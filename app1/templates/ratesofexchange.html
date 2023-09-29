@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .form1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        
+    }
+    form{
+        padding:30px;
+    }
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+        
+    }
+    .back{
+        background-color:rgba(0,0,0,0.4);
+        color: white;
+
+    }
+    btns:hover{
+        background-color:rgba(225,225,225,0.4);
+        color:black;
+    }
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+    input{
+        background-color:white;
+    }
+</style>
+    <div class="m-3">
+        <h6 class="bg-info text-light m-0 p-2">Multi Currency Alteration</h6>
+        <div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
+        <div hidden  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.id}}</div>
+        <div class="p-3" style="background-color:rgba(0,0,0,.4);">
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"><label for="a">Date for rate of exchange : </label></div>
+                <div class="col-sm-3 m-0 p-0"><input type="date" value="01/04/2022" class="form-control" name="dt" ></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+            <div class="table-responsive-sm" style="background-color:rgba(0,0,0,0.4);">
+                <Table class="w-100 table text-center" border="1">
+                    <tr>
+                        <th rowspan="2">Sl.no</th>
+                        <th rowspan="2">currency</th>
+                        <th rowspan="2">Std.rate</th>
+                        <th colspan="2">Selling rate</th>
+                        <th colspan="2">Buying rate</th>
+                        <th rowspan="2">Action</th>
+        
+                    </tr>
+                    <tr>
+        
+                        <th>last voucher rate</th>
+                        <th>Specified rate</th>
+                        <th>last voucher rate</th>
+                        <th>Specified rate</th>
+        
+                    </tr>
+                    
+                     
+                      <form action="{% url 'create_ROE' %}" method="post" >
+                        {% csrf_token %}
+                        {% for p in curr %} 
+                        <tr>
+                           
+                               
+                          <td> {{ forloop.counter }} </td>
+                        
+                      
+                      <td> 
+                            <input type="text" name="curname" readonly id="" value="{{ p.Symbol }} ({{ p.FormalName }})" class="form-control" >
+                        </td>
+                      <td> <input type="text" class="w-100 form-control" value="{{ p.std_rate }}" name="stdr"></td>
+                      <td> </td>
+                      <td> <input type="text" class="w-100 form-control" value="{{ p.sell_specified_rate }}" name="ssr"></td>
+                      <td> </td>
+                      <td> <input type="text" class="w-100 form-control" value="{{ p.uy_specified_rate }}" name="bsr"></td>
+                      
+                      <td> <button class="btn btn-info">Enter</button></td> 
+                      
+                    
+                   
+                    </tr>
+                    {% endfor %}
+                </form>
+                    <br>
+                    
+                </Table>
+            </div>
+            
+        </div>
+     
+   
+    </div> 
+    
+   
+
+{% endblock %}

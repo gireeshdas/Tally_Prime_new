@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .modal-content{
+            width: 400px;
+            margin-top: 300px;
+            background-color: #213b52;
+        }
+        .hide{
+            display: none;
+        }
+        .inp{
+            border: none;
+            color: #fff;
+            background-color: rgba(0,0,0,.001);
+            width: 100px;
+        }
+        .in{
+            width: 100px;
+        }
+    </style>
+    <div class="m-1">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-5">GST Details</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+            
+                <h6 class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">GST Details for Ledger
+                    <center><input type="text" class="form-control inp text-center" id="nm"></center>
+                </h6>
+                
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_ledger_gst' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"></div>
+                        <div class="col-sm-6 m-0 p-0"></div>
+                        <div class="col-sm-4 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid  p-2 m-0" id="">
+                        <div class="col-sm-4 m-0 p-0"><label for=""><b>Nature of Transaction</b></label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                             <select name="nature_of_transaction" id="Nature_of_Transaction" class="form-control" onchange="natureoftrans()">
+                                <option value="Not_Applicable">Not Applicable</option>
+                                <option value="Branch_Transfer_Inward">Branch Transfer Inward</option>
+                                <option value="Imports_Exempt">Imports Exempt</option>
+                                <option value="Imports_Nil_Rated">Imports Nil Rated</option>
+                                <option value="Imports_Taxable">Imports Taxable</option> 
+                                <option value="Interstate_Purchase_Exempt">Interstate Purchase Exempt</option>
+                                <option value="Interstate_Purchase_From_Unregistered_Dealer-Exempt">Interstate Purchase From Unregistered Dealer - Exempt</option>
+                                <option value="Interstate_Purchase_From_Unregistered_Dealer-NilRated">Interstate Purchase From Unregistered Dealer - Nil Rated</option>
+                                <option value="Interstate_Purchase_From_Unregistered_Dealer-Services">Interstate Purchase From Unregistered Dealer - Services</option>
+                                <option value="Interstate_Purchase_From_Unregistered_Dealer-Taxable">Interstate Purchase From Unregistered Dealer - Taxable</option>
+                                <option value="Interstate_Purchase_Nil_Rated">Interstate Purchase Nil Rated</option>
+                                <option value="Interstate_Purchase_Taxable">Interstate Purchase Taxable</option>
+                                <option value="Intrastate_Purchase_Deemed_Exports-Exempt">Intrastate Purchase Deemed Exports - Exempt</option>
+                                <option value="Intrastate_Purchase_Deemed_Exports-NilRated">Intrastate Purchase Deemed Exports - Nil Rated</option>
+                                <option value="Intrastate_Purchase_Deemed_Exports-Taxable">Intrastate Purchase Deemed Exports - Taxable</option>
+                                <option value="Purchase_Deemed_Exports-Exempt">Purchase Deemed Exports - Exempt</option>
+                                <option value="Purchase_Deemed_Exports-NilRated">Purchase Deemed Exports - Nil Rated</option>
+                                <option value="Purchase_Deemed_Exports-Taxable">Purchase Deemed Exports - Taxable</option>
+                                <option value="Purchase_Exempt">Purchase Exempt</option>
+                                <option value="Purchase_From_Composition_Dealer">Purchase From Composition Dealer</option>
+                                <option value="Purchase_From_SEZ-Exempt">Purchase From SEZ - Exempt</option>
+                                <option value="Purchase_From_SEZ-LUT/Bond">Purchase From SEZ - LUT/Bond</option>
+                                <option value="Purchase_From_SEZ-NilRated">Purchase From SEZ - Nil Rated</option>
+                                <option value="Purchase_From_SEZ-Taxable">Purchase From SEZ - Taxable</option>
+                                <option value="Purchase_From_SEZ_(Without Bill of Entry)-Exempt">Purchase From SEZ (Without Bill of Entry) - Exempt</option>
+                                <option value="Purchase_From_SEZ_(Without Bill of Entry)-NilRated">Purchase From SEZ (Without Bill of Entry) - Nil Rated</option>
+                                <option value="Purchase_From_SEZ_(Without Bill of Entry)-Taxable">Purchase From SEZ (Without Bill of Entry) - Taxable</option>
+                                <option value="Purchase_From_Unregistered_Dealer-Exempt">Purchase From Unregistered Dealer - Exempt</option>
+                                <option value="Purchase_From_Unregistered_Dealer-NilRated">Purchase From Unregistered Dealer - Nil Rated</option>
+                                <option value="Purchase_From_Unregistered_Dealer-Taxable">Purchase From Unregistered Dealer - Taxable</option>
+                                <option value="Purchase_Nil_Rated">Purchase Nil Rated</option>
+                                <option value="Purchase_Taxable">Purchase Taxable</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 m-0 p-0"></div>
+                    </div>
+                    
+                    <h6  class="bg-trasparent text-light p-2 m-0 text-left">Tax Details <br><i>
+                        {% for i in tally %}
+                            <p>
+                                (From {{ i.fin_begin }})
+                            </p>
+                        {% endfor %}
+                    </i></h6>
+    
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"><label for="a">Taxability</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="taxable" id="taxx" class="form-control in hide" value="Taxable">
+                                <select name="taxability" id="taxability" class="form-control" onchange="showTaxable()">
+                                    <option value="Unknown">Unknown</option>
+                                    <option value="Exempt">Exempt</option>
+                                    <option value="Nill Rated">Nill Rated</option>
+                                    <option value="Taxable">Taxable</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+
+                        <div class="modal fade" id="myModal" role="dialog" >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body"><br>
+                                        <div class="row container-fluid  p-2 m-0">
+                                            <div class="col-sm-4 m-0 p-0"> <label for="a">Appicable From</label></div>
+                                            <div class="col-sm-8 m-0 p-0">
+                                                {% for i in tally %}
+                                                    <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="appicable_from">
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-sm-2 m-0 p-0"></div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row container-fluid p-0 m-0 hide" id="tax">
+                            <div class="row container-fluid  p-2 m-0" id="">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a"><b>Tax Type</b></label></div>
+                                <div class="col-sm-6 m-0 p-0"><label for="a"><b>Rate</b></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a">Integrated Tax</label></div>
+                                <div class="col-sm-6 m-0 p-0"><input type="text" name="integrated_tax" class="form-control" value="0%"></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a">Cess</label></div>
+                                <div class="col-sm-6 m-0 p-0"><input type="text" name="cess" class="form-control" value="0%"></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div> 
+                        </div>
+                        
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+
+    <script>
+        document.getElementById("nm").value = localStorage.getItem("status");
+
+        $(document).ready(function(){ 
+            $('#taxability').change(function() 
+            { 
+                var opval = $(this).val(); 
+                if(opval=="Unknown"){ 
+                    $('#myModal').modal("show"); 
+                }
+                else if(opval=="Exempt"){ 
+                    $('#myModal').modal("show"); 
+                }
+                else if(opval=="Nill Rated"){ 
+                    $('#myModal').modal("show"); 
+                }
+            });
+        });
+        function showTaxable(){
+            var status =document.getElementById("taxability");
+            var a= status.value;
+            console.log(a);
+            if( a== "Taxable"){
+                console.log(a);
+                document.getElementById('tax').style.display ="flex";
+            }
+            else{
+                document.getElementById('tax').style.display ="none";
+            }
+        }
+        function natureoftrans(){
+            var status =document.getElementById("Nature_of_Transaction");
+            var a= status.value;
+            console.log(a);
+            if( a== "Not_Applicable"){
+                console.log(a);
+
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="flex";
+                document.getElementById('taxx').style.display ="none";
+            }
+            else if ( a== "Imports_Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Interstate_Purchase_From_Unregistered_Dealer-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Intrastate_Purchase_Deemed_Exports-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Interstate_Purchase_Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Intrastate_Purchase_Deemed_Exports-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Purchase_Deemed_Exports-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Purchase_From_SEZ-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Purchase_From_SEZ_(Without Bill of Entry)-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Purchase_From_Unregistered_Dealer-Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else if ( a== "Purchase_Taxable"){
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="flex";
+                document.getElementById('taxability').style.display ="none";
+            }
+            else{
+                document.getElementById('taxx').style.display ="flex";
+                document.getElementById('tax').style.display ="none";
+                document.getElementById('taxability').style.display ="none";
+            }
+        } 
+    </script>
+{% endblock %}

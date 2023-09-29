@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+        
+
+    </script>
+    <style>
+        
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col "> Ledger Vouchers</div>
+                   
+                </div>
+                <div class="row  " style="height: 50px;">
+                <div class="col ">
+                    <h6>
+                    <span class=" d-flex justify-content-start" style="margin-top: 8px;"> Ledger : &nbsp;<strong>{{ledger_name}} </strong> </span>
+                    <span class="d-flex  justify-content-end " style="margin-top: -15px;"> 1-Apr-22 to 30-Apr-22</span>
+                </h6>
+                </div>
+            </div>
+                <div class="table-responsive">
+                    <table  class="table  " style="background-color: rgba(33,57,77,255);color:#fff;">
+                        <thead >
+                        <tr>
+                          <th style="text-align: center;">Date</th>
+                          <th >Particulars</th>
+                          <th >Vch Type</th>
+                          <th style="text-align: right ;">Vch No.</th>
+                          <th style="text-align: right ;">Debit</th>
+                          <th style="text-align: right ;">Credit</th>
+                          
+                        </tr>
+                    </thead>
+
+                    <tbody >
+                        {% for i in voucher %}
+                    <tr>
+                        <td style="text-align: center;">{{i.Date}}</td>
+                        <td ><strong>{{i.Particualrs}}</strong></td>
+                        <td><strong>{{i.Vch_Type}}</strong></td>
+                        <td style="text-align: right ;">{{i.Vch_No}}</td>
+                        <td class="debit" style="text-align: right ;"><strong>
+                            {% if i.Debit %}
+                            {{i.Debit}}
+                            {% endif %}
+                        </strong></td>
+                        <td style="text-align: right ;"><strong>
+                            
+                            {% if i.Credit %}
+                            {{i.Credit}}
+                            {% endif %}
+                            </strong></td>
+
+
+                    </tr>
+                    {% endfor %}
+                
+
+
+                    
+                    {% for i in ledger %}
+                    <tr>
+                        <td colspan="4" style="text-align: right;"> Opening Balance : <br>
+                            Current Total :</td>
+                            {% if i.ledger_opening_bal_type == "Dr" %}
+                            <td style="text-align: right;">
+
+                                <strong>{{i.ledger_opening_bal}}</strong>
+
+                                <br>
+                                <strong>{{total_debit}}</strong>
+   
+                            </td>
+                            <td style="text-align: right;" id=""><strong></strong><br>
+                                <strong>{{total_credit}}</strong></td>
+
+                                {% else %}
+                                <td style="text-align: right;">
+
+                                    <strong></strong>
+    
+                                    <br>
+                                    <strong>{{total_debit}}</strong>
+       
+                                </td>
+                                <td style="text-align: right;" id=""><strong>{{i.ledger_opening_bal}}</strong><br>
+                                    <strong>{{total_credit}}</strong></td>
+    
+                                {% endif %}
+   
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="4" style="text-align: right;"><strong>Closing Balance : </strong>  
+                        </td>
+                            {% if type1 == "Dr" %}
+                            
+                            <td style="text-align: right;"><strong>{{closing_balance}}</strong></td>
+                            <td style="text-align: right;"><strong></strong></td>
+                            {% else %}
+                            <td style="text-align: right;"><strong></strong></td>
+                            <td style="text-align: right;"><strong>{{closing_balance}}</strong></td>
+                            
+                            {% endif %}
+   
+                        
+                    </tr>
+
+
+                {% endfor %}
+                       
+                    
+                      
+                    
+                    </tbody>
+
+
+
+
+                    
+
+                    </table>
+
+
+                  </div>
+
+              
+                  
+
+
+               
+
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

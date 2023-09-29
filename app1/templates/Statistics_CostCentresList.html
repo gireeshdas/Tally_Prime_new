@@ -1,0 +1,238 @@
+
+
+
+    {% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <head>
+        <style>
+    
+            .close {
+                position: absolute;
+                top: 0;
+                right: 8px;
+                font-size: 25px;
+                color: rgb(0, 0, 0);
+                transform: rotate(45deg);
+                cursor: pointer;
+                text-decoration: none;
+                
+            }
+            .close:hover{
+                color: white;
+            }
+    
+     .table1 th {
+        border: .5px solid rgba(255, 255, 255, .3); ;
+        
+        
+     }
+     .table-row{
+    cursor:pointer;
+    }
+    
+    .table-row1{
+    cursor:pointer;
+    }
+    .table-row1:hover{
+        background-color: rgb(216, 155, 51);
+    }
+    
+      .btn{
+        border: 1px solid rgb(103, 175, 220);
+        /* height: 30px;
+        text-align: center; */
+        
+        width: 95%;
+        
+    
+        
+      }
+      .table1{
+        border: 1px solid rgb(103, 175, 220);
+      }
+      .selected{background-color:  rgb(216, 155, 51);color: #fff;font-weight: bold
+    }
+      .selected1 {
+        background-color:  rgb(77, 154, 242);
+      }    
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                      
+                       
+                          <div class="col "> <a href="javascript:history.go(-1);" class="close">+</a> Chart of Accounts</div>
+                    </div>
+                    
+                    <div class="table-responsive ">
+                        
+                        <table  class="table " style="background-color: rgba(33,57,77,255);color:#fff; " border="1" id="tb1">
+                            <tr >
+                                
+                                
+                                <th>     <table   style="width: 100%;"  id="table">
+                                    <thead>
+                                    <tr>
+                                      <th rowspan="3" colspan="2"   class="align-middle text-white "> 
+                                        <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">List of Cost Centres</h6>
+                                        <th rowspan="3"  class="text-white " style="width: 30px;">
+                                        <h6 style="text-align: end; font-size: 15px;">
+                                            For 1-Apr-22</h6>
+                                        </th>
+                                    </th>
+                                    </tr>
+                                
+                                      
+                                </thead>
+                                <tbody>
+    
+                                    {% for i in cst %}
+    
+                                    <tr class="table-row " data-href="{% url 'load_cost_centers' i.id %}" >
+    
+                                        <td colspan="2" >{{ i.c_name }}</td>
+        
+                                    
+                                       
+                                    </tr>
+                                
+                                {% endfor %} 
+                                {% for i in cst1 %}
+    
+                                    <tr class="table-row " data-href="{% url 'load_cost_centers' i.id %}" >
+    
+                                        <td colspan="2" >{{ i.c_name }}</td>
+        
+                                    
+                                       
+                                    </tr>
+                                
+                                {% endfor %} 
+                                
+                                
+                                </tbody>
+                                </table>
+                            </th>
+                              
+                              
+            
+                                </table></div>
+                          
+                            
+                         
+                      
+            </div>
+            
+        </div>
+        <div style="font-size:20px;"> {{ cost_centre_count }} Cost Centres</div><hr>
+
+        <table class="table1 col" style="text-align: center; margin-top: 10px;" >
+            <thead>
+                <th ><a href="{% url 'index' %}" type="button"  class="btn p-1 px-4" >Quit</a></th>
+                <th><button type="button"  class="btn p-1 px-4" onclick="myFunction()">Select</button></th>
+                <th><button type="button"  class="btn p-1 px-1" onclick="removeSelectedRow()">Remove Line</button></th>
+                <th><a href="{% url 'Statistics_list_of_cost_centers' %}" type="button"  class="btn p-1 px-1" >Restore Line</a></th>
+            </thead>
+        </table>
+        <br></div>
+    
+        
+
+        <script>
+            $(document).ready(function($) {
+                $(".table-row").dblclick(function() {
+                    window.document.location = $(this).data("href");
+                });
+            });
+        </script>
+        <script>
+                    
+            var index;  // variable to set the selected row index
+            function getSelectedRow()
+            {
+                var table = document.getElementById("table");
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                        // clear the selected from the previous selected row
+                        // the first time index is undefined
+                        if(typeof index !== "undefined"){
+                            table.rows[index].classList.toggle("selected");
+                        }
+                       
+                        index = this.rowIndex;
+                        this.classList.toggle("selected");
+        
+                    };
+                }
+                    
+            }
+        
+        
+            getSelectedRow();
+        
+            
+        
+            
+            
+            
+            
+        </script>
+        
+        <script>
+        
+           
+        function myFunction() {
+         var se = document.getElementsByClassName('selected');
+         se[0].style.backgroundColor = "lightblue";
+            
+        }
+            </script>
+        
+        
+        <!-- <script>
+                
+                var rIndex,
+                    table = document.getElementById("table");
+                
+                
+                function selectedRowToInput()
+                {
+                    
+                    for(var i = 1; i < table.rows.length; i++)
+                    {
+                        table.rows[i].onclick = function()
+                        {
+                          // get the seected row index
+                          rIndex = this.rowIndex;
+                          this.classList.toggle("selected");
+                        
+                        };
+                    }
+                }
+                selectedRowToInput();
+                
+                
+                
+                function removeSelectedRow()
+                {
+                    table.deleteRow(rIndex);
+                    
+                }
+            </script> -->
+        
+        <script>
+        function removeSelectedRow()
+                {
+                    table.deleteRow(index);
+                    
+                }
+        </script>
+        
+        
+    {% endblock %}

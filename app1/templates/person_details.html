@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+    </style>
+
+  <div class="m-5 pl-5 pr-5">
+    <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+        <a href="javascript:history.go(-2);" class="close">x</a>
+    <h6 style="" class="bg-info text-light p-2 m-0 text-center">Person Resposible Details</h6>
+            <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'add_person' comp.id %}">
+                
+                {% csrf_token %}
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-3" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-12 m-6 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                       
+                        
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="c">Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="name" class="form-control" id="c" placeholder="" required /></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="d">Son/Daughter of</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text"  name="fname" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="e">Designation</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text"  name="Designation" class="form-control" id="d" placeholder=""></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="d">PAN</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="pan" class="form-control"  title="Please enter valid PAN number. E.g. AAAAA9999A" maxlength="10" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" ></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="g">Flat No</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="address" value="{{comp.address}}" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Name of the premises/building</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="bname" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Road/Street/Lane</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="road" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Area/Location</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="area" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Town/City/District</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="city" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">State</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="state"  value="{{comp.state}}" class="form-control" id="d" placeholder="">
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Pincode</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text"name="pin" value="{{comp.pincode}}" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Mobile No</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" name="mobile" value="{{comp.mobile}}" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">STD code</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="std" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Telephone</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="telephone" value="{{comp.telephone}}" class="form-control" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-4 m-0 p-0"> <label for="h">Email id</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" name="email" value="{{comp.email}}" id="d" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-12 m-0 p-0"> <label for="h">(Note:All the above details will be used in Challan,Forms & Returns)</label></div>
+                           
+                        </div>
+                    </div>
+                    
+                   
+               
+                <div class="enter w-100 py-4"><button class="btn btn-info w-25">CREATE</button></div>   
+                 
+            </form>
+        </div>
+    </div>   
+        
+    {% endblock %}

@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<style>
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+   
+
+    
+           
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 150px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+        overflow-y: auto;
+        
+       
+      
+      }
+      .show{
+        display: block;
+           }
+           .huh:hover{
+            background-color: orange;
+           }
+           .prmm{
+            display: none;
+           }
+          
+          
+           
+
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+<div class="row container-fluid p-0 mx-0" >
+    <div class="col-sm-3 m-0  p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" width: 100%; background-color:rgba(0,0,0,0.2);" >
+   <!--     <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <h6  class="bg-info text-light  p-2">Group Creation (secondary)</h6>
+    
+
+<form id="myForm" action="{% url 'create_group' %}" method="post" class="">
+    {% csrf_token %}
+   
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4  p-0"> <label for="gname">Name :</label></div>
+                        <div class="col-sm-8  p-0"><input type="text" id="gname"   name="group_name" class="form-control" placeholder="" required></div> 
+                    </div>
+
+                    
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 p-0"> <label for="alia">(Alias) :</label></div>
+                        <div class="col-sm-8  p-0"><input type="text"  id="alia"  name="group_alias" class="form-control" placeholder=""></div> 
+                    </div>
+                    
+
+                    <div class="row container-fluid   p-2 m-0">
+                        <div class="col-sm-4 p-0"> <label for="Under">Under</label></div>
+                        <div class="col-sm-8  p-0"> 
+                        <input type="text" class="custom-select-md form-control" id="primary-text" onfocus="showList()" 
+                          name="group_under" ></div>
+                        <div class="col-sm-8 m-0 p-0 form-group" >
+                            <fieldset >
+                                <div class="form-popup" id="list-div"  >
+  
+                                    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Groups</h6>
+                                <hr >
+                                <div    style="max-height: 400px; color: black; padding: 10px;cursor: pointer;">
+
+                                <div class="huh" style="padding-left: 200px;" >   <a style="color: black;" href="creategroup" >Create</a></div> 
+                                <hr style="background-color:black">
+                                    
+
+                                  <div class="huh" class="hidden" onclick="hideList('primary'),shg()"  value="primary">primary</div>
+                                      
+                                           <div class="huh"  onclick="hideList('Bank OCC A/c'),sg()">  Bank OCC A/c</div>
+                                            <div class="huh" onclick="hideList('Bank OD A/c'),sg()" value="Bank OD A/c">Bank OD A/c</div>
+                                            <div class="huh" onclick="hideList('Branch Divisions'),sg()" value="Branch Divisions">Branch Divisions</div>
+                                            <div class="huh" onclick="hideList('Capital Amount'),sg()" value="Capital Amount">Capital Amount</div>
+                                            <div class="huh" onclick="hideList('Cash in Hand'),sg()" value="Bank_Account">Cash in Hand</div>
+                                            <div class="huh" onclick="hideList('Current Assets'),sg()" value="Bank_Account">Current Assets</div>
+                                            <div class="huh" onclick="hideList('Current Liabilities'),sg()" value="Bank_Account">Current Liabilities</div>
+                                            <div class="huh" onclick="hideList('Deposits (Asset)'),sg()" value="Bank_Account">Deposits (Asset)</div>
+                                            <div class="huh" onclick="hideList('Direct Expenses'),sg()" value="Bank_Account">Direct Expenses</div>
+                                            <div class="huh" onclick="hideList('Direct Incomes'),sg()" value="Bank_Account">Direct Incomes</div>
+                                            <div class="huh" onclick="hideList('Duties and Taxes'),sg()" value="Bank_Account">Duties and Taxes</div>
+                                            <div class="huh" onclick="hideList('Expenses(Direct)'),sg()" value="Bank_Account">Expenses(Direct)</div>
+                                            <div class="huh" onclick="hideList('Expenses(Indirect)'),sg()" value="Bank_Account">Expenses(Indirect)</div>
+                                            <div class="huh" onclick="hideList('Fixed Assets'),sg()" value="Bank_Account">Fixed Assets</div>
+                                            <div class="huh" onclick="hideList('Income (Direct)'),sg()" value="Bank_Account">Income (Direct)</div>
+                                            <div class="huh" onclick="hideList('Income (Indirect)'),sg()" value="Bank_Account">Income (Indirect)</div>
+                                            <div class="huh" onclick="hideList('Investments'),sg()" style="color: black;" value="Bank_Account">Investments</div>
+                                            <div class="huh" onclick="hideList('Loans & Advances (Asset)'),sg()" value="Bank_Account">Loans & Advances (Asset)</div>
+                                            <div class="huh" onclick="hideList('Loans (Liability)'),sg()" value="Bank_Account">Loans (Liability)</div>
+                                            <div class="huh" onclick="hideList('Misc. Expenses (Asset)'),sg()" value="Bank_Account">Misc. Expenses (Asset)</div>
+                                            <div class="huh" onclick="hideList('provisions'),sg()" value="Bank_Account">provisions</div>
+                                            <div class="huh" onclick="hideList('Purchase Accounts'),sg()" value="Bank_Account">Purchase Accounts</div>
+                                            <div class="huh" onclick="hideList('Reserves & Surplus'),sg()" value="Bank_Account">Reserves & Surplus</div>
+                                            <div class="huh" onclick="hideList('Retained Earnings'),sg()" value="Bank_Account">Retained Earnings</div>
+                                            <div class="huh" onclick="hideList('Sales Accounts'),sg()" value="Bank_Account">Sales Accounts</div>
+                                            <div class="huh" onclick="hideList('Secured Loans'),sg()"  value="Bank_Account">Secured Loans</div>
+                                            <div class="huh" onclick="hideList('Stock-in-Hand'),sg()" value="Bank_Account">Stock-in-Hand</div>
+                                            <div class="huh" onclick="hideList('Sundry Creditors'),sg()" value="Bank_Account">Sundry Creditors</div>
+                                            <div class="huh" onclick="hideList('Sundry Debtors'),sg()" value="Bank_Account">Sundry Debtors</div>
+                                            <div class="huh" onclick="hideList('Suspence A/c'),sg()" value="Bank_Account">Suspence A/c</div>
+                                            <div class="huh" onclick="hideList('Unsecured Loans'),sg()" style="color: black;" value="Bank_Account">Unsecured Loans</div> 
+                                            
+                                            {% for grp in grp %}
+                            
+                                            <div class="huh" onclick="hideList('{{ grp.name }}'),sg()" style="color: black;" >{{ grp.name }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        
+                            
+                                </div>
+                        </fieldset>
+                        
+                            
+                           
+                           
+
+                        </div> 
+                    </div>
+
+                <div class="hidden form-group" id="hidden" style="display: none;" >
+                <fieldset class="container ">
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="subled">Nature of group :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="namegroup" name="nature" class="prm form-control">
+                                <option selected></option>
+                                <option value="Accept">Accept</option>
+                                <option value="Expenses">Expenses</option>
+                                <option value="Income">Income</option>
+                                <option value="Liabilities">Liabilities</option>
+                            </select>
+                        </div> 
+
+                        <div class="prmm row container-fluid  p-2 m-0" id="prmm1">
+                            <div class="col-sm-4 m-0 p-0"> <label for="subledd">Does it affect gross profit :</label></div>
+                            <div class="col-sm-8 m-0 p-0">
+                                <select id="subledd" name="gross_profit" class=" form-control">
+                                    <option value="yes">Yes</option>
+                                    <option value="no" selected>No</option>
+                                </select>
+                            </div> 
+                        </div>
+
+                      
+                    </div>
+                </fieldset>
+                </div>
+
+
+
+
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="subled">Groups behaves like a sub-ledger:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="subled" name="sub_ledger" class=" form-control">
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>
+                            </select>
+                        </div> 
+                    </div>
+                    
+                   
+
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="nett">Nett Debit/Credit Balance for Reporting:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="nett" name="debit_credit" class=" form-control">
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>
+                            </select>
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="cal">Used for
+                            calculation
+                            <br><small style="font-size: 10px;">(for example:taxes,discounts,Sales invoice
+                                entries)</small>:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="cal" name="calculation" class=" form-control">
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>
+                            </select>
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="meth"> Method to allocate when used in purchase invoice :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="meth" name="invoice" class=" form-control">
+                                <option value="" selected>Not Applicable</option>
+                                <option value="Appropriate by Qty">Appropriate by Qty</option>
+                                <option value="Appropriate by Value">Appropriate by Value</option>
+                            </select>
+                        </div> 
+                    </div>
+
+
+
+                    <div class="flexy w-100 py-4"><button id="cbtn" type="submit" class="btn btn-info w-50">Create</button></div>
+    
+</form>
+
+
+
+</div>
+</div>
+<script>
+
+    
+
+function shg() {
+    document.getElementById("hidden").style.display='block';
+}
+function sg() {
+    document.getElementById("hidden").style.display='none';
+}
+
+    
+   
+
+    function showList() {
+                      document.getElementById("list-div").style.visibility = "visible";
+                  }
+                  function hideList(valueDIv) {
+                      document.getElementById("primary-text").value=valueDIv;
+                      document.getElementById("list-div").style.visibility = "hidden";
+                  }
+
+            $('.prm').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "Expenses"){
+                $('#prmm1').removeClass("prmm");
+                $('#prmm1').addClass("show");
+            }
+            else{
+                $('#prmm1').removeClass("show");
+                $('#prmm1').addClass("prmm")
+            }  
+           
+            
+
+        })                  
+
+
+            
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+{% endblock  %}

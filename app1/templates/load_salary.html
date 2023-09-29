@@ -1,0 +1,360 @@
+
+
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hide{
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row-reverse;
+        }
+        .form1{
+        
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+        }
+        .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+        }
+
+
+        .form-popup {
+            visibility: hidden;       
+            position: fixed;
+            top: 230px;
+            right: 15px;
+            background-color: rgb(216, 232, 238); 
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 300px;
+        
+        }
+</style>
+    
+
+        <div style="width: 190%;margin-left: 2%;margin-top: 5%;">
+            <div class="row container-fluid p-0 " >
+                
+                    
+                <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+                    <a href="javascript:history.go(-2);" class="close" style="margin-right: 0px;">+</a>
+                    
+                <h6  class="bg-info text-light p-2">Salary Details Creation</h6>
+
+                <form  action="{% url 'salary3' %}" method="post" >
+                    {% csrf_token %} 
+               
+
+
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="gname">Name :</label></div>
+                    <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="name"
+                        style="width: 30%;margin-left: -20%;" id="loc" onblur="passvalues2()"
+                        placeholder="" autocomplete="off"/></div> 
+                </div>
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="alia">Under :</label></div>
+                    <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="under" value="Primary"
+                        style="width: 30%;margin-left: -20%;" id="" 
+                        placeholder="" autocomplete="off"></div> 
+                </div>
+
+                <script>
+                    function pass()
+                    {
+                    var firstname=document.getElementById("loc").value;
+                    localStorage.setItem("textvalue",firstname);
+                    return false;
+                    }
+                </script>
+
+                            <Table class="w-100 table text-center" border="1">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 130px;" rowspan="2">Effective From</th>
+                                        <th  width="400px" rowspan="2">Pay Head</th>
+                                        <th rowspan="2">Rate</th>
+                                        <th width="30px" rowspan="2">per</th>
+                                        <th rowspan="2">Pay Head Type</th>
+                                        <th rowspan="2">Calculation Type</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>                   
+                                    <tr>
+                                   
+                                        <td><input class="custom-select-md form-control" type="text" name="effective"
+                                             id="" value="02-Apr-22"
+                                            placeholder="" autocomplete="off"/></td>
+                                        <td width=""><input class="custom-select-md form-control" type="text" name="payhead"
+                                            id="primary-text" 
+                                           placeholder="" autocomplete="off"
+                                           onfocus="showList()" > </td>
+                                        <td> <input class="custom-select-md form-control" type="number" name="rate"
+                                            id="" 
+                                           placeholder="" autocomplete="off"/></td>
+                                        <td width="100"> <input class="custom-select-md form-control" type="number" name="per"
+                                            id="" 
+                                           placeholder="" autocomplete="off"/></td>
+                                        <td><input class="custom-select-md form-control" type="text" name="payheaad_type"
+                                            id="payheaad_type" 
+                                           placeholder="" autocomplete="off"/> </td>
+                                        <td><input class="custom-select-md form-control" type="text" name="calculation_type"
+                                            id="calculation_type" 
+                                           placeholder="" autocomplete="off"/></td>
+                                    </tr>
+
+
+                                    <tr>
+                                   
+                                        <td><input class="custom-select-md form-control" type="text" name="effective"
+                                             id="" 
+                                            placeholder="" autocomplete="off"/></td>
+                                        <td width=""><input class="custom-select-md form-control" type="text" name="payhead"
+                                            id="primary-text2" 
+                                           placeholder="" autocomplete="off"
+                                           onfocus="showList2()" > </td>
+                                        <td> <input class="custom-select-md form-control" type="number" name="rate"
+                                            id="" 
+                                           placeholder="" autocomplete="off"/></td>
+                                        <td width="100"> <input class="custom-select-md form-control" type="number" name="per"
+                                            id="" 
+                                           placeholder="" autocomplete="off"/></td>
+                                        <td><input class="custom-select-md form-control" type="text" name="payheaad_type"
+                                            id="payheaad_type" 
+                                           placeholder="" autocomplete="off"/> </td>
+                                        <td><input class="custom-select-md form-control" type="text" name="calculation_type"
+                                            id="calculation_type" 
+                                           placeholder="" autocomplete="off"/></td>
+                                    </tr>
+
+
+                                    
+
+                                    
+                                
+                                                  
+                                    
+                                </tbody>
+
+                                
+                                
+                            </Table>
+
+                            <center><div><input type="submit" style="margin-left: 0%;margin-top: 20px;  margin-bottom: 50px;  width: 25%;" value="create" class="btn btn-info" onclick="pass();"></div></center>
+
+
+                        </form>
+                </div>
+            </div>
+        </div>
+
+
+<!-- list Creation -->
+
+<div class="form-popup" id="list-div" >
+
+<h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Pay Heads</h6>
+<hr>
+<div>
+<table>
+<tr>
+    <td>
+        <a href="pay_head"> <button
+            type="submit"
+            style="color: black;margin-left: 310%; width: 20%"
+            class="custom-select-md form-control"
+          >
+            create
+          </button> </a>
+    </td>
+</tr>
+
+<tr>
+  <td>    
+
+    {% for l in pay %}
+    <div onclick="hideList('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+    {% endfor %}
+  </td>
+</tr>  
+
+</table>
+</div>
+</div>
+
+
+
+
+
+<!-- list Creation -->
+
+<div class="form-popup" id="list-div2" >
+
+    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Pay Heads</h6>
+    <hr>
+    <div>
+    <table>
+    <tr>
+        <td>
+            <a href="pay_head"> <button
+                type="submit"
+                style="color: black;margin-left: 210%; width: 20%"
+                class="custom-select-md form-control"
+              >
+                create
+              </button> </a>
+        </td>
+    </tr>
+    
+    <tr>
+      <td>    
+    
+        {% for l in pay %}
+        <div onclick="hideList2('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+        {% endfor %}
+      </td>
+    </tr>  
+    
+    </table>
+    </div>
+    </div>
+
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+        <script>
+
+             
+
+             document.getElementById("loc").value = localStorage.getItem("name"); 
+             document.getElementById("loc2").value = localStorage.getItem("under"); 
+
+
+
+             function showList(){
+                document.getElementById('list-div').style.visibility="visible";
+             }
+
+             function hideList(valueDIv) {
+                
+                document.getElementById("primary-text").value=valueDIv;
+               
+                
+                document.getElementById("list-div").style.visibility = "hidden";
+                getDetails()
+                getDetail()
+               
+            }
+
+
+
+            function showList2(){
+                document.getElementById('list-div2').style.visibility="visible";
+             }
+
+             function hideList2(valueDIv) {
+                
+                
+                document.getElementById("primary-text2").value=valueDIv;
+                
+                document.getElementById("list-div2").style.visibility = "hidden";
+                getDetails()
+                getDetail()
+               
+            }
+           
+
+
+            function getDetails()
+            {
+                var did=document.getElementById("primary-text").value;
+                console.log(did)
+                //alert(did)
+                $.ajax(
+{
+    
+    url: '{% url "load" %}',
+    data:{
+             id: did
+    },
+    success: function( data ) 
+    {
+        document.getElementById("payheaad_type").value=data;
+       
+    }
+ });
+            }
+            function getDetail()
+            {
+                var did=document.getElementById("primary-text").value;
+                console.log(did)
+                //alert(did)
+                $.ajax(
+{
+    
+    url:'{% url "load_calculation" %}',
+    data:{
+             id: did
+    },
+    success: function( data ) 
+    {
+        //alert(data);
+        document.getElementById("calculation_type").value=data;
+       
+    }
+ });
+            }
+        </script>
+
+
+
+
+
+                
+                <script>
+                   
+                      
+                    function passvalues2()
+                    {
+                        var name=document.getElementById("loc").value;
+                        var under=document.getElementById("loc2").value;
+                        //console.log(name);
+                        localStorage.setItem("name2", name);
+                        localStorage.setItem("under2", under);
+                        var a=localStorage.getItem("name2");
+                        var b=localStorage.getItem("under2");
+                        //console.log(a);
+                    }
+
+                </script>
+   
+  
+    
+   
+
+{% endblock %}

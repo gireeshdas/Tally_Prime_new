@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<head>
+    <script type="text/javascript">
+        function searchrecords()
+        {
+            var input,ul,li,filter;
+            input=document.getElementById("search");
+            filter=input.value.toUpperCase();
+            ul=document.getElementById("ulid")
+            li=ul.getElementsByTagName("li")
+            for(i=0;i<li.length;i++){
+                let li = ul[i].getElementsByTagName('li')[0]
+
+            }
+            
+
+        }
+
+    </script>
+    <style>
+        
+        thead th {
+    border: .5px solid rgba(255, 255, 255, .3); ;
+        }
+    .ledger{
+
+        
+        background-color: rgb(65, 123, 160);
+        width : 300px;
+        margin: auto;
+        text-align: center;
+        height: 100px;
+        color: #000;
+        
+
+    }
+    
+    .input{
+        width: 80%;
+       margin: auto;
+       height: 30px;
+       margin-top: 10px;
+       color: #000;
+       background-color: antiquewhite;
+       border: 1px solid rgb(8, 150, 239,0.5);
+       
+    }
+    .box{
+        width : 400px;
+        background-color: rgba(33,57,77,255);color:#fff;
+        margin: auto;
+        height: auto;
+
+    }
+    .head{
+        background-color: rgb(9, 90, 203);
+        
+    }
+    
+ .create{
+    height: 40px;
+    text-align: end;
+    color: #FFF;
+    padding-right: 12px;
+   padding-top: 35px;
+    
+ }
+ hr{
+    border: 1px solid rgb(12, 12, 12,.2);
+ }
+ .ledgers{
+    color:#FFF;
+    padding-left: 15px;
+    width: 100%;
+    text-decoration: none;
+    margin-top: -15px;
+    list-style:none;
+ }
+
+ tr{
+    margin-left: -15px;
+    cursor: pointer;
+    
+ }
+ tr:hover{
+    background-color: rgb(235, 176, 14);
+
+ }
+ tr a{
+    color:#FFF;
+    padding-left: 10px;
+
+ }
+ .tb{
+    width: 100%;
+    margin-top: -16px;
+    
+ }
+ .selected{
+    background-color: rgb(235, 176, 14);
+
+ }
+   
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;color:#fff;width:100%;margin: auto;">
+                    <div class="col "> Select Ledger</div>
+                </div>
+                
+                <div class="ledger">
+
+                    <form style="margin-top: 30px;">
+                        <div class="form-group">
+                            <label style="font-size: 18px; text-decoration: underline #fff; margin-top: 10px;">Name of Ledger</label>
+                            <input type="text" class="input"  id="search" onkeyup="searchFun()">
+                          </div>
+
+                    </form>
+
+
+
+                </div>
+
+                <div class="box">
+                    <div class="head px-3" style="margin-top: 5px;">List of Ledgers</div>
+                    <div class="create" ><a href="{% url 'account_books_create_ledger' %}" style="color:#FFF ;">Create</a> </div>
+                    <hr>
+
+                    <table id="myTable" class="tb">
+                        {% for i in ledger %}
+                            <tr class="tr" style="height: 20px;">
+                                <td>
+                                    <a href="{% url 'account_books_ledger_show2' i.id %}">{{i.name}}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+
+
+
+                    
+
+
+
+                </div>
+                
+                
+
+              
+                  
+
+
+               
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const searchFun = () =>{
+            let filter = document.getElementById('search').value.toUpperCase();
+            let myTable = document.getElementById('myTable');
+            let tr = myTable.getElementsByTagName('tr')
+
+            for(var i=0; i<tr.length;i++){
+                let td = tr[i].getElementsByTagName('td')[0];
+
+                
+
+                if (td){
+                    let textvlue = td.textContent || td.innerHTML;
+                    if (textvlue.toUpperCase().indexOf(filter) > -1){
+                        tr[i].style.display = "";
+                        tr[i].classList.toggle("selected")
+                        
+
+                    }else{
+                        tr[i].style.display = "none";
+                        
+                        
+                    }
+                }
+
+
+            }
+
+
+
+        }
+
+       
+    </script>
+
+      <!-- <script type="text/javascript">
+        function searchFun(){
+            
+            input = document.getElementById("search");
+            filter=input.value.toUpperCase();
+            table=document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (var i=0;i<tr.length;i++)
+            {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td)
+                {
+                    textdata = td.innerText;
+                    if(textdata.toUpperCase().indexOf(filter)>-1)
+                    {
+                        
+                        tr[i].style.display=""
+                        tr[i].classList.toggle("selected")
+                        
+                        
+
+                        
+                        
+                    }
+                    else
+                    {   
+                        tr[i].style.display="None"
+                        
+                        
+                        
+                    }
+                }
+            
+            }
+            
+        }
+    </script> -->
+
+{% endblock %}

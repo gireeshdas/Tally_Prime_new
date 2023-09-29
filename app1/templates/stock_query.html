@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+<style>
+
+  thead th {
+    border: .5px solid rgba(255, 255, 255, .2);
+  }
+
+  .table-row{
+    cursor:pointer;
+      
+  }
+ 
+  tr{
+
+    background-color: rgba(33,57,77); 
+    color:#fff;
+    border: 0px none;
+
+  }
+  a{
+   
+    text-decoration: none;
+    color:#fff;
+    
+  }
+  .sec_hd {
+    font-weight: 350;
+  }
+  .thrd_hd{
+    font-weight: 500;
+  }
+  table .tbl{
+    height:max-content;
+    width: 100%;
+    border: double 0.5px;
+    margin-top: auto;
+  }
+  
+</style>
+
+<body>
+  <div class="container-fluid" >
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row d-flex" style=" font-weight:600 ; background-color: rgb(124, 186, 224);color: #000;width: 100%;margin: auto;">
+            <div class="col">Stock Query</div>
+            <div class="col-4" style="font-weight:600 ;text-transform:capitalize;">{{company.name}}</div>
+      
+            <div class= 'col-2'><a href="javascript:history.go(-1);">
+                <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
+            </div>                      
+        </div>
+              
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm border-dark" style="background-color: rgba(33,57,77,255);color:#fff;">
+            <tr>
+              <th colspan="10" rowspan="2" class="pb-3" style="font-weight:600 ; border-bottom: solid 0.5px rgba(255, 255, 255, .2) ; border-right:none ;">
+                <div>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{data.name}}</div>
+                <div>Group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{data.under.name}}</div>
+                <div>Closing Balance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{closing_balance}}&nbsp;{{data.per}}</div>
+                <div>Cost Price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{data.rate}}/{{data.per}}</div>
+                <div>Costing Method&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;Avg. Cost</div>
+                <div>Standard cost&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{data.rate}}/{{data.per}}</div>
+                
+
+              </th>
+              <th colspan="10" rowspan="2" class="text-left pb-3" style="font-weight:600 ;border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">                           
+                <div>Part No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</div>
+                <div>Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{data.under.name}}</div>
+                <div>Closing value&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{closing_value}}</div>
+                <div>Standard selling price&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{data.rate}}/{{data.per}}</div>
+                <div>Market valuation method&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;Avg. Price</div>
+              </th>
+            </tr>
+
+            <tbody style="border: solid 0.5px rgba(255, 255, 255, .2);">
+
+              <tr class="p-0 m-0">
+                <td colspan="10" class="p-0 m-0">
+                <table class="p-0 m-0 tbl" id="tbl1">
+                  <th colspan="20" class="text-center"style="font-weight:1100; border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">
+                    Purchase
+                  </th>
+                  <tr>
+                    <th colspan="5" class="text-left sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Last purchased on&nbsp;&nbsp;:
+                    </th>
+                    <th colspan="5" class="text-center sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Bank
+                    </th>
+                    <th colspan="5" class="text-center sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      12 Nos @
+                    </th>
+                    <th colspan="5" class="text-center sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; ">
+                      50.00/Nos
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="2" class="text-left thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Date
+                    </th>
+                    <th colspan="4" class="text-left thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none; text-align: left;">
+                      Party Name
+                    </th>
+                    <th colspan="4" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Quantity
+                    </th>
+                    <th colspan="4" class="text-center thrd_hd"  style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Rate
+                    </th>
+                    <th colspan="2" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Disc %
+                    </th>
+                    <th colspan="4" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; ">
+                      Amount
+                    </th>
+                    
+                  </tr>
+                  <tr id="p_det">
+                    <td colspan="2" class="text-left" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                    </td>
+                    <td colspan="4" class="text-left" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none; ">
+                    </td>
+                    <td colspan="4" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      
+                    </td>
+                    <td colspan="4" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      
+                    </td>
+                    <td colspan="2" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                    </td>
+                    <td colspan="4" class="text-center" style=" border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; ">
+                      
+                    </td>
+                  </tr>
+                </table>
+                </td>
+                <td colspan="10" class="p-0 m-0">
+              
+              <table class="p-0 m-0 tbl" id="tbl2">
+              <tr>
+                
+                <th colspan="20" class="text-center"style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">
+                  Sales
+                </th>
+                <tr>
+                  <th colspan="5" class="text-left sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-right: none;">
+                    Last sold on&nbsp;&nbsp;:
+                  </th>
+                  <th colspan="5" class="text-center  sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; border-right: none;">
+                    Bank
+                  </th>
+                  <th colspan="5" class="text-center sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none; border-right: none;">
+                    1 Nos @
+                  </th>
+                  <th colspan="5" class="text-center sec_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">
+                    10.00/Nos
+                  </th>
+              </tr>
+              <tr>
+                <th colspan="2" class="text-left thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-right: none;">
+                  Date
+                </th>
+                <th colspan="4" class="text-left thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; border-right: none;">
+                  Party Name
+                </th>
+                <th colspan="4" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none; border-right: none;">
+                  Quantity
+                </th>
+                <th colspan="4" class="text-center thrd_hd " style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; border-right: none;">
+                  Rate
+                </th>
+                <th colspan="2" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                  Disc %
+                </th>
+                <th colspan="4" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                  Amount
+                </th>
+            </tr>
+            <tr id="s_det">
+              
+              <td colspan="2" class="text-left" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-right: none;">
+                
+              </td>
+              <td colspan="4" class="text-left" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; border-right: none;">
+                
+              </td>
+              <td colspan="4" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none; border-right: none;">
+               
+              </td>
+              <td colspan="4" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; border-right: none;">
+                
+              </td>
+              <td colspan="2" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                
+              </td>
+              <td colspan="4" class="text-center" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2); border-left:none ;border-right: none;">
+                
+              </td>
+          </tr>
+              
+              </table>
+                </td>
+            </tr>
+              
+            <tr class="p-0 m-0">
+              <td colspan="10" class="p-0 m-0">
+              <table class="p-0 m-0 tbl "  id="tbl3">
+                <th colspan="20" class="text-center"style=" border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; ">
+                  Godown/Batch Details
+                </th>
+                <tr>
+                  
+                    <th colspan="4" class="text-left thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Godown
+                    </th>
+                    <th colspan="3" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Batch
+                    </th>
+                    <th colspan="3" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">
+                      Quantity
+                    </th>
+                </tr>
+                {% for g in godown %}
+                <tr id="g_det">
+       
+                <td colspan="4" class="text-left" style="border-left:none ;border-right: none; border-bottom: none;">
+                  <a href="">{{g.name}}</a>
+                </td>
+                <td colspan="3" class="text-center" style="border-left:none ;border-right: none;">
+                  <a href="">{{g.batch}}</a>
+                </td>
+                <td colspan="3" class="text-center" style="border-left:none; ">
+                  <a href="">{{g.quantity}} {{data.per}}</a>
+                </td>
+                
+                
+                </tr>
+                {% endfor %}
+                
+                <tr>
+                  <tr>
+                    <td colspan="4" class="text-left" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none; border-top: none;">
+                      
+                    </td>
+                    <td colspan="3" class="text-center" style=" border-top: solid 0.5px  rgba(255, 255, 255, .2);  border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;border-right: none;">
+                      Total:
+                    </td>
+                    <td colspan="3" class="text-center" style=" border-top: solid 0.5px  rgba(255, 255, 255, .2); border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">
+                      <u style="text-decoration: double underline 0.5px;">{{total}} {{data.per}}</u>
+                    </td>
+                </tr>
+                
+              </table>
+              </td>
+              <td colspan="10" class="p-0 m-0">
+            
+            <table class="p-0 m-0 tbl" id="tbl4">
+            <tr>
+              
+              <th colspan="20" class="text-center"style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; ">
+                Items of Same Category
+              </th>
+              <tr>
+                <th colspan="5" class="text-left thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-right: none;">
+                  Item Name
+                </th>
+                <th colspan="5" class="text-center thrd_hd" style=" border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ; border-right: none;">
+                  Quantity
+                </th>
+                <th colspan="5" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none; border-right: none;">
+                  Cost
+                </th>
+                <th colspan="5" class="text-center thrd_hd" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);border-left:none ;">
+                  Sale Price
+                </th>
+            </tr>
+            {% for c in category %}
+            <tr id="itm_det">
+              <td colspan="5" class="text-left" style="border-left:none ; border-right: none;">
+                <a href="{% url 'stock_query' c.id %}">{{c.name}}</a>
+              </td>
+              <td colspan="5" class="text-center" style="border-left:none ; border-right: none;">
+                <a href="{% url 'stock_query' c.id %}">{{c.quantity}} {{c.per}}</a>
+              </td>
+              <td colspan="5" class="text-center" style="border-left:none; border-right: none;">
+                <a href="{% url 'stock_query' c.id %}">{{c.rate}}</a>
+              </td>
+              <td colspan="5" class="text-center" style="border-left:none ;">
+                <a href="{% url 'stock_query' c.id %}">{{c.value}}</a>
+              </td>
+              </tr>
+              {% endfor %}
+              </table>
+              </td>
+            </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+    // const table1 = document.getElementById("tbl1");
+    // const table2 = document.getElementById("tbl2");
+    // const sl = document.getElementById("s_det");
+    // const purc = document.getElementById("p_det");
+  
+    // table2.style.height = table1.offsetHeight + "px";
+  
+    // new ResizeObserver(() => {
+    //   sl.style.height = table1.offsetHeight + "px";
+    // }).observe(table1);
+  
+    // new ResizeObserver(() => {
+    //   purc.style.height = table2.offsetHeight + "px";
+    // }).observe(table2);
+
+    // const table3 = document.getElementById("tbl3");
+    // const table4 = document.getElementById("tbl4");
+    // const gdwn = document.getElementById("g_det");
+    // const itm = document.getElementById("itm_det");
+
+  
+    //  table4.style.height = table3.offsetHeight + "px";
+  
+    // new ResizeObserver(() => {
+    //   itm.style.height = table3.offsetHeight + "px";
+    // }).observe(table3);
+  
+    // new ResizeObserver(() => {
+    //   gdwn.style.height = table4.offsetHeight + "px";
+    // }).observe(table4);
+
+  </script>
+</body>
+{% endblock %}

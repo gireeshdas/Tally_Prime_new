@@ -1,0 +1,101 @@
+
+
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+</style>
+
+
+    <div class="row container-fluid  p-2 m-0 justify-content-center">
+        <div class="col-sm-10 p-0" style="background-color:rgba(0,0,0,0.2);height: 100%;">        
+<h6 style="font-size: 20px;text-align: left;" class="bg-info text-light"><b>Voucher Register</b></h6>
+<div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
+
+             
+ <!--                                 
+    <div class="col-sm-4 p-4" style="text-align:left">List of all Credit Note Vouchers
+        <div id="dateP1" style="font-weight: 900; text-align: end;">1-Sep-2022 to 31-Sep-2022</div>
+        
+
+    
+</div>
+-->
+<table class="table-bordered" width="100%">
+    <thead class="thead-dark">
+      <tr>
+        <th  colspan="2">List of all Creditnote Vouchers<BR><BR></th>
+          <td colspan="4"></td>
+        <td> {% for m in msg1 %}
+          {{m}}
+          {% endfor %}</td>
+      </tr>
+<script>
+    document.getElementById("currentDate").innerHTML=new Date().toDateString();
+    function setDate(){
+            document.getElementById("currentDate").innerHTML= document.getElementById('enterDate').value;
+    }
+    </script>
+  {% for p in voucher %}
+
+{% endfor %}
+<table class="table table-borderless table-sm">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Particulars</th>
+            <th>Voucher type</th>
+            <th>Voucher No.</th>
+            <th>Debit Amount</th>
+            <th>Credit Amount</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+       
+        
+        {% for p in voucher %}
+
+
+        
+         
+            <tr>
+                <td>{{ p.date }}</td>
+                <td>{{ p.particulars }}</td>
+                <td>{{ p.vouchertype }}</td>
+                <td>{{ p.voucherno }}</td>
+                <td>{{ p.debitamount }}</td>
+                <td>{{ p.creditamount }}</td>
+          
+                
+            </tr>
+    
+            {% endfor%}
+        </tbody>  
+    
+    <div class="row container-fluid m-0 w-100 p-0">
+        <table class="table p-0 m-0">
+            <tbody>
+                
+                <tr>
+                    <td class="w-75 m-0 p-0 pl-3">Grand Total</td>
+                    <td class="w-25 m-0 p-0 text-center"><input type="text" name="total" class="form-control" value="{{total}}" id="total" readonly></td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div> 
+    
+   
+</table>
+
+        </div>
+    </div>
+    {% endblock %}
+

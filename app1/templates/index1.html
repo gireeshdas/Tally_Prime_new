@@ -1,0 +1,269 @@
+
+
+{% extends 'nav.html' %}
+{% block content %}
+        {% load static %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins',sans-serif;
+    }
+    section{
+        position: relative;
+        width: 100%;
+        padding: 5%;
+        
+    }
+
+    .circle{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(254, 255, 253);
+        clip-path: circle(60% at right 110%);
+    }
+    a {
+         font-family: "Poppins", sans-serif;
+     }
+    
+    .banner h3 span{
+        color: #fff;
+        font-size: 100%;
+        font-weight: 900;
+
+    }
+    .banner h3 {
+        color: #fff;
+        font-size: 300%;
+        line-height: 130%;
+        font-weight: 400;
+    }
+    .banner p{
+        color: #fff;
+    }
+    .banner a{
+        border-radius: 50px;
+        background-color: #fff;
+        color: #213b52;
+    }
+    .fa{
+            size: 50%;
+            
+    }
+    .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s;
+}
+
+.card:hover .card-image {
+  transform: scale(1.1);
+}
+
+.card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover .card-content {
+  opacity: 1;
+}
+
+ul{
+    list-style: none;
+}
+
+ </style>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <body >
+            <section class="container-fluid  banner mt-5" style="background-color: #213b52;">
+                <div class="circle"></div>
+                <div class="row">
+                    <div class="col-sm-6 mt-5">
+                        <h3><span>Tally ERP 9 </span> <br> Is one of the best accounting software.</h3>
+                                <p>it is complete enterprise software for small and medium enterprises
+                                </p>
+                                   <center>
+                                    <a class="pl-2 pr-2 " href="">learn more</a>
+                                   </center>
+                    </div>
+                    <div class="col-sm-6 ml-auto">
+                        <img style="justify-content: flex-end;align-items: flex-end;display: flex;" class="ml-5" width="70%" src="{% static 'assets/img/pnge.png' %}" alt="">
+                    </div>
+                </div>
+            </section>
+       
+        <!-- Bootstrap JS -->
+        <script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
+    
+    <section class="container-fluid " style="background-color: rgb(190, 190, 190);">
+            <div class="row">
+                <div class="col-md-6 ">
+                        <img width="100%" src="https://img.freepik.com/free-photo/smiling-business-lady-working-with-colleagues_1262-2153.jpg?w=740&t=st=1691469565~exp=1691470165~hmac=767f71f96cbde30e07c7cd88f9dcdc55cd64dfde49095f8a2ff30f40afa5c807" alt="">
+                </div>
+                <div class="col-md-6 mt-5 " >
+                        <center><h3 class="mt-5">ABOUT US</h3></center>
+
+                    <div class="row" style="justify-content: center;align-items: center; display: flex;text-align: center;">
+                        <p class="mt-5 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                             when an unknown printer took a galley of type and scrambled it to make a type 
+                             specimen book. It has survived not only five centuries, but also the leap 
+                             into electronic typesetting, remaining essentially unchanged.
+
+                        </p>
+                        <button class="p-1 pl-2 pr-2" style="background-color: #213b52;color: #fff;border-radius: 5px;">More..</button>
+                        
+                    </div>
+                  <center class="mt-3">
+                    
+                    <a href="#" class="fa fa-facebook m-1"></a>
+                    <a href="#" class="fa fa-twitter m-1"></a>
+                    <a href="#" class="fa fa-instagram m-1"></a>
+                    <a href="#" class="fa fa-google m-1"></a>
+                    
+                  </center>
+                </div>
+            </div>
+        
+        </section>
+
+        <section class="container-fluid">
+                
+            <div class="row">
+                
+                <div class="col-md-12 " >
+                        <center><h3 >OUR SERVICES</h3></center>
+
+                    <div class="row mt-5">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="https://img.freepik.com/free-photo/front-view-young-beautiful-businesswoman-working-her-pc-table-along-with-phone-graphics-writing-down-notes-job-activities-technology_140725-16299.jpg?w=740&t=st=1691471246~exp=1691471846~hmac=9cfb2c04d8a4d2c7549708a75d65e2c7a0d48ab7836841f040544a6693309597" alt="Card Image" class="card-image">
+                                <div class="card-content">
+                                  <p>This is the content that will be shown on hover.</p>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="https://img.freepik.com/free-photo/man-using-laptop-office_23-2147710993.jpg?w=740&t=st=1691471359~exp=1691471959~hmac=429536b96164740c727cf308e28d660b4f3cd34dea978490ed42c3b8939de94a" alt="Card Image" class="card-image">
+                                <div class="card-content">
+                                  <p>This is the content that will be shown on hover.</p>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="https://img.freepik.com/free-photo/business-woman-working-office-desktop_23-2148194757.jpg?w=740&t=st=1691471379~exp=1691471979~hmac=3472d9daaa0448e9d6b0e9d938a25daf12a105c10c60363de27c1cfa549a5032" alt="Card Image" class="card-image">
+                                <div class="card-content">
+                                  <p>This is the content that will be shown on hover.</p>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>       
+                 
+                
+        </section>
+<section id="contact" class="container-fluid" style="background-color: rgb(190, 190, 190);">
+    <center><h3 >CONTACT</h3></center>
+    <div class="row">
+        
+        <div class="col-md-6 pl-5">
+           
+                <ul>
+                    <li class="mt-5">
+                        <i class="fa fa-map-marker" style="font-size:36px"></i> <br>
+                        Carnival infopark ,phase 1 kakkanad ,kochi 786543
+                    </li>
+                    <li class="mt-5">
+                        <i class="fa fa-envelope" style="font-size:36px"></i> <br>
+                        tallyadmin@hotmail.com <br>
+                        admin.tally@gmail.com
+
+                    </li>
+                    <li class="mt-5">
+                        <i class="fa fa-mobile-phone" style="font-size:36px"></i>
+                        <p>9084526625</p>
+                        <p>9875634555</p>
+                    </li>
+                </ul>
+        </div>
+
+        <div class="col-md-6 mt-5">
+            <form action="#" method="POST">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+    </div>
+</section>
+<section class="container-fluid" style="background-color: rgb(49, 49, 49);color: #fff;" >
+    <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4">
+              <h3>About Us</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="col-md-4">
+              <h3>Contact Us</h3>
+              <p>Email: contact@example.com</p>
+              <p>Phone: +1234567890</p>
+            </div>
+            <div class="col-md-4">
+              <h3>Follow Us</h3>
+              <ul class="social-icons">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+      
+   </section>
+</body>
+{% endblock %}

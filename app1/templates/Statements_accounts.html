@@ -1,0 +1,57 @@
+<style>
+    table, td {
+      text-align:center;
+      margin-top: 10%;
+      
+    }
+    th{
+        text-align: center;
+        text-decoration-style: wavy;
+        
+    }
+    </style>
+{% extends 'base.html' %}
+
+{% block body %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<div class="row container-fluid " style="margin-left: 10%; margin-top:10%">
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-3 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);height: 300px;" >
+        <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <div  class="bg-info text-light" ><center>Statements Of Accounts</center></div>
+                
+
+           <div>
+              <center>
+               <table>
+                <br>
+              
+                <tr>
+                     <td>
+                        <div style="margin-left: 15px; padding: 10px; "><a href="{% url 'outstanding' %}">Outstandings</a></div>
+                       
+                      </td>
+                </tr>
+                <tr>
+                    <td>
+                       <div style="margin-left: 15px;  padding: 10px;"><a href="{% url 'statistics' %}">Statistics</a></div>
+                      
+                     </td>
+               </tr>
+               
+           
+        <tr>
+            <th>
+                <div style="margin-left: 15px; padding: 10px;"><a href=" ">QUIT</a></div>
+                  
+            </th>
+        </tr>
+               </table>
+            </center>
+           </div>
+        </div>
+    </div>
+   
+
+{% endblock %}

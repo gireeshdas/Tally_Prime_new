@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            transform: rotate(0deg);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 550px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container {
+            max-width: 50px;
+            height: 500px;
+            padding: 10px;
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 600px;
+            padding: 2px; 
+        }
+        .bt{
+            text-align: end;
+        }
+        .btns_prnt{
+            width: 100%;
+            cursor:pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        } 
+        .ScrollStyle{
+            /* max-height: 200px; */
+            overflow-y: scroll;
+        }  
+    </style>
+
+    <script>
+    function showcom(){
+        var status = document.getElementById("type");
+        var a = status.value;
+        if(a=="Compound"){
+
+            window.location.href="{% url 'load_unit_compound' %}"
+        }
+    }
+    </script>
+    
+    <div class="m-0">
+        <div class="row container-fluid p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>Unit Creation (Secondary)</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                        {{i.name}}
+                    {% endfor %}
+                    </div>
+                </div>
+                <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'unit_sim' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid p-2 m-0">
+                            <div class="col-sm-1 m-0 p-0"></div> 
+                            <div class="col-sm-5 m-0 p-0"> <label for="a">Type</label></div>
+                            <div class="col-sm-5 m-0 p-0">
+                                <select name="type" class="form-control" id="type" onchange="showcom()">
+                                    <option value="Simple">Simple</option>
+                                    <option value="Compound">Compound</option>
+                                </select>
+                            </div> 
+                            <div class="col-sm-1 m-0 p-0"></div>    
+                        </div>
+                        <div class="row container-fluid  p-0 m-0" id="simple">
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                                <div class="col-sm-5 m-0 p-0"><label for="b">Symbol</label></div>
+                                <div class="col-sm-5 m-0 p-0"><input type="text" class="form-control" name="symb"></div>
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                                <div class="col-sm-5 m-0 p-0"> <label for="b">Formal Name</label></div>
+                                <div class="col-sm-5 m-0 p-0"><input type="text" class="form-control" name="fname"></div> 
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                                <div class="col-sm-5 m-0 p-0"><label for="b">Unit Quantity Code (UQC)</label></div>
+                                <div class="col-sm-5 m-0 p-0"> 
+                                    <input type="text" id="uqc" value="" name="uqc" class="form-control" onclick="showuqcs();">
+                                </div>
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                                <div class="col-sm-5 m-0 p-0"><label for="b"> Number of decimal places</label></div>
+                                <div class="col-sm-5 m-0 p-0"><input type="number" class="form-control" name="decimal"></div>
+                                <div class="col-sm-1 m-0 p-0"></div> 
+                            </div>
+                        </div>    
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div> 
+
+    <div class="form-popup ScrollStyle" id="myForm" style="background-color: #213b52">
+        <form action="" class="form-container1" >
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Groups</h6>
+            <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+            <a href="{% url 'new_uqcs' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">New UQC</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setuqcs('Not applicable')" class="btns_prnt" value="Not applicable">Not applicable</option>
+                        <option onclick="setuqcs('BAG-BAGS')" class="btns_prnt" value="BAG-BAGS">BAG-BAGS</option>
+                        <option onclick="setuqcs('BAL-BALE')" class="btns_prnt" value="BAL-BALE">BAL-BALE</option>
+                        <option onclick="setuqcs('BDL-BUNDLES')" class="btns_prnt" value="BDL-BUNDLES">BDL-BUNDLES</option>
+                        <option onclick="setuqcs('BKL-BUCKLES')" class="btns_prnt" value="BKL-BUCKLES">BKL-BUCKLES</option>
+                        <option onclick="setuqcs('BOU-BILLION OF UNITS')" class="btns_prnt" value="BOU-BILLION OF UNITS">BOU-BILLION OF UNITS</option>
+                        <option onclick="setuqcs('BOX-BOX')" class="btns_prnt" value="BOX-BOX">BOX-BOX</option>
+                        <option onclick="setuqcs('BTL-BOTTLES')" class="btns_prnt" value="BTL-BOTTLES">BTL-BOTTLES</option>
+                        <option onclick="setuqcs('BUN-BUNCHES')" class="btns_prnt" value="BUN-BUNCHES">BUN-BUNCHES</option>
+                        <option onclick="setuqcs('CAN-CANS')" class="btns_prnt" value="CAN-CANS">CAN-CANS</option>
+                        <option onclick="setuqcs('CBM-CUBIC METERS')" class="btns_prnt" value="CBM-CUBIC METERS">CBM-CUBIC METERS</option>
+                        <option onclick="setuqcs('CCM-CUBIC CENTIMETERS')" class="btns_prnt" value="CCM-CUBIC CENTIMETERS">CCM-CUBIC CENTIMETERS</option>
+                        <option onclick="setuqcs('CMS-CENTIMETERS')" class="btns_prnt" value="CMS-CENTIMETERS">CMS-CENTIMETERS</option>
+                        <option onclick="setuqcs('CTN-CARTONS')" class="btns_prnt" value="CTN-CARTONS">CTN-CARTONS</option>
+                        <option onclick="setuqcs('DOZ-DOZEN')" class="btns_prnt" value="DOZ-DOZEN">DOZ-DOZEN</option>
+                        <option onclick="setuqcs('DRM-DRUMS')" class="btns_prnt" value="DRM-DRUMS">DRM-DRUMS</option>
+                        <option onclick="setuqcs('GGK-GREAT GROSS')" class="btns_prnt" value="GGK-GREAT GROSS">GGK-GREAT GROSS</option>
+                        <option onclick="setuqcs('GYD-GROSS-YARDS')" class="btns_prnt" value="GYD-GROSS-YARDS">GYD-GROSS-YARDS</option>
+                        <option onclick="setuqcs('KGS-KILOGRAMS')" class="btns_prnt" value="KGS-KILOGRAMS">KGS-KILOGRAMS</option>
+                        <option onclick="setuqcs('KLR-KILOLITER')" class="btns_prnt" value="KLR-KILOLITER">KLR-KILOLITER</option>
+                        <option onclick="setuqcs('KME-KILOMETER')" class="btns_prnt" value="KME-KILOMETER">KME-KILOMETER</option>
+                        <option onclick="setuqcs('MLT-MILLILITRE')" class="btns_prnt" value="MLT-MILLILITRE">MLT-MILLILITRE</option>
+                        <option onclick="setuqcs('MTR-METERS')" class="btns_prnt" value="MTR-METERS">MTR-METERS</option>
+                        <option onclick="setuqcs('MTS-METRIC TONES')" class="btns_prnt" value="MTS-METRIC TONES">MTS-METRIC TONES</option>
+                        <option onclick="setuqcs('NOS-NUMBERS')" class="btns_prnt" value="NOS-NUMBERS">NOS-NUMBERS</option>
+                        <option onclick="setuqcs('OTH-OTHERS')" class="btns_prnt" value="OTH-OTHERS">OTH-OTHERS</option>
+                        <option onclick="setuqcs('PAC-PACKS')" class="btns_prnt" value="PAC-PACKS">PAC-PACKS</option>
+                        <option onclick="setuqcs('PCS-PICES')" class="btns_prnt" value="PCS-PICES">PCS-PICES</option>
+                        <option onclick="setuqcs('PRS-PAIRS')" class="btns_prnt" value="PRS-PAIRS">PRS-PAIRS</option>
+                        <option onclick="setuqcs('QTL-QUINTEL')" class="btns_prnt" value="QTL-QUINTEL">QTL-QUINTEL</option>
+                        <option onclick="setuqcs('ROL-ROLLS')" class="btns_prnt" value="ROL-ROLLS">ROL-ROLLS</option>
+                        <option onclick="setuqcs('SET-SETS')" class="btns_prnt" value="SET-SETS">SET-SETS</option>
+                        <option onclick="setuqcs('SQF-SQUAREFEET')" class="btns_prnt" value="SQF-SQUAREFEET">SQF-SQUAREFEET</option>
+                        <option onclick="setuqcs('SQM-SQUARE METER')" class="btns_prnt" value="SQM-SQUARE METER">SQM-SQUARE METER</option>
+                        <option onclick="setuqcs('SQY-SQUARE YARDS')" class="btns_prnt" value="SQY-SQUARE YARDS">SQY-SQUARE YARDS</option>
+                        <option onclick="setuqcs('TBS-TABLETS')" class="btns_prnt" value="TBS-TABLETS">TBS-TABLETS</option>
+                        <option onclick="setuqcs('TGM-TEN GROSS')" class="btns_prnt" value="TGM-TEN GROSS">TGM-TEN GROSS</option>
+                        <option onclick="setuqcs('THD-THOUSANDS')" class="btns_prnt" value="THD-THOUSANDS">THD-THOUSANDS</option>
+                        <option onclick="setuqcs('TON-TONNES')" class="btns_prnt" value="TON-TONNES">TON-TONNES</option>
+                        <option onclick="setuqcs('TUB-TUBES')" class="btns_prnt" value="TUB-TUBES">TUB-TUBES</option>
+                        <option onclick="setuqcs('UNIT-UNITS')" class="btns_prnt" value="UNIT-UNITS">UNIT-UNITS</option>
+                        <option onclick="setuqcs('YDS-YARDS')" class="btns_prnt" value="YDS-YARDS">YDS-YARDS</option>
+
+                        {% for u in u %}
+                            <option onclick="setnewuqc('{{u.uqc_name}}','{{u.id}}')" class="btns_prnt">{{u.uqc_name}}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{i.id}}">
+        </form>
+    </div>
+
+    <script>
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+        function showuqcs(){
+            document.getElementById('myForm').style.visibility= "visible";
+            document.getElementById("myForm").style.display = "block";
+        }
+        function setuqcs(uc){
+            document.getElementById('uqc').value= uc;
+            document.getElementById('myForm').style.visibility= "blobk";
+        }
+        function setnewuqc(uqc,uqcId){
+            document.getElementById('uqc').value= under;
+            document.getElementById('myForm').style.visibility= "block";
+            document.getElementsByName('underhidden').value= uqcId;
+        }
+    </script>
+{% endblock %}

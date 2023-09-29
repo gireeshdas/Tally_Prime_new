@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+
+.flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .form1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+    }
+    
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+
+    .hide{
+        display: none;
+    }
+        
+
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+       
+      
+      }
+      @media (max-width: 991px) {
+        .main-panel {
+            margin-left: 0;
+            width: 100%;
+        }
+        }
+
+        .content-wrapper {
+        padding: 1.875rem 1.75rem;
+        width: 100%;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        }
+      
+    
+    </style>
+    <div class="main-panel">
+        <div class="content-wrapper">
+    <div class="row">
+    <div class="col-md-4" ></div>
+    <div class="col-md-4" >
+        <h6  class="bg-info text-light p-2 m-0 text-left">unit Creation</h6>
+
+            <form id="" action="unit_creation" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4"> <label for="type">Type :</label></div>
+                <div class="col-md-8"><select name="type" onchange="show()" id="type" required="" class="form-control">
+                    <option value="null">select</option>
+                    <option value="simple">simple</option> 
+                    <option value="compound">compound</option>
+                </select></div>
+                
+            </div>
+
+            
+            <div id="sym" class="row container-fluid hide  p-2 m-0">
+                <div class="col-md-4"> <label for="b">Symbol</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="symbol" class="form-control"  placeholder="" autocomplete="off"></div>
+                
+            </div>
+
+
+            <div id="for" class="row container-fluid hide   p-2 m-0">
+                <div class="col-md-4"> <label for="c">Formal Name</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="formal_name" class="form-control"  placeholder="" autocomplete="off"></div>
+                
+            </div>
+
+           
+
+            <div id="num" class="row container-fluid  hide  p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">Number of decimal places</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="decimal" class="form-control" id="dcml" placeholder="" value="0" autocomplete="off"></div>
+                
+            </div>
+
+
+            <!-- <div id="ft" class="row container-fluid hide   p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">First unit</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="first_unit" class="form-control"  placeholder="" autocomplete="off" ></div>
+                
+            </div>
+
+            <div id="con" class="row container-fluid hide   p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">conversion</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="conversion" class="form-control"  placeholder="" autocomplete="off" ></div>
+                
+            </div>
+
+
+            <div id="sd" class="row container-fluid hide   p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">Second unit</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="second_unit" class="form-control"  placeholder="" autocomplete="off"></div>
+                
+            </div> -->
+            
+
+            <div class="row" style="margin-top: 10%;">
+                <div class="col-md-4"></div>
+                    <div class="col-md-4" ><button class="btn btn-info w-15">CREATE</button></div>   
+                </div> 
+        
+
+       
+        
+        </form>
+    </div>
+
+    <div class="col-md-4"></div>
+
+    </div>
+        </div>
+    </div>
+    
+
+
+
+
+<!-- list of units -->
+
+<div class="form-popup" id="list-div" >
+
+<h6 style="background-color:rgb(17, 169, 240) ;color:white">List of UQC</h6>
+<hr >
+<div>
+<table >
+<tr >
+    <td>
+       <a href="uqc"> <button
+            type="submit"
+            style="color: black;margin-left: 310%; width: 20%"
+            class="custom-select-md form-control"
+          >
+            create
+          </button></a>
+    </td>
+</tr>
+
+<tr>
+  <td>    
+
+    {% for l in unit %}
+  <div onclick="hideList('{{l.uqc}}')" style="color:black;" >{{l.uqc}}</div>
+  {% endfor %}
+  </td>
+</tr>  
+
+</table>
+</div>
+
+
+
+
+</div>
+
+
+
+ <script>
+    function showList() {
+        document.getElementById("list-div").style.visibility = "visible";
+    }
+    function hideList(valueDIv) {
+        document.getElementById("primary-text").value=valueDIv;
+        document.getElementById("list-div").style.visibility = "hidden";
+    }
+
+
+    function checker(){
+        var result =confirm('Are you sure?');
+        if (result==false){
+            event.preventDefault();
+        }
+    }
+
+    function show(){
+        var status =document.getElementById('type');
+        var c=status.value;
+        console.log(c);
+        if (c=='simple'){
+            console.log(c);
+            document.getElementById('sym').style.display="flex";
+            document.getElementById('for').style.display="flex";
+            document.getElementById('num').style.display="flex";
+            document.getElementById('uqc').style.display="flex";
+            document.getElementById('ft').style.display="none";
+            document.getElementById('con').style.display="none";
+            document.getElementById('sd').style.display="none";
+        }
+
+        else if(c=='compound'){
+            console.log(c);
+            document.getElementById('sym').style.display="none";
+            document.getElementById('for').style.display="none";
+            document.getElementById('num').style.display="none";
+            document.getElementById('uqc').style.display="none";
+            document.getElementById('ft').style.display="flex";
+            document.getElementById('con').style.display="flex";
+            document.getElementById('sd').style.display="flex";
+        }
+        else {
+            console.log(c);
+            document.getElementById('sym').style.display="none";
+            document.getElementById('for').style.display="none";
+            document.getElementById('num').style.display="none";
+            document.getElementById('uqc').style.display="none";
+            document.getElementById('ft').style.display="none";
+            document.getElementById('con').style.display="none";
+            document.getElementById('sd').style.display="none";
+        }
+    }
+
+    
+
+ </script>
+
+{% endblock %}

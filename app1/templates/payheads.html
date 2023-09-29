@@ -1,0 +1,909 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        .form-popup {
+                visibility: hidden;       
+                position: fixed;
+                top: 230px;
+                right: 15px;
+                background-color: rgb(216, 232, 238); 
+                border: 1px solid #f1f1f1;
+                z-index: 9;
+                width: 300px;
+                height: 200px;
+            
+            }
+        .form-popup2 {
+                visibility: hidden;       
+                position: fixed;
+                top: 230px;
+                right: 15px;
+                background-color: rgb(216, 232, 238); 
+                border: 1px solid #f1f1f1;
+                z-index: 9;
+                width: 300px;
+                height: 200px;
+      
+      }
+
+        
+    </style>
+
+  <div class="m-0">
+    <h6 style="" class="bg-info text-light p-2 m-0 text-center">Pay Head Creation</h6>
+            <form action="{% url 'add_payhead' %}"  style="background-color:rgba(0,0,0,.4);" method="post" >
+                {% csrf_token %}
+                
+                <div class="row container-fluid p-0 m-0" >
+
+                    <div class="col-sm-6 m-0 p-4">
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a" >Name</label></div>
+                            <div class="col-sm-8 m-0 p-0"><input required type="text" class="form-control" id="ab" oninput="shw()" placeholder="" name="name"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="b">Alias</label></div>
+                            <div class="col-sm-8 m-0 p-0"> 
+                            <input type="text" class="form-control" id="bd" oninput="shw2()" placeholder="" name="alias"></div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-sm-3 m-0 p-0"></div>
+                    <div class="col-sm-3 m-0 p-0" style="background-color:rgba(0,0,0,.2);"><h6 class="text-center p-3">Total Opening Balance</h6></div>
+
+                
+                
+                </div>
+
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        
+
+                        <div class="row container-fluid  p-0 m-0">
+                            <h5 class="text-center">Pay head Information</h5>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-6 m-0 p-0"> <label for="pan">Pay Head Type Type</label></div>
+                                <div class="col-sm-6 m-0 p-0">
+                                    <select name="payhead" id="pht" onchange="pay()" class="form-control">
+                                        <option value="Earning for Employees">Earning for Employees</option>
+                                        <option value="Deduction From Employees">Deduction From Employees</option>
+
+                                        <option value="Employees Statutory Deductions">Employees Statutory Deductions</option>  
+                                        <option value="Employer's Statutory Contributions">Employer's Statutory Contributions</option>
+                                        <option value="Gratuity">Gratuity</option>
+                                        <option value="Loans and Advances">Loans and Advances</option>
+                                        <option value="Reimbursements to Employees">Reimbursements to Employees</option>
+                                        <option value="Not Applicable">Not Applicable</option>
+                                        
+                                    </select>
+                                </div>
+                                
+                            </div>
+                    
+                        </div>
+                   
+                  
+                            
+
+
+    <div class="bankac  p-0 m-0 w-100" id="bankac">
+        
+        <!-- <h6 class="p-3">Bank Account Details</h6> -->
+
+        <div class="row container-fluid   p-2 m-0" id="it">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Income Type</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="income" id="chqrng" class="form-control">
+                    <option value=""> </option>
+                    <option value="Fixed">Fixed</option>
+                    <option value="Variable">Variable</option>  
+                    
+                </select>
+
+
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="under">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="under" id="chqrng" class="form-control">
+                    <option value="Direct Expenses">Direct Expenses</option>
+                    <option value="Expenses (Direct)">Expenses (Direct)</option>  
+                    <option value="Expenses (Indirect)">Expenses (Indirect)</option>  
+                    <option value="Misc.Expenses (ASSET)">Misc.Expenses (ASSET)</option>  
+                    
+                </select>
+            </div>
+            
+        </div>
+
+
+        <div class="row container-fluid hide1 p-2 m-0" id="under2">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="under" id="chqrng" class="form-control">
+                    <option value="Current Assets">Current Assets</option> 
+                    <option value="Current Liabilities">Current Liabilities</option>
+                    <option value="Direct Expenses">Direct Expenses</option>
+                    <option value="Expenses (Direct)">Expenses (Direct)</option>  
+                    <option value="Expenses (Indirect)">Expenses (Indirect)</option>  
+                    <option value="Misc.Expenses (ASSET)">Misc.Expenses (ASSET)</option> 
+                    <option value="Direct Incomes">Direct Incomes</option> 
+                    <option value=">Duties & Taxes">Duties & Taxes</option> 
+                    <option value="Income(Direct)">Income(Direct)</option> 
+                    <option value="Income(Indirect)">Income(Indirect)</option> 
+                    <option value="Indirect Expenses">Indirect Expenses</option>
+                    <option value="Indirect Incomes">Indirect Incomes</option>
+                        
+                    
+                </select>
+            </div>
+            
+        </div>
+
+
+
+
+        <div class="row container-fluid hide1 p-2 m-0" id="under3">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="under" id="chqrng" class="form-control">
+                    <!-- <option value="Current Assets">Current Assets</option>  -->
+                    <option value=">Duties & Taxes">Duties & Taxes</option> 
+                    <option value="Current Liabilities">Current Liabilities</option>
+                    
+                    
+                    
+                        
+                    
+                </select>
+            </div>
+            
+        </div>
+
+
+        <div class="row container-fluid hide1 p-2 m-0" id="under4">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="under" id="chqrng" class="form-control">
+                    <option value="Direct Expenses">Direct Expenses</option>
+                    <option value="Expenses (Direct)">Expenses (Direct)</option>  
+                    <option value="Expenses (Indirect)">Expenses (Indirect)</option>  
+                    <option value="Indirect Expenses">Indirect Expenses</option>  
+                    
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid hide1  p-2 m-0" id="under5">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="under" id="chqrng" class="form-control">
+                    <option value="Loan & Advances(Asset)">Loan & Advances(Asset)</option>
+                    
+                    
+                </select>
+            </div>
+            
+        </div>
+
+
+        <div class="row container-fluid hide1  p-2 m-0" id="under6">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Under</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="under" id="chqrng" class="form-control">
+                    <option value="">Current Liabilities</option>
+                    <option value="provisions">provisions</option>
+                    
+                    
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="ans">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Affect Net Salary</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="netsalary" onchange="ns()" id="ans2"  class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>  
+                    
+                    
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="ndp">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Name to be displayed in payslip</label></div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="vc" placeholder="" name="payslip"></div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0" id="ucg">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Use calculation of gratuity</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="gratuity" id="" class="form-control">
+                    <option value="NO">No</option> 
+                    <option value="Yes">Yes</option> 
+                    
+                </select>
+            </div>
+        </div>
+
+        
+
+        <div class="row container-fluid   p-2 m-0" id="cty">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >As Calculation type</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="caltype" onchange="show()" id="cal" class="form-control">
+                    <option value="As User Defined Value">As User Defined Value</option>
+                    <option value="As Computer Value">As Computer Value</option>  
+                    <option value="Flat Rate">Flat Rate</option>
+                    <option value="On Attendence">On Attendence</option>
+                    <option value="On Production">On Production</option>
+        
+                </select>
+            </div>
+        </div>
+
+        
+
+        <div class="row container-fluid hide1   p-2 m-0" id="cpm">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Calculation Period</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="ctype" id="chqprnt" class="form-control">
+                    <option value="Months">Months</option>   
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid hide1  p-2 m-0" id="att">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Attendance/leave with pay</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input class="custom-select-md form-control" type="text" name="attendence with pay"
+                                                id="primary-text" 
+                                               placeholder="" autocomplete="off"
+                                               onfocus="showList()" >
+            </div>
+        </div>
+
+        <div class="row container-fluid hide1  p-2 m-0" id="att2">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >leave with out pay</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="Attendance with out pay" class="form-control">
+                    <option value=""></option>
+                    <option value=""></option>  
+                    
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid hide1   p-2 m-0" id="cp">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Calculation Period</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="ctype" id="chqprnt" class="form-control">
+                    <option value="Months">Months</option>
+                    <option value="Days">Days</option>
+                    <option value="Fortnights">Fortnights</option>  
+                    <option value="weeks">weeks</option>
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid hide1  p-2 m-0" id="ptype">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Production Type</label></div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" name="ptype" class="form-control" id="prdt" placeholder="" autocomplete="off"
+                onfocus="showListProduction()"></div>
+            
+        </div>
+
+
+
+    </div>
+
+
+                    </div>
+    <div class="col-sm-6 m-0 p-4  "  style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+
+       <div class="hide2" id="compute">
+        <h5 class=" col-sm-6-m-0 p-0 text-center mb-2">Computation Information</h5>
+                        
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0 mt-2"> <label for="rgtype" >Compute</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="compute" id="chqprnt" class="form-control">
+                    <option value="On current Deduction Total">On current Deduction Total</option>
+                    <option value="On current Earning Total">On current Earning Total</option>  
+                    <option value="On current Sub Total">On current Sub Total</option> 
+                    <option value="On Specified Formula">On Specified Formula</option> 
+                    
+                </select>
+            </div>
+        </div>
+                        
+                        <!-- <div class="col-sm-6 m-0 p-0"> -->
+                            <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Effective from</th>
+                                    <th scope="col">Amount Greater Than</th>
+                                    <th scope="col">Amount Up To</th>
+                                    <th scope="col">Slab Type</th>
+                                    <th scope="col">Value</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">
+                                        <select name="effective_from" id="chqprnt" class="w-100 form-control">
+                                            <option value="1-Apr-22">1-Apr-22</option>
+                                            <option value="2-Apr-22">2-Apr-22</option>  
+                                            
+                                        </select>
+                                    </th>
+                                    <td></td>
+                                    <td><input name="amount_upto" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                    <td>
+                                        <select  onchange="pv()" id="pk"  class="w-100 form-control">
+                                            <option value="Percentage">Percentage</option>
+                                            <option value="value">Value</option>  
+                                            
+                                        </select>
+                                    </td>
+                                    <td><input name="value"  class="w-100 form-control text-white text-center" id="vck" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                  </tr>
+                                  <tr>
+                                    <!-- <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td> -->
+                                  </tr>
+                                 
+                                </tbody>
+                              </table>
+                              
+       </div>
+
+                              <div class="hide3" id="slab">
+                                <h5 class=" col-sm-6-m-0 p-0 text-center mb-2">Slab Rate details for Gratuity Calculation</h5>
+
+                              <div class="row container-fluid   p-2 m-0">
+                                <div class="col-sm-6 m-0 p-0 mt-2"> <label for="rgtype" >Gratuity Days of a Months</label></div>
+                                <div class="col-sm-6 m-0 p-0">
+                                    <input type="number" name="days_of_months" class="form-control w-50">
+                                </div>
+                            </div>
+
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">from</th>
+                                    <th scope="col">to</th>
+                                    <th scope="col">Eligibility days for gratuity calculation per year</th>
+                                    
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><input name="from" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></th>
+                                        <td><input name="to" class="w-100 text-white form-control" type="text" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                        <td><input name="eligiibility" class="w-100 text-white form-control" type="number" style="background-color:rgba(0, 0, 0, 0.2);"></td>
+                                        
+                                      </tr>
+                                 
+                                </tbody>
+                              </table>
+                              </div>
+                        </div>
+                    
+
+                    </div>
+
+
+                    
+
+
+
+                    
+
+                    <div class="row hide1 container-fluid p-0 m-0" id="round" >
+
+                        <div class="col-sm-6 m-0 p-4"  style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                            <h5 class="text-center mb-3">Round Off Information</h5>
+    
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-4 m-0 p-0"> <label  >Round Method</label></div>
+                                <div class="col-sm-8 m-0 p-0"> <select name="roundmethod" onchange="rund()" id="rm" class="form-control">
+                                    <option value="Not Applicable">Not Applicable</option>
+                                    <option value="Downward Rounding">Downward Rounding</option>  
+                                    <option value="Normal Rounding">Normal Rounding</option> 
+                                    <option value="Upward Rounding">Upward Rounding</option> 
+                                    
+                                </select></div>
+                            </div>
+                            <div class="row container-fluid  hide1  p-2 m-0" id="limit">
+                                <div class="col-sm-4 m-0 p-0"> <label for="pan">Limit</label></div>
+                                <div class="col-sm-8 m-0 p-0"><input type="text" class="form-control"  placeholder="" name="limit"></div>
+                                
+                            </div>
+                        </div> 
+                        <div class="col-sm-6 m-0 p-0"  ></div>   
+                    </div>  
+
+                    <div class="row container-fluid  p-2 my-2" >
+                        <div class="col-sm-4 m-0 p-0" ></div>
+                        <div class="col-sm-2 m-0 p-0"> <p for="setgst" class="text-center p-2 m-0" style="height:100%;" >Opening balance (on 1-Aprl-22)</p></div>
+                        <div class="col-sm-2 m-0 p-0"><input type="text" class="form-control" name="balance" id="opening_balance" placeholder=""></div>
+                        <div class="col-sm-4 m-0 p-0"></div>
+                    </div>
+                        <div class="enter w-100 py-4"><button type="submit" class="btn btn-info w-75 px-4">CREATE</button></div>   
+                        
+                    
+                    
+         </form> 
+         <div class="form-popup" id="list-div" >
+  
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Attendance</h6>
+        <hr >
+        <div>
+            <table >
+            <tr >
+                <td>
+                    <a href="{% url 'attendence2' %}"> <button
+                        type="submit"
+                        style="color: black;margin-left: 310%; width: 20%"
+                        class="custom-select-md form-control"
+                      >
+                        create
+                      </button> </a>
+                </td>
+            </tr>
+        
+            <tr>
+              <td>    
+        
+                {% for l in ph %}
+                <div onclick="hideList('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+                {% endfor %}
+              </td>
+            </tr>  
+            
+            </table>
+        </div>
+
+        <div class="form-popup2" id="list-div2" >
+  
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Production Types</h6>
+          <hr >
+          <div>
+            <table >
+                <tr >
+                    <td>
+                        <a href="{% url 'attendence2' %}"> <button
+                            type="submit"
+                            style="color: black;margin-left: 310%; width: 20%"
+                            class="custom-select-md form-control"
+                          >
+                            create
+                          </button> </a>
+                    </td>
+                </tr>
+                
+                  
+            <tr>
+              <td>    
+          
+                {% for l in ph2 %}
+              <div onclick="hideListProduction('{{l.name}}')" style="color:black;" >{{l.name}}</div>
+              {% endfor %}
+              </td>
+            </tr>  
+            
+            </table>
+          </div>
+          
+          </div>
+        
+            
+
+  </div>
+  
+
+
+
+                    
+ 
+<style>
+    .hide1{
+        display: none;
+        
+        flex-direction: row;
+    }
+
+    .hide2{
+
+        display: none;
+        
+        flex-direction: column;
+
+    }
+
+    .hide3{
+        display: none;
+
+        flex-direction: column;
+    }
+
+        
+
+
+</style> 
+
+
+
+<script>
+
+function showList(){
+                    document.getElementById('list-div').style.visibility="visible";
+                 }
+                
+
+
+                 function hideList(valueDIv) {
+                    document.getElementById("primary-text").value=valueDIv;
+                   
+
+                    document.getElementById("list-div").style.visibility = "hidden";
+                    
+                    
+                }
+                function showListProduction(){
+        document.getElementById("list-div2").style.visibility="visible";
+    }
+    function hideListProduction(valueDIv) {
+        document.getElementById("prdt").value=valueDIv;
+        document.getElementById("list-div2").style.visibility = "hidden";
+    }
+
+
+    function show(){
+        var static =document.getElementById('cal');
+        var a =static.value;
+        console.log(a);
+
+        if (a =='On Production'){
+            document.getElementById('ptype').style.display='flex';
+            document.getElementById('att').style.display='none';
+            document.getElementById('cp').style.display='none';
+            document.getElementById('cpm').style.display='none';
+            document.getElementById('att2').style.display='none';
+            document.getElementById('round').style.display='flex';
+        }
+        else if (a == 'On Attendence'){
+            document.getElementById('att').style.display='flex';
+            document.getElementById('ptype').style.display='none';
+            document.getElementById('cp').style.display='none';
+            document.getElementById('cpm').style.display='none';
+            document.getElementById('att2').style.display='none';
+            document.getElementById('round').style.display='flex';
+
+        }
+
+        else if (a == 'Flat Rate'){
+            document.getElementById('cp').style.display='flex';
+            document.getElementById('att').style.display='none';
+            document.getElementById('ptype').style.display='none';
+            document.getElementById('cpm').style.display='none';
+            document.getElementById('att2').style.display='none';
+            document.getElementById('round').style.display='flex';
+        }
+
+        else if (a == 'As Computer Value'){
+            document.getElementById('cpm').style.display='flex';
+            document.getElementById('cp').style.display='none';
+            document.getElementById('att').style.display='none';
+            document.getElementById('ptype').style.display='none';
+            document.getElementById('att2').style.display='none';
+            document.getElementById('round').style.display='flex';
+
+        }
+        else{
+
+            document.getElementById('cpm').style.display='none';
+            document.getElementById('cp').style.display='none';
+            document.getElementById('att').style.display='none';
+            document.getElementById('ptype').style.display='none';
+            document.getElementById('att2').style.display='none';
+            document.getElementById('round').style.display='none';
+
+
+        }
+    }
+    
+</script>
+
+
+<script>
+     function shw(){
+        var status =document.getElementById('ab')
+        var a=status.value
+        console.log(a);
+        document.getElementById('vc').value =a;
+     }
+
+     function shw2(){
+        var status =document.getElementById('bd')
+        var a=status.value
+        console.log(a);
+        document.getElementById('pk').value =a;
+     }
+
+     function attendence(){
+        var static =document.getElementById('atp');
+        var a=static.value;
+        console.log(a);
+        
+        if (a =='Not Applicable'){
+            document.getElementById('att2').style.display='flex';
+            document.getElementById('cp').style.display='flex';
+
+
+        }
+        else{
+            document.getElementById('att2').style.display='none';
+            document.getElementById('cp').style.display='flex';
+
+        }
+     }
+
+     function rund(){
+        var status=document.getElementById('rm');
+        var a=status.value;
+        console.log(a);
+
+        if (a == 'Downward Rounding'){
+            document.getElementById('limit').style.display='flex';
+        }
+
+        else if (a == 'Normal Rounding'){
+            document.getElementById('limit').style.display='flex';
+
+        }
+
+        else if (a == 'Upward Rounding'){
+            document.getElementById('limit').style.display='flex';
+
+        }
+        else{
+
+            document.getElementById('limit').style.display='none';
+
+
+        }
+     }
+        
+</script>
+
+
+
+
+
+<script>
+
+    function pay(){
+        var status = document.getElementById('pht');
+        var a =status.value;
+        console.log(a);
+        if (a == 'Deduction From Employees'){
+            document.getElementById('under2').style.display='flex';
+            document.getElementById('under').style.display='none';
+            document.getElementById('under3').style.display='none';
+            document.getElementById('compute').style.display='none';
+            document.getElementById('under4').style.display='none';
+
+            document.getElementById('it').style.display='none';
+            document.getElementById('ans').style.display='flex';
+            document.getElementById('ndp').style.display='flex';
+            document.getElementById('cty').style.display='flex';
+            document.getElementById('ucg').style.display='flex';
+
+            document.getElementById('under6').style.display='none';
+            document.getElementById('slab').style.display='none'
+        }
+
+        else if (a == 'Earning for Employees'){
+
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='flex';
+            document.getElementById('under3').style.display='none';
+            document.getElementById('compute').style.display='none';
+            document.getElementById('under4').style.display='none';
+
+            document.getElementById('it').style.display='flex';
+            document.getElementById('ans').style.display='flex';
+            document.getElementById('ndp').style.display='flex';
+            document.getElementById('cty').style.display='flex';
+            document.getElementById('ucg').style.display='flex';
+
+            document.getElementById('under6').style.display='none';
+            document.getElementById('slab').style.display='none'
+
+        }
+        else if (a == 'Employees Statutory Deductions'){
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='none'; 
+            document.getElementById('under3').style.display='flex';
+            document.getElementById('compute').style.display='flex';
+            document.getElementById('under4').style.display='none';
+
+            document.getElementById('it').style.display='none';
+            document.getElementById('ans').style.display='flex';
+            document.getElementById('ndp').style.display='flex';
+            document.getElementById('cty').style.display='flex';
+            document.getElementById('ucg').style.display='none';
+
+            document.getElementById('under6').style.display='none';
+            document.getElementById('slab').style.display='none'
+        }
+
+        else if (a == "Employer's Statutory Contributions"){
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='none'; 
+            document.getElementById('under3').style.display='none';
+            document.getElementById('under4').style.display='flex';
+            document.getElementById('compute').style.display='flex';
+
+            document.getElementById('it').style.display='none';
+            document.getElementById('ans').style.display='flex';
+            document.getElementById('ndp').style.display='flex';
+            document.getElementById('cty').style.display='flex';
+            document.getElementById('ucg').style.display='none';
+
+            document.getElementById('under6').style.display='none';
+            document.getElementById('slab').style.display='none'
+        }
+
+        else if (a == "Loans and Advances"){
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='none'; 
+            document.getElementById('under3').style.display='none';
+            document.getElementById('under4').style.display='none';
+            document.getElementById('compute').style.display='none';
+            document.getElementById('under5').style.display='flex';
+
+            document.getElementById('it').style.display='none';
+            document.getElementById('ans').style.display='flex';
+            document.getElementById('ndp').style.display='flex';
+            document.getElementById('cty').style.display='flex';
+            document.getElementById('ucg').style.display='none';
+
+            document.getElementById('under6').style.display='none';
+            document.getElementById('slab').style.display='none'
+        }
+
+
+        
+        else if (a == "Reimbursements to Employees"){
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='none'; 
+            document.getElementById('under3').style.display='none';
+            document.getElementById('under4').style.display='flex';
+            document.getElementById('compute').style.display='none';
+            document.getElementById('under5').style.display='none';
+
+            document.getElementById('it').style.display='flex';
+            document.getElementById('ans').style.display='flex';
+            document.getElementById('ndp').style.display='flex';
+            document.getElementById('cty').style.display='flex';
+            document.getElementById('ucg').style.display='none';
+
+            document.getElementById('under6').style.display='none';
+            document.getElementById('slab').style.display='none'
+        }
+
+
+        else if(a == 'Gratuity'){
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='none'; 
+            document.getElementById('under3').style.display='none';
+            document.getElementById('under4').style.display='none';
+            document.getElementById('compute').style.display='none';
+            document.getElementById('under5').style.display='none';
+
+            document.getElementById('it').style.display='none';
+            document.getElementById('ans').style.display='none';
+            document.getElementById('ndp').style.display='none';
+            document.getElementById('cty').style.display='none';
+            document.getElementById('ucg').style.display='none';
+            document.getElementById('att').style.display='none';
+
+            document.getElementById('under6').style.display='flex';
+            document.getElementById('slab').style.display='flex'
+
+
+        }
+
+        else{
+
+            document.getElementById('under2').style.display='none';
+            document.getElementById('under').style.display='none'; 
+            document.getElementById('under3').style.display='none';
+            document.getElementById('under4').style.display='none';
+            document.getElementById('compute').style.display='none';
+            document.getElementById('under5').style.display='none';
+
+            document.getElementById('it').style.display='none';
+            document.getElementById('ans').style.display='none';
+            document.getElementById('ndp').style.display='none';
+            document.getElementById('cty').style.display='none';
+            document.getElementById('ucg').style.display='none';
+            document.getElementById('att').style.display='none';
+
+            document.getElementById('under6').style.display='flex';
+            document.getElementById('slab').style.display='none'
+
+
+        }
+
+
+
+
+    }
+
+    function pv(){
+        var status =document.getElementById('pk');
+        var a=status.value;
+        console.log(a);
+        if (a == 'Percentage'){
+            document.getElementById('vck').value ="%";
+        }
+        else{
+            document.getElementById('vck').value ="";
+
+        }
+    }   
+    
+    
+    function ns(){
+        var status =document.getElementById('ans2');
+        a =status.value;
+        console.log(a);
+
+        if (a == 'No'){
+            document.getElementById('ndp').style.display='none';
+        }
+        else{
+
+            document.getElementById('ndp').style.display='flex';
+
+        }
+    }
+
+
+
+</script>
+
+
+
+
+{% endblock %}    

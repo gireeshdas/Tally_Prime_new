@@ -1,0 +1,850 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .hide{
+        display: none;
+    }
+    .modal-body {
+        color: #fff;
+        background-color: #213b52;
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+    .modal-content{
+        margin-top: 250px;
+        background-color: #213b52;
+    }
+</style>
+
+
+<div class="m-2">
+    <div class="row bg-info text-light p-2 m-0">
+        <div class="col-md-6"><h6>Voucher Type Creation</h6></div>
+    </div>
+    
+    <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'Statistics_Edit_Voucher_Types' vt_edit.pk %}" autocomplete="off">
+        {% csrf_token %}
+        <div class="p-3">
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                <div class="col-sm-3 m-0 p-0"><input type="text" name="vname" value="{{vt_edit.voucher_name}}" class="form-control" id=""></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                <div class="col-sm-3 m-0 p-0"><input type="text" name="alias" value="{{vt_edit.alias}}" class="form-control" id=""></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+            <div class="col-sm-5 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                <h5 class="text-center">General</h5>
+                <div class="row container-fluid  p-0">
+                    <div class="col-sm-6 m-0 p-0"></div>
+                    <div class="col-sm-6 m-0 p-0"></div>
+                </div>
+
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="c">Select type of voucher</label></div>
+                    <!-- <div class="col-sm-6 m-0 p-0"> -->
+                        <div class="col-sm-6 m-0 p-0"><input type="text" value="{{vt_edit.voucher_type}}" name="vouch_type" class="form-control" id="" disabled></div>
+                        <!-- <select name="vouch_type"  id="voucher_type" class="form-control" onchange="showVoucherType()" disabled >
+                            <option value="Abr"></option>
+                            {% for i in edit %}
+                            <option value="{{ i.voucher_name }}">{{ i.voucher_name }}</option>
+                            {% endfor %}
+                            <option value="Attendance">Attendance</option>  
+                            <option value="Contra">Contra</option> 
+                            <option value="Credit_Note">Credit Note</option>
+                            <option value="Debit_Note">Debit Note</option>
+                            <option value="Delivery_Note">Delivery Note</option>
+                            <option value="Job_Work_In_Order">Job Work In Order</option>
+                            <option value="Job_Work_Out_Order">Job Work Out Order</option>
+                            <option value="Journal">Journal</option>
+                            <option value="Material_In">Material In</option>
+                            <option value="Material_Out">Material Out</option>
+                            <option value="Memorandum">Memorandum</option>
+                            <option value="Payment">Payment</option>
+                            <option value="Payroll">Payroll</option>
+                            <option value="Physical_Stock">Physical Stock</option>
+                            <option value="Purchase">Purchase</option>
+                            <option value="Purchase_Order">Purchase Order</option>
+                            <option value="Receipt">Receipt</option>
+                            <option value="Receipt_Note">Receipt Note</option>
+                            <option value="Rejections_In">Rejections In</option>
+                            <option value="Rejections_Out">Rejections Out</option>
+                            <option value="Reversing_Journal">Reversing Journal</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Sales_Order">Sales Order</option>
+                            <option value="Stock_Journal">Stock Journal</option>
+                        </select> -->
+                    <!-- </div> -->
+                </div>
+
+                <div class="row container-fluid  p-2" id="">
+                    <div class="col-sm-6 m-0 p-0"> <label for="d">Abbreviation</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text" value="{{vt_edit.abbreviation}}" name="Abbreviation" class="form-control" id="abr"></div>
+                </div>
+                
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="e">Activate this voucher type</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="activate_Vtype"  class="form-control" id="vouchertype0">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <script>
+                    $(document).ready(function(){ 
+                        $('#vouchertype0').change(function() 
+                        { 
+                            var opval = $(this).val(); 
+                            if(opval=="Yes"){ 
+                                $('#myModal').modal("show"); 
+                            }
+                        });
+                    });
+                </script> -->
+                <!-- <div class="modal fade" id="myModal" role="dialog" >
+                    <div class="modal-dialog">
+                        <div class="modal-content" >
+                            <div class="modal-body"><br>
+                                <p class="price">You need to enable the Payroll Feature for your Company
+                                    <center>Enable Now?</center>
+                                </p><br><br>
+                                <div>
+                                    <a href="" data-dismiss="modal"><span style="color: #fff;">Yes </span><span style="color: #000;"> Or </span> </a>
+                                    <a href="" style="color: #fff;" data-dismiss="modal">No</a> 
+                                    <br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <hr>
+                <div class="row container-fluid p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="f">Method of voucher numbering</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="method_Vno" id="voucher_no" class="form-control" onchange="showVoucherNo()" required>
+                            <option value="option"></option>
+                            <option value="Automatic">Automatic</option> 
+                            <option value="Override">Automatic(Manual Override)</option> 
+                            <option value="Manual">Manual</option>
+                            <option value="Multiuser Auto">Multiuser Auto</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row container-fluid hide p-2" id="duplicates">
+                    <div class="col-sm-6 m-0 p-0"> <label for="g">Prevent duplicates</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="prevent" id="g" class="form-control">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>   
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row container-fluid hide p-2" id="advanced">
+                    <div class="col-sm-6 m-0 p-0"> <label for="g">Use advanced configuration</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="advance_con" id="config" class="form-control" onchange="showconfig()" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>   
+                        </select>
+                    </div>
+                </div>     
+                <hr>
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="g">Use effective dates  for vouchers</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="use_EDV" id="g" class="form-control">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>   
+                        </select>
+                    </div>
+                </div>
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="h">Allow zero valued transactions</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="zero_val" id="" class="form-control">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>   
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row container-fluid  p-2" id="optional">
+                    <div class="col-sm-6 m-0 p-0"> <label for="i">Make voucher type as 'Optional' by default</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="mVoptional_defualt" id="i" class="form-control">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="">Allow narration in voucher</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="allow_nar" id="j" class="form-control">
+                            <option value="yes">Yes</option> 
+                            <option value="no">No</option>   
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row container-fluid  p-2" id="provide">
+                    <div class="col-sm-6 m-0 p-0"> <label for="k">Provide narration for each leadger voucher</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="provide_L" id="k" class="form-control">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option> 
+                        </select>
+                    </div>
+                </div><br>
+                <div class="row container-fluid hide p-2" id="journal">
+                    <div class="col-sm-6 m-0 p-0"> <label for="k">Use as a manufacturing journal</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="manu_jrnl" id="k" class="form-control">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option> 
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row container-fluid hide p-2" id="track">
+                    <div class="col-sm-6 m-0 p-0"> <label for="">Track Additional Cost for Purchases</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="track_purchase" id="" class="form-control">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option> 
+                        </select>
+                    </div>
+                </div>
+                <div class="row container-fluid hide p-2" id="enable">
+                    <div class="col-sm-6 m-0 p-0"> <label for="">Enable default accounting allocations</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="enable_acc" id="" class="form-control">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option> 
+                        </select>
+                    </div>
+                </div>  
+                
+            </div>
+            <div class="col-sm-4 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                <h5 class="text-center">Printing</h5>
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Print voucher after saving</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="prnt_VA_save" id="l" class="form-control">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>  
+                        </select>
+                    </div>
+                </div> 
+                
+                <div class="row container-fluid hide p-2" id="formal_rcpt">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Print formal receipt after savings</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text" name="prnt_frml" class="form-control" id="" value="{{vt_edit.prnt_frml}}"></div>
+                </div>
+                <div class="row container-fluid hide p-2" id="jurisdiction">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Default Jurisdiction</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text" name="jurisdiction" class="form-control" id="" value="{{vt_edit.jurisdiction}}"></div>
+                </div> <br>
+
+                <div class="row container-fluid hide p-2" id="pos">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Use for POS invoice</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="pos_invoice" id="POS" class="form-control" onchange="showPOS()" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>  
+                        </select>
+                    </div>
+                </div> 
+                <div class="row container-fluid hide p-2" id="msg_1">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Messege to print (1)</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text" name="msg_1" class="form-control" id="" value="{{vt_edit.msg_1}}"></div>
+                </div> 
+                <div class="row container-fluid hide p-2" id="msg_2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Messege to print (2)</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text" name="msg_2" class="form-control" id="" value="{{vt_edit.msg_2}}"></div>
+                </div> 
+
+                <div class="row container-fluid hide p-2" id="bank">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Default Bank</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="default_bank" id="" class="form-control">
+                            <option value="Not Applicable">Not Applicable</option>
+                        </select>
+                    </div>
+                </div> 
+
+                <div class="row container-fluid hide p-2" id="title_print">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Default Title to Print</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text" name="title_print" class="form-control" id="" value="{{vt_edit.title_print}}"></div>
+                </div> 
+                <div class="row container-fluid hide p-2" id="set/alter">
+                    <div class="col-sm-6 m-0 p-0"> <label for="l">Set / Alter declaration</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="set_alter" id="setalter" class="form-control">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>  
+                        </select>
+                    </div>
+                </div>  
+                <script>
+                    $(document).ready(function(){ 
+                        $('#setalter').change(function() 
+                        { 
+                            var opval = $(this).val(); 
+                            if(opval=="Yes"){ 
+                                $('#myModal1').modal("show"); 
+                            }
+                        });
+                    });
+                </script>
+                <div class="modal fade" id="myModal1" role="dialog" >
+                    <div class="modal-dialog">
+                        <div class="modal-content" >
+                            <div class="modal-body"><br>
+                                <h6 style="text-align: center;">Declaration</h6>
+                                <p class="price">We declare that this invoice shows the actual price of the goods described and that 
+                                    all particulars are true and correct.
+                                </p><br><br>
+                                <div>
+                                    <a href="" data-dismiss="modal"><span style="color: #fff;">Yes </span><span style="color: #000;"> Or </span> </a>
+                                    <a href="" style="color: #fff;" data-dismiss="modal">No</a> 
+                                    <br><br>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="col-sm-3 m-0 p-4">
+                <h5 class="text-center">Name of class</h5>
+                <div class="container-fluid hide p-2" id="name_class">
+        vchrdata.name_class=request.POST['name_class']
+                    <div class="col-sm-12 m-0 p-0"><input type="text" name="name_class" class="form-control" id="" value="{{vt_edit.name_class}}"></div>
+                </div> 
+            </div>
+        </div>
+        <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>    
+    </form>     
+</div> 
+
+<script>
+    function showconfig(){
+        var status =document.getElementById("config");
+        var a= status.value;
+        console.log(a);
+        if( a== "Yes"){
+            console.log(a);
+            window.location.href="{% url 'vouch_advance' %"
+        }
+    }
+
+    function showVoucherNo(){
+        var status = document.getElementById("voucher_no");
+        var a = status.value;
+        console.log(a);
+        if( a == "option" ){
+            console.log(a);
+
+            document.getElementById('advanced').style.display = "none";
+            document.getElementById('duplicates').style.display = "none";
+        }
+        else if( a == "Automatic" ){
+            document.getElementById('advanced').style.display = "flex";
+            document.getElementById('duplicates').style.display = "none";
+        }
+        else if( a == "Override" ){
+            document.getElementById('advanced').style.display = "flex";
+            document.getElementById('duplicates').style.display = "flex";
+        }
+        else if( a == "Manual" ){
+            document.getElementById('duplicates').style.display = "flex";
+            document.getElementById('advanced').style.display = "none";
+        }
+        else if( a == "Multiuser Auto" ){
+            document.getElementById('advanced').style.display = "flex";
+            document.getElementById('duplicates').style.display = "none";
+        }
+        else{
+            document.getElementById('duplicates').style.display = "none";
+            document.getElementById('advanced').style.display = "none";
+        }
+    }
+
+    function showVoucherType(){
+        var val=document.getElementById("voucher_type").value;
+            if(val=="Attendance")
+            {
+                newval="Attd";
+            }
+            else if(val=="Contra")
+            {
+                newval="Ctra";
+            }
+            else if(val=="Credit_Note")
+            {
+                newval="C/Note";
+            }
+            else if(val=="Debit_Note")
+            {
+                newval="D/Note";
+            }
+            else if(val=="Delivery_Note")
+            {
+                newval="Dely Note";
+            }
+            else if(val=="Job_Work_In_Order")
+            {
+                newval="Job Wrk In Ordr";
+            }
+            else if(val=="Job_Work_Out_Order")
+            {
+                newval="Job Wrk Out Ordr";
+            }
+            else if(val=="Journal")
+            {
+                newval="Jrnl";
+            }
+            else if(val=="Material_In")
+            {
+                newval="Mat In";
+            }
+            else if(val=="Material_Out")
+            {
+                newval="Mat Out";
+            }
+            else if(val=="Memorandum")
+            {
+                newval="Memo";
+            }
+            else if(val=="Payment")
+            {
+                newval="Pymt";
+            }
+            else if(val=="Payroll")
+            {
+                newval="Pyrl";
+            }
+            else if(val=="Physical_Stock")
+            {
+                newval="Phy Stk";
+            }
+            else if(val=="Purchase")
+            {
+                newval="Purc";
+            }
+            else if(val=="Purchase_Order")
+            {
+                newval="Purc Order";
+            }
+            else if(val=="Receipt")
+            {
+                newval="Rcpt";
+            }
+            else if(val=="Receipt_Note")
+            {
+                newval="Rcpt Note";
+            }
+            else if(val=="Rejections_In")
+            {
+                newval="Rej In";
+            }
+            else if(val=="Rejections_Out")
+            {
+                newval="Rej Out";
+            }
+            else if(val=="Reversing_Journal")
+            {
+                newval="Rev Jrnl";
+            }
+            else if(val=="Sales")
+            {
+                newval="Sale";
+            }
+            else if(val=="Sales_Order")
+            {
+                newval="Sales Ordr";
+            }
+            else if(val=="Stock_Journal")
+            {
+                newval="Stk Jrnl";
+            }
+            else
+            {
+                newval="";
+            }
+            document.getElementById("abr").value = newval;
+        
+        var status = document.getElementById("voucher_type");
+        var a = status.value;
+        console.log(a);
+        if( a == "Attendance" ){
+            console.log(a);
+            
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Contra" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Credit_Note" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "flex";
+            document.getElementById('title_print').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Debit_Note" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('title_print').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('attd').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";  
+            document.getElementById('name_class').style.display = "none"; 
+        }
+        else if( a == "Delivery_Note" ){
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "flex";
+            document.getElementById('title_print').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none"; 
+            document.getElementById('name_class').style.display = "none";   
+        }
+        else if( a == "Job_Work_In_Order" ){
+            document.getElementById('title_print').style.display = "flex";
+            document.getElementById('set/alter').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none"; 
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none"; 
+            document.getElementById('name_class').style.display = "none";   
+        }
+        else if( a == "Job_Work_Out_Order" ){
+            document.getElementById('title_print').style.display = "flex";
+            document.getElementById('set/alter').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('provide').style.display = "none"; 
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Journal" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";    
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Material_In" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Material_Out" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('title_print').style.display = "none"; 
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";   
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Memorandum" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('optional').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none"; 
+            document.getElementById('name_class').style.display = "none";      
+        }
+        else if( a == "Payment" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Payroll" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Physical_Stock" ){
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('optional').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Purchase" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Purchase_Order" ){
+            
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Receipt" ){
+            document.getElementById('formal_rcpt').style.display = "flex";
+            document.getElementById('name_class').style.display = "flex";
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+        }
+        else if( a == "Receipt_Note" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Rejections_In" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Rejections_Out" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Reversing_Journal" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('optional').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Sales" ){
+            document.getElementById('provide').style.display = "flex";
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('pos').style.display = "flex";
+            document.getElementById('bank').style.display = "flex";
+            document.getElementById('title_print').style.display = "flex";
+            document.getElementById('jurisdiction').style.display = "flex";
+            document.getElementById('set/alter').style.display = "flex";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('journal').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Sales_Order" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('enable').style.display = "flex";
+            document.getElementById('set/alter').style.display = "flex";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('track').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('journal').style.display = "none";  
+            document.getElementById('name_class').style.display = "none";
+        }
+        else if( a == "Stock_Journal" ){
+            document.getElementById('optional').style.display = "flex";
+            document.getElementById('journal').style.display = "flex";
+            document.getElementById('track').style.display = "flex";
+            document.getElementById('provide').style.display = "none";
+            document.getElementById('enable').style.display = "none";
+            document.getElementById('title_print').style.display = "none";
+            document.getElementById('jurisdiction').style.display = "none";
+            document.getElementById('set/alter').style.display = "none";
+            document.getElementById('pos').style.display = "none";
+            document.getElementById('formal_rcpt').style.display = "none";
+            document.getElementById('bank').style.display = "none";
+            document.getElementById('name_class').style.display = "none";
+        }    
+    }
+
+    function showPOS(){
+        var status = document.getElementById("POS");
+        var a = status.value;
+        console.log(a);
+        if( a == "Yes" ){
+            console.log(a);
+
+            document.getElementById('msg_1').style.display = "flex";
+            document.getElementById('msg_2').style.display = "flex";
+        }
+        else{
+            document.getElementById('msg_1').style.display = "none";
+            document.getElementById('msg_2').style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

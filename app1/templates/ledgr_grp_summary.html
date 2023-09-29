@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Ledger Monthly Summary</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+                        <tr>
+                          <th rowspan="6"  class="align-middle text-white">Particular</th>
+                          <th colspan="6" class="text-center text-white"><h5>{{ Display.PName }}</h5><h6><b>{{ Display.Sgroup_Forng.Fgroup_Forng.Group_Name.Name }}</b></h6>For 1-Apr-2022</th>
+                        </tr>
+                        <tr>
+                          <th colspan="2" class="text-center text-white">Transactions</th>
+                          <th rowspan="3" colspan="2" class="text-center text-white">Closing Balance</th>
+                        </tr>
+                        <tr>
+                          <th class="text-center text-white">Debit</th>
+                          <th class="text-center text-white">credit</th>
+                        </tr>
+                        <tbody>
+                            <tr class="trhover">
+                                <td class="text-white">Opening Balance</td>
+                                <td class="text-right pr-5" colspan="3">{{ sum4 }}</td>
+                            </tr>
+                             {% for i in data %}
+                            <tr class="trhover">
+                                <td class="text-white"><a href="{% url 'Ledger_Voucher' i.id %}">{{ i.Particular }}</a></td>
+                                <td class="text-center text-white">{{ i.Dedit }}</td>
+                                <td class="text-center text-white">{{ i.Credit }}</td>
+                                <td class="text-center text-white">{{ i.Closing_Balance }}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td class="month">{{mon1}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon2}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon3}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon4}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon5}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon6}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon7}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon8}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon9}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon10}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon11}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{mon12}}</td>
+                            </tr>
+                            <!--{% for i in month %
+                                <tr class="trhover">
+                                    <td class="text-white"><a href="">{{ i.month_name }}</a></td>
+                                    <td class="text-center text-white"></td>
+                                    <td class="text-center text-white"></td>
+                                    <td class="text-center text-white"></td>
+                                </tr>
+                            {% endfor % -->
+                            <!-- <tr class="trhover">
+                                <td class="text-white"><a href="">{{ month.month_name }}</a></td>
+                                <td class="text-center text-white"></td>
+                                <td class="text-center text-white"></td>
+                                <td class="text-center text-white"></td>
+                            </tr> -->
+                            
+                            <tr >
+                                <th class="text-white">Grand Total</th>
+                                <th class="text-center text-white">{{ sum2 }}</th>
+                                <th class="text-center text-white">{{ sum1 }}</th>
+                                <th class="text-center text-white">{{ sum5 }}</th>
+
+                              </tr>
+                        </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+<style>
+    .trhover:hover{
+        background-color: rgb(31, 40, 68);
+    }
+    /* tr:empty{
+        display: none;
+    } */
+    
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function()
+    {
+        $("table tr td").each(function()
+        {
+            var emptyrows=$.trim($(this).text());
+            if(emptyrows.length==0)
+            {
+                $(this).parent().hide();
+            }
+        });
+    });
+</script>
+
+{% endblock %}

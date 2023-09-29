@@ -1,0 +1,578 @@
+
+    {% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        .hide{
+            display: none;
+        }
+        
+
+        
+        .flexy{
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .form-popup {
+            position: fixed;
+            top: 230px;
+            right: 15px;
+            background-color: rgb(17, 169, 240); 
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 200px;
+            margin-left: 190px;
+            margin-top: 240px;
+        
+        
+        }
+
+    </style>
+
+  <div class="m-0">
+    <h6  class="bg-info text-light p-2 m-0 text-center">Create Employee</h6>
+            <form class="p-5" style="background-color:rgba(0,0,0,.4);" action="addemployee1" method="post">
+                {% csrf_token %}
+                <div class="p-3">
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                    <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control" id="na" placeholder="" name="name"  onblur="passvalues()" required></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                    <div class="col-sm-3 m-0 p-0"> 
+                    <input type="text" class="form-control" id="b" placeholder="" name="alias"></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+            
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="b">Under</label></div>
+                <div class="col-sm-3 m-0 p-0"> 
+                    <input name="underr" id="un" class="form-control" onclick="showList5()"> 
+                        
+                </div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+            <script>
+                document.getElementById("na").innerHTML=localStorage.getItem("textvalue");
+            </script>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="date">Date of joining</label></div>
+                    <div class="col-sm-3 m-0 p-0"><input type="date" class="form-control" id="date" placeholder=""  name="join"></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="salary">Define salary details</label></div>
+                    <div class="col-sm-3 m-0 p-0">
+                        <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" 
+                        name="sal" id="salary" class="form-control">
+                           <option value="No">No</option> 
+                           <option value="{% url 'salary'  %}">Yes</option>
+                       </select> <br>
+                    </div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+        </div>
+
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);" id="gen">
+                        
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        <h5 class="text-center">General Information</h5>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="empno">Employee Number</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="empno" placeholder="" name="empname"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="desig">Designation</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="desig" placeholder="" name="desig"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="fn">Function</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="fn" placeholder="" name="fn"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="loc">Location</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="loc" placeholder="" name="loc"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="gender">Gender</div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="gen" id="gender" class="form-control">
+                                    <option value="male">Male</option> 
+                                    <option value="female">Female</option>
+                                    <option value="trans">Transgender</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="dob">Date of birth</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="date" class="form-control" id="dob" placeholder="" name="dob"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="blood">Blood Group</div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select  id="blood" class="form-control" name="blood">
+                                    <option value="A+ve">A+ve</option> 
+                                    <option value="B+ve">B+ve</option> 
+                                    <option value="O+ve">O+ve</option> 
+                                    <option value="AB+ve">AB+ve</option>
+                                    <option value="A-ve">A-ve</option>
+                                    <option value="B-ve">B-ve</option>   
+                                    <option value="AB-ve">AB-ve</option> 
+                                    <option value="O-ve">O-ve</option> 
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="prnts">Father's /Mother's Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="prnts" placeholder="" name="prnts"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="spouse">Spouse's Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="spouse" placeholder="" name="spouse"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="adrs">Address</label></div>
+                            <div class="col-sm-6 m-0 p-0"><textarea type="text" rows="4" class="form-control" id="adrs" placeholder="" name="adrs"></textarea></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="phno">Phone Number</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="phno" placeholder="" name="phone"></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="email">Email</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="Email" class="form-control" id="email" placeholder="" name ="email"></div>
+                        </div>
+
+
+
+
+                        
+                    </div>
+
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="bank">Provide bank details</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="bank" class="form-control" name="bank" onchange="show()">
+                                    <option value="No">No</option> 
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    
+                        <div class="hide flexy" id="fsp" >
+                            <h5 class="text-center mt-3">For Statutory & Payroll Reports</h3>
+                                <div class="row container-fluid  p-2" style="margin-top: 30px;">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="prnts">A/c No</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="prnts" placeholder="" name="acount"></div>
+                                </div>
+        
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="spouse">IFS Code</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="spouse" placeholder="" name="ifsc"></div>
+                                </div>
+        
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="adrs">Bank Name</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text"  class="form-control" id="first" placeholder="" name="bank_name" onclick="showList2()"></textarea></div>
+                                </div>
+        
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="phno">Branch</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="phno" placeholder="" name="branch_name"></div>
+                                </div>
+                                <h5 class="text-center mt-2" style="margin-top: 30px;">For banking</h5>
+                                <div class="row container-fluid  p-2" style="margin-top: 30px;">
+                                    <div class="col-sm-6 m-0 p-0"><label class="form-labelb w-100 ">Transaction Type</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input onclick="showList4()" id="tt" name="Transaction_type" class="form-control w-100">
+                                       <!---- <option  value="unknown">Unknown</option>
+                                        <option  value="End of List">End of List</option>
+                                        <option  value="Cheque">Cheque</option>
+                                        <option  value="e-fund Transfer">e-fund Transfer</option>
+                                        <option  value="ATM">ATM</option>
+                                        <option  value="Card">Card</option>
+                                        <option  value="ECS">ECS</option>
+                                        <option  value="Others">Others</option>-->
+                                    </div>
+                                   </div>
+
+
+
+
+
+                                   
+                               
+                            
+                            
+    
+                            <div class="mt-2 hide flexy" id="ef">
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="phno">A/c No</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="phno" placeholder="" name="acnumber"></div>
+                                </div>
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="spouse">IFS Code</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="spouse" placeholder="" name="ifsccode"></div>
+                                </div>
+        
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="adrs">Bank Name</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text"  class="form-control" id="adrs" placeholder="" name="bank_name2"></textarea></div>
+                                </div>
+        
+                                
+                               
+    
+                            </div>
+    
+                            <div class="hide flexy mt-2" id="cu" style="margin-top: 30px;">
+                                <h5 style="text-align:center;">Cheque</h5>
+                                <div class="row container-fluid  p-2">
+                                    <div class="col-sm-6 m-0 p-0"> <label for="adrs">Cross using</label></div>
+                                    <div class="col-sm-6 m-0 p-0"><input type="text"  class="form-control" id="adrs" placeholder="" name="cheque"></textarea></div>
+                                </div>
+    
+                            </div></h5></div>
+
+                        <h5 class="text-center" style="margin-top:40px ;">Statutary details</h5>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="intax">Income Tax Number</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="intax" placeholder="" name="taxno"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="aadhar">Aadhar Number</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="aadhar" placeholder="" name="aadhar"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="uan">Universal Account Number(UAN)</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="uan" placeholder="" name="uan"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="pfn">PF Account Number(PFN)</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="pfn" placeholder="" name="pfn"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="prn">PR Account Number(PRAN)</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="prn" placeholder="" name="pran"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="esi">ESI Number(ESIN)</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="esi" placeholder="" name="esin"></div>
+                        </div>
+<hr>
+                        
+
+
+
+                        
+                    </div>
+
+
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-25">CREATE</button></div> 
+                </form>
+                </div>
+
+
+                 <!-- list Creation -->
+
+        <div class="col-sm-3 hide" id="li" style="margin-left:1050px ;margin-top: -570px;background-color:#2f516f ">
+            <div class="col-sm-12 m-0 p-0">
+                <div class="card-col-sm-12">
+                    <div class="card-body">
+                        <div class="card-title text-center custom-select-md for">
+                            <h5>Transaction Types</h5> <a href="#" style="margin-left: 150px;"><h6></h7></a><hr/>
+                           
+        
+                        </div>
+                        <ul class="list-group ">
+                           
+                            <div class="row container-fluid  p-0 m-0">
+                               
+                            <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist4('Cheque')" value="Cheque">Cheque</li></div>
+                            <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist4('e-fund Transfer')" value="e-fund Transfer">e-fund Transfer</li></div>
+                            <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist4('ATM')" value="ATM">ATM</li></div>
+                            <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist4('Card')" value="Card">Card</li></div>
+                            <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist4('ESC')" value="ESC">ESC</li></div>
+                            <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist4('Others')" value="Others">Others</li></div>
+                                </div>
+                               
+                            
+                           
+                          </ul>
+                        
+                    </div>
+                </div>
+                </div></div>
+
+
+
+               
+<!-- list Creation -->
+
+
+<div class="col-sm-3 hide" id="list" style="margin-left:1050px ;margin-top: -720px;background-color:#2f516f ;">
+    <div class="col-sm-12 m-0 p-0">
+        <div class="card-col-sm-12">
+            <div class="card-body">
+                <div class="card-title text-center custom-select-md for">
+                    <h5>List of Bank</h5> <a href="#" style="margin-left: 150px;"><h6>Add Bank</h7></a><hr/>
+                   
+
+                </div>
+                <ul class="list-group ">
+                    <li class="bx bx-caret-right" onclick="hidelist3('Not Applied')" value="Not Applied">Not Applied</li>
+                    {% for p2 in p %}
+                    <div class="row container-fluid  p-0 m-0">
+                       
+                    <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist3('{{p2.name}}')" value="{{p2.name}}">{{p2.name}}</li></div>
+                        </div>
+                       
+                    {% endfor %}
+                   
+                  </ul>
+                
+            </div>
+        </div>
+        </div></div>
+
+
+
+
+
+        <!-- list Creation -->
+
+
+<div class="col-sm-3 hide" id="li2" style="margin-left:600px ;margin-top: -1080px;background-color:#2f516f ;">
+    <div class="col-sm-12 m-0 p-0">
+        <div class="card-col-sm-12">
+            <div class="card-body">
+                <div class="card-title text-center custom-select-md for">
+                    <h5>List of Employee Group</h5> <a href="#" style="margin-left: 150px;"><h6>Create</h7></a><hr/>
+                   
+
+                </div>
+                <ul class="list-group ">
+                    <li class="bx bx-caret-right" onclick="hidelist5('Primary')" value="Primary">Primary</li>
+                    {% for p2 in p3 %}
+                    <div class="row container-fluid  p-0 m-0">
+                       
+                    <div class="col-sm-9 m-0 p-0"><li class="bx bx-caret-right" onclick="hidelist5('{{p2.groupname}}')" value="{{p2.groupname}}">{{p2.groupname}}</li></div>
+                        </div>
+                       
+                    {% endfor %}
+                   
+                  </ul>
+                
+            </div>
+        </div>
+        </div></div>
+
+
+
+       
+
+
+        
+
+
+
+        
+
+
+    
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                
+               
+
+
+
+                <script> 
+
+function showList5(){
+    document.getElementById('li2').style.display='flex';
+    
+    
+}
+
+function hidelist5(valueDIv){
+
+    document.getElementById('li2').style.display='none'
+    document.getElementById('un').value=valueDIv
+    
+    
+
+}  
+
+
+
+function showList2(){
+    document.getElementById('list').style.display='flex';
+    
+    
+}
+
+function hidelist3(valueDIv){
+
+    document.getElementById('list').style.display='none'
+    document.getElementById('first').value=valueDIv
+    
+    
+
+}  
+
+
+function showList4(){
+    document.getElementById('li').style.display='flex'
+    
+    
+}
+
+function hidelist4(valueDIv){
+
+    document.getElementById('li').style.display='none'
+    document.getElementById('tt').value=valueDIv
+    
+
+        var name=document.getElementById('tt');
+        var a=name.value;
+        console.log(a);
+
+        if (a=='e-fund Transfer'){
+            document.getElementById('ef').style.display="flex";
+            document.getElementById('cu').style.display="none";
+        }
+        else if (a=='Cheque'){
+            document.getElementById('cu').style.display="flex";
+            document.getElementById('ef').style.display="none";
+        }
+        else{
+            document.getElementById('cu').style.display="none";
+            document.getElementById('ef').style.display="none";
+        }
+
+    
+
+}  
+
+
+
+
+  
+                      
+                    function passvalues()
+                    {
+                        var name=document.getElementById("na").value;
+                        var under=document.getElementById("un").value;
+                        //console.log(name);
+                        localStorage.setItem("name", name);
+                        localStorage.setItem("under", under);
+                        var a=localStorage.getItem("name");
+                        var b=localStorage.getItem("under");
+                        //console.log(a);
+                    }
+
+                </script>
+                    
+        
+   
+
+
+<script>
+    function sav(){
+        var status=document.getElementById("sala");
+        var a=status.value;
+        if(a=='Yes'){
+            
+            window.location.href="{% url 'salary' %}"
+        }
+        else{
+            document.getElementById('gen').style.display="flex";
+        }
+
+    }
+</script>
+
+<script>
+    function show(){
+        var status=document.getElementById('bank');
+        var a=status.value;
+        console.log(a);
+        if (a=='Yes'){
+            console.log(a);
+            document.getElementById('fsp').style.display="flex";
+
+        }
+        else if(a=='No'){
+            document.getElementById('fsp').style.display="none";
+        }
+        else{
+            document.getElementById('fsp').style.display="none";
+        }
+    }
+
+</script>
+
+<script>
+    function shw(){
+        var name=document.getElementById('tt');
+        var a=name.value;
+        console.log(a);
+
+        if (a=='e-fund Transfer'){
+            document.getElementById('ef').style.display="flex";
+            document.getElementById('cu').style.display="none";
+        }
+        else if (a=='Cheque'){
+            document.getElementById('cu').style.display="flex";
+            document.getElementById('ef').style.display="none";
+        }
+        else{
+            document.getElementById('cu').style.display="none";
+            document.getElementById('ef').style.display="none";
+        }
+
+    
+    }
+</script>
+
+
+
+
+
+{% endblock %}   

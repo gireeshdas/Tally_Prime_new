@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .hide{
+			display: none;
+    	}
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <h6  class="bg-info text-light p-2 m-0 text-left"><a href="javascript:history.go(-1);" class="close">&times;</a>Bank Details</h6>
+                
+                <form class="p-5" action="{% url 'ledger_bank_details' %}" method="post" style="background-color:rgba(0,0,0,.4);">
+                    {% csrf_token %}
+                    <center>   <div class="col-sm-6 m-0 p-4">
+                        <div class="row container-fluid  p-2 ">
+                            <div class="col-sm-6 m-0 p-0"> <h6 for="a">Bank Details For :</h6></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="bankde"  class="form-control" id="loc" placeholder=""></div>
+                        </div>
+                    </div>
+                </center>    
+                    
+                    <div class="p-3"><hr>
+                        <div class="row container-fluid  p-0 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Transaction Type</label></div>
+                            <div class="col-sm-6 m-0 p-0"></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><hr>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="trans" id="Transaction_Type" class="form-control" onchange="trantype()" required >
+                                    <option value="End of List">End of List</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="e - Fund Trasfer">e - Fund Trasfer</option>
+                                    <option value="Others" selected>Others</option>
+                                </select>
+                            <div class="col-sm-6 m-0 p-0"></div>
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="cross_using">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Cross Using</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" value="A/C Payee" name="cros">
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="A/c_No">
+                            <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c No.</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" id="acno" placeholder="" name="acnt">
+                            </div>   
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="IFSC_Code">
+                            <div class="col-sm-6 m-0 p-0"> <label for="pan">IFSC Code</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" id="ifs" placeholder="" name="ifs">
+                            </div> 
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="Bank_Name">
+                            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Bank Name</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="bank" id="" class="form-control">
+                                    <option value="not applicable">Not applicable</option>  
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+
+    <script>
+        function trantype(){
+            var status = document.getElementById("Transaction_Type");
+            var a = status.value;
+            console.log(a);
+            if( a == "End of List" ){
+                console.log(a);
+
+                window.location.href="{% url 'load_create_ledger' %}";
+            }
+            else if( a == "Cheque" ){
+                document.getElementById('cross_using').style.display = "flex";
+                document.getElementById('A/c_No').style.display = "none";
+                document.getElementById('IFSC_Code').style.display = "none";
+                document.getElementById('Bank_Name').style.display = "none";
+            }
+            else if( a == "e - Fund Trasfer" ){
+                document.getElementById('A/c_No').style.display = "flex";
+                document.getElementById('IFSC_Code').style.display = "flex";
+                document.getElementById('Bank_Name').style.display = "flex";
+                document.getElementById('cross_using').style.display = "none";
+            }
+            else{
+                document.getElementById('cross_using').style.display = "none";
+                document.getElementById('A/c_No').style.display = "none";
+                document.getElementById('IFSC_Code').style.display = "none";
+                document.getElementById('Bank_Name').style.display = "none";
+            }
+        } 
+        document.getElementById("loc").value=localStorage.getItem("status")
+    </script>
+{% endblock %}

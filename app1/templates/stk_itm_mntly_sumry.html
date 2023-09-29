@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Stock Item Monthly Summary</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table  table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+
+                        <tr>
+                            <th rowspan="3"  class="align-middle text-white">Particular</th>
+                            <th colspan="6" class="text-center text-white"> <h5>{{ display.Particular }}</h5><h6><b> </b></h6>For 1-Apr-2022</th>
+                        </tr>
+                        
+                        <tr>
+                            <th colspan="2" class="text-center text-white">Inwards</th>
+                            <th colspan="2" class="text-center text-white">Outwards</th>
+                            <th colspan="2" class="text-center text-white">Closing Balance</th>
+                        </tr>
+                          
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Value</th>
+                            <th>Quantity</th>
+                            <th>Value</th>
+                            <th>Quantity</th>
+                            <th>Value</th> 
+                        </tr>
+                        
+                    <tbody >
+                        <tr class="trhover">
+                            <th>Opening Balance</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>{{ sum1 }} </th>
+                            <th>{{ sum2 }} </th>
+                        </tr>
+                        {% for i in data %}
+                        <tr class="trhover">
+                            <td><a href="{% url 'Stock_Item_Voucher' i.id %}">{{ i.Particular }}</a></td>
+                            <td>{{ i.Inwards_Qty }} </td>
+                            <td>{{ i.Inwards_Vlu }}</td>
+                            <td>{{ i.Outwards_Qty }} </td>
+                            <td>{{ i.Outwards_Vlu }}</td>
+                            <td>{{ i.Closing_Bal_Qty }} </td>
+                            <td>{{ i.Closing_Bal_Vlu }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td class="month">{{mon1}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon2}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon3}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon4}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon5}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon6}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon7}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon8}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon9}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon10}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon11}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{mon12}}</td>
+                        </tr>
+                    </tbody>
+                        <tr>
+                            <th colspan="">GRAND TOTAL :</th>
+                            <th>{{sum3}} </th>
+                            <th>{{sum4}}</th>
+                            <th>{{sum5}} </th>
+                            <th>{{sum6}}</th>
+                            <th>{{sum7}}</th>
+                            <th>{{sum8}}</th>
+                           </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+.trhover:hover{
+    background-color: rgb(31, 40, 68);
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function()
+    {
+        $("table tr td").each(function()
+        {
+            var emptyrows=$.trim($(this).text());
+            if(emptyrows.length==0)
+            {
+                $(this).parent().hide();
+            }
+        });
+    });
+</script>
+
+{% endblock %}

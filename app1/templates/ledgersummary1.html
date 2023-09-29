@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load mathfilters %}
+<style>
+  th.a:hover{
+    text-align: center;
+    width: 120px;
+    background-color:orange;
+   }
+  .btns_prnt{
+      width: 100%;
+      text-align: end;
+      background-color: rgba(240, 248, 255, 0);
+      border: none;
+      /* padding: 6px; */
+
+  }
+  .btns_prnt:hover{
+      background-color:orange;
+      color: rgb(15, 14, 14);
+  }
+
+</style>   
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<center></center><h5 class="text-capitalize" style="text-align:center;"></h5></center>   
+<a href="javascript:;" class="has-arrow">
+  <div class="row container-fluid p-8 mx-0">
+          <div class="col-sm-12 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+        <div  class="bg-info text-light">Ledger Montly Summary</div>
+        <td colspan="4"></td>
+          <td> {% for m in msg1 %}
+            {{m}}
+            {% endfor %}</td>
+<div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);"></div>
+    <table class="table-bordered" width="100%">
+      <thead class="thead-dark"> 
+        <tr>
+                  
+          <th rowspan="10" colspan="5" class="a"><br/>Particulars 
+        
+          <th colspan="6" class="a"><center>{{name.ledger}}<br/> ABC Pvt Ltd</center>
+             <tr><td  colspan="5" class="a"><br/><center>Transactions</center></td><td rowspan="5"><center>Closing Balance</center></td>
+             <tr><td colspan="2" class="a" ><center>credit</center></td><td colspan="2" class="a"><center>Dedit</center> </td></td></tr>
+             
+          </th>   
+        </tr>   
+        
+      </thead>
+       <tbody>
+        <tr><td colspan="10" colspan="3" class="a">Opening balance</td><td colspan="2" colspan="3" class="a"><center>100000cr</center></td></tr>
+      {% for s in  v %}
+        <tr>
+          <td colspan="4" colspan="3" class="a"><a href="{% url 'listofledger' forloop.counter  %}" class="btns_prnt">{{s.month|date:'M'}}</a></td>
+          <td colspan="2" class="a" text-align="center"><center>{{s.credit}}</center></td>
+          <td colspan="2" class="a" text-align="center"><center>{{s.debit}}</center></td>
+          {% if s.credit > s.debit %}<td colspan="4" class="a" text-align="center"><center>{{s.credit|sub:s.debit}}&nbsp;Cr</center></td>
+           {% else %}       
+          <td colspan="4" class="a" text-align="center"><center>{{s.debit|sub:s.credit}}&nbsp;Dr</center></td>{% endif %}
+       </tr>        
+    {% endfor %} 
+    <tr><td colspan="4"  class="a"><h6>Grand Total</h6> </td>
+      <td colspan="2"  class="a"  ><center>{{c}}</center></td>
+      <td colspan="2"  class="a" ><center>{{d}}</center></td></tr>
+       
+        </tbody>
+   
+        
+       <!-- <div class="row container-fluid m-0 w-100 p-0">
+        <table class="table p-0 m-0">
+            <tbody>
+                <tr>
+                    <td class="w-75 m-0 p-0 pl-3">Grand Total</td>
+                    <td class="w-25 m-0 p-0 text-center"><h3 class="btns_prnt">{{total1}}</h3></td>
+                </tr>
+            </tbody>
+        </table>   
+    </table>
+    </div>
+  </div> -->
+
+{% endblock %}

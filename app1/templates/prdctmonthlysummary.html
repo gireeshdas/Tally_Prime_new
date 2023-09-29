@@ -1,0 +1,266 @@
+
+    {% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            *{
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing:border-box;
+        }
+       
+        table,th,td
+{
+    border-collapse: collapse;
+  
+}
+table
+{
+    width: 100%;
+    border-color: gray;
+    background-color:rgba(0,0,0,.4);
+}
+
+th.a{
+    text-align: center;
+    width: 120px;
+}
+th
+{
+   
+    border-top: 1.5px solid rgb(100, 107, 114);
+    border-left: 1.5px solid rgb(100, 107, 114);
+    border-bottom: 1.5px solid rgb(100, 107, 114);
+    
+    font-size: 13px;
+    font-weight: lighter;
+    padding: 6px;
+    color:beige;
+    
+   
+}
+
+ td
+{
+    padding: 8px;
+    font-size: 13px;
+    text-align: center;
+ 
+}
+tfoot td.b{
+    padding: 8px;
+    font-size: 13px;
+    text-align: left;
+}
+.btns{
+    color: black;
+    text-decoration: none;
+    
+  
+
+}
+.btns_prnt{
+    width: 100%;
+    text-align: start;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    /* padding: 6px; */
+
+}
+tbody tr:hover td{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+.btns_prnt:hover{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+tbody tr:hover td{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+@media (max-width: 991px) {
+  .main-panel {
+      margin-left: 0;
+      width: 100%;
+  }
+}
+
+.content-wrapper {
+
+  padding: 1.875rem 1.75rem;
+  width: 100%;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+    </style>
+
+</head>
+<body>
+    <div class="main-panel">
+        <div class="content-wrapper">
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 ">
+    <div style="background-color:rgba(0,0,0,.4);">
+        <h6 style="color: rgb(0, 0, 65); background-color: rgb(142, 211, 250);padding: 2px; height:3%;">Stock Item Monthly Summary</h6>
+    <div style=" display:flex; height: 97%;">
+    <div style=" width:100%;  height: 100%;overflow-x: auto; ">
+       
+        <!--<div style="display:flex; padding: 25px;">
+    
+            <div style="width: 50%; text-align: start;">
+              <h5 style="color: black; font-size: 16px; height: 3%;">Particulars</h5>
+              <h5 style="padding:5px;">1-Apr-22 to 31-March-23</h5>
+        
+          </div>
+          <div style="width: 50%; text-align: end;">
+            <h5 style="color: black; padding:5px;font-size: 16px;">For 1-Apr-22&nbsp;</h5>
+            <br><h5 style="color: black; padding:5px;font-size: 16px;">Quantity &nbsp;Rate &nbsp;Value</h5>
+        
+          </div>
+          </div>-->
+      <hr>Stock Item:{{ si.name }} </hr>
+      
+
+      <table>
+        <thead>
+        <tr>
+            <th rowspan="4">Particulars </th>
+            <th colspan="6" class="a" >{{ cmp.comp_name }}<br>{{ cmp.start_date }}</th>
+        </tr>
+
+    <tr> <th colspan="2"class="a" >Inwards</th>
+        <th colspan="2"class="a" >Outwards</th><th colspan="2"class="a" >Closing Balance</th></tr>
+     <tr><th class="a" >Quantity</th><th class="a">Value</th>
+        <th class="a" >Quantity</th><th class="a">Value</th>
+        <th class="a" >Quantity</th><th class="a">Value</th></tr>   
+         
+    </thead>
+    <tbody>
+        <tr>
+            <td><span style="font-style: italic;">Opening Balance</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ qty }}</td>
+            <td>{{ val }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;"><a href="{% url 'vouchsummary' si.id '4' qty %}"><h6>April</h6></a></td>
+            <td>{{ ia }}</td>
+            <td>{{ ib }}</td>
+            <td>{{ oc }}</td>
+            <td>{{ od }}</td>
+            <td>{{ aa }}</td>
+            <td>{% widthratio aa 1 rate %}</td>
+            
+        </tr>
+          <tr>  <td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id '5' aa  %}"><h6>May </h6></a></td>
+            <td>{{ ie }}</td>
+            <td>{{ iv }}</td>
+            <td>{{ og }}</td>
+            <td>{{ oh }}</td>
+            <td>{{ cb5 }}</td>
+            <td>{% widthratio cb5 1 rate %}</td>
+            
+        </tr>
+           <tr> <td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '6' cb5  %}"><h6>June </h6></a></td>
+            <td>{{ iiq }}</td>
+            <td>{{ ij }}</td>
+            <td>{{ okq }}</td>
+            <td>{{ ol }}</td>
+            <td>{{ cb6 }}</td>
+            <td>{% widthratio cb6 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '7' cb6 %}"><h6>July </h6></a></td>
+                <td>{{ im }}</td>
+                <td>{{ inv }}</td>
+                <td>{{ ooq }}</td>
+                <td>{{ op }}</td>
+                <td>{{ cb7 }}</td>
+                <td>{% widthratio cb7 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id '8' cb7  %}"><h6>August </h6></a></td>
+                <td>{{ iq }}</td>
+                <td>{{ ir }}</td>
+                <td>{{ os }}</td>
+                <td>{{ ot }}</td>
+                <td>{{ cb8 }}</td>
+                <td>{% widthratio cb8 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id '9' cb8  %}"><h6>September </h6></a></td>
+                <td>{{ iu }}</td>
+                <td>{{ ivv }}</td>
+                <td>{{ ow }}</td>
+                <td>{{ ox }}</td>
+                <td>{{ cb9 }}</td>
+                <td>{% widthratio cb9 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '10' cb9 %}"><h6>October</h6></a></td>
+                <td>{{ iy }}</td>
+                <td>{{ iz }}</td>
+                <td>{{ oa1 }}</td>
+                <td>{{ ob1 }}</td>
+                <td>{{ cb10 }}</td>
+                <td>{% widthratio cb10 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id   '11' cb10 %}"><h6>November </h6></a></td>
+                <td>{{ ic1 }}</td>
+                <td>{{ id1 }}</td>
+                <td>{{ oe1 }}</td>
+                <td>{{ of1 }}</td>
+                <td>{{ cb11 }}</td>
+                <td>{% widthratio cb11 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '12' cb11  %}"><h6>December </h6></a></td>
+                <td>{{ ig1 }}</td>
+                <td>{{ ih1 }}</td>
+                <td>{{ oi1 }}</td>
+                <td>{{ oj1 }}</td>
+                <td>{{ cb12 }}</td>
+                <td>{% widthratio cb12 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '1' cb12 %}"><h6>January </h6></a></td>
+                <td>{{ ik1 }}</td>
+                <td>{{ il1 }}</td>
+                <td>{{ om1 }}</td>
+                <td>{{ on1 }}</td>
+                <td>{{ cb1 }}</td>
+                <td>{% widthratio cb1 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '2' cb1 %}"><h6>February </h6></a></td>
+                <td>{{ io1 }}</td>
+                <td>{{ ip1 }}</td>
+                <td>{{ oq1 }}</td>
+                <td>{{ or1 }}</td>
+                <td>{{ cb2 }}</td>
+                <td>{% widthratio cb2 1 rate %}</td></tr>
+            <tr><td style="text-align: left;" ><a href="{% url 'vouchsummary' si.id  '3' cb2  %}"><h6>March</h6></a></td>
+                <td>{{ is1 }}</td>
+                <td>{{ it1 }}</td>
+                <td>{{ ou1 }}</td>
+                <td>{{ ov1 }}</td>
+                <td>{{ cb3 }}</td>
+                <td>{% widthratio cb3 1 rate %}</td></tr>
+
+            
+    </tbody>
+    <tfoot>
+        <tr style=" border-top: 1.5px solid rgb(100, 107, 114);">
+            <td class="b">Grand Total</td>
+            <td>{{ tpq }}</td>
+            <td>{{ tpv }}</td>
+            <td>{{ tsq }}</td>
+            <td>{{ tsv }}</td>
+            <td>{{ ttq }}</td>
+            <td>{% widthratio rate 1 ttq %}</td>
+        </tr>
+    </tfoot>
+     </table>
+    </div>
+     </table>
+    </div>
+    
+   
+</div></div>
+<div class="col-md-2"></div>
+</div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block body %}
+     {% load static %}
+
+
+     <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        .hide{
+            display:none;
+        }
+        .flexy{
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+    
+
+
+     
+     <div class="container" >
+        <h2 class="text-center">Unit creation</h2>
+        <div class="row" >
+            <div  class="col" style="margin-left:33% ;" >
+                <form action="{% url 'unit_edit2' p.id %}" method="post">
+                    {% csrf_token %}
+
+                    <label class="form-label">Type</label>
+                    <select name="type" onchange="show()" id="pvc" class="form-control w-50">
+                        <option value="simple">Simple</option>
+                        <option value="compound">Compound</option>
+                    </select>
+
+                    <div id="sps" class="flexy w-50">
+                        <div class="w-100"><label class="form-label">Symbol</label></div>
+                        <input name="symbol" type="text" class="form-control " value="{{ p.symbol }}">
+
+                       <div  class="w-100"><label class="form-label">Formal name</label></div>
+                        <input name="formal" type="text" class="form-control " value="{{ p.formal_name }}">
+                       <div  class="w-100"><label class="form-label">Number of Decimal</label></div>
+                        <input name="decimal" type="text" placeholder="0" class="form-control" value="{{ p.number_of_decimal_places }}">
+                    </div>
+ 
+                    <div id="fps" class="hide flexy w-50">
+
+                    
+                        <div  class="w-100"><label class="form-label">first unit</label></div>
+                        <input name="ft" type="text" class="form-control " value="{{ p.first_unit }}">
+                    
+                        
+                       <div  class="w-100"> <label class="form-label">conversion</label></div>
+                        <input name="con" type="text" class="form-control " value="{{ p.conversion }}">
+                
+                       
+                       <div  class="w-100"><label class="form-label">second unit</label></div>
+                        <input name="sec" type="text" value="0" class="form-control "value="{{ p.second_unit }}">
+                    </div>
+                    
+                   
+                    <button type="submit"  class="form-control btn btn-info mt-3 w-50" >submit</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+     </div>
+
+     <script>
+        function change(){
+            var result =confirm('Are you sure');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+
+
+     </script>
+
+     <script>
+
+        function show(){
+            var status=document.getElementById('pvc');
+            var c=status.value
+            console.log(c)
+
+            if (c == 'compound'){
+                console.log(c);
+
+                document.getElementById('fps').style.display="flex";
+                document.getElementById('sps').style.display="none"
+            }
+            else {
+                document.getElementById('sps').style.display="flex";
+                document.getElementById('fps').style.display="none"
+            }
+        }
+
+
+     </script>
+
+
+{% endblock %}

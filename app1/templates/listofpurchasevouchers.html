@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block body %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<center></center><h5 class="text-capitalize" style="text-align:center;"></h5></center>   
+<a href="javascript:;" class="has-arrow">
+  <div class="row container-fluid p-8 mx-0">
+        <!-- <div class="col-sm-3"></div> -->
+        <div class="col-sm-12 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+        <div  class="bg-info text-light"> Vouchers Register<span style="margin-left: 40%;">{{cmp.name}}</span></div>
+<div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);"></div>
+    <table class="table-bordered" width="100%">
+      <thead class="thead-dark">
+        <tr>
+          <th  colspan="2">List of all Purchase Vouchers<BR><BR></th>
+            <td colspan="4"></td>
+          <td> {% for m in msg1 %}
+            {{m}}
+            {% endfor %}</td>
+        </tr>
+        <th colspan="2">Date</th>
+        <th colspan="2">Particulars</th>
+        <th colspan="2">Voucher type:</th>
+        <th colspan="2">Ledger Type :</th>
+        <th colspan="2">Debit Amount</th>
+        <th colspan="2">Credit Amount</th>
+      </thead>
+      <tr>
+        
+      </tr>
+        
+         
+      {% for i in purchase %}  
+      <tr>
+          <td colspan="2">{{i.purchase_date}}</td>
+          <td colspan="2"><a href="">{{i.partyAccntname}}</a></td>
+          <td colspan="2">Accounting Voucher</td>
+          <td colspan="2">{{i.purchaseledger}}</td>
+          <td colspan="2">0 </td>
+          <td colspan="2">{{i.total}}</td>
+       </tr>
+       {% endfor %}
+      
+        <tr>
+         <td colspan="8">
+           Grand Total:
+           </td>
+           <td>
+                        </td>
+           <td colspan="7">{{total1}}<center>
+            </center>
+            </td> 
+          </tr> 
+          <tr>
+            <td colspan="6">
+              <a href="{% url 'purchaseregister' %}">Back to purchase register</a>
+             </td> 
+            </tr>
+      </tbody> 
+    </table>
+    </div>
+  </div>
+
+{% endblock %}

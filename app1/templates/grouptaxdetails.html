@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+   
+<style>
+    @media (max-width: 991px) {
+  .main-panel {
+      margin-left: 0;
+      width: 100%;
+  }
+}
+.content-wrapper {
+  padding: 1.875rem 1.75rem;
+  width: 100%;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+@media (max-width: 767px) {
+        #demoos{
+            display: none;
+        }
+    }
+</style>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row d-flex justify-content-center" >
+                <div class="col" id="demoos"></div>
+                <div class="col" style="background-color: rgb(103, 175, 220);color:#fff;">GST Details For Stock Group</div>
+                <div class="col" id="demoos"></div>
+                <!-- <div class="col"><a href="" class="float-end"><button class="btn-close"></button></a></div> -->
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4 " style="background-color: rgba(33,57,77,255);color:#fff;">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <b>Tax Dteails</b>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="">Taxability :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="" id="" class="form-control">
+                                <option value="">Unknown</option>
+                                <option value="">Exempt</option>
+                                <option value="">Nil Related</option>
+                                <option value="">Taxable</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <b>Tax Type</b>
+                        </div>
+                        <div class="col-md-6">
+                            <b>Rate</b>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="">Integerated Tax :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="0%">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="">Cess :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="0%">
+                        </div>
+                    </div>
+                    <div class="row mt-4 mb-4  d-flex justify-content-center">
+                        <button type="submit" class="form-control text-white" style="background-color: rgb(103, 175, 220);border:1px solid black; width:250px;"> Submit </button>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

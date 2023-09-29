@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }
+
+        .form-popup {
+            visibility: hidden;       
+            position: fixed;
+            top: 230px;
+            right: 27px;
+            background-color: rgb(0,0,0,.2); 
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+      
+      }
+    
+    </style>
+    
+    <div>
+        <div style="margin-left:10% ;">
+            <div  style="width: 90%;">
+
+        <h6  class="bg-info text-light p-2 m-0 text-left">Employee Group Creation (Secondary)</h6>
+        {% for a in empalter %}
+            <form  name="myForm" id="" action="{% url 'statistics_empgrp_alt' a.id %}" onsubmit="validateForm()" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+              
+
+            <div style="margin-left:250px;" class="row container-fluid  p-2  ">
+                <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control" value="{{ a.name }}" name="name" autocomplete="off"
+                    onblur="passvalues()" ></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+
+            
+            <div class="row container-fluid  p-2 " style="margin-left:250px;">
+                <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                <div class="col-sm-3 m-0 p-0"> 
+                <input type="text" class="form-control" id="b" placeholder="{{ a.alias }}" name="alias" autocomplete="off"
+                onblur="passvaluesAlias()"></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+
+            <div class="row container-fluid  p-2 "style="margin-left:250px;">
+                <div class="col-sm-2 m-0 p-0"> <label for="Under">Under</label></div>
+                <div class="col-sm-3 m-0 p-0"> 
+                <input type="text" class="form-control" id="primary-text" onfocus="showList()" autocomplete="off" placeholder="" value="{{ a.under }}"  name="under_name"></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+
+            <div class="row container-fluid  p-2 "style="margin-left:250px;">
+                <div class="col-sm-2 m-0 p-0"> <label for="salary">Define salary details</label></div>
+                <div class="col-sm-3 m-0 p-0">
+                    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" 
+                     name="salary" id="salary" class="form-control">
+                        <option value="{{ a.define_salary }}">{{ a.define_salary }}<option>
+                        <option value="#">No</option> 
+                        <option value="/statistics_empg_dtls/{{ a.id }}">Yes</option>
+                    </select> <br><br>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+            </div>
+
+                
+            <div class="enter w-100 py-4"><button class="btn btn-info w-15">Alter</button></div>     
+                
+           
+        </form>
+        {% endfor %}
+
+    </div>  
+        </div>
+    </div>
+    
+    
+    
+    <div class="form-popup" id="list-div" >
+  
+        <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Employee Groups</h6>
+    <hr >
+    <div>
+        <table >
+        <tr >
+            <td>
+              <a href="{% url 'statistics_empg_create' %}"><button
+                    type="submit"
+                    style="color: white; width: 100%"
+                    class="custom-select-md form-control"
+                  >
+                    create
+                  </button></a>
+            </td>
+        </tr>
+    
+        <tr>
+          <td>    
+    
+            {% for l in emp %}
+            <div onclick="hideList('{{l.name}}')" style="color: white;" >{{l.name}}</div>
+            {% endfor %}
+          </td>
+        </tr>  
+        
+        </table>
+    </div>
+    
+    
+     </div>
+    
+                    
+    
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                    
+                    <script>
+                          localStorage.clear();
+
+                         document.getElementById("a").value = localStorage.getItem("name"); 
+
+                         localStorage.clear();
+
+                         document.getElementById("b").value = localStorage.getItem("alias");
+
+                         localStorage.clear();
+                          
+                        function passvalues()
+                        {
+                            var name=document.getElementById("a").value;
+                            //console.log(name);
+                            localStorage.setItem("name", name);
+                            var a=localStorage.getItem("name");
+                            //console.log(a);
+                        }
+
+                        function passvaluesAlias()
+                        {
+                            var name=document.getElementById("b").value;
+                            localStorage.setItem("alias",name);
+                            var b=localStorage.getItem("alias")
+                        }
+
+                        function showList() {
+                            document.getElementById("list-div").style.visibility = "visible";
+                        }
+                        function hideList(valueDIv) {
+                            document.getElementById("primary-text").value=valueDIv;
+                            document.getElementById("list-div").style.visibility = "hidden";
+                        }
+                        function validateForm(){
+
+                            var x=document.forms["myForm"]["name"].value;
+                            if (x==null || x=="")
+                            {
+                            alert("Name must be filled out");
+                            return false;
+                            }
+                        }
+                                
+                    </script>
+{% endblock %}

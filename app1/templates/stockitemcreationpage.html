@@ -1,0 +1,461 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            transform: rotate(0deg);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 30px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 200px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 300px;
+            padding: 2px; 
+        }
+        .btns_prnt{
+            color: #fff;
+            width: 100%;
+            cursor:pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        }
+        .bt{
+            text-align: end;
+        }
+        .ScrollStyle{
+            /* max-height: 200px; */
+            overflow-y: scroll;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+
+    <div class="m-2">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Stock Item Creation</div>
+        </div>
+           
+        <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'Statistics_Stock_Item_Creation' %}" autocomplete="off">
+            {% csrf_token %}
+
+            <div class="p-3">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                    <div class="col-sm-3 m-0 p-0"><input type="text" name="name" class="form-control" id="name" onblur="passvalue()" required></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                    <div class="col-sm-3 m-0 p-0"><input type="text" name="alias" class="form-control" id=""></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+            </div>
+            
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <h5 class="text-center">General</h5>
+                    <div class="row container-fluid  p-0">
+                        <div class="col-sm-6 m-0 p-0"></div>
+                        <div class="col-sm-6 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="e">Under</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <input type="text" name="under" id="under" value="Primary" class="form-control" onclick="showform();">
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="e">Units</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <input type="text"  id="units" onblur="showunits()" name="units" class="form-control" onclick="showform1();">
+                        </div>
+                    </div>
+                    <!-- <div class="row container-fluid p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="e">Enable Godown</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="" id="gt" class="form-control" onchange="showgodown();">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div> -->
+                    <!-- <div class="row container-fluid hide p-2 m-0" id="additional">
+                        <h5 class="text-center">Additional Details</h5>
+                        <div class="row container-fluid  p-0">
+                            <div class="col-sm-6 m-0 p-0"></div>
+                            <div class="col-sm-6 m-0 p-0"></div>
+                        </div>
+
+                        <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Maintain in Batches</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="bt" class="form-control" name="batches" onchange="showbats();">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Track Date of manufacturing</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="btt" class="form-control" name="trackdate" onchange="showbats1();">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Use Expiry Dates</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="bat" class="form-control" name="expirydate" onchange="showbats2();">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                      
+                    </div> -->
+                </div> 
+
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <h5 class="text-center">Statutory Details</h5>
+                    <div class="row container-fluid  p-2" id="l">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">GST Applicable</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="gst_applicable" id="gst" class="form-control" onchange="">
+                                <option value="Not Applicable">Not Applicable</option>
+                                <option value="Applicable" selected>Applicable</option>
+                                <option value="Undefined">Undefined</option>   
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid p-2" id="setalt">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">Set/Alter GST details</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="set_alter" id="stock" class="form-control" onchange="">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>        
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2" id="supply">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">Type of supply</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="typ_sply" id="l" class="form-control" >
+                                <option value="Goods">Goods</option>
+                                <option value="Services">Services</option>   
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="l">Rate of duty(eg 5)</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" id="l" class="form-control" name="rate_of_duty"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);"> -->
+                <!-- <br><h5 style="margin-left: 20%;"><b>Opening Balance</b></h5> -->
+                <!-- <div class="p-3">
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Quantity</label></div>
+                        <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control"  placeholder="" name="quantity"
+                            id="quantity" onblur="passquantity()">
+                        </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Rate</label></div>
+                        <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control" id="rate" placeholder="" name="rate"
+                            id="rate" onblur="passrate()">
+                        </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Per</label></div>
+                        <div class="col-sm-3 m-0 p-0"> 
+                            <input type="text" class="form-control" id="per1" placeholder="" name="per"> </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Value</label></div>
+                        <div class="col-sm-3 m-0 p-0"> 
+                            <input type="text" class="form-control" id="value" placeholder="" name="value"> </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                </div> -->
+            <!-- </div> -->
+            <div class="col-sm-6 m-0 p-4"></div>
+            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>       
+        </form>
+    </div>
+
+    <div class="form-popup ScrollStyle" id="underForm" style="background-color: #213b52" >
+        <form action="" class="form-container1">
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Groups</h6>
+            <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+            <a href="{% url 'Statistics_Stock_Group_Creation_Page' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setPrimary()" class="btns_prnt">&nbsp;&nbsp;Primary</option>
+
+                        {% for co in grp %}
+                        <option onclick="setvalue(' {{co.name}} ','{{co.id}}')" class="btns_prnt">&nbsp;&nbsp;{{ co.name }}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{co.id}}">
+        </form>    
+    </div>
+    <div class="form-popup ScrollStyle" id="underForm1" style="background-color: #213b52" >
+        <form action="" class="form-container1">
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">Units</h6>
+            <button type="button" class="btn cancel close" onclick="closeForm1()">X</button>
+            <a href="{% url 'unitcreate_alt' %" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setAvailable('Not Applicable')" class="btns_prnt" value="Not Applicable">&nbsp;&nbsp;&nbsp;Not Applicable</option>
+                        
+                        {% for i in unt %}
+                        <option onclick="setvalue1('{{i.f_unit}}')" id="un" class="btns_prnt">&nbsp;&nbsp;
+                            {{ i.f_unit }} 
+                        </option>
+                            
+                        {% endfor %}
+
+                        {% for i in u %}
+                            <option onclick="setvalue1('{{i.symbol}}')"  class="btns_prnt">&nbsp;&nbsp;
+                                {{ i.symbol }} 
+                            </option>
+                            
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden1" hidden value="{{un.id}},{{u.id}}">
+        </form>    
+    </div>
+
+    <script>
+
+        function setPrimary(){
+            document.getElementById('under').value= 'Primary';
+            document.getElementById('underForm').style.visibility= "hidden";
+        }
+        function setAvailable(p){
+            document.getElementById('units').value= p;
+            var status = document.getElementById("units");
+            var a = status.value
+            console.log(a);
+            if( a == "Not Applicable" ){
+                console.log(a);
+                document.getElementById('additional').style.display = "none";
+            }
+        }
+        function setvalue1(units,unitsId,gr){
+            document.getElementById('units').value= units,gr;
+            document.getElementById('underForm1').style.visibility= "block";
+            document.getElementsByName('underhidden1').value= unitsId;
+            document.getElementById('additional').style.display = "flex";
+        }
+        function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+        }
+        function showform(){
+            document.getElementById('underForm').style.display= "block";
+        }
+        function setvalue(under,underId){
+            document.getElementById('under').value= under;
+            document.getElementById('underForm').style.visibility= "hidden";
+            document.getElementsByName('underhidden').value= underId;
+        }
+        function closeForm1() {
+            document.getElementById("underForm1").style.display = "none";
+        }
+        function showform1(){
+            document.getElementById('underForm1').style.display= "block";
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+        function showcrt(){
+            var status = document.getElementById("crt");
+            var a = status.value;
+            if(a=="create"){
+    
+                window.location.href="{% url 'load_stock_group' %"
+            }
+            else{
+                document.getElementById('rate').style.display="flex";
+            }
+        }
+        function showgststock(){
+            var status = document.getElementById("stock");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'gst_stock_item' %"
+            }
+            else{
+                document.getElementById('rate').style.display="flex";
+            }
+        }
+
+        // document.getElementById("value").value = localStorage.getItem("amount");
+    
+        function checker(){
+            var result =confirm('Are you sure?');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+        
+        function passquantity(){
+            var quantity=document.getElementById("quantity").value;
+            localStorage.setItem("quantity", quantity);
+            var qua=localStorage.getItem("quantity");                         
+        }
+        function passunits(){
+            var units=document.getElementById("per").value;
+            localStorage.setItem("per", units);
+            var qua=localStorage.getItem("per");                         
+        }
+        // list showgroup
+        function showGroup() {
+            document.getElementById("list-group").style.visibility = "visible";
+        }
+        function hideGroup(valueDIv) {
+            document.getElementById("group").value=valueDIv;
+            document.getElementById("list-group").style.visibility = "hidden";
+        }
+        // list Show Category
+        function showCategory() {
+            document.getElementById("list-categ").style.visibility = "visible";
+        }
+        function hideCateg(valueDIv) {
+            document.getElementById("categ").value=valueDIv;
+            document.getElementById("list-categ").style.visibility = "hidden";
+        }
+        // list show Units
+        function showUnits() {
+            document.getElementById("list-units").style.visibility = "visible";
+        }
+        function hideUnits(valueDIv) {
+            document.getElementById("unit").value=valueDIv;
+            document.getElementById("list-units").style.visibility = "hidden";
+        }
+
+        $('#quantity, #rate').on('input',function(){
+            var quantity = parseFloat($('#quantity').val()) || 0;
+            var rate = parseFloat($('#rate').val()) || 0;
+            $('#value').val(quantity * rate);    
+        });
+
+        function showgst(){
+            var status = document.getElementById("gst");
+            var a = status.value;
+            console.log(a);
+            if( a == "Applicable" ){
+                console.log(a);
+
+                document.getElementById('supply').style.display = "flex";
+                document.getElementById('setalt').style.display = "flex";
+            }
+            else if( a == "Undefined" ){
+                document.getElementById('supply').style.display = "flex";
+                document.getElementById('setalt').style.display = "none";
+            }
+            else{
+                document.getElementById('supply').style.display = "none";
+                document.getElementById('setalt').style.display = "none";
+            }
+        }
+        function passvalue(){
+            var status = document.getElementById('name').value;
+            console.log(status);
+
+            localStorage.setItem("status",status);
+            var a = localStorage.getItem('status');
+            console.log(a);
+        }
+
+        document.getElementById("value").value = localStorage.getItem("valuepass");
+
+        function passunits(){
+            var units = document.getElementById('units').value;
+            console.log(units);
+
+            localStorage.setItem("units",units);
+            var a = localStorage.getItem('units');
+            console.log(a);
+        }
+        function showgodown(){
+            var status = document.getElementById("gt");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy2' %"
+            }
+        }
+        function showbats(){
+            var status = document.getElementById("bt");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy' %"
+                
+            }
+        }
+        function showbats1(){
+            var status = document.getElementById("btt");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy1' %"
+            }
+        }
+        function showbats2(){
+            var status = document.getElementById("bat");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy1' %"
+            }
+        }
+    </script>
+        
+{% endblock %}

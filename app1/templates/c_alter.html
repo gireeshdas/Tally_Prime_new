@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid p-3 mx-0">
+            <div class="col-sm-3 m-0 p-0"></div>
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Currency Alteration</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'alter_currency'%}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Symbol</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                {% for i in tally %}
+                                    <input type="text" class="form-control" id="a" name="c_symbl" value="{{i.currency_symbol}}">
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Formal Name</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                {% for i in tally %}
+                                    <input type="text" class="form-control" id="a" name="fname" value="{{i.formal_name}}">
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">ISO Currency Code</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" name="isocode"  id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <hr>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Number of decimel places</b></label></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="form-control" id="a" name="decimal_p"  value="2" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Show amount in millions</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="show_amt" id="i" class="form-control">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>  
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Suffix symbol to amount</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="suffix" id="i" class="form-control">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>  
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Add space between amount and symbol</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="add_space" id="i" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>  
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Word representing amount after decimal</b></label></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="form-control" id="a" name="word_rep" value="paise" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>No: of decimal places for amount in words</b></label></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="form-control" id="a" name="no_decimal" value="2" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">ALTER</button></div>  
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

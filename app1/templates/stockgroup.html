@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+<script>
+function confirm() {
+    swal({
+            title: 'warning!',
+            text: 'do you want to delete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'no',
+            confirmButtonText: 'yes'
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                document.querySelector('#myform').submit();
+            }
+        })
+}
+</script>
+<style>
+.table-row{
+cursor:pointer;
+}
+.table-row1{
+cursor:pointer;
+}
+.table-row1:hover{
+background-color: rgb(216, 155, 51);
+}
+
+.selected{background-color:  rgb(216, 155, 51);color: #fff;font-weight: bold
+}
+
+span{
+float: right;
+}
+.btn{
+background-color:#213b52;
+width: 35%;
+}
+.trhover:hover{
+background-color: rgb(31, 40, 68);
+}
+</style>
+</head>
+
+<div class="container-fluid" >
+    <div class="main-panel" >
+        <div class="content-wrapper" >
+            <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                <div class="col ">Chart Of Account</div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered border-dark " id="table" style="background-color: rgba(33,57,77,255);color:#fff;">
+                    <tr>
+                        <th colspan="6">List Of Stock Groups <span>FOR 1-april-2022</span></th>              
+                    </tr>    
+                    {% for i in sgdata %}         
+                    <tr class=" table-row">                    
+                        <td colspan="6"><a href="">{{ i.name }}</a><span><a href="{% url 'Statistics_Delete_Stock_Group' i.pk %}"><i class="bi bi-trash-fill " style="color: red;"></i></a></span>
+                        <span><a href="{% url 'Statistics_Stock_Group_Edit_Page' i.pk %}"><i class="bi bi-pencil-fill" style="margin-right: 20px;color:rgb(75, 206, 75)"></i></a></span></td>
+                    </tr> 
+                    {% endfor %}    
+                    <!-- {% for i in SGdata %}         
+                    <tr class=" table-row">
+                        <td colspan="6"><a href="">{{ i.Name }}</a><span><a href="{% url 'Delete_Stock_Item' i.pk %}"><i class="bi bi-trash-fill " style="color: red;"></i></a></span>
+                            <span><a href="{% url 'Stock_Item_Edit_Page' i.pk %}"><i class="bi bi-pencil-fill" style="margin-right: 20px;color:rgb(75, 206, 75)"></i></a></span></td>
+                    </tr> 
+                    {% endfor %}               -->
+                    <tr>
+                        <th colspan="6">{{ sqtotal }} stock groups </th>
+                    </tr>                    
+                </table>
+
+                <div class="bottom text-center d-flex justify-content-between">
+                    <button class="btn border"><a href="{% url 'index' %}">QUIT</a></button>
+                    <!-- <button class="btn border"><a href="">ALTER</a></button> -->
+                    <button type="button" class="btn border" onclick="myFunction()">SELECT</button>
+                    <button class="btn border"><a href="{% url 'Statistics_Stock_Group_Creation_Page' %}">CREATE</a></button>
+                    <!-- <button class="btn border">DELETE</button> -->
+                    <button class="btn border"  onclick="removeSelectedRow()">REMOVE LINE</button>
+                    <button class="btn border"><a href="{% url 'Statistics_Stock_Groups' %}">RESTORE LINE</a></button>
+                </div>
+
+              </div>
+        </div>
+    </div>
+</div>
+
+
+<script>        
+    var index;  // variable to set the selected row index
+    function getSelectedRow()
+    {
+        var table = document.getElementById("table");
+        for(var i = 1; i < table.rows.length; i++)
+        {
+            table.rows[i].onclick = function()
+            {
+                // clear the selected from the previous selected row
+                // the first time index is undefined
+                if(typeof index !== "undefined"){
+                    table.rows[index].classList.toggle("selected");
+                }              
+                index = this.rowIndex;
+                this.classList.toggle("selected");
+            };
+        }
+    }
+    getSelectedRow();
+</script>
+
+<script>      
+    function myFunction() {
+         var se = document.getElementsByClassName('selected');
+         se[0].style.backgroundColor = "lightblue";
+            
+    }
+</script>
+
+<script>
+    function removeSelectedRow()
+        {
+            table.deleteRow(index);     
+        }
+</script>
+
+{% endblock %}

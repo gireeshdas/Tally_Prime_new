@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+    <style>
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;        
+        }
+    </style>
+
+    <div class="m-0">
+        <div class="row container-fluid p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>PAN/CIN Details</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                <form class="p-3" style="background-color:rgba(0,0,0,.4);" name="myform" action="{% url 'pan_cin' %}" method="post"
+                    onsubmit="return validateform()" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-2 m-0 p-0"></div>
+                            <div class="col-sm-3 m-0 p-0"> <label for="a">PAN/Income tax no.</label></div>
+                            <div class="col-sm-5 m-0 p-0"><input type="text" class="form-control" name="pan" required></div>    
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-2 m-0 p-0"></div>
+                            <div class="col-sm-3 m-0 p-0"> <label for="b">Corporate Identity No. (CIN)</label></div>
+                            <div class="col-sm-5 m-0 p-0"><input type="text" class="form-control" name="cin"></div> 
+                        </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">ACCEPT</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div> 
+
+    <script>  
+        function validateform(){  
+            var cin=document.myform.cin.value;  
+            var pan=document.myform.pan.value;  
+            
+            if (cin==null || cin==""){  
+                alert("CIN can't be blank");            
+                return false;  
+            }
+            else if(pan.length<10){  
+                alert("Invalid PAN structure.Format should be 5 alpha in uppercase 4 numeric and 1 alpha in uppercase (eg:AADAS1234D)");  
+                return false;  
+            }  
+        }  
+    </script>  
+{% endblock %}

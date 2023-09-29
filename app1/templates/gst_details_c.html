@@ -1,0 +1,97 @@
+
+
+
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>GST Details</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                <h6  class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">GST Details for Company</h6>
+                <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'gst_details_c' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <h6 class="bg-trasparent text-light p-2 m-0 text-left">Tax Details <br><i>
+                        {% for i in tally %}
+                        <p>
+                            {{ i.fin_begin }}
+                        </p>
+                        {% endfor %}
+                    </i></h6> 
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Taxability</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="taxability" id="primary" class="form-control" onchange="showgst()">
+                                    <option value="Unknown">Unknown</option>
+                                    <option value="Exempt">Exempt</option>
+                                    <option value="Nill Rated">Nill Rated</option>
+                                    <option value="Taxable">Taxable</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-0 m-0 hide" id="tax">
+                            <div class="row container-fluid  p-2 m-0" id="">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a"><b>Tax Type</b></label></div>
+                                <div class="col-sm-6 m-0 p-0"><label for="a"><b>Rate</b></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a">Integrated Tax</label></div>
+                                <div class="col-sm-6 m-0 p-0"><input type="text" name="tax" class="form-control" value="0%"></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a">Cess</label></div>
+                                <div class="col-sm-6 m-0 p-0"><input type="text" name="cess" class="form-control" value="0%"></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-4 m-0 p-0"> <label for="a">Kerala Flood Cess</label></div>
+                                <div class="col-sm-6 m-0 p-0"><input type="text" name="flood_cess" class="form-control" value="0%"></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>   
+                        </div>
+                        
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+
+    <script>
+        function showgst(){
+            var status = document.getElementById("primary");
+            var a = status.value;
+            if(a=="Exempt"){
+    
+                window.location.href="{% url 'load_rev' %}"
+            }
+            else if(a=="Nill Rated"){
+    
+                window.location.href="{% url 'load_rev' %}"
+            }
+            else{
+                document.getElementById('rate').style.display="flex";
+            }
+        }
+    </script>
+{% endblock %}

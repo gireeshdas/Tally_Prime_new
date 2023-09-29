@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+
+
+   <style>
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .hide{
+        display:none;
+    }
+</style>
+
+   <h1 class="text-center mb-5  radius-15 p-3" style="background-color:#213b52 ;">Payroll Voucher Type creation</h1>
+
+<div class="container radius-15  " style="background-color:#213b52 ;">
+    <div class="row">
+        <div class="col">
+           
+            <form action="{% url 'add_voucher_edit2' p.id %}" method="post">
+                {% csrf_token %}
+
+                <label class="form-label pt-3">Name</label>
+                <input name="name" type="text" class="form-control" value="{{ p.voucher_name }}">
+                <label  class="form-label">alias</label>
+                <input name="alias" type="text" class="form-control" value="{{ p.alias }}">
+                <hr>
+               
+                <h3 class="mt-4">General </h3>
+                <div class="row">
+                    <div class="col">
+                      
+                        <label class="form-labelb ">Select type of voucher</label>
+                        <select name="type" onchange="pk()" id="ab" class="form-control w-100" >
+                            <option value="" selected disabled>select type</option>
+                            
+                            {% for p2 in data %}
+                            <option name="type">{{p2.voucher_name}}</option>
+                            {% endfor %}    
+
+                        </select>
+                        <label class="form-label">Abbreviation</label>
+                        <input name="abber"  id="vc" type="text" class="form-control w-100" value="{{ p.abbreviation }}">
+                        <label class="form-labelb ">Activation this voucher type</label>
+                        <select name="active" class="form-control w-100" >
+                            <option name="active" value="No">No</option>
+                            <option name="active" value="Yes">Yes</option>
+                        </select>
+                        <label class="form-label">Method of Voucher numbering</label>
+                        <select name="numbering" onchange="show()" id="mvp" placeholder="select option" class="form-control w-100">
+                            <option value=""><--  select option  --></option>
+                            <option name="numbering" value="Automatic">Automatic</option>
+                            <option name="numbering" value="Automatic manual">Automatic(Manual override)</option>
+                            <option name="numbering" value="manual">Manual</option>
+                            <option name="numbering" value="multi-user auto">Multi-user Auto</option>
+                            <option name="numbering" value="None">None</option>
+                        </select>
+                        <!-- <div class="  container-fluid  p-1 hide"  id="prv">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Prevent Duplicates</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="prvtdp" id="prvtdp" class="form-control "required="False">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                    
+                        
+                        <div class=" container-fluid mt-2 p-1 hide" id="usrv">
+                            <div class="sm-6 m-0 p-0"> <label for="g">Use advanced configurations </label></div><br>
+                            <div class="col-sm-6 m-0 p-0 ml-2" >
+                                <select name="useavdc" id="useadvc" class="form-control w-100 ">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div> -->
+                        <!-- </div> -->
+
+                       <div class="hide mt-5 mb-5" id="usrv">
+
+                        <label class="form-label">Use advanced configration</label>
+                        <select name="config" class="form-control w-100 ml-2">
+                            <option name="config" value="No">No</option>
+                            <option name="config" value="Yes">Yes</option>
+                            
+
+                        </select>
+
+                       </div>
+                        
+                       <div class="hide mt-5 mb-5" id="prv">
+
+                        <label class="form-label">Prevent duplicates</label>
+                        <select name="prevent" class="form-control w-100 ml-5">
+                            <option name="prevent" value="No">No</option>
+                            <option name="prevent" value="Yes">Yes</option>
+                            
+
+                        </select>
+
+
+                       </div>
+                       
+
+
+
+                        
+                        <label class="form-label">Allow Zero-valued transactions</label>
+                        <select name="trans" class="form-control w-100">
+                            <option name="trans" value="No">No</option>
+                            <option name="trans" value="Yes">Yes</option>
+                        </select>
+                        
+
+                        <label class="form-label">Print</label>
+                        <select name="print" class="form-control w-100">
+                            <option name="print" value="No">No</option>
+                            <option name="print" value="Yes">Yes</option>
+                        </select>
+                       
+                    </div>
+
+
+                </div>
+                <button type="submit" class="btn btn-info w-100 mt-4 mb-3">Submit</button>
+
+            </form>
+           
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function show(){
+        var status = document.getElementById('mvp');
+        var c= status.value
+        console.log(c);
+        if  (c=='Automatic'){
+            console.log(c);
+
+            document.getElementById('usrv').style.display="none";
+            document.getElementById('prv').style.display='none';
+
+        }
+        else if ( c== 'manual' ){
+            document.getElementById('prv').style.display="flex";
+            document.getElementById('usrv').style.display="none";
+        }
+
+        else if (c == 'Automatic manual'){
+            document.getElementById('usrv').style.display="none";
+            document.getElementById('prv').style.display="flex";
+        }
+
+        else if(c == 'multi-user auto'){
+            document.getElementById('usrv').style.display="none";
+            document.getElementById('prv').style.display="none";
+        }
+
+        else if(c =='None'){
+            document.getElementById('usrv').style.display="none";
+            document.getElementById('prv').style.display="none";
+        }
+        else {
+             
+            document.getElementById('usrv').style.display="none";
+            document.getElementById('prv').style.display="none";
+
+        }
+
+
+
+    }
+
+
+    function pk(){
+        var status =document.getElementById('ab')
+        var a=status.value
+        console.log(a);
+        if (a == 'Attendence'){
+            document.getElementById('vc').value ="Attd";
+        }
+
+        else if(a == 'Payment'){
+            document.getElementById('vc').value="pymt"
+        }
+        else if (a == 'Payroll'){
+            document.getElementById('vc').value="pyrl"
+        }
+    }
+
+</script>
+
+
+
+{% endblock %}   

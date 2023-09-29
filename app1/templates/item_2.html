@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<head>
+    <style>
+          thead th {
+    border: .5px solid rgba(255, 255, 255, .2); ;
+    
+    
+ }
+ .table-row{
+cursor:pointer;
+}
+.table-row:hover{
+    background-color: rgb(216, 155, 51);
+}
+.table-row1{
+cursor:pointer;
+}
+.table-row1:hover{
+    background-color: rgb(216, 155, 51);
+}    
+  
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">stock group Summary</div>
+                </div>
+                <div class="table-responsive" >
+                    <table class="table" style="background-color: rgba(33,57,77,255);color:#fff;">
+
+                        <thead>
+
+                            <tr>
+                                
+                                <th rowspan="4"   class="align-middle text-white "> <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">Particular</h6></th>
+                                
+                                <th colspan="6" class="text-center text-white " ><h6><i>{{std.name}}</i></h6>
+                                  <h6><strong> ABC PVT.LTD </strong></h6><h6> For 1-Apr-2022</h6></th>
+                              </tr>
+                              <tr>
+                                <!-- <th colspan="2" class="text-center text-white" style="width: 23%;"><h6> <strong> Outwards </strong></h6></th>-->
+                                <th colspan="3" class="text-center text-white" style="width: 30%;"><h6> <strong>opening balance</strong></h6></th>
+                                <th colspan="3" class="text-center text-white " style="width:30%;"><h6> <strong>closing balance</strong></h6></th>
+
+                              </tr>
+                              <tr>
+                                <th class="text-center text-white">Quantity</th>
+                                <th class="text-center text-white">Rate</th>
+                                <th  class="text-center text-white">value</th>
+                                <th class="text-center text-white">Quantity</th>
+                                <th class="text-center text-white">Rate</th>
+                                <th class="text-center text-white">value</th> 
+                                
+                              </tr>
+
+                              
+
+                             
+
+
+
+
+
+                        </thead>
+                        
+
+                        <tbody>
+                          {% for p in ptm %}
+                          
+                              
+                          <tr class="table-row">
+                            <td ><a class="m-3" href="{% url 'stock_month' p.id %}">{{p.name}}</a></td>
+                            <td  style="text-align: center;">{{p.quantity}} BTL</td>
+                            <td  style="text-align: center;">{{p.rate}}</td>
+                            <td  style="text-align: center;">{{p.value}}</td>
+
+                            <td style="text-align: center;">{{p.additional}} BTL</td>
+                            <td style="text-align: center;">{{p.rate}}</td>
+                            <td style="text-align: center;">{{p.rate_of_duty}}</td>
+                          </tr>
+                         
+                                
+                        {% endfor %}
+                          
+                            <!-- {% for i in mo %} -->
+                            
+                            
+                            
+                            <tr class="table-row" data-href="">
+                                <td>April</td>
+                                
+                                 
+                                <!-- {% if i.leger_month_closing_set.all %}
+                                 
+                                {% for j in i.leger_month_closing_set.all %}
+                                 
+                                    {% if j.Ledger == le %} -->
+
+                                 
+                                 
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td></td>
+                               
+                                
+                                
+                                
+                                    
+                                            
+                                
+                              
+                                    <!-- {% endif %} -->
+                                    
+
+                                
+
+                               
+                                
+                                <!-- {% endfor %} -->
+                                
+                                
+
+                                 <!-- {% else%} -->
+                                 <!-- <td style="text-align: end;"><strong></strong></td>
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td> -->
+                                 <!-- {% endif %} -->
+
+                            </tr>
+                            
+                            <!-- {% endfor %} -->
+
+                          
+
+                          
+
+
+                            <tr class="table-row">
+                                <th  ><h6 class="d-flex align-items-sm-start par p-1 py-1 foot" style="margin-left: 0px;">Grand Total</h6></th>
+                                
+                                <td  style="text-align: center;"></td>
+                                <td  style="text-align: center;"></td>
+                                <td  style="text-align: center;">{{total}}</td>
+
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: center;">{{closing_val}}</td>
+                                
+                            </tr>
+
+                            
+
+                            
+
+                            
+
+
+                        </tbody>
+                        
+
+
+
+
+                    
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        $(document).ready(function($) {
+            $(".table-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+
+{% endblock %}

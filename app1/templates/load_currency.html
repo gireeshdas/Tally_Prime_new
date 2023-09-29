@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            .flexy{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        .form1{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            
+        }
+        form{
+            padding:30px;
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+            transform: rotate(45deg);
+            cursor: pointer;
+            text-decoration: none;
+            
+        }
+        button{
+            background-color:rgb(103, 175, 220) ;
+            color:white;
+            padding:10px 20px;
+        }
+    </style>
+
+       <div class="row container-fluid  p-0">
+        <div class="col-sm-3 m-0 p-0"></div>
+        <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <a href="javascript:history.go(-1);" class="close">+</a>
+        <h6 class="bg-info text-light p-2" style="text-align: center;">Currency Alteration</h6>
+        <div class="row container-fluid">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form action="create_currency" method="post">
+                    {% csrf_token %}
+                    <label for="a">Symbol</label>
+                    <input type="text" class="form-control" id="a" placeholder="" >
+                    <label for="b">Formal Name</label>
+                    <input type="text" class="form-control" id="b" placeholder="">
+                    <label for="c">ISO Currency Code</label>
+                    <input type="text" class="form-control" id="c" placeholder="">
+                    <label for="d">Number of Decimal places</label>
+                    <input type="text" class="form-control" id="d" placeholder="">
+                    <label for="e">Show amount in millions</label>
+                    <select  id="e" class="form-control" name="smt_millon">
+                        <option value="No">No</option> 
+                        <option value="Yes">Yes</option>
+                    </select>
+                    <label for="f">Suffix symbol to amount</label>
+                    <select id="f" class="form-control" name="symbol_to_amount">
+                        <option value="No">No</option> 
+                        <option value="Yes">Yes</option>
+                    </select>
+
+                    <label for="g">Add space between symbol and amount</label>
+                    <select id="g" class="form-control" name="space_bt_sy">
+                        <option value="No">No</option> 
+                        <option value="Yes">Yes</option>
+                    </select>
+                    <label for="h">Word representing amount after decimal</label>
+                    <input type="text" class="form-control" id="h" placeholder=""  name="amount_after_decimal">
+
+                    <label for="i">No, of decimal places for amount in words</label>
+                    <input type="text" class="form-control" id="h" placeholder="" name="amount_in_words">
+                    <div class="flexy">
+                        <button type="submit" class="btn btn-info w-15 my-2" >Create</button>
+                    </div>
+                   
+
+                </form>
+              
+
+            </div>
+            <div class="col-sm-2"></div>
+
+        </div>
+        </div>
+        <div class="col-sm-3  m-0 p-0"></div>
+
+       </div> 
+     
+    
+{% endblock %}

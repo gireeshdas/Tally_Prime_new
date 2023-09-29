@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+ 
+
+    .main-head {
+        background-color: #70c5c5;
+        color: white;
+        font-size: medium;
+        padding: 2px;
+
+    }
+
+    .main-color {
+        background-color: rgba(0,0,0,0.2);
+        color: white;
+
+    }
+
+    nav-item {
+        color: white;
+    }
+    select{
+        background-color: rgba(0,0,0,0.2);  
+        color: white;
+    }
+    select optgroup{
+        background-color: rgb(22 244 255 / 20%);  
+        color: white;  
+    }
+    /* select  option  {
+        background-color: rgba(0,0,0,0.2);
+        color: white; 
+    } */
+    /* select option:active ,section option:focus, section option:hover ,section option:checked{
+        background-color: rgba(0,0,0,0.2);
+        color: white; 
+    } */
+    .form-control,
+    .form-control:focus {
+        background-color: rgb(255 0 0 / 14%);
+        color:white;
+        
+    }
+    input[type="text"],input[type="date"],input[type="number"]{
+        background-color: rgba(0,0,0,0.2);
+        color: white; 
+    }
+
+</style>
+<div class="container main-color">
+    <div class="card main-color">
+
+        <div class="card-body">
+            <form method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" name="sl_inv_id" id="sl_inv_id" />
+
+            <div class="row ">
+                <div class="col-md-6 ">
+                    <h3 class="main-head">Accounting Voucher Creation</h3>
+                    <p style="background-color: blueviolet;display: inline; padding: 0 25px;">
+                        Sales
+                    </p>&nbsp;&nbsp;&nbsp;
+                    <label>NO</label>
+                    <input required id="invno" name="invno" type="number" value="1" > <br><br> <br>
+                    <label for="">Party A/C name :</label>
+                    &nbsp;&nbsp;&nbsp;
+                    <select required id="myselect" style="width: 250px;height: 30px;" name="party_ac_name" onchange="clickDispButton()" >
+                        <optgroup  label="List Of Ledger Accounts"></optgroup>
+                        <option  selected disabled ></option>
+                        <option  value="{% url 'ledgers' %}"  >Create</option>
+                        {% for pr in party_ledg  %}
+                        <option value="{{pr.mname}}">{{pr.mname}}
+                            
+                        </option>
+                        {% endfor %}
+                    </select> <br> <br>
+                    
+                    <label for="">Current Balance :</label>
+                    &nbsp;&nbsp;
+                    
+   
+                    <input  disabled id="current_bal_party" name="current_bal_party" type="text" size="35"> <br> <br>
+                         
+      
+
+                    <label for="">Sales ledger :</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <select required id="myselect2" onchange="goToLink()" style="width: 250px;height: 30px;" name="sale_ledger" >
+                        <optgroup  label="List Of Ledger Accounts"></optgroup>
+                        <option  selected disabled ></option>
+                        <option >Create</option>
+                        
+                        {% for sl in sale_ledg %}
+                        <option value="{{sl.mname}}">
+                            {{sl.mname}}
+                        </option>  
+                        {% endfor %}
+                            
+
+                            
+                    </select> <br> <br>
+
+                    <label for="">Current Balance :</label>
+                    &nbsp;&nbsp;
+                    <input disabled id="current_bal_sale" name="current_bal_sale" type="text" size="35"> <br> <br>
+                    
+ 
+                    <input    id="btnsave" type="button" class="btn btn-success btn-lg w-75" value="Save" type="submit">                         
+                    
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <!-- <div class="btn-group-vertical" role="group" > -->
+                        <input required  type="date" name="date" id="date"> <br> <br>
+                        <a style="display: none;" id="dis_link" class="btn btn-success" href="{% url 'dispathch_detail' %}">Go to dispathch_detail</a>
+                        <!-- <button type="button" class="btn btn-info">Company</button> <br>
+                        <button type="button" class="btn btn-info">Contra</button>
+                        <button type="button" class="btn btn-info">Payment</button>
+                        <button type="button" class="btn btn-info">Receipt</button>
+                        <button type="button" class="btn btn-info">Journal</button> -->
+                    </div>
+      
+                </div>
+            </form> 
+            </div>
+        </div>
+    </div>
+    <!-- go to item item_allocation page  -->
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                        <th>Select an item and go to item allcation page</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select id="myselect3" onchange="window.location.href=this.value;"  style="width: 250px;height: 30px;" name="sale_vouch" >
+                                    <optgroup  label="Endlist"></optgroup>
+                                    <option  selected disabled ></option>
+                                    <option value="{% url 'stock_items_creation' %}">Create</option>
+                                    
+                                    {% for st in stock_items %}
+                                    <option name="stock" id="stock" value="{% url 'item_allocation' st.id  %}" >
+                                        {{st.name}}
+                                    </option>  
+                                    {% endfor %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<!-- end second container  -->
+
+<!-- start third container  -->
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+    <div class="table table-responsive">
+    <table class="table">
+        <thead>
+            <th><strong>Name of item</strong> </th>
+            <th><strong>Quantity</strong></th>
+            <th><strong>Rate</strong>  </th>
+            <th><strong>Per</strong>  </th>
+            <th><strong>Amount</strong></th>
+        </thead>
+        <tbody>
+            
+            {% if sal_one %}
+            <!-- item iterated from sales voucher from stock item one alloation table -->
+            {% for sa  in sal_one %}
+            
+            <tr>   
+                <td><input disabled type="text" name="item_name" id=""  value={{sa.item_name}}></td>
+                <td><input disabled  type="number" name="quantity" id="" value={{sa.quantity}} ></td>
+                <td><input disabled type="number" name="rate" id="" value={{sa.rate}}></td>
+                <td><input disabled type="text" name="per" id="" value={{sa.per}}></td>
+                <td><input disabled type="number" name="Amount" id="" value={{sa.amount}}></td>
+            </tr>
+            {% endfor %}
+                
+
+            {% endif %}
+                
+
+        </tbody>
+    </table>
+    </div>
+    <!-- above card body div end   -->
+    <!-- <div class="card-footer">
+    <label style="color: white;font-weight: bold;font-size: 18px;" for="">Total</label>
+    <label class="mr-10" for="" style="float: right;color: white;font-weight: bold;font-size: 18px;">100</label>
+    </div> -->
+    <!-- above card footer end  -->
+    </div>
+    <!--above card end div  -->
+</div> 
+<!-- above third container end  -->
+    </div>
+</div>
+
+
+
+<script>
+    
+    function goToLink(){
+            var sel = document.getElementById("myselect");
+            var sel2= document.getElementById("myselect2");
+            var sel3= document.getElementById("myselect3");
+            var a = sel.value;
+            var b = sel2.value;
+            var c = sel3.value;
+            console.log(a);
+            if(a=="Create"){
+                window.location.href="{% url 'ledgers' %}"
+            }
+            if(b=="Create"){
+                window.location.href="{% url 'ledgers' %}"
+            }
+
+    }
+    // function goToLink2(){
+    //     var sel3= document.getElementById("myselect3");
+    //     var d=sel3.value;
+    //     if (d !="Create"){
+    //         window.location.href="{#% url 'item_allocation' %#}"
+    //     }
+        
+    // }
+
+// dispath button link click 
+function clickDispButton() {
+  document.getElementById("dis_link").click();
+}
+</script>
+
+{% endblock body %}

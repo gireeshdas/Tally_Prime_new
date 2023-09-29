@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+    .flexy{
+        margin-left: 50px;
+    }
+</style>
+
+
+
+<div class="m-3">
+    <a href="javascript:history.go(-1);" class="close">+</a>
+<h6 class="bg-info text-light p-2 m-0 " style="text-align: center;">Currency Alteration</h6>
+        <form  style="background-color:rgba(0,0,0,.4);" method="post" action="/currency_alteraion/{{ i.id }}">
+            {% csrf_token %}
+            
+            <div class="row container-fluid p-0 m-0" >
+
+                <div class="col-sm-6 m-0 p-4">
+                    
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Symbol</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="text" class="form-control" value="{{ i.Symbol }}" id="" placeholder="" name="symbol"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Formal Name</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="text" class="form-control" id="" value="{{ i.FormalName }}"  placeholder="" name="name"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >ISO Currency Code</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="text" class="form-control" id="" value="{{ i.ISOCurrency }}" placeholder="" name="iso"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Number Of decimal places</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="text" class="form-control" id="" value="{{ i.DecimalPlace }}" placeholder="" name="numdec"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >No. of decimal place for amount in words</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="text" class="form-control" id="" value="{{ i.DecimalWords }}"  placeholder="" name="no_decimalo"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Sufix Symbol to amount</label></div>
+                        <div class="col-sm-4 m-0 p-0"><select name="suffix" id="" class="form-control">
+                            <option value="{{ i.suffixSymbol }}">{{ i.suffixSymbol }}</option>
+
+                            <option value="No">NO</option>
+                            <option value="Yes">YES</option>
+                        </select></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Word representing amount after decimal</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="text" class="form-control" value="{{ i.wordRep }}" id=""  placeholder="" name="word_rep"></div>
+                    </div>
+
+                    
+                </div>
+                <div class="col-sm-6 m-0 p-4">
+                    <div class="row container-fluid p-2 m-0" >
+                        
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Show amount in millions </label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="show_amt" id="" value="{{ i.showAmount }}" class="form-control">
+                                <option value="{{ i.showAmount }}">{{ i.showAmount }}</option>
+
+                                <option value="Yes" >Yes</option>
+                                <option value="No" >No</option> 
+                            </select>
+                        </div>
+        
+                            
+                        </select></div>
+                        <div class="row container-fluid p-0 m-0" >
+
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Add space between amount and Symbol</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="add_space" id="" value="{{ i.AddSpace }}" class="form-control">
+                                <option value="{{ i.AddSpace }}">{{ i.AddSpace }}</option>
+
+                                <option value="Yes" >Yes</option>
+                                <option value="No">No</option> 
+                            </select>
+                        </div>
+                    </div>
+        
+                            
+                        </select></div>
+            </div>
+
+            <div class="col-12   m-0 p-0">
+                <hr>
+                <h6 style="text-align: center;">Rate Of Exchange</h6>
+                <hr>
+            </div>
+
+            <div style="overflow: scroll ;max-height: 70vh; width: 100%;background-color:rgba(0,0,0,0.4); ">
+                <Table class="w-100 table text-center" border="1">
+                    <tr>
+                        
+                        <th colspan="2">Standard</th>
+                        <th colspan="3">Selling rate</th>
+                        <th colspan="3">Buying rate</th>
+        
+                    </tr>
+                    <tr><th>Date</th>
+                        <th>Specified rate</th>
+
+                        <th>Date</th>
+                        <th>last voucher rate</th>
+                        <th>Specified rate</th>
+                        <th>Date</th>
+                        <th>last voucher rate</th>
+                        <th>Specified rate</th>
+        
+                    </tr>
+                    <tr>
+                        <form action="save_currency_data" method="post">
+                            {% csrf_token %}
+                      
+        
+        
+                      </select></td>
+                      
+                      <td> <input type="date" class="w-100 from-control"  name="standate"></td>
+                      <td> <input type="text" class="w-100 from-control"  name="stdrate"></td>
+                      <td> <input type="date" class="w-100 from-control"  name="selldate"></td>
+                      <td> </td>
+                      <td> <input type="text" class="w-100 from-control"  name="selsrate"></td>
+                      <td> <input type="date" class="w-100 from-control"  name="buydate"></td>
+                      <td> </td>
+
+                      <td> <input type="text" class="w-100 from-control"  name="buysrate"></td>
+
+                      <!-- <td> <button class="btn btn-info">Enter</button></td>  -->
+                      
+                    </form>
+                    </tr>
+                    
+                    
+                    
+                </Table>
+                
+            </div>
+            <center>
+            <div class="flexy">
+                <button type="submit" style="text-align: center;" class="btn btn-info w-20 my-2 " >Create</button>
+            </div></center>
+        </div> 
+        
+       
+    
+                
+
+                
+
+            
+            
+        </div>
+                    
+
+                   
+                    
+                
+
+
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<div class="container-fluid">
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#000000;width:100%;margin: auto;">
+        <div class="col-5 ">Ledger Monthly Summary</div>
+        <div class="col-5" style="font-weight:600 ;text-transform:capitalize;">{{company.name}}</div>
+        <div class= 'col-2'><a href="javascript:history.go(-1);">
+          <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
+        </div> 
+      </div>
+      <div class="table-responsive">
+        <table class="table  table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+          <thead>
+            <tr>
+              <th rowspan="6"  class="align-middle text-white">Particulars</th>
+              <th colspan="6" class="text-center text-white"><h6>{{ledger.name}}</h6><h5>{{company.name}}</h5><h6>{{startdate  |date:'d-M-Y'}} to {{enddate  |date:'d-M-Y'}}</h6></th>
+            </tr>
+            <tr>
+              <th colspan="2" class="text-center text-white">Transactions</th>
+              
+            </tr>
+            <tr>
+              <td class="text-center text-white">Debit</td>
+              <td class="text-center text-white">Credit</td>
+              <th rowspan="3" class="text-center text-white" style="border-top: none;">Closing Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if vouchers %}  
+            <tr>                               
+              <td class="text-white" style="font-family: cursive;">Opening Balance</td>
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+              <th class="text-center text-white">{{ledger.opening_blnc}} {{ledger.opening_blnc_type}}</th>  
+            </tr>
+            
+            {% for i in table_data %}
+            <tr class="trhover">   
+
+              <td class="text-white"><a href="{% url 'trialbalance_ledger_vouchers' ledger.id i.name %}">{{i.name}}</a></td>
+
+              {% if i.db %}
+              <td class="text-center text-white">{{i.db}}</td>
+              {% else %}
+              <td class="text-center text-white"></td>
+              {% endif %}
+
+              {% if i.cr %}
+              <td class="text-center text-white">{{i.cr}}</td>
+              {% else %}
+              <td class="text-center text-white"></td>
+              {% endif %}
+
+              {% if i.closing_balance %}
+              <td class="text-center text-white">{{i.closing_balance}} {{i.balance_type}}</td>
+              {% else %}
+              <td class="text-center text-white"></td>
+              {% endif %}
+            
+                
+            </tr>  
+            {% endfor %}
+          
+            <tr>
+              <th class="text-white">Grand Total</th>
+              <th class="text-center text-white">{{td}}</th>
+              <th class="text-center text-white">{{tc}}</th>
+              <th class="text-center text-white">{{ledger.current_blnc}} {{ledger.current_blnc_type}}</th>
+            </tr>
+            
+            {% else %}
+
+            <tr>                               
+              <td class="text-white" style="font-family: cursive;">Opening Balance</td>
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+              <th class="text-center text-white">{{ledger.opening_blnc}} {{ledger.opening_blnc_type}}</th>  
+            </tr>
+            
+            {% for i in table_months %}
+            <tr class="trhover">   
+
+              <td class="text-white"><a href="{% url 'trialbalance_ledger_vouchers' ledger.id i %}">{{i}}</a></td>
+
+              
+              <td class="text-center text-white"></td>
+              
+
+              
+              <td class="text-center text-white"></td>
+              
+              {% if i == monthstart %}
+              <td class="text-center text-white">{{ledger.current_blnc}} {{ledger.current_blnc_type}}</td>
+              {% else %}
+              <td class="text-center text-white"></td>
+              {% endif %}
+              
+            
+                
+            </tr>  
+            {% endfor %}
+          
+            <tr>
+              <th class="text-white">Grand Total</th>
+              <th class="text-center text-white"></th>
+              <th class="text-center text-white"></th>
+              <th class="text-center text-white">{{ledger.current_blnc}} {{ledger.current_blnc_type}}</th>
+            </tr>
+
+            {% endif %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .trhover:hover{
+    background-color: rgb(0, 12, 48);
+  }
+</style>
+{% endblock %}

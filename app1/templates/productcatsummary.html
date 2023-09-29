@@ -1,0 +1,173 @@
+
+    {% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            *{
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing:border-box;
+        }
+       
+        table,th,td
+{
+    border-collapse: collapse;
+    
+}
+th.a{
+    text-align: center;
+    width: 70px;
+}
+table
+{
+    width: 100%;
+    border-color: gray;
+    background-color:rgba(0,0,0,.4);
+}
+
+
+th
+{
+   
+    border-top: 1.5px solid rgb(100, 107, 114);
+    border-left: 1.5px solid rgb(100, 107, 114);
+    border-bottom: 1.5px solid rgb(100, 107, 114);
+    
+    font-size: 13px;
+    font-weight: lighter;
+    padding: 6px;
+    color:beige;
+    
+   
+}
+
+td
+{
+    padding: 8px;
+    font-size: 13px;
+    text-align: center;
+ 
+}
+tfoot td.b{
+    padding: 8px;
+    font-size: 13px;
+    text-align: left;
+}
+.btns{
+    color: black;
+    text-decoration: none;
+    
+  
+
+}
+.btns_prnt{
+    width: 100%;
+    text-align: start;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    /* padding: 6px; */
+
+}
+.btns_prnt:hover{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+tbody tr:hover td{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+@media (max-width: 991px) {
+  .main-panel {
+      margin-left: 0;
+      width: 100%;
+  }
+}
+
+.content-wrapper {
+
+  padding: 1.875rem 1.75rem;
+  width: 100%;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+    </style>
+
+</head>
+<body>
+    <div class="main-panel">
+        <div class="content-wrapper">
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 ">
+    <div style="background-color:rgba(0,0,0,.4);">
+        <h6 style="color: rgb(0, 0, 65); background-color: rgb(142, 211, 250);padding: 2px; height:3%;">Stock Item Summary</h6>
+    <div style=" display:flex; height: 97%;">
+    <div style=" width:100%;  height: 100%; ">
+       
+        <!--<div style="display:flex; padding: 25px;">
+    
+            <div style="width: 50%; text-align: start;">
+              <h5 style="color: black; font-size: 16px; height: 3%;">Particulars</h5>
+              <h5 style="padding:5px;">1-Apr-22 to 31-March-23</h5>
+        
+          </div>
+          <div style="width: 50%; text-align: end;">
+            <h5 style="color: black; padding:5px;font-size: 16px;">For 1-Apr-22&nbsp;</h5>
+            <br><h5 style="color: black; padding:5px;font-size: 16px;">Quantity &nbsp;Rate &nbsp;Value</h5>
+        
+          </div>
+          </div>-->
+      <hr></hr>
+      
+
+      <table>
+        <thead>
+        <tr>
+           <span style="text-align: left;"> <th rowspan="3" >Particulars </th></span>
+            <th colspan="3" class="a">{{ cmp.comp_name }}<br>{{ cmp.start_date }}</th>
+        </tr>
+
+    <tr><th colspan="3"class="a">Closing Balance</th></tr>
+        
+         <tr>
+            
+            <th class="a">Quantity</th>
+            <th class="a">Rate</th>
+            <th class="a">Value</th>
+        </tr>
+    </thead>
+    <tbody >
+        {% for s in si %}
+        
+        <tr>
+            <td style="width:200px;text-align: left;"><a href="{% url 'prdctmonthlysummary' s.id  %}">{{ s.name }}</a></td>
+            <td>{{ s.qy }}</td>
+            <td>{{ s.rateper }}</td>
+     
+            <td>{{ s.value }}</td>
+        </tr>
+        {% endfor %}
+        
+    </tbody>
+    <tfoot>
+        <tr style=" border-top: 1.5px solid rgb(100, 107, 114);">
+            <td>Grand Total</td>
+            <td>{{ q }}</td>
+            <td>{{ y }}</td>
+            <td>{{ a }}</td>
+        </tr>
+    </tfoot>
+     </table>
+    </div>
+    
+   
+</div></div>
+
+</div>
+<div class="col-md-2"></div>
+</div>
+    </div>
+</div>
+{% endblock %}

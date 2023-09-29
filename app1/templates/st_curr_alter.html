@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid p-3 mx-0">
+            <div class="col-sm-2 m-0 p-0"></div>
+            <div class="col-sm-8 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <h6 class="bg-info text-light p-2">Currency Alteration (Secondary)</h6>
+        <div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
+        {% for a in curr %}
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'statistics_cdef_alt' a.id %}" autocomplete="off">
+                    {% csrf_token %}
+                   
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Symbol</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="a" name="c_symbl" value="{{ a.Symbol }}"  placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Formal Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="a" name="fname"  value="{{ a.FormalName }}"   placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">ISO Currency Code</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" name="isocode"  value="{{ a.ISOCurrency }}"   id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <hr>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Number of decimel places</b></label></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="form-control" id="a" name="decimal_p" value="{{ a.DecimalPlace }}"  value="2" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Show amount in millions</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="show_amt" id="i" class="form-control">
+                                    <option value="{{ a.showAmount }}">{{ a.showAmount }}</option>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>  
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Suffix symbol to amount</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="suffix" id="i" class="form-control">
+                                    <option value="{{ a.suffixSymbol }}">{{ a.suffixSymbol }}</option>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>  
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Add space between amount and symbol</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="add_space" id="i" class="form-control">
+                                    <option value="{{ a.AddSpace }}">{{ a.AddSpace }}</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>  
+                                </select>
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Word representing amount after decimal</b></label></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="form-control" id="a" name="word_rep" value="{{ a.wordRep }}" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>No: of decimal places for amount in words</b></label></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="form-control" id="a" name="no_decimal" value="{{ a.DecimalWords }}" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">ALTER</button></div>  
+                   
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

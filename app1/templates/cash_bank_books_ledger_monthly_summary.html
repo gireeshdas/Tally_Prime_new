@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<head>
+    <style>
+          thead th {
+    border: .5px solid rgba(255, 255, 255, .2); ;
+    
+    
+ }
+ .table-row{
+cursor:pointer;
+}
+.table-row:hover{
+    background-color: rgb(216, 155, 51);
+}
+.table-row1{
+cursor:pointer;
+}
+.table-row1:hover{
+    background-color: rgb(216, 155, 51);
+}    
+  
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Ledger Monthly Summary</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table " style="background-color: rgba(33,57,77,255);color:#fff;">
+
+                        <thead>
+
+                            <tr>
+                                <th rowspan="3"   class="align-middle text-white ">
+                                     <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">Particular</h6>
+                                    </th>
+                                
+                                <th colspan="3" class="text-center text-white " ><h6><i>{{ledger_name}}</i></h6>
+                                  <h6><strong> ABC PVT.LTD </strong></h6><h6> For 1-Apr-2022</h6></th>
+                              </tr>
+                              <tr>
+
+                                <th colspan="2" class="text-center text-white" style="width: 26%;"><h6> <strong> Transactions </strong></h6></th>
+                                <th rowspan="2" class="text-center text-white " style="width: 13%;"><h6> <strong> Closing <br>Balance</strong></h6></th>
+
+                              </tr>
+                              <tr>
+                                <th class="text-center text-white" style="width: 12%;">Debit</th>
+                                <th class="text-center text-white"style="width: 12%;">Credit</th>
+                              </tr>
+
+
+
+
+
+                        </thead>
+                        
+
+                        <tbody>
+                            <tr class="table-row" data-href="">
+                                <td><i>Opening Balance</i></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong>{{open_balance}}&nbsp;{{type}}</strong></td>
+
+                            </tr>
+                            
+                            {% for i in mo %}
+                            
+                            
+                            <tr class="table-row" data-href="{% url 'cash_bank_books_ledger_show' le.id i.id %}">
+                                <td>{{i.month_name}}</td>
+                                
+                                 
+                                {% if i.cash_bank_books_leger_month_closing_set.all %}
+                                 
+                                {% for j in i.cash_bank_books_leger_month_closing_set.all %}
+                                 
+                                    {% if j.Ledger == le %}
+
+                                 
+                                 
+                                        <td style="text-align: end;"><strong>{{j.debit }}</strong></td>
+                                        <td style="text-align: end;"><strong>{{j.credit}}</strong></td>
+                                        <td style="text-align: end;"><strong>{{j.Closing_balance}} &nbsp; {{j.type}}</strong></td>
+                                    
+                              
+                                    {% endif %}
+         
+                                {% endfor %}
+                                
+                                
+
+                                 {% else%}
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 {% endif %}
+
+                            </tr>
+                            
+                            {% endfor %}
+
+                           
+                            
+
+                            <!-- <tr class="table-row" >
+                                <td>May</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>June</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr>
+                                <td>july</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>August</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>September</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>October</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>November</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>December</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>January</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>Febuary</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr>
+                            <tr class="table-row">
+                                <td>March</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+
+                            </tr> -->
+
+
+                            <tr class="table-row">
+                                <th  ><h6 class="d-flex align-items-sm-start par p-1 py-1 foot" style="margin-left: 20px;">Grand Total</h6></th>
+                                
+                                <th  style="text-align: end;">{{total_debit}}</th>
+                                <th  style="text-align: end;">{{total_credit}}</th>
+                                <th  style="text-align: end;">{{closing_balance}}&nbsp;{{type1}}</th>
+                                
+                            </tr>
+
+                            
+
+                            
+
+                            
+
+
+                        </tbody>
+                        
+
+
+
+
+                    
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        $(document).ready(function($) {
+            $(".table-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+
+{% endblock %}

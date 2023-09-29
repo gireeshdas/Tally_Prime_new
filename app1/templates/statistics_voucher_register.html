@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
+
+    </script>
+    
+    <style>
+        
+        /* thead th {
+    border: .5px solid rgba(255, 255, 255, .3); ;
+    
+    
+ } */
+
+ .table-row{
+cursor:pointer;
+}
+/* .table-row:hover{
+    background-color: rgb(216, 155, 51);
+} */
+.table-row1{
+cursor:pointer;
+}
+.table-row1:hover{
+    background-color: rgb(216, 155, 51);
+}
+ .btn{
+    border: 1px solid rgb(103, 175, 220);
+    /* height: 30px;
+    text-align: center; */
+    
+    width: 95%;
+    
+
+    
+  }
+  .table1{
+    border: 1px solid rgb(103, 175, 220);
+  }
+  .selected{background-color:  rgb(216, 155, 51);color: #fff;font-weight: bold
+}
+  .selected1 {
+    background-color:  rgb(77, 154, 242);
+  }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col "> Voucher Register</div>
+                   
+                </div>
+                <div class="row  " style="height: 50px;">
+                <div class="col ">
+                    <h6>
+                    <span class=" d-flex justify-content-start" style="margin-top: 8px;"><strong> List of {{vouch.voucher_name}}  Vouchers </strong> </span>
+                    <span class="d-flex  justify-content-end " style="margin-top: -15px;"> 1-Apr-22 to 30-Apr-22</span>
+                </h6>
+                </div>
+            </div>
+                <div class="table-responsive">
+                    <table  class="table  " style="background-color: rgba(33,57,77,255);color:#fff;" id="table">
+                        <thead >
+                        <tr>
+                          <th style="text-align: center;">Date</th>
+                          <th colspan="2"  style="width: 40%;">Particulars</th>
+                          <th style="text-align: center;">Vch Type</th>
+                          <th style="text-align: right;">Vch No.</th>
+                          <th style="text-align: right;">Debit <br>Amount</th>
+                          <th style="text-align: right;">Credit<br> Amount</th>
+                          
+                        </tr>
+                    </thead>
+
+                    <tbody >
+                      {% for i in entries_by_month %}
+                      
+                        <tr class="table-row" >
+                            <input type="number" value="{{i.id}}" id="delid" hidden >
+
+                            {% if vouch.voucher_type == 'Debit_Note'%}
+                            <td style="text-align: center;">{{i.sdebit.debitdate}}</td>
+                            <td colspan="2"><strong>{{i.sdebit.customer}}</strong></td>
+                            <td style="text-align: center;"><strong>{{vouch.voucher_name}}</strong></td>
+                            <td style="text-align: right;"><strong>{{forloop.counter}}</strong></td>
+                            <td  style="text-align: right;"><strong>{{i.total}}</strong></td>
+
+                            {% elif vouch.voucher_type == 'Credit_Note'%}
+                            <td style="text-align: center;">{{i.scredit.creditdate}}</td>
+                            <td colspan="2"><strong>{{i.scredit.customer}}</strong></td>
+                            <td style="text-align: center;"><strong>{{vouch.voucher_name}}</strong></td>
+                            <td style="text-align: right;"><strong>{{forloop.counter}}</strong></td>
+                            <td  style="text-align: right;"><strong>{{i.total}}</strong></td>
+
+                            {% elif vouch.voucher_type == 'Journal'%}
+                            <td style="text-align: center;">{{i.j_voucher.date}}</td>
+                            <td colspan="2"><strong>{{i.particular}}</strong></td>
+                            <td style="text-align: center;"><strong>{{vouch.voucher_name}}</strong></td>
+                            <td style="text-align: right;"><strong>{{forloop.counter}}</strong></td>
+                            <td  style="text-align: right;"><strong>{{i.debit}}</strong></td>
+
+                            {% elif vouch.voucher_type == 'Payment'%}
+                            <td style="text-align: center;">{{i.pay_voucher.date}}</td>
+                            <td colspan="2"><strong>{{i.particular}}</strong></td>
+                            <td style="text-align: center;"><strong>{{vouch.voucher_name}}</strong></td>
+                            <td style="text-align: right;"><strong>{{forloop.counter}}</strong></td>
+                            <td  style="text-align: right;"><strong>{{i.amount}}</strong></td>
+
+                            {% elif vouch.voucher_type == 'Receipt'%}
+                            <td style="text-align: center;">{{i.rec_voucher.date}}</td>
+                            <td colspan="2"><strong>{{i.particular}}</strong></td>
+                            <td style="text-align: center;"><strong>{{vouch.voucher_name}}</strong></td>
+                            <td style="text-align: right;"><strong>{{forloop.counter}}</strong></td>
+                            <td  style="text-align: right;"><strong>{{i.amount}}</strong></td>
+
+                            {% elif vouch.voucher_type == 'Contra'%}
+                            <td style="text-align: center;">{{i.con_voucher.date}}</td>
+                            <td colspan="2"><strong>{{i.particular}}</strong></td>
+                            <td style="text-align: center;"><strong>{{vouch.voucher_name}}</strong></td>
+                            <td style="text-align: right;"><strong>{{forloop.counter}}</strong></td>
+                            <td  style="text-align: right;"><strong>{{i.amount}}</strong></td>
+
+                            
+
+                            {% endif %}
+
+                           
+
+                        </tr>
+                        {% endfor %}
+                    
+
+ 
+
+
+                    
+
+                    </table>
+
+
+                  </div>
+                  <table class="table1 col" style="text-align: center; margin-top: 10px;" >
+                    <thead>
+                        <th ><a href="{% url 'index' %}" type="button"  class="btn p-1 px-4" >Quit</a></th>
+                        <th><button type="button"  class="btn p-1 px-4" onclick="myFunction()">Select</button></th>
+                        <!-- <th><b  type="button"  class="btn p-1 px-4"  onclick="Delete()" >Delete</button></th> -->
+                        <th><button type="button"  class="btn p-1 px-1" onclick="removeSelectedRow()">Remove Line</button></th>
+                        <th><a href="" type="button"  class="btn p-1 px-1" >Restore Line</a></th>
+                    </thead>
+                </table>
+
+              
+                  
+
+
+               
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $('.delete').click(function(event) {
+            var form =  $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this record?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your imaginary file has been deleted!", {
+                    icon: "success" ,
+              
+                    });
+                    form.submit();
+        
+                    
+                    
+                    
+                    }
+            });
+        });
+        
+    </script>
+    <script>
+            
+        var index;  // variable to set the selected row index
+        function getSelectedRow()
+        {
+            var table = document.getElementById("table");
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                table.rows[i].onclick = function()
+                {
+                    // clear the selected from the previous selected row
+                    // the first time index is undefined
+                    if(typeof index !== "undefined"){
+                        table.rows[index].classList.toggle("selected");
+                    }
+                   
+                    index = this.rowIndex;
+                    this.classList.toggle("selected");
+                    
+
+                };
+            }
+                
+        }
+
+
+        getSelectedRow();
+
+        
+
+        
+        
+        
+        
+    </script>
+    
+    <script>
+
+       
+function myFunction() {
+     var se = document.getElementsByClassName('selected');
+     se[0].style.backgroundColor = "lightblue";
+        
+}
+        </script>
+
+
+    <!-- <script>
+            
+            var rIndex,
+                table = document.getElementById("table");
+            
+            
+            function selectedRowToInput()
+            {
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                      // get the seected row index
+                      rIndex = this.rowIndex;
+                      this.classList.toggle("selected");
+                    
+                    };
+                }
+            }
+            selectedRowToInput();
+            
+            
+            
+            function removeSelectedRow()
+            {
+                table.deleteRow(rIndex);
+                
+            }
+        </script> -->
+
+<script>
+    function removeSelectedRow()
+            {
+                table.deleteRow(index);
+                
+            }
+</script>
+<!-- <script>
+    function Delete()
+            {
+                
+                delid = document.getElementById("delid").value;
+                var url = new URL("https://www.geeksforgeeks.org");
+                
+
+
+            }
+</script> -->
+
+{% endblock %}

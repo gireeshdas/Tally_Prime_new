@@ -1,0 +1,351 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+<head>
+    <style>
+
+    thead th {
+            border: .5px solid rgba(255, 255, 255, .2);
+        }
+
+    .table-row{
+            cursor:pointer;
+            
+        }
+        
+    tr{
+
+            background-color: rgba(33,57,77); 
+            color:#fff;
+            border: 0px none;
+
+        }
+    a{
+            text-decoration: none;
+            color:#fff;
+        }
+       
+    .table-row:hover{
+            background-color: rgb(216, 155, 51);
+        }
+    .table-row1{
+        cursor:pointer;
+        }
+    .table-row1:hover{
+            background-color: rgb(216, 155, 51);
+        }    
+    .btn{
+        color: azure;
+        background-color: rgb(17, 28, 35);
+        width: 200px;
+        margin-left: 100px;
+        justify-content: center;
+    }  
+    
+    #form-container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px;
+        height: 400px;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        justify-content: center;
+        color: aliceblue;
+        }
+    .prnt{
+        background-color: rgba(33,57,77); 
+        color: aliceblue; 
+        width: 50px; 
+        border: none;
+        
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        background: #ececec;
+        overflow: hidden;
+    }
+    .flex-row {
+        display: flex;
+    }
+    .wrapper {
+        border: 1px solid #4b00ff;
+        border-right: 0;
+    }
+    #signature-pad {
+        border: 2px solid #000;
+        width: 100%;
+        height: 200px;
+    }
+    button#clear {
+        height: 100%;
+        background: #4b00ff;
+        border: 1px solid transparent;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    button#clear span {
+        transform: rotate(90deg);
+        display: block;
+    }
+
+
+    </style>
+
+
+<body>
+  <div class="container-fluid">
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row d-flex" style=" font-weight:600 ; background-color: rgb(124, 186, 224);color: #000;width: 100%;margin: auto;">
+            <div class="col " style="font-weight: 500;">Cheque Deposit Slip</div>
+            <div class="col-5" style="font-weight:600 ;text-transform:capitalize;">{{company.name}}</div>
+      
+            <div class= 'col-2'><a href="javascript:history.go(-1);">
+                <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
+            </div>  
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm border-dark" style="background-color: rgba(33,57,77,255);color:#fff; border-left: none;">
+                <tr>
+                    <th colspan="17" style="font-weight: 500; border-bottom: solid 0.5px rgba(255, 255, 255, .2) ; border-right:none ;">
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ledger: {{ledger.name}}</div>
+                    </th> 
+                    <th colspan="3" class="text-center"  style=" border-bottom: solid 0.5px rgba(255, 255, 255, .2); text-align: end; border-left: none;"> 
+                        
+                        <div style="text-align: end; margin-right: 20px; font-weight: 500;">{{company.fin_begin  |date:'d-M-Y'}} &nbsp; to &nbsp; {{company.fin_end | date:'d-M-Y'}}</div>
+                    </th>
+                  </tr>
+                  
+   
+                   <tr class= "py-1" style="font-weight: 500;">
+                    <th colspan="3" class="text-center" style="border-right: none; border-left: none;"> Date</th>
+                    <th colspan="5"  class="text-center" style="border-right: none; border-left: none;">Particulars</th>
+                    
+                    <th colspan="5" class="text-center  "style="border-right: none; border-left: none;">Instrument No.</th>
+                    <th colspan="3"  class="text-center  "style="border-right: none; border-left: none;">Instrument Date</th>
+                    <th colspan="2" class="text-center  "style="border-right: none; border-left: none;">Printed ?</th>
+                    <th colspan="2" class="text-center  "style="border-right: none; border-left: none;">Amount</th>
+                </tr>
+
+                <tbody style="border: solid 0.5px rgba(255, 255, 255, .2);" >
+                    {% for i in bank %}
+                    <input type="hidden" id="bankid{{forloop.counter}}" value=" {{i.id}}">
+                    <tr id = "row{{forloop.counter}}" class="rowss">
+                        <td colspan="3" class="text-white" style="border-right: none; border-left: none;">
+                            <a href="">{{ i.date | date:'d-M-Y' }}</a>
+                        </td>
+                        <td colspan = "5" class="text-center text-white" style="border-right: none; border-left: none;">
+                          <a href="">{{i.particular}}</a></td>
+                        
+                          <td colspan="5" class="text-center text-white" style="border-right: none; border-left: none;">
+                            <a href="">{{ i.instno }}</a></td>
+                            <td colspan="3" class="text-center text-white" style="border-right: none; border-left: none;">
+                              <a href="">{{ i.instdate | date:'d-M-Y' }}</a></td>
+                              
+                              
+                                <td colspan="2" class="text-center text-white" style="border-right: none; border-left: none;">
+                                    <input type="text" class="prnt" id="printid{{forloop.counter}}" value="No" oninput="showForm(this.id);" >
+                                  </td>
+                                  <td colspan="2" class="text-center text-white" style="border-right: none; border-left: none;">
+                                    <a href="">{{i.amount}}</a></td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+                <tfoot style="border-top:solid 0.5px rgba(255, 255, 255, .2) ;">
+                  <tr>
+                    <td style="border-right: none; border-left: none; font-weight: bold; margin-left: 50px;" colspan="18" >
+                      Selected Total
+                    </td>
+                    <td colspan="2" class="text-center" style="border-right: none; border-left: none;"></td>
+                  </tr>
+                  <tr>
+                    <td style="border-right: none; border-left: none; font-weight: bold; margin-left: 150px;" colspan="18"  >
+                      Grand Total
+                    </td>
+                    
+                    <td colspan="2" class="text-center" style="border-right: none; border-left: none;">{{total}}</td>
+
+                  </tr>
+                  
+                </tfoot>
+            </table>
+        </div>
+      </div>
+  </div>
+  <!-- ---pop up--- -->
+
+<div class="form-popup popup1 p-0 m-0 " id="form-container" style="background-color: #213b52; border-radius: 2px;" >
+    <div class="row d-flex" style="background-color:  rgb(124, 186, 224);color:rgb(0, 0, 0);width: 100%;margin: auto;">
+        <div class="col-10" style="font-weight:600 ;text-transform:capitalize;">Deposit Slip</div>
+        <div class= 'col'>
+            <span class="pull-right clickable" data-effect="fadeOut" onclick="closeForm()"><i class="fa fa-times"></i></span></a>
+        </div>                      
+    </div>
+
+    <form class="form-container" style="background-color: rgb(245, 240, 230);color:rgb(0, 0, 0);">
+
+            <div class="row container  p-3 justify-content" style="justify-content: space-between;">
+                <div class="col-5 form-group">
+                    <label ><b>Bank Name&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></label>
+                    <label for="" style="text-transform: uppercase; font-weight: 600;" ><em>{{ledger.name}}</em></label>
+                </div>
+            
+                <div class="col-5 form-group">
+                    <label ><b>Date&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="date" class="prnt" style=" font-weight: 600; width: 120px; background-color: rgb(245, 240, 230);color:rgb(0, 0, 0);" id="today">
+                </div>
+            </div>
+        
+            <hr>
+            
+            <div class="row container  p-2 " style="justify-content: space-between;">
+
+                <div class="col-5 form-group">
+                    <label ><b>Account Number:&nbsp;&nbsp;</b></label>
+                    <label style="text-transform: capitalize;" id = 'acc_num' >{{ledger.acc_no}}</label>
+ 
+                </div>
+
+                <div class="col-5 form-group">
+                    <label ><b>Voucher Date:&nbsp;&nbsp;</b></label>
+                    <label style="text-transform: capitalize;" id = 'vdate'></label>                
+                </div>
+
+            </div>
+
+            <div class="row container  p-2 justify-content" style="justify-content: space-between;">
+                <div class="col-10 form-group">
+                    <label ><b>Name&nbsp;&nbsp;:&nbsp;&nbsp;</b></label>
+                    <label style="text-transform: capitalize;" id = 'p_name' ></label>
+                </div>
+
+            </div>
+            <div class="row container  p-2 justify-content" style="justify-content: space-between;">
+
+            <div class="col-7 form-group">
+                <label ><b>Amount in words:&nbsp;&nbsp;</b></label>
+                <label for="amount" id="amntwrd" style="text-transform: capitalize;"></label>
+                
+            </div>
+            
+            <div class="col-3 form-group">
+                <label ><b>Amount:&nbsp;&nbsp;</b></label>
+                <label for="amount" id="amnt"></label>
+                
+            </div>
+            </div>
+            <div class="row container  p-2" style="justify-content: right; margin-left: 200px;">
+
+                <div class="col-10 form-group" >
+                    <label> Signature Here:&nbsp;&nbsp;                
+                    <input type="text" style="border: none; background-color: rgb(245, 240, 230);;">
+                </div>
+            </div>
+           
+            <div class="row container  p-2 justify-content-right" style="justify-content: end;" >
+
+                <div class="col-10 form-group">
+                    <button class="btn" type="button" onclick="printForm()">Print</button>
+
+                </div>
+
+            </div>
+      
+        </div>
+        
+    </form> 
+</div> 
+
+    </div>
+
+
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/number-to-words"></script>
+<script>
+
+        const rows = document.getElementsByTagName("tr");
+        var rs;
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].addEventListener("click", function() {
+            const cells = this.getElementsByTagName("td");
+            console.log(rows);
+            console.log(cells);
+            console.log(cells[0].textContent);
+            $("#p_name").html(cells[1].textContent);
+            $("#vdate").html(cells[0].textContent);
+            $("#amnt").html(cells[5].textContent);
+
+            numberToWord(cells[5].textContent);
+
+            });
+            
+            
+        }
+        function numberToWord(number) {
+
+            const wordString = numberToWords.toWords(number);
+
+            document.getElementById('amntwrd').innerHTML = wordString +" Rupees";
+        }
+
+        function showForm(ID) {
+       
+        console.log(ID);
+        if (document.getElementById(ID).value.toLowerCase() === "yes") {
+
+            
+            document.getElementById("form-container").style.display = "block";
+        } 
+        else {
+
+            document.getElementById("form-container").style.display = "none";
+        }
+        }
+
+        function printForm() {
+             
+            const originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = document.getElementById("form-container").innerHTML;
+            window.print();
+
+            document.body.innerHTML = originalContents;
+
+        }
+        function closeForm(){
+            document.getElementById("form-container").style.display = "none";
+        }
+
+        const today = new Date().toISOString().slice(0, 10);
+        document.getElementById("today").value = today;
+
+      
+
+</script>
+
+
+{% endblock %}

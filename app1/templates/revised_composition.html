@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+      .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;        
+        }
+    </style>
+
+    <div class="m-0">
+        <div class="row container-fluid p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>Revised Applicability</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'revised_composition' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-2 m-0 p-0"></div>
+                            <div class="col-sm-3 m-0 p-0"> <label for="a">Applicable from</label></div>
+                            <div class="col-sm-5 m-0 p-0">
+                                {% for i in tally %}
+                                    <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="appl_from_composition" required>
+                                {% endfor %}</div>
+                        </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+{% endblock %}

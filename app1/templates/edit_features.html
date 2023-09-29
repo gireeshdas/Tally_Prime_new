@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        button{
+            background-color:rgb(23, 127, 192) ;
+            color:white;
+            padding:10px 10px;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+     <script>
+        function savegst(){
+            window.location.href="{% url 'edit_gst_details' ctg.id %}";
+        }
+        function savetds(){
+            window.location.href="{% url 'edit_tds_deductor' ctg.id %}";
+
+        } 
+    </script> 
+  <div class="m-4">
+    <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+        {% comment %} <a href="javascript:history.go(-2);" class="close">x</a>
+    <h6  class="bg-info text-light p-2 m-0 text-center"></h6> {% endcomment %}
+            <form class="p-5" style="background-color:rgba(0,0,0,.4);" id="frmfeature" method="post" action="{% url 'features' ctg.id %}"> 
+                
+                {% csrf_token %}
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        {% comment %} <h5 class="text-center">GST registration detais</h5> {% endcomment %}
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"><label>company</label></div>
+                            <div class="col-sm-6 m-0 p-0"> <input type="text" name="state" value="{{ctg.name}}" class="form-control"></div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <h6><u>Accounting</u></h6>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0">
+                                 <label for="e">Maintain accounts</label>
+                            </div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select   name="maintain_accounts" id="maintain_accounts"  class="form-control">
+                              
+                                <option value="Yes" selected >Yes</option>
+                                <option value="No" >No</option>
+                              
+                                
+                                
+                                </select>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> 
+                                <label for="g">Enable bill-wise entry</label>
+                            </div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select  class="form-control" name="bill_wise_entry" id="bill_wise_entry" >
+                                   
+                                      <option value="Yes" selected >Yes</option>
+                                      <option value="No" >No</option>
+                                 
+                                     
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Enable Cost Centres</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select  class="form-control" name="cost_centres" id="cost_centres" >
+                                 
+                                      <option value="Yes">Yes</option>
+                                      <option value="No"  selected  >No</option>
+                                  
+                                    
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Enable Interest Calculation</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select class="form-control" name="interest_calc" id="interest_calc" >
+                                   
+                                      <option value="Yes" >Yes</option>
+                                      <option value="No"  selected >No</option>
+                                  
+                                     
+                                    
+                                   
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <h6><u>Inventory</u></h6>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="e">Maintain inventory</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select class="form-control" name="maintain_inventory" id="maintain_inventory" >
+                                    
+                                    <option value="Yes" selected >Yes</option>
+                                    <option value="No" >No</option>
+                                  
+                                    
+                                 
+                                </select>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Integrate accounts with inventory</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select  class="form-control"name="integrate_accounts" id="integrate_accounts" >
+                                    
+                                    <option value="Yes" selected >Yes</option>
+                                    <option value="No" >No</option>
+                                 
+                                 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Enable Multiple Price Levels</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select class="form-control" name="multiple_price_level" id="multiple_price_level" >
+                                   
+                                  
+                                    <option value="Yes" >Yes</option>
+                                    <option value="No" selected>No</option>
+                                
+                                
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="g">Enable batches</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select class="form-control" name="batches" id="batches" >
+                              
+                                <option value="Yes" selected >Yes</option>
+                                <option value="No" >No</option>
+                              
+                                <option value="Yes" >Yes</option>
+                                <option value="No" selected>No</option>
+
+                             
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="g">Maintain Expiry Date for Batches</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select  class="form-control" name="expirydate_batches" id="expirydate_batches" >
+                               
+                           
+                                <option value="Yes" >Yes</option>
+                                <option value="No" selected>No</option>
+                              
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Enable Job Order Processing</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select  class="form-control" name="joborder_processing" id="joborder_processing" >
+                                    
+                                    <option value="Yes" >Yes</option>
+                                    <option value="No" selected>No</option>
+                                
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Enable Cost Tracking</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select  class="form-control" name="cost_tracking" id="cost_tracking" >
+                                    
+                                    <option value="Yes" >Yes</option>
+                                    <option value="No" selected>No</option>
+                                
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Enable Job Costing</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select class="form-control" name="job_costing" id="job_costing" >
+                                    
+                                    <option value="Yes" >Yes</option>
+                                    <option value="No" selected>No</option>
+                                
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Use Discount column in invoices</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="Discount_coloumn" id="g" class="form-control">
+                                    <option value="yes">Yes</option> 
+                                    <option value="no" selected>No</option>
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Use Seperate actual and billed quantity column in invoices</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="billed_quantity" id="g" class="form-control">
+                                    <option value="yes">Yes</option> 
+                                    <option value="no" selected>No</option>
+                                   
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        <div class="row container-fluid  p-2">
+                            <h6><u>Taxation</u></h6>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Goods and Services Tax(GST)</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="gst" id="l" class="form-control" onchange="savegst()">
+
+                                    <option value="Yes" >Yes</option>
+                                    <option value="No" selected >No</option>
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Tax Deducted at Source(TDS)</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="tds" id="l" class="form-control" onchange="savetds()">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No" selected>No</option>
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Tax Collected  at Source(TCS)</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="tcs" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable value Added Tax(VAT)</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="vat" id="l" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No" selected>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Excise</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="excise" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Service Tax</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="service_tax" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row container-fluid  p-2">
+                            <h6><u>Payroll</u></h6>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Maintain Payroll</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="payroll" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Payroll Statutory</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="payroll_statutory" id="Payroll_statutory" class="form-control" name="Payroll_statutory">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <h6><u>Others</u></h6>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Enable Multiple Addresses</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="multiple_address" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">Mark Modified Vouchers</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="Modified_vouchers" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                   
+                </div>
+             <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>   
+                
+            </form>
+        </div>
+        
+        
+    {% endblock %}

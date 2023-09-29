@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+      .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 550px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container {
+            max-width: 50px;
+            height: 500px;
+            padding: 10px;
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 600px;
+            padding: 2px; 
+        }
+        /* body{
+            overflow: hidden;
+        } */
+        .btns_prnt{
+            color: #fff;
+            width: 100%;
+            cursor: pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        }
+        .bt{
+            text-align: end;
+        }
+        .inp{
+            border: none;
+            color: #fff;
+            background-color: rgba(0,0,0,.001);
+        }
+</style>
+    <div class="m-3">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6"><b>Stock Item Allocation</b></div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                {{i.name}}
+            {% endfor %}
+            </div>
+        </div>
+        <div class="p-3" style="background-color:rgba(0,0,0,.4);">
+            <center>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-5 m-0 p-0"></div>
+                    <div class="col-sm-1 m-0 p-0"><label for="a">Allocation of : </label></div>
+                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="dt" name="stockname" style="width: 60px;"></div>
+                    <div class="col-sm-1 m-0 p-0"></div>
+                </div>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-5 m-0 p-0"></div>
+                    <div class="col-sm-1 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="a">For</label></div>
+                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="ft" name="stockname" style="width: 60px;"></div>
+                    <div class="col-sm-1 m-0 p-0"></div>
+                </div>
+            </center>
+            <div class="table-responsive-sm" style="background-color:rgba(0,0,0,0.4);">
+                <Table class="w-100 table text-center" border="1">
+                    <tr>
+                        <!-- <th>Sl.no</th> -->
+                        <th>Godown</th>
+                        <th>Branch</th>
+                        <th>Track</th>
+                        <th>Expiry</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Per</th>
+                        <th>Amount</th>
+                        <th>Accept</th>
+        
+                    </tr>
+                    
+                    <tr>
+                      <td> 
+                        <input type="text" id="under" name="under_name" class="form-control" onclick="showform();">
+                        </td>
+                      <td> <input type="text" class="w-100 form-control"></td>
+                      <td> <input type="text" class="w-100 form-control"></td>
+                      <td> <input type="text" class="w-100 form-control"></td>
+                      <td><input type="text" class="w-100 form-control" id="quantity" onblur="passquantity()"> </td>
+                      <td> <input type="text" class="w-100 form-control" id="rate" onblur="passrate()"></td>
+                      <td><input type="text" class="w-100 form-control" id="per" onblur="passper()"> </td>
+                      <td> <input type="text" class="w-100 form-control" id="value" onblur="passvalue()"></td>
+                      
+                      <td><a href="javascript:history.go(-1);"><button class="btn btn-info">Accept</button></a></td> 
+            
+                    </tr>
+                    
+                    
+                </Table>
+            </div>
+            
+        </div>
+     
+   
+    </div> 
+    
+    <div class="form-popup" id="underForm" style="background-color: #213b52" >
+        <form action="" class="form-container1" >
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Godowns</h6>
+            <a href="{% url 'godown_alt' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setPrimary()" class="btns_prnt">&nbsp;&nbsp;Primary</option>
+                        <option onclick="setmain()" class="btns_prnt">&nbsp;&nbsp;Main Location</option>
+                        
+                        {% for l in gd %}
+                            <option onclick="setvalue('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{l.id}}">
+        </form>
+        <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+    </div>
+
+    <script>
+        function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+        }
+        function showform(){
+            document.getElementById('underForm').style.display= "block";
+        }
+        function setPrimary(){
+            document.getElementById('under').value= 'Primary';
+            document.getElementById('underForm').style.visibility= "block";
+        }
+        function setmain(){
+            document.getElementById('under').value= 'Main Location';
+            document.getElementById('underForm').style.visibility= "block";
+        }
+        function setvalue(under,underId){
+            document.getElementById('under').value= under;
+            document.getElementById('underForm').style.visibility= "block";
+            document.getElementsByName('underhidden').value= underId;
+        }
+
+        document.getElementById("value").value = localStorage.getItem("amount");
+
+        document.getElementById("per").value = localStorage.getItem("units");
+
+        document.getElementById("dt").value = localStorage.getItem("status");
+
+        document.getElementById("ft").value = localStorage.getItem("quantity");
+
+        function checker(){
+            var result =confirm('Are you sure?');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+        function passvalue(){
+            var value=document.getElementById("value").value;
+            localStorage.setItem("value", value);
+            var a=localStorage.getItem("value");                         
+        }
+        function passquantity(){
+            var quantity=document.getElementById("quantity").value;
+            localStorage.setItem("quantity", quantity);
+            var qua=localStorage.getItem("quantity");                         
+        }
+        function passrate(){
+            var rate=document.getElementById("rate").value;
+            localStorage.setItem("rate", rate);
+            var qua=localStorage.getItem("rate");                         
+        }
+        function passper(){
+            var per=document.getElementById("per").value;
+            localStorage.setItem("per", per);
+            var qua=localStorage.getItem("per");                         
+        }
+        // list showgroup
+        function showGroup() {
+            document.getElementById("list-group").style.visibility = "visible";
+        }
+        function hideGroup(valueDIv) {
+            document.getElementById("group").value=valueDIv;
+            document.getElementById("list-group").style.visibility = "hidden";
+        }
+        // list Show Category
+        function showCategory() {
+            document.getElementById("list-categ").style.visibility = "visible";
+        }
+        function hideCateg(valueDIv) {
+            document.getElementById("categ").value=valueDIv;
+            document.getElementById("list-categ").style.visibility = "hidden";
+        }
+        // list show Units
+        function showUnits() {
+            document.getElementById("list-units").style.visibility = "visible";
+        }
+        function hideUnits(valueDIv) {
+            document.getElementById("unit").value=valueDIv;
+            document.getElementById("list-units").style.visibility = "hidden";
+        }
+
+        $('#quantity, #rate').on('input',function(){
+            var quantity = parseFloat($('#quantity').val()) || 0;
+            var rate = parseFloat($('#rate').val()) || 0;
+            $('#value').val(quantity * rate);    
+        });
+    </script>
+
+{% endblock %}

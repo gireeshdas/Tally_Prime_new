@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<style>
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+    }
+   
+    .fo:hover{
+        background:  rgb(202, 202, 13);
+        
+    }
+
+
+
+</style>
+
+
+
+<div class="row container-fluid p-0 mx-0">
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+      <!-- <a href="javascript:history.go(-1);" class="close">+</a>--> 
+    <h6  class="bg-info text-light p-2">List of Groups</h6>
+    
+
+<form id="myForm" action="" method="post" class="">
+    {% csrf_token %}
+   
+                   
+
+                    <div class="fo  col-sm-13 m-0 p-0  py-3"   ><a id="cbtn" href="group_alt"  style="padding-left: 6px; margin-left: 600px; height: 5px;" class="">Create</a></div>
+
+                    <hr>
+<div>
+                    <div class=" fo  col-sm-13 m-0 p-0  py-4" style="height:2px;" ><a id="cbtn" href="credit" style="padding-left: 6px"  class="">Creditors</a></div>
+                    <div class=" fo  col-sm-13 m-0 p-0  py-4" style="height:2px;" ><a id="cbtn" href="debi" style="padding-left: 6px"  class="">Debtors</a></div> 
+                    
+                </div>
+                    <hr>
+
+
+                    {% for gr in gr %}
+
+                    <div class=" fo  col-sm-13 m-0 p-0 w-200 py-4" style="height:5px;" ><a id="cbtn" href="" style="padding-left: 6px"  class="">{{ gr.group_name }}</a></div>
+
+                    {% endfor %}
+                 
+              
+
+    
+</form>
+
+</div>
+</div>
+
+
+</div> 
+
+
+
+
+{% endblock body %}

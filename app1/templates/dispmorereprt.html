@@ -1,0 +1,114 @@
+<style>
+    table, td {
+      text-align:center;
+    }
+    th{
+        text-align: center;
+        text-decoration-style: wavy;
+    }
+    </style>
+{% extends 'base.html' %}
+
+{% block body %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<div class="row container-fluid p-0 mx-0">
+    <div class="col-sm-4 m-0 p-0"></div>
+    <div class="col-sm-4 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);height: 400px;">
+        <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <div  class="bg-info text-light"><center>Account Books</center></div>
+                
+
+           <div>
+              <center>
+               <table>
+                <br>
+                <tr>
+                    <th>
+                       <br> SUMMARY
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-left: 15px;"><a href="{% url 'cash_bank_books_cash_bank_summary' %}">Cash/Bank Books(s)</a></div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-left: 15px;"><a href="{% url 'account_books_ledger' %}">Ledger</a></div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-left: 15px;"><a href="{% url 'Select_Groups' %}">Group Summary</a></div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-left: 15px;"><a href="{% url 'Select_Group_Voucher' %}">Group Voucher</a></div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                       <br> REGISTERS
+                    </th>
+                </tr>
+                <tr>
+                     <td>
+                        <div style="margin-left: 15px;"><a href="{% url 'salesregister' %}">Sales Register</a></div>
+                       
+                      </td>
+                </tr>
+                <tr>
+                    <td>
+                       <div style="margin-left: 15px;"><a href="{% url 'purchaseregister' %}">Purchase Register</a></div>
+                      
+                     </td>
+               </tr>
+               <tr>
+                <td>
+                   <div style="margin-left: 15px;"><a href="{% url 'journalregister' %}">Journal Register</a></div>
+                  
+                 </td>
+           </tr>
+           <tr>
+            <td>
+               <div style="margin-left: 15px;"><a href="{% url 'debitnoteregister' %}">Debitnote Register</a></div>
+              
+             </td>
+       </tr>
+       <tr>
+        <td>
+           <div style="margin-left: 15px;"><a href="{% url 'creditnoteregister' %}">Creditnote Register</a></div>
+          
+         </td>
+   </tr>
+   <tr>
+    {% comment %} <th>
+        <br><div style="margin-left: 15px;"><a href="{% url 'balancesheet' %}">Balance Sheet</a></div>
+    </th> {% endcomment %}
+</tr>
+           <tr>
+            <th>
+               <br> Voucher Clarification
+            </th>
+        </tr>
+     
+        <tr>
+            <th>
+                <div style="margin-left: 15px;"><a href=" ">QUIT</a></div>
+                  
+            </th>
+        </tr>
+               </table>
+            </center>
+           </div>
+        </div>
+    </div>
+   
+
+{% endblock %}

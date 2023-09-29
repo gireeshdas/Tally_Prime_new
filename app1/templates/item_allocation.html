@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+        select{
+        background-color: rgba(0,0,0,0.2);  
+        color: white;
+    }
+    select optgroup{
+        background-color: rgb(22 244 255 / 20%);  
+        color: white;  
+    }
+    .form-control,
+    .form-control:focus {
+        background-color: rgb(255 0 0 / 14%);
+        color:white;
+        
+    }
+</style>
+<!-- <h1>{{stock_it.name}#}</h1> -->
+<div class="row mt-5" >
+<div class="col-md-3"></div>
+<div class="col-md-7">
+<div class="container">
+    <div class="card">
+        <div class="card-body">  
+            <form action="" method="post">
+                {% csrf_token %}
+
+           <h1 style="background-color: hsl(0, 0%, 0%);">{{selected_value}}  </h1> 
+                    <p>Item Allocations for : <strong style="font-size: medium;">{{stock_it.name}}</strong> <strong></strong> <button onclick="goBack()" id="additem" class="btn btn-md btn-primary">Go to sales voucher page</button> </p>
+                    <hr>
+                    <!-- Add item table  -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Per</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="ml-5">
+                            <!-- two hidden  -->
+                            <input type="hidden" name="itm_allo_id" id="itm_allo_id" />
+                            <input type="hidden" value="{{stock_it.name}}"  name="item_name" id="item_name" />
+                            <td>
+                                <select class="form-control form-control-sm" id="myselect" style="width: 120px;height: 30px;" name="party_ac_name" onchange="goToLink()" >
+                                    <optgroup  label="List Of Locations"></optgroup>
+                                    <option selected value=""></option>
+                                     <option value="Create">Create</option>
+                                     {% for cr  in crt_god  %}
+                                     <option selected value="{{cr.name}}">{{cr.name}}</option>
+                                     {% endfor %}
+                                    </select>                    
+                            </td>
+                            
+                            <td> <input type="number"  class="form-control form-control-sm"  size="3"     name="quantity" id="quantity"> </td>
+                            <td><input type="number"  class="form-control form-control-sm"  size="3" value=""   name="rate" id="rate"></td> 
+                            <td><input disabled type="text" class="form-control form-control-sm" size="3"  value="{{stock_it.units}}" name="per" id="per"></td>
+                            <td><input  type="number" class="form-control form-control-sm" size="3"  name="amount" id="amount"></td>
+                            <td>
+                                <input type="button"class="btn btn-success w-100"id="btnsave"value="Save" />
+                            </td>
+                        </tbody>
+                    </table>
+                </form>
+                    <!-- item show edit delete table   -->
+                    <table id="mytable" class="mt-3 table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Per</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="showdata">
+
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+</div>
+<div class="md-2"></div>
+</div>
+
+<script>
+    function goToLink(){
+            var sel = document.getElementById("myselect");
+            var a = sel.value;           
+            console.log(a);
+            if(a=="Create"){
+                window.location.href="{% url 'godown_secondary' %}"
+            }
+    }
+    function goBack() {
+        window.history.back();
+    }
+
+$(document).ready(function() {
+  $('#quantity, #rate').on('input', function() {
+    var quantity = $('#quantity').val();
+    var rate = $('#rate').val();
+    var result = quantity * rate;
+    $('#amount').val(result);
+  });
+});
+</script>
+{% include "itm_allo_ajax.html"%}
+{% endblock %}

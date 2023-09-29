@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+
+
+
+
+      
+<style>
+        
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    .ps:hover{
+          color: white;
+          background-color: rgb(1, 100, 213);
+        }
+        .hide{
+          display: none;
+        }
+
+</style>
+<div class="m-4">
+<div class="row container-fluid p-0 " >
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+    <h6  class="bg-info text-light p-2">Employee Category Creation (Secondary)</h6>
+
+    
+    
+
+<form  action="{% url 'employe_category_form' %}" method="post" class="p-5">
+        {% csrf_token %}
+   
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="gname">Name :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="name"
+                            style="width: 100%;" id="alias" 
+                            placeholder="" autocomplete="off" required/></div> 
+
+                            
+                    </div>
+
+
+                
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alias">(Alias) :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="alias"
+                            style="width: 100%;" id="alias" 
+                            placeholder="" autocomplete="off"></div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label >Allocate Revenue Items:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select name="locate" class="form-control " style="width: 100%;">
+                                <option  value="No">No</option>
+                                <option  value="Yes">yes</option>
+                        
+                            </select>
+                            
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label >Allocate Non-revenue Items:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select name="locate2" class="form-control " style="width: 100%;">
+                                <option  value="No">No</option>
+                                <option  value="Yes">yes</option>
+                        
+                            </select>
+                            
+                        </div> 
+                    </div>
+
+                   
+
+
+                    <div class="flexy"><input type="submit"   value="create" class="btn btn-info w-100 mt-5"></div>
+
+                 
+
+                  
+    
+</form>
+
+    </div>
+
+
+       
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+{% endblock %}   

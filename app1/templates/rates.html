@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }  
+    </style>
+
+    <div class="m-3">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Multi-Currency Alteration</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_ROE' %}" autocomplete="off">
+            {% csrf_token %}
+            <div class="p-3">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"><label for="a">Date for rate of exchange : </label></div>
+                    <div class="col-sm-3 m-0 p-0">
+                        {% for i in tally %}
+                            <p>{{i.fin_begin}}</p>
+                        {% endfor %}
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+                <div class="table-responsive-sm">
+                    <Table class="w-100 table text-center" border="1">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Sl.no</th>
+                                <th rowspan="2">currency</th>
+                                <th rowspan="2">Std.rate</th>
+                                <th colspan="2">Selling rate</th>
+                                <th colspan="2">Buying rate</th>
+                                <th rowspan="2">Action</th>
+                            </tr>
+                            <tr>
+                                <th>last voucher rate</th>
+                                <th>Specified rate</th>
+                                <th>last voucher rate</th>
+                                <th>Specified rate</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                           
+                            {% for cr in ccr %}
+                                <tr>
+                                    <td> {{ forloop.counter }} </td>
+
+                                    
+                                    
+                                    
+                                    <td> 
+                                        <input type="text" name="curname" id="" value="{{ cr.Symbol }} ({{ cr.FormalName }})" class="form-control" >
+                                    </td>
+                                    <td><input type="text" class="form-control" value="" name="stdr"></td>
+                                    <td></td>
+                                    <td><input type="text" class="form-control" value="" name="ssr"></td>
+                                    <td></td>
+                                    <td><input type="text" class="form-control" value="" name="bsr"></td>
+                                    <td> <button class="btn btn-info">Enter</button></td> 
+                                </tr>
+                            
+
+                           
+                            {% endfor %}
+                            
+
+                        </tbody>
+                    </Table>
+               </div>  
+            </div>
+        </form>
+    </div>
+{% endblock %}

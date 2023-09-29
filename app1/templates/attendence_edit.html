@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+
+    <h3 class="text-center mb-5 ">Attendence/Production Type creation</h3>
+    <div class="container"  style="width: 50%;margin-left: 35%;">
+        
+        <div class="row" >
+            <div class="col">
+               
+                <form action="{% url 'attendence_edit2' p.id %}"  method="post">
+                    {% csrf_token %} 
+        
+                    <label class="form-label" >Name</label>
+                    <input name="name" type="text" class="form-control w-50" value="{{ p.name }}">
+                    <label class="form-label">alias</label>
+                    <input  name="alias" type="text" class="form-control w-50" value="{{ p.alias }}">
+                    <label class="form-label">Under</label>
+                    <select name="under" class="form-control w-50">
+                        {% for p in p2 %}
+                        <option name="under" value="primary">Primary</option>
+                        <option name="under" >{{p.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label class="form-label">Attendence type Period type</label>
+                    <select name="type" class="form-control w-50" >
+                        <option  name="type">Select the option</option>
+                        <option value="Attendance/Leave with pay" name="type">Attendance/Leave with pay</option>
+                        <option value="Leave without pay" name="type">Leave without pay</option>
+                        <option value="Production" name="type">Production</option>
+                        <option value="User Defined Calender Type" name="type">User Defined Calender Type</option>
+                    </select>
+
+                    <button type="submit"  class=" btn btn-info mt-3 w-50" >submit</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+     </div>
+
+     <script>
+        function checker(){
+            var result = confirm('Are you sure ?');
+            if (result== false){
+                event.preventDefault();
+
+            }
+        }
+     </script>
+
+
+
+{% endblock %}    

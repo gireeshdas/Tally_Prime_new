@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Stock Group Summary</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+                        <tr>
+                          <th rowspan="6"  class="align-middle text-white">Particular</th>
+                          <th colspan="6" class="text-center text-white"><h5>{{ display.Particular }}</h5><h6><b> </b></h6>For 1-Apr-2022</th>
+                        </tr>
+                        <tr>
+                          <th colspan="6" class="text-center text-white">Closing Balance</th>
+                        </tr>
+                        <tr>
+                          <th class="text-center text-white">Quantity</th>
+                          <th class="text-center text-white">Rate</th>
+                          <th class="text-center text-white">Value</th>
+                        </tr>
+                        <tbody>
+                           {% for i in data %}
+                            <tr class="trhover">
+                                <th class="text-white"><a href="{% url 'Stock_Item_Monthly_Summary' i.id %}">{{ i.Particular }}</a></th>
+                                <td class="text-center text-white">{{ i.Quantity }}</td>
+                                <td class="text-center text-white">{{ i.Rate }}</td>
+                                <td class="text-center text-white">{{ i.Value }}</td>
+
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <th class="text-white">Grand Total</th>
+                                <th colspan="3" class="text-right text-white">{{total}}</th>
+                                <!-- <td class="text-center text-white"></td> -->
+                              </tr>
+                        </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+.trhover:hover{
+    background-color: rgb(31, 40, 68);
+}
+</style>
+
+
+{% endblock %}

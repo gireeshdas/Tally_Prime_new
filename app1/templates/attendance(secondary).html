@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        
+
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+      
+      }
+      .form-uqc {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+      
+      }
+      .hide{
+        display: none;
+     }
+     @media (max-width: 991px) {
+        .main-panel {
+            margin-left: 0;
+            width: 100%;
+        }
+        }
+
+        .content-wrapper {
+        padding: 1.875rem 1.75rem;
+        width: 100%;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        }
+      
+    
+    
+    </style>
+    <div class="main-panel">
+      <div class="content-wrapper">
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h6  class="bg-info text-light p-2 m-0 text-left">Attendance/Production Type Creation</h6>
+
+            <form name="myForm" id="" action="attendance" onsubmit="validateForm()" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+
+                <div class="row container-fluid  p-2 m-0">
+                  <div class="col-md-4"> <label for="gname">Name :</label></div>
+                  <div class="col-md-8"><input class="custom-select-md form-control" type="text" name="name"
+                  id="alias" 
+                      placeholder="" autocomplete="off"/></div> 
+              </div>
+
+              <div class="row container-fluid  p-2 m-0">
+                  <div class="col-md-4"> <label for="alia">(Alias) :</label></div>
+                  <div class="col-md-8"><input class="custom-select-md form-control" type="text" name="alias"
+                     id="alias" 
+                      placeholder="" autocomplete="off"></div> 
+              </div>
+
+              <div class="row container-fluid  p-2 m-0">
+                  <div class="col-md-4"> <label for="under">Under :</label></div>
+                  <div class="col-md-8">
+                       <input class="custom-select-md form-control" type="text" name="under_name"
+                             id="primary-text" onfocus="showList()"
+                             placeholder="Primary" autocomplete="off">
+                             
+                            
+
+                  </div> 
+              </div>
+              <div class="row container-fluid  p-2 m-0">
+                  <div class="col-md-4"> <label for="attendance">Attendance Type :</label></div>
+                  <div class="col-md-8">
+                  <select name="attendance" id="type" class="custom-select-md form-control " 
+                  onchange="show()">
+                      <option value="">--select--</option>
+                      <option value="leave_with_pay">Attendance/Leave with Pay</option>
+                      <option value="leave_without_pay">Leave without Pay</option>
+                      <option value="production">Production</option>
+                      <option value="user_defined">User Defined Calendar Type</option>
+                  </select></div>
+              </div>
+
+              <div id="pt" class="row container-fluid hide  p-2 m-0">
+                <div class="col-md-4"> <label for="alia">Period Type :</label></div>
+                <div class="col-md-8"><input class="custom-select-md form-control" type="text" name="period" value="Days"
+                  id="alias" 
+                    placeholder="" autocomplete="off"></div> 
+            </div>
+
+            <div id="uni" class="row container-fluid hide  p-2 m-0">
+              <div class="col-md-4"> <label for="unitss">Units :</label></div>
+              <div class="col-md-8"><input class="custom-select-md form-control" type="text" name="units" 
+
+                  placeholder="" autocomplete="off"
+                  id="secondary-text" 
+                  onfocus="showUnits()"></div> 
+          </div>
+
+     
+
+              
+            <div class="row" style="margin-top: 10%;">
+              <div class="col-md-4"></div>
+                  <div class="col-md-4" ><button class="btn btn-info w-15">CREATE</button></div>   
+              </div>
+            </form>
+              <!-- <div class="flexy w-100 py-4"><button id="cbtn" type="button" class="btn btn-info w-50">Create</button></div> -->
+
+
+</div>
+
+<div class="col-md-4"></div>
+</div>
+      </div>
+    </div>
+    
+
+
+    
+    <div class="form-popup" id="list-div" >
+  
+      <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Attendance Type</h6>
+  <hr >
+  <div>
+      <table >
+      
+  
+      <tr>
+        <td>    
+  
+          {% for l in att %}
+          <div onclick="hideList('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+          {% endfor %}
+        </td>
+      </tr>  
+      
+      </table>
+  </div>
+  
+  
+   </div>
+
+
+<!-- list of units -->
+
+<div class="form-uqc" id="list-units" >
+
+<h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Units</h6>
+<hr >
+<div>
+<table >
+  <tr >
+    <td>
+          <a href="unit_creation"> <button
+            type="submit"
+            style="color: black;margin-left: 310%; width: 20%"
+            class="custom-select-md form-control"
+          >
+            create
+          </button></a>
+    </td>
+  </tr>
+
+
+<tr>
+<td>    
+
+{% for l in unit %}
+<div onclick="hideUnit('{{l.symbol}}')" style="color:black;" >{{l.symbol}}</div>
+{% endfor %}
+</td>
+</tr>  
+
+</table>
+</div>
+
+
+
+
+</div>
+
+
+<script>
+
+function validateForm(){
+
+var x=document.forms["myForm"]["name"].value;
+if (x==null || x=="")
+{
+alert("Name must be filled out");
+return false;
+}
+}
+
+
+function showList() {
+document.getElementById("list-div").style.visibility = "visible";
+}
+function hideList(valueDIv) {
+document.getElementById("primary-text").value=valueDIv;
+document.getElementById("list-div").style.visibility = "hidden";
+}
+function showUnits(){
+document.getElementById("list-units").style.visibility = "visible";
+}
+function hideUnit(valueDIv) {
+document.getElementById("secondary-text").value=valueDIv;
+document.getElementById("list-units").style.visibility = "hidden";
+}
+
+function show(){
+  var status=document.getElementById("type");
+  var c=status.value;
+
+  if (c=='leave_with_pay'){
+   document.getElementById('pt').style.display="flex";
+   document.getElementById('uni').style.display="none";
+  }
+  else if(c=='leave_without_pay'){
+   document.getElementById('pt').style.display="flex";
+   document.getElementById('uni').style.display="none";
+  }
+  else if(c=='production'){
+  document.getElementById('uni').style.display="flex";
+   document.getElementById('pt').style.display="none";
+  }
+  else if(c=='leave_without_pay'){
+   document.getElementById('pt').style.display="flex";
+   document.getElementById('uni').style.display="none";
+  }
+  else {
+   document.getElementById('pt').style.display="none";
+   document.getElementById('uni').style.display="none";
+
+  }
+
+
+
+
+
+}
+// function color(value){
+//   document.body.style.backgroundColor="rgba(255, 0, 0, 0.4)";
+
+// }
+
+</script>
+
+
+{% endblock %}

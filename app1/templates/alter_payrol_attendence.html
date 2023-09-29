@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+         .hide{
+            display:none;
+        }
+        .flexy{
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+
+    </style>
+
+    <h3 class="text-center mb-5 ">Attendence/Production Type creation</h3>
+    <div class="container"  style="width: 50%;margin-left: 35%;">
+        
+        <div class="row" >
+            <div class="col">
+               
+                <form action="{% url 'alter_payrol_attendence3' %}"  method="post">
+                    {% csrf_token %} 
+                    
+                    <label class="form-label">Name</label>
+                    <input name="name" type="text" class="form-control w-50" required>
+
+                    
+                    <label class="form-label">alias</label>
+                    <input  name="alias" type="text" class="form-control w-50">
+                    <label class="form-label">Under</label>
+                    <input name="under" class="form-control w-50" onclick="showList2()" id="first">
+                        <!--{% for p2 in p %}
+                        <option name="under" value="primary">Primary</option>
+                        <option name="under" >{{p2.name}}</option>
+                        {% endfor %}
+                    </select>-->
+                    <label class="form-label">Attendence type Period type</label>
+                    <select name="type" class="form-control w-50" onchange="show5()" id="cal2">
+                        <option  name="type">Select the option</option>
+                        <option value="Attendance/Leave with pay" name="type">Attendance/Leave with pay</option>
+                        <option value="Leave without pay" name="type">Leave without pay</option>
+                        <option value="Production" name="type">Production</option>
+                        <option value="User Defined Calender Type" name="type">User Defined Calender Type</option>
+
+                
+                    </select>
+                    
+                   
+                    
+                    <div class="row container-fluid hide p-2 m-0" id="pk">
+                        <div class="col-sm-6 m-0 p-0"> <label for="pan">Period Type</label>
+                        <input type="text" class="form-control" id="vc2" placeholder="" name="payslip" value="Monthly"></div>
+                        
+                    </div>
+
+                    <div class="row container-fluid hide p-2 m-0" id="pk2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="pan">Unit</label>
+                        <input type="text" class="form-control" id="vc" placeholder="" name="payslip" onclick="showList3()"></div>
+                        
+                    </div>
+
+                    <button type="submit"  class=" btn btn-info mt-3 w-50" >submit</button>
+
+
+
+
+
+
+                    <div>
+                        <div class="col-sm-7 hide" id="aiwa" style="margin-left:350px ;margin-top: -180px;">
+                          <div class="col-sm-12 m-0 p-0">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="card-title text-center custom-select-md for">
+                                          <h5>Attendence/Production Type</h5> <a href="{% url 'unit3' %}" style="margin-left: 220px; margin-top: 20px;"><h6>Create</h7></a><hr/>
+                                         
+                      
+                                      </div>
+                                      <ul class="list-group ">
+                                          <li class="list-item ps" onclick="hidelist2('primary')" value="primary">primary</li>
+                                          {% for p2 in p %}
+                                          <div class="row container-fluid  p-0 m-0">
+                                              <div class="col-sm-9 m-0 p-0"><li class="list-item ps" onclick="hidelist2('{{p2.name}}')" value="{{p2.name}}">{{p2.name}}</li></div>
+                                          </div>
+                                          {% endfor %}
+                                         
+                                        </ul>
+                                      
+                                  </div>
+                              </div>
+                              
+                      
+                      
+                          </div>
+                      </div>
+                    </div>
+
+
+
+                    
+
+                    <div>
+                        <div class="col-sm-7 hide" id="aiwa2" style="margin-left:350px ;margin-top: -80px;">
+                          <div class="col-sm-12 m-0 p-0">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="card-title text-center custom-select-md for">
+                                          <h5>Units</h5> <a href="{% url 'unit3' %}" style="margin-left: 220px; margin-top: 20px;"><h6></h7></a><hr/>
+                                         
+                      
+                                      </div>
+                                      <ul class="list-group ">
+                                          
+                                          {% for p3 in p2 %}
+                                          <div class="row container-fluid  p-0 m-0">
+                                              <div class="col-sm-9 m-0 p-0"><li class="list-item ps" onclick="hidelist3('{{p3.symbol}}')" value="{{p3.symbol}}">{{p3.symbol}}</li></div>
+                                          </div>
+                                          {% endfor %}
+                                         
+                                        </ul>
+                                      
+                                  </div>
+                              </div>
+                              
+                      
+                      
+                          </div>
+                      </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+         
+     </div>
+
+     <script>
+
+
+
+function showList3(){
+    document.getElementById('aiwa2').style.display='flex';
+    
+    
+    
+}
+
+function hidelist3(valueDIv){
+
+    document.getElementById('aiwa2').style.display='none'
+    document.getElementById('vc').value=valueDIv
+    
+    
+
+}
+
+
+function show5(){
+        var static =document.getElementById('cal2');
+        var a =static.value;
+        console.log(a);
+
+        if (a =='Attendance/Leave with pay'){
+            document.getElementById('pk').style.display='flex';
+            document.getElementById('pk2').style.display='none';
+           
+        }
+        else if (a == 'Production'){
+            document.getElementById('pk').style.display='none';
+            document.getElementById('pk2').style.display='flex';
+            
+        }
+
+        else if (a == 'Leave without pay'){
+            document.getElementById('pk').style.display='flex';
+            document.getElementById('pk2').style.display='none';
+            
+        }
+
+        else if (a == 'User Defined Calender Type'){
+            document.getElementById('pk').style.display='flex';
+            document.getElementById('pk2').style.display='none';
+            
+
+        }
+        else{
+
+            document.getElementById('pk').style.display='none';
+            document.getElementById('pk2').style.display='none';
+            
+        }
+    }
+        
+
+function showList2(){
+    document.getElementById('aiwa').style.display='flex';
+    document.getElementById('si').style='buto';
+    
+    
+}
+
+function hidelist2(valueDIv){
+
+    document.getElementById('aiwa').style.display='none'
+    document.getElementById('first').value=valueDIv
+    
+    
+
+}
+
+
+
+        function checker(){
+            var result = confirm('Are you sure ?');
+            if (result== false){
+                event.preventDefault();
+
+            }
+        }
+     </script>
+
+
+
+{% endblock %}    

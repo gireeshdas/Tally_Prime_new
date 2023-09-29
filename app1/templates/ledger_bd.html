@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .hide{
+			display: none;
+    	}
+        .inp{
+            border: none;
+            color: #fff;
+            background-color: rgba(0,0,0,.001);
+            width: 100px;
+        }
+
+        .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 17px;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+    }
+    
+    .form-popup {
+        display: none;
+        position: fixed;
+        top: 250px;
+        right: 15px;
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+        height: 400px;
+    }
+    
+      .content a:hover {background-color: rgb(238, 167, 75);}
+      
+      /* Add styles to the form container */
+      .form-container {
+        max-width: 50px;
+        height: 500px;
+        padding: 10px;
+      }
+      .form-container1 {
+        max-width: 350px;
+        height: 500px;
+        padding: 2px;
+       
+      }
+
+    </style>
+
+<script>
+   function closeForm() {
+        document.getElementById("underForm").style.display = "none";
+    }
+    function showCost(){
+        document.getElementById('underForm').style.display= "block";
+    }
+    function setPrimary(){
+    document.getElementById('under').value= '*Primary';
+    document.getElementById('underForm').style.visibility= "hidden";
+    }
+    function setCostcentre(under,underId){
+        document.getElementById('under').value= under;
+        document.getElementById('underForm').style.visibility= "hidden";
+        document.getElementsByName('underhidden').value= underId;
+    }
+</script>
+    
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-5">Bank Details</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                <h6 class=" text-light p-2 m-0 text-center" style="background-color:rgba(0,0,0,.4);">Bank Details For
+                    <center><input type="text" class="form-control inp text-center" id="nm"></center>
+                </h6> 
+    
+                <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_ledger_bankdetails' %}" autocomplete="off">
+                    {% csrf_token %}
+                
+                    <div class="p-3"><hr>
+                        <div class="row container-fluid m-0">
+                            <div class="col-sm-4"> <label for="a">Transaction Type</label></div>
+                        </div><hr>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="transaction_type" id="Transaction_Type" class="form-control" onchange="trantype()" required >
+                                    <option value="End of List">End of List</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="e - Fund Trasfer">e - Fund Trasfer</option>
+                                    <option value="Others" selected>Others</option>
+                                </select>
+                            <div class="col-sm-6 m-0 p-0"></div>
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="cross_using">
+                            <div class="col-sm-6 m-0 p-0"><label for="a">Cross Using</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" value="A/C Payee" name="ac_payee">
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="A/c_No">
+                            <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c No.</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" id="acno" placeholder="" name="acc_no">
+                            </div>   
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="IFSC_Code">
+                            <div class="col-sm-6 m-0 p-0"> <label for="pan">IFSC Code</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" id="ifs" pattern="^[A-Za-z]{4}[a-zA-Z0-9]{7}$" 
+                                title="Please fill valid IFSC Code Eg:AXIS12345AA" name="ifsc_code">
+                            </div> 
+                        </div>
+                        <div class="row container-fluid hide p-2 m-0" id="Bank_Name">
+                            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Bank Name</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" id="under" value="Not Applicable" name="bank_name" class="form-control " 
+                            onclick="showCost();" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>         
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+
+        <div class="form-popup" id="underForm" style="background-color: #213b52" >
+            <form action="" class="form-container1" >
+                <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Banks<a href="" class="close"></a></h6>
+                <a  href="{% url 'bankname' %}" style="margin-left:180px;color:#fff;cursor:pointer" id="bn" onchange="banknm()">Create New</a>  
+        
+            <hr >
+            <div>
+                <table >
+                <tr >
+                    <a onclick="setPrimary()" style="color:#fff;cursor:pointer">&nbsp;&nbsp;Not Applicable</a><br>
+                {% for i in bn %}
+               
+            
+                <a onclick="setCostcentre('{{i.bankname}}','{{i.id}}')"  class="content" 
+                style="cursor:pointer;color:#fff;">&nbsp;&nbsp;{{i.bankname}}</a><br>
+                {% endfor %}
+                </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{i.id}}">
+            </form>
+            <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+        </div>
+        
+    </div> 
+    
+    <script>        
+
+        document.getElementById("nm").value = localStorage.getItem("status");
+
+        function trantype(){
+            var status = document.getElementById("Transaction_Type");
+            var a = status.value;
+            console.log(a);
+            if( a == "Cheque" ){
+                console.log(a);
+                document.getElementById('cross_using').style.display = "flex";
+                document.getElementById('A/c_No').style.display = "none";
+                document.getElementById('IFSC_Code').style.display = "none";
+                document.getElementById('Bank_Name').style.display = "none";    
+            }
+            else if( a == "e - Fund Trasfer" ){
+                document.getElementById('A/c_No').style.display = "flex";
+                document.getElementById('IFSC_Code').style.display = "flex";
+                document.getElementById('Bank_Name').style.display = "flex";
+                document.getElementById('cross_using').style.display = "none";
+            }
+            else{
+                document.getElementById('cross_using').style.display = "none";
+                document.getElementById('A/c_No').style.display = "none";
+                document.getElementById('IFSC_Code').style.display = "none";
+                document.getElementById('Bank_Name').style.display = "none";
+            }
+        } 
+    </script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<style>
+    .close {
+        position: absolute;
+        top: 1px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .fo:hover{
+        background: rgb(202, 202, 13);
+    }
+    .ui:hover{
+        background-color:rgb(202, 202, 13) ;
+    }
+
+
+
+</style>
+
+
+
+<div class="row container-fluid p-0 mx-0">
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+      <!-- <a href="javascript:history.go(-1);" class="close">+</a>--> 
+    <h6  class="bg-info text-light p-2">List of Ledgers</h6>
+    
+
+<form id="myForm" action="" method="post" class="">
+    {% csrf_token %}
+   
+                   
+
+                    <div class="fo  col-sm-13 m-0 p-0  py-2"   ><a id="cbtn" href="ledgers"  style="padding-left: 6px; margin-left: 600px;width: 50px;" class="">Create</a></div>
+
+                    <hr>
+
+                    {% for ledg in ledg  %}
+
+                    <div>
+                          
+                          
+                           
+                            <p class="ui" style="padding: 5px;" >
+                                <a href="nw" >{{ ledg.name }}</a>
+                            </div>
+                       
+                        
+
+                    
+                   
+
+
+                    {% endfor %}
+                   
+                 
+              
+
+
+    
+</form>
+
+</div>
+</div>
+</div>
+<div class="col-sm-3  m-0 p-0"></div>
+
+</div> 
+
+
+
+
+{% endblock body %}

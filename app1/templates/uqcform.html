@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+
+
+
+
+      
+<style>
+        
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    .ps:hover{
+          color: white;
+          background-color: rgb(1, 100, 213);
+        }
+        .hide{
+          display: none;
+        }
+
+</style>
+<div class="">
+<div class="row container-fluid p-0 " >
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+   <center> <h6  class="bg-info text-light p-2">UQC Name</h6></center>
+    
+    
+
+<form  action="{% url 'uqcform' %}" method="post" class="p-5">
+        {% csrf_token %}
+   
+                    
+                        <input class="custom-select-md form-control" type="text" name="uqcname"
+                            style="width: 100%;" id="alias" 
+                            placeholder="" autocomplete="off" required/>
+
+                            
+                    
+                
+                <div class="flexy w-100 py-4"><button class="btn btn-info w-25 " onclick="checker()">Create</button></div> 
+            
+                </form>
+
+                    {% endblock %}  
+    <script>
+         function checker(){
+            var result =confirm('Are you sure?');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+    </script>

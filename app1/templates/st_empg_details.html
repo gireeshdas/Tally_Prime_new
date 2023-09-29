@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            .flexy{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+            .form-popup {
+              visibility: hidden;       
+              position: fixed;
+              top: 230px;
+              right: 27px;
+              background-color: rgb(0,0,0,.2); 
+              border: 1px solid #f1f1f1;
+              z-index: 9;
+              width: 300px;
+            
+            }
+            .hide{
+                
+                display: none;
+            }
+    </style>
+        
+
+            <div style="width: 190%;">
+                <div class="row container-fluid p-0 " >
+
+                    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+                        <a href="javascript:history.go(-2);" class="close">+</a>
+                        
+                    <h6  class="bg-info text-light p-2">Salary Details Alteration</h6>
+                     {% for a in empgd %}
+                    <form id="" action="" method="post" class="p-5">
+                        {% csrf_token %} 
+                   
+                      
+
+ 
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="name">Name :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text"  name="name"
+                            style="width: 30%;margin-left: -20%;" value="{{ a.name }}"
+                            placeholder="" autocomplete="off" required/></div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="under">under :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text"  name="under"
+                            style="width: 30%;margin-left: -20%;" value="{{ a.under }}"
+                            placeholder="" autocomplete="off"></div> 
+                    </div>
+  {% endfor %}
+                                <Table class="w-100 table text-center" >
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px;" rowspan="2">Effective From</th>
+                                            <th  width="400px" rowspan="2">Pay Head</th>
+                                            <th rowspan="2">Rate</th>
+                                            <th width="30px" rowspan="2">per</th>
+                                            <th rowspan="2">Pay Head Type</th>
+                                            <th rowspan="2">Calculation Type</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>                   
+                                        <tr>
+                                       
+                                            <td><input class="custom-select-md form-control" type="date" name="effective"
+                                                 id="" 
+                                                placeholder="" autocomplete="off"/></td>
+                                                
+                                            <td width=""><input class="custom-select-md form-control" type="text" name="payhead"
+                                                id="primary-text" 
+                                               placeholder="" autocomplete="off"
+                                               onfocus="showList()" > 
+                                            
+                                            
+                                            </td>
+                                            <td> <input class="custom-select-md form-control" type="number" name="rate"
+                                                id="" 
+                                               placeholder="" autocomplete="off"/></td>
+                                            <td width="100"> <input class="custom-select-md form-control" type="number" name="per"
+                                                id="" 
+                                               placeholder="" autocomplete="off"/></td>
+                                            <td><input class="custom-select-md form-control" type="text" name="payheaad_type"
+                                                id="payheaad_type" 
+                                               placeholder="" autocomplete="off"/> </td>
+                                            <td><input class="custom-select-md form-control" type="text" name="calculation_type"
+                                                id="calculation_type" 
+                                               placeholder="" autocomplete="off"/></td>
+                                        </tr>
+
+                                        <tr class="hide" id="row2">
+                                       
+                                            <td><input class="custom-select-md form-control" type="date" name="effective"
+                                                 id="" 
+                                                placeholder="" autocomplete="off"/></td>
+                                            <td width=""><input class="custom-select-md form-control" type="text" name="payhead"
+                                                id="primary-text2" 
+                                               placeholder="" autocomplete="off"
+                                               onfocus="showList1()" > 
+                                            
+                                            
+                                            </td>
+                                            <td> <input class="custom-select-md form-control" type="number" name="rate"
+                                                id="" 
+                                               placeholder="" autocomplete="off"/></td>
+                                            <td width="100"> <input class="custom-select-md form-control" type="number" name="per"
+                                                id="" 
+                                               placeholder="" autocomplete="off"/></td>
+                                            <td><input class="custom-select-md form-control" type="text" name="payheaad_type"
+                                                id="payheaad_type2" 
+                                               placeholder="" autocomplete="off"/> </td>
+                                            <td><input class="custom-select-md form-control" type="text" name="calculation_type"
+                                                id="calculation_type2" 
+                                               placeholder="" autocomplete="off"/></td>
+                                        </tr>
+
+
+                                        
+                                        <tr class="hide" id="row3">
+                                       
+                                            <td><input class="custom-select-md form-control" type="date" name="effective"
+                                                 id="" 
+                                                placeholder="" autocomplete="off"/></td>
+                                            <td width=""><input class="custom-select-md form-control" type="text" name="payhead"
+                                                id="primary-text3" 
+                                               placeholder="" autocomplete="off"
+                                               onfocus="showList2()" > 
+                                            
+                                            
+                                            </td>
+                                            <td> <input class="custom-select-md form-control" type="number" name="rate"
+                                                id="" 
+                                               placeholder="" autocomplete="off"/></td>
+                                            <td width="100"> <input class="custom-select-md form-control" type="number" name="per"
+                                                id="" 
+                                               placeholder="" autocomplete="off"/></td>
+                                            <td><input class="custom-select-md form-control" type="text" name="payheaad_type"
+                                                id="payheaad_type" 
+                                               placeholder="" autocomplete="off"/> </td>
+                                            <td><input class="custom-select-md form-control" type="text" name="calculation_type"
+                                                id="calculation_type" 
+                                               placeholder="" autocomplete="off"/></td>
+                                        </tr>
+                                    </tbody>
+
+                                    
+                                    
+                                </Table>
+
+                                <div><input type="submit" style="margin-left: 0%;margin-top: 20px;width: 100%;" value="create" class="btn btn-info"></div>
+
+
+                            </form>
+                    </div>
+                </div>
+            </div>
+
+
+<!-- list Creation -->
+    
+<div class="form-popup" id="list-div" >
+  
+  <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Pay Heads</h6>
+  
+
+<div>
+  <table >
+  <tr >
+      <td>
+          <a href="/statistics_add_payhead"> <button
+              type="submit"
+              style="color: white; width: 100%"
+              class="custom-select-md form-control"
+            >
+              create
+            </button> </a>
+      </td>
+  </tr>
+
+  <tr>
+    <td>    
+
+      {% for l in epay %}
+      <div onclick="hideList('{{l.name}}')" style="color: white;" >{{l.name}}</div>
+      {% endfor %}
+    </td>
+  </tr>  
+  
+  </table>
+</div>
+</div>
+
+
+
+
+
+ </div>
+
+
+ </div>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+            <script>
+                 document.getElementById("loc").value = localStorage.getItem("status");
+                 document.getElementById("under").value = localStorage.getItem("under");  
+
+
+
+                 function showList(){
+                    document.getElementById('list-div').style.visibility="visible";
+                 }
+                
+
+
+                 function hideList(valueDIv) {
+                    document.getElementById("primary-text").value=valueDIv;
+                   
+
+                    document.getElementById("list-div").style.visibility = "hidden";
+                    
+                    // var element = document.getElementById("row2");
+                    // element.classList.remove("hide");
+                    getDetails()
+                    getDetail()
+                }
+                
+            </script>
+
+
+<script>
+
+    function pass(){
+        var static=document.getElementById('loc').value;
+        console.log(static);
+        
+        localStorage.setItem("static",static);
+        localStorage.getItem("static")
+    }
+
+    function pass2(){
+        var static=document.getElementById('under').value;
+        console.log(static);
+
+        
+    }
+
+</script>
+
+
+<script>
+
+
+
+
+    
+</script>
+       
+      
+        
+       
+    
+{% endblock %}
+
+
+
+
+
+
+

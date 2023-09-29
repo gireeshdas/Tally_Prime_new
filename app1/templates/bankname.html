@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;    
+        }
+    </style>
+    <div class="m-3">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-5">Bank Details</div>
+                    <div class="col-md-5">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'bankname' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <h6  class="bg-trasparent text-light p-2 m-0 text-center">Bank Name</h6>
+                    <div class="p-2">
+                        <center>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" name="bank_name" id="d" placeholder="" value=""> 
+                            </div> 
+                        </center>
+                    </div>
+                    <div class="enter w-100 py-2"><button class="btn btn-info w-15">CREATE</button></div> 
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %} 

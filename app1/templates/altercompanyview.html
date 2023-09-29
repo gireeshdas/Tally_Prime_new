@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style>
+    .btns_prnt{
+        width: 100%;
+       
+        background-color: rgba(240, 248, 255, 0);
+        border: none;
+        /* padding: 6px; */
+    
+    }
+    .btns_prnt:hover{
+        background-color:rgb(44, 158, 187);
+        color: rgb(15, 14, 14);
+    }
+
+</style>
+<div class="row container-fluid p-0 mx-0">
+    <div class="col-sm-4 m-0 p-0"></div>
+    <div class="col-sm-4 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);height: 400px;">
+        <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <div  class="bg-info text-light">List of Companies</div>
+    
+            
+           
+
+           <div>
+               <table>
+                <br>
+                {% for i in com %}
+                {% if i.status == 1 %}
+                
+                <tr>
+                    <div class="btns_prnt">
+                       
+                        <div style="margin-left: 20px;"><a href="{% url 'altercompany' i.id %}">{{i.name}}</a> </div>
+                        <div class="text-right">
+                        <div  style="margin-top:-21px;margin-right:50px;">({{i.id}}) </div>
+                        </div>
+                        
+                    </div>
+                </tr>
+                {% endif %}
+                {% endfor %}
+               </table>
+           </div>
+        </div>
+    </div>
+   
+
+{% endblock %}

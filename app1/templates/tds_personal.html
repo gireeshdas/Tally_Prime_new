@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+            transform: rotate(45deg);
+            cursor: pointer;
+            text-decoration: none;
+            
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <a href="javascript:history.go(-1);" class="close">+</a>
+
+                <h6  class="bg-info text-light p-2 m-0 text-left">Person Responsible Details</h6>
+
+                
+                <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'tds_personal' id.id %}" autocomplete="off">
+
+                    {% csrf_token %}
+                    <h6  class=" text-light p-2 m-0 text-center">Person Responsible Details</h6>
+                    <div class="p-3">
+                        
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tpname" class="form-control" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="b">Son / Daughter of</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tpsd" class="form-control" id="b" placeholder=""></div> 
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="b">Designation</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tpdn" class="form-control" id="b" placeholder=""></div> 
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">PAN</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tppn" class="form-control" id="a" placeholder="" value=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Flat No.</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tpft" class="form-control" id="a" placeholder="" value=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Name of the primises / building</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tpps" class="form-control" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Road/Street/Lane</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="spst" class="form-control" id="a" placeholder="" value=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Area/Location</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="spln" class="form-control" id="a" placeholder="" value=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Town/City/District</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="spdt" class="form-control" id="a" placeholder="" value=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="b">State</label></div>
+                            <div class="col-sm-6 m-0 p-0">  <input type="text" name="tpse" value="{{id.state}}" class="form-control">
+
+                                <!-- <select name="tpse" id="" class="form-control">
+                                    <option value="">Not Applicable</option>
+                                    <option value="">Andaman & Nicobar Islands</option> 
+                                    <option value="">Andhra Pradesh</option>
+                                    <option value="">Arunachal Pradesh</option>
+                                    <option value="">Assam</option> 
+                                    <option value="">Bihar</option> 
+                                    <option value="">Chandigarh</option> 
+                                    <option value="">Chhattisgarh</option> 
+                                    <option value="">Dadra & Nagar Haveli and Daman & Diu</option> 
+                                    <option value="">Delhi</option> 
+                                    <option value="">Goa</option> 
+                                    <option value="">Gujarat</option> 
+                                    <option value="">Haryana</option> 
+                                    <option value="">Himachal Pradesh</option> 
+                                    <option value="">Jammu & Kashmir</option> 
+                                    <option value="">Jharkhand</option> 
+                                    <option value="">Karnataka</option> 
+                                    <option value="Kerala" selected>Kerala</option> 
+                                    <option value="">Ladakh</option> 
+                                    <option value="">Lakshadweep</option> 
+                                    <option value="">Madhya Pradesh</option> 
+                                    <option value="">Maharashtra</option>
+                                    <option value="">Manipur</option> 
+                                    <option value="">Meghalaya</option> 
+                                    <option value="">Mizoram</option> 
+                                    <option value="">Nagaland</option> 
+                                    <option value="">Odisha</option> 
+                                    <option value="">Puducherry</option> 
+                                    <option value="">Punjab</option> 
+                                    <option value="">Rajasthan</option> 
+                                    <option value="">Sikkim</option> 
+                                    <option value="">Tamil Nadu</option> 
+                                    <option value="">Telangana</option> 
+                                    <option value="">Tripura</option> 
+                                    <option value="">Uttarakhand</option> 
+                                    <option value="">Uttarakhand</option> 
+                                    <option value="">West Bengal</option> 
+                                </select> -->
+                            </div>
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Pincode</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="tppin" value="{{id.pincode}}" class="form-control" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Mobile No.</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="spmb" class="form-control" value="{{id.mobile}}" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">STD Code</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="spstd" class="form-control" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Telephone</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="spte" value="{{id.telephone}}" class="form-control" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Email ID</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="email" name="spel" value="{{id.email}}" class="form-control" id="a" placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                            <br><br><br>  
+                        </div>
+                        <p>(Note : All the above details will used in Challan,Forms,Returns)</p>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+{% endblock %}

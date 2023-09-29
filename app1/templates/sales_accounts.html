@@ -1,0 +1,169 @@
+
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<style type="text/css">
+    
+
+    .b1{
+        height: 600px;
+        
+        
+    }
+    .open{
+        
+        float: right;
+       
+
+    }
+    .open2{
+        float: right;
+        margin-right: 200px;
+    }
+    
+    .head{
+        border-bottom: 1px solid;
+        /* border-bottom: 1px solid; */
+    
+    }
+    
+    .par{
+        letter-spacing: 2px;
+     
+        padding: 15px;
+    
+    }
+    .ul{
+       
+    
+        letter-spacing: 2px;
+        font-size: medium;
+    }
+    .list2{
+        margin: 2px;
+        list-style-type: none;
+        margin: 15px;
+        letter-spacing: 2px;
+        
+    }
+    .list2:hover{
+        background-color: darkgoldenrod;
+    }
+    
+    .ABC{
+    
+        font-size: small;
+        padding-right: 25px;
+        float: right;
+        padding-top: 10px;
+        font-weight: 700;
+    
+    
+    }
+    .total{
+        padding: 10px;
+        margin-left: -60px;
+    }
+
+    </style>
+
+
+
+
+
+
+<div class="container-fluid "  style="border: 1px solid; background-color:rgba(0,0,0,.4);">
+    <div class="row">
+        <div class="col-sm-12 m-0 p-0 b1 " style="border-right: 1px solid;" >
+           
+
+            <div class="row ml-0" style="border-bottom: 1px solid; margin: 0px;">
+                <div class="col-sm-9 m-0 p-0 head" ><h4 class=" par" style="margin-top: 20px;margin-left: 40px; ">particulars</h4></div>
+                    <div class="col-sm-3 m-0 p-0 head" style="border-left: 1px solid; "><p class=" ABC" style="margin-top: 20px;"><center>ABC Limited </br>For 1-Apr-22 </center></p>
+                        
+                <div class="row" style="border-top: 1px solid; margin: 0px;">
+                    <div class="col-sm-9 m-0 p-0 " ><p class="ABC"><h6 style="margin-left: 100px;">closing Balance</h6></p></div></div>
+                    <div class="row" style="border-top: 1px solid; margin: 0px;">
+                        <div class="col-sm-6 mt-2 p-0 " ><p class="ABC"><h6 style="margin-left: 50px;">Debit</h6></p></div>
+                        <div class="col-sm-6 mt-2 p-0 " style="border-left: 1px solid;"><p class="ABC"><h6 style="margin-left: 50px;">Credit</h6></p></div></div>
+                        
+                    
+                    
+                
+                    </div>
+                    
+
+            </div>
+
+            <ul class="ul" style="margin-top: 50px;">
+                
+               
+                
+
+<!-- 
+                {% for p in std %}
+                
+                <li class="list2">{{p.name}} <i class="open">{{p.opening_balance}}</i></li>
+
+                {% endfor  %} -->
+                
+
+                {% for t in std %}
+               
+                
+                   <li class="list2"><a  href="{% url 'sales_month_2' t.id %}">{{t.name}}</a><i class="open">{{t.credit_period}}</i><i class="open2"></i></li>
+                   <!-- <li class="list2">{{t.ledger_name}} <i class="open">{{t.ledger_opening_bal}}</i></li> -->
+                 
+                  <!-- <li class="list2">{{t.ledger_name}} <i class="open2">{{t.ledger_opening_bal}}.00</i></li> -->
+                  
+                
+
+                {% endfor  %}
+               
+               
+               
+                
+            </ul>
+
+           
+
+
+          
+            
+        </div>
+
+       
+
+       
+
+
+
+        <div class="col-sm-12 m-0 p-0  " style="border-right: 1px solid; border-top: 1px solid;" >
+           
+
+            <div class="row ml-2" style="margin-top: 15px;margin-bottom: 15px; font-size: 18px;">
+                <div class="col-sm-10 m-0 p-0 " ><a style="margin-left: 30px;">Grand Total</a></div>
+                <div class="col-sm-1 m-0 p-0 " ><a class="total" >{{total_d}}</a></div>
+                <div class="col-sm-1 m-0 p-0 " ><a class="total ml-3" >{{total}}</a></div>
+                   
+            </div>
+
+            
+
+          
+            
+        </div>
+        <script>
+
+    function add(){
+            let sum = 0;
+            for (let i = 1; i <= 6; i++) {
+                sum = sum + i;
+            }
+                console.log(sum)}
+//Output: 21
+        </script>
+        {% endblock %} 
+       

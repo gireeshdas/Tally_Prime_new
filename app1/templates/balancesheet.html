@@ -1,0 +1,283 @@
+
+{% extends 'base.html' %}
+{% block body %}
+<style>
+    table, td {
+      text-align:center;
+    }
+    th{
+        text-align: center;
+        text-decoration-style: wavy;
+    }
+    </style>
+
+
+{% comment %} <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> {% endcomment %}
+      
+            <div class="page-wrapper">                              
+                <div  class="bg-info text-light">Balance Sheet</div>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-sm-9 col-md-6" style="background-color:#213b52;border-right:1px solid whitesmoke; height: 500px;"">
+                            <div style="margin-left:18px;font-size:18px;margin-top:35px">Liabilities</div>
+                            <div id=""></div>
+                            
+                                <div style="text-align: right; margin-top:-35px;margin-right:15px;font-size:15px">{{comp.name}}</br>as at</div>
+                                <div style="text-align: right;margin-top:-3px;margin-right:15px;font-weight:250" >{{comp.fin_begin}} to  {{comp.fin_end}}</div>
+                                <div style="text-align: right;font-size:11px"></div>
+                  
+                                               
+                    <hr>
+                        {% comment %} <h6>{{L}}</h6>
+                        <h6>{{A}}</h6> {% endcomment %}
+                        {% comment %} <h6>{{prtfd}}</h6> {% endcomment %}
+                        <div style="margin-left:15px;font-size:16px"><a href="{% url 'groupsummary'%}">Current Liabilities</a></div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{sclob}}</div> 
+                        <div style="margin-left:15px;font-size:16px"><a href="{% url 'bd_groupsummary' %}">Branch/Divisions</a></div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{sbdob}}</div>
+                        {% if L < A %}
+                    </br>
+                </br>
+                        <div style="margin-left:15px;font-size:16px"><a href="{% url 'profit'  %}">Profit &Loss Account</a></div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{pflose}}</div>
+                        <div style="margin-left:35px;font-style: italic;"><a href="{% url 'groupsummary' %}">Opening Balance</a></div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">.</div>
+                        <div style="margin-left:35px;font-style: italic;"><a href="">Current Period</a>..{{pflose}}</div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">.</div>
+                        <div style="text-align:center; margin-top:-18px;margin-right:18px;font-size:15px">.</div>
+                        <div style="margin-left:35px;font-style: italic;"><a href="">Difference in opening Balances</a></div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{d}}</div>
+                        <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px"></div>
+                    </br>
+                </br>
+            </br>
+        </br>
+    </br>
+                        <div style="margin-left:15px;font-size:16px"><a href="{% url 'groupsummary'  %}"></a>Total</div><div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{TA}}</div>
+                        {% else %}
+                
+                    </br>
+                </br>
+            </br>
+        </br>
+    </br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+              
+<div style="margin-left:15px;font-size:16px"><a href="{% url 'groupsummary' %}"></a>Total</div><div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{TA}}</div>
+                        {% endif %}
+                    </br>
+                </br>
+            </br>
+        </br>
+    </br>
+
+
+              
+
+                       </div>
+                        <!-- <div class="col-sm-1 col-md-1" style="border-left:1px solid whitesmoke; height: 500px;"></div> -->
+                       
+                       <div class="col-sm-9 col-md-6" style="background-color:#213b52;">
+                        <div style="margin-left:18px;font-size:18px;margin-top:35px">Assets</div>
+                        
+                      
+                        <div style="text-align: right; margin-top:-35px;margin-right:15px;font-size:15px">{{comp.name}}</br>as at</div>
+                        <div style="text-align: right;margin-top:-3px;margin-right:15px;font-weight:250" >{{comp.fin_begin}} to  {{comp.fin_end}}</div>
+                           
+                <hr>
+                
+                    <div style="margin-left:15px;font-size:16px"><a href="{% url 'capital_group_summary' %}">Capital Account</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{scoa}}</div> 
+                    <div style="margin-left:15px;font-size:16px"><a href="{% url 'loanl_group_summary' %}">Loans(Liability)</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{sllob}}</div> 
+                      
+                       
+                
+                                        
+                    
+                    <div style="margin-left:15px;font-size:16px"><a href="{% url 'fixed_assets_group_summary'%}">Fixed Assets</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{sfa}}</div> 
+                   
+                    <div style="margin-left:35px;font-size:16px"><a href="{% url 'investments' %}">Investments</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{siob}}</div> 
+                    <div style="margin-left:35px;font-size:16px"><a href="{% url 'currentassets' %}">Current Assets</a></div> 
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{sca}}</div> 
+
+                    {% if L > A %}
+                </br>
+            </br>
+                    <div style="margin-left:15px;font-size:16px"><a href="{% url 'profit'  %}">Profit &Loss Account</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{pflose}}</div>
+                    <div style="margin-left:35px;font-style: italic;"><a href="{% url 'groupsummary'%}">Opening Balance</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">.</div>
+                    <div style="margin-left:35px;font-style: italic;"><a href="">Current Period</a>..{{pflose}}</div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">.</div>
+                    <div style="text-align:center; margin-top:-18px;margin-right:18px;font-size:15px">.</div>
+                    <div style="margin-left:35px;font-style: italic;"><a href="">Difference in opening Balances</a></div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{d}}</div>
+                    <div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px"></div>
+                </br>
+            </br></br>
+        
+    
+<div style="margin-left:15px;font-size:16px"><a href="{% url 'groupsummary' %}">Total</a></div><div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{TL}}</div>   
+                    {% else %}
+                </br>
+            </br></br>
+        </br>
+    </br>
+</br></br>
+</br>
+<div style="margin-left:15px;font-size:16px"><a href="{% url 'groupsummary'  %}">Total</a></div><div style="text-align: right; margin-top:-18px;margin-right:18px;font-size:15px">{{TL}}</div>             
+               </div>
+                    {% endif %} 
+               
+               </div>
+</div>
+    </div>
+</div>
+<script>
+    setTimeout(function ad(){ 
+        var a=document.getElementById('sales').innerHTML;
+        var b=document.getElementById('direct').innerHTML;
+        var c=document.getElementById('stock').innerHTML;
+        var d1 = parseInt(a);
+        var d2 = parseInt(b);
+        var d3 = parseInt(c);
+        var d=d1+d2+d3;
+        console.log(d)
+        
+        document.getElementById("total").innerHTML = d;
+       
+
+        let i=document.getElementById('purch').innerHTML;
+        let j=document.getElementById('expenses').innerHTML;
+        let k=document.getElementById('closing').innerHTML
+
+        let e1=parseInt(i);
+        let e2=parseInt(j);
+        let e3=parseInt(k);
+
+        var e=e1+e2+e3;
+        console.log(e)
+        
+       
+       
+
+        if (d>e){
+
+            document.getElementById('loss3').style.visibility="visible";
+            document.getElementById('loss4').style.visibility="visible";
+
+            document.getElementById('loss').style.visibility="hidden";
+            document.getElementById('loss2').style.visibility="hidden";
+
+
+            let f=d-e;
+            console.log(f)
+            document.getElementById('gross').innerHTML=f;
+            document.getElementById("total2").innerHTML = d;
+            document.getElementById('gross_profit').innerHTML=f;
+            
+            // total profit
+
+            let indirect_income=document.getElementById('indirect').innerHTML;
+            let v=parseInt(indirect_income);
+            let total_profit=f+v;
+            document.getElementById('total_profit').innerHTML=total_profit;
+
+             // total of net profit
+
+            let indirect_exp=document.getElementById('indirect_exp').innerHTML;
+            let g1=parseInt(indirect_exp);
+    
+            let net_profit=total_profit-g1;
+            document.getElementById('net_profit').innerHTML=net_profit;
+
+            //total particular exp
+
+            var total_particular_exp=g1+net_profit;
+            document.getElementById('total_profit2').innerHTML=total_particular_exp;
+
+            
+
+
+
+
+        }
+
+        else if(d<e){
+
+            document.getElementById('loss').style.visibility="visible";
+            document.getElementById('loss2').style.visibility="visible";
+
+            document.getElementById('loss3').style.visibility="hidden";
+            document.getElementById('loss4').style.visibility="hidden";
+
+
+
+            document.getElementById('tot').innerHTML=e;
+            document.getElementById('total5').innerHTML=e;
+
+            // indirect expense
+            let indirect_exp=document.getElementById('indirect_exp').innerHTML;
+            let g1=parseInt(indirect_exp);
+
+            //indirect income 
+            let indirect_income=document.getElementById('indirect').innerHTML;
+            let v=parseInt(indirect_income);
+           
+
+
+            let p=e-d;
+            console.log(p);
+            document.getElementById('gross_loss').innerHTML=p;
+            document.getElementById('gross_loss2').innerHTML=p;
+
+            //indirect exp + gross profit = total_loss
+           let loss2= p+g1;
+           console.log(loss2)
+           document.getElementById('total_profit2').innerHTML=loss2;
+           document.getElementById('total_profit').innerHTML=loss2;
+
+           //net loss
+           let loss3=loss2-v
+           console.log(loss3)
+           document.getElementById('net_loss2').innerHTML=loss3;
+
+
+
+            let indirect_icomes=document.getElementById('indirect_inc').innerHTML;
+            let g3=parseInt(indirect_incomes);
+            
+
+            let net_loss=p-g3;
+            document.getElementById('loss2').innerHTML=net_loss;
+            
+            
+
+
+        }
+
+
+  
+     
+     }, 100);
+
+
+
+
+</script>
+
+
+
+{% endblock %}
+                  

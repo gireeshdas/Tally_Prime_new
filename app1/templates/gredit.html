@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+
+   
+
+   <div class="nav">
+    <h1 class="" style="margin-left: 35%; margin-bottom: 30px;">Employe group creation</h1>
+    
+</div>
+
+<div class="container " style="border-radius: 20px; width:100%; margin-top: -58px; ">
+   <form action="{% url 'emp_gredit2' p.id %}" method="post" class="form pt-5 pb-5" style="width: 50%; margin-left:40%">
+       {% csrf_token %}
+
+       
+    <label class="text-white form-label">Name</label>
+    <input name="name" type="text" class="form-control w-50" value="{{ p.groupname}}">
+    <label  class="form-label text-white">alias</label>
+    <input name="alias" type="text" class="form-control w-50" value="{{ p.groupalias}}">
+    <label class="text-white form-label">under</label>
+    <select name="under" class="form-control w-50" >
+    {% for data in p2 %}
+        <option name="under" value="primary">primary</option>
+        <option name="under">{{data.groupname}}</option><br>
+        {% endfor %}
+    </select>
+   
+    
+    <button class="btn btn-info mt-3 " style="margin-left:18% ;">Submit</button>
+   </form>
+</div>
+
+
+{% endblock %}   

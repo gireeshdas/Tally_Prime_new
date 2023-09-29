@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+   <style>
+      
+        .hide{
+            display:none;
+        }
+        .flexy{
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .buto{
+         margin-top: 200px;
+         margin-left: 200px;
+         }
+   </style>
+
+   
+
+   <div class="nav">
+    <h1 class="" style="margin-left: 35%; margin-bottom: 30px;">Employe group creation</h1>
+    
+</div>
+
+<div class="container " style="border-radius: 20px; width:100%; margin-top: -58px; ">
+   <form action="{% url 'emp_add' %}" method="post" class="form pt-5 pb-5" style="width: 50%; margin-left:40%">
+       {% csrf_token %}
+
+    
+    <label class="text-white form-label">Name</label>
+    <input name="name" type="text" class="form-control w-50" required>
+    <label  class="form-label text-white">alias</label>
+    <input name="alias" type="text" class="form-control w-50" >
+    <label class="text-white form-label">under</label>
+    <input name="under" class="form-control w-50" onclick="showList2()" id="first">
+
+    <button class="btn btn-info mt-3 " style="margin-left:18% ;" >Submit</button>
+        <!--{% for c in p %}
+        <option name="under" value="primary">primary</option>
+        <option name="under">{{c.groupname}}</option><br>
+       {% endfor %} 
+    </select>-->
+<div>
+    <div class="col-sm-7 hide" id="aiwa" style="margin-left:290px ;margin-top: -80px;">
+      <div class="col-sm-12 m-0 p-0">
+          <div class="card">
+              <div class="card-body">
+                  <div class="card-title text-center custom-select-md for">
+                      <h5>Employee Group</h5> <a href="{% url 'unit3' %}" style="margin-left: 190px; margin-top: 20px;"><h6>Create</h7></a><hr/>
+                     
+  
+                  </div>
+                  <ul class="list-group ">
+                      <li class="list-item ps" onclick="hidelist2('primary')" value="primary">primary</li>
+                      {% for p2 in p %}
+                      <div class="row container-fluid  p-0 m-0">
+                          <div class="col-sm-9 m-0 p-0"><li class="list-item ps" onclick="hidelist2('{{p2.groupname}}')" value="{{p2.groupname}}">{{p2.groupname}}</li></div>
+                      </div>
+                      {% endfor %}
+                     
+                    </ul>
+                  
+              </div>
+          </div>
+          
+  
+  
+      </div>
+  </div>
+</div>
+
+    
+ 
+    
+   </form>
+</div>
+
+<script>
+
+   function showList2(){
+       document.getElementById('aiwa').style.display='flex';
+       document.getElementById('si').style='buto';
+       
+       
+   }
+
+   function hidelist2(valueDIv){
+
+       document.getElementById('aiwa').style.display='none'
+       document.getElementById('first').value=valueDIv
+       
+       
+
+}
+</script>
+
+
+{% endblock %}   

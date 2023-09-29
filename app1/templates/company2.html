@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<style>
+    body
+{
+    counter-reset: Serial;           /* Set the Serial counter to 0 */
+}
+
+table
+{
+    border-collapse: separate;
+}
+
+tr td:first-child:before
+{
+  counter-increment: Serial;      /* Increment the Serial counter */
+  content: counter(Serial); /* Display the counter */
+}
+.btns_prnt{
+    width: 100%;
+   
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    /* padding: 6px; */
+
+}
+.btns_prnt:hover{
+    background-color:rgb(44, 158, 187);
+    color: rgb(15, 14, 14);
+}
+</style>
+<script>
+    $(document).ready(function() {
+        
+     });
+    </script>
+
+<div class="row container-fluid p-3 mx-0">
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);height: 400px;">
+        <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <div  class="bg-info text-light">List of Companies</div>
+    <div class="text-right " style="margin-right: 20px;margin-top:10px;">
+        <a class="btns_prnt" href="{% url 'create_cmpny' %}"  >Create Company</a><br>
+        <a class="btns_prnt" href="{% url 'altercompanyview' %}"  >Alter Company</a><br>
+        <a class="btns_prnt" href="{% url 'selectcompany' %}"  >Select Company</a><br>
+        <a class="btns_prnt" href="{% url 'shutcompany' %}"  >Shut Company</a>
+    </div>
+<hr>
+           <div>
+               <table>
+               {% for i in com %}
+               {% if i.status == 1 %}
+               <tr>
+            <div class="btns_prnt">
+                       
+                <div style="margin-left: 20px;">{{i.name}} </div>
+                <div class="text-right">
+                <div  style="margin-top:-21px;margin-right:50px;">({{i.id}}) </div>
+                </div>
+                
+            </div>
+                <!-- <td style="margin-left: 320px;margin-top:10px;"></td> -->
+            </tr>
+                
+                {% endif %}
+               {% endfor %}
+               </table>
+        </div>
+                    
+
+                    
+    
+</form>
+
+</div>
+</div>
+<div class="col-sm-3  m-0 p-0"></div>
+
+</div> 
+
+
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+
+
+
+    <style>
+
+        *{
+                    padding: 0;
+                    margin: 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+                .container{
+                    height: 30vh;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    /* background-color: rgb(204, 212, 228); */
+                }
+                .form1{
+                    background-color:rgba(0,0,0,.4);
+                    box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.662);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    border: none;
+                   
+                    position: absolute;
+                }
+                form{
+                    padding: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+        
+                input,select{
+                    margin: 10px;
+                    padding: 5px;
+                    width: 100%;
+                    border: none;
+                    background-color: #2f516f;
+                    color: white; 
+                    /* background-color: rgba(0, 0, 0, 0.04); */
+                    border: 2px solid rgb(0, 0, 0,0);
+                }
+                input:focus-within,select:focus{
+                 border: 2px solid rgb(103, 175, 220,0.5);
+                }
+        
+        
+                form div{
+                    width: 100%;
+                }
+                button{
+                    margin-top: 40px;
+                    padding: 6px 30px;
+                    border-radius: 10px;
+                    border: 4px solid rgb(0, 0, 0,0);
+                    color: white;
+                    background-color: rgb(103, 175, 220);
+                }
+                button:hover{
+                    
+                    border: 4px solid rgb(103, 175, 220);
+                    color: rgb(103, 175, 220);
+                    background-color: white;
+                }
+                .close {
+            position: absolute;
+            top: 0;
+            right: 8px;
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+            transform: rotate(45deg);
+            cursor: pointer;
+            text-decoration: none;
+            
+        }
+        .close:hover{
+            color: yellow;
+        }
+        @media (max-width: 991px) {
+  .main-panel {
+      margin-left: 0;
+      width: 100%;
+  }
+}
+
+.content-wrapper {
+
+  padding: 1.875rem 1.75rem;
+  width: 100%;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+    </style>
+</head>
+<body>
+    <div class="main-panel">
+        <div class="content-wrapper">
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-9 ">
+            <div class="container">
+            <div class="form1 form-group">
+                <a href="javascript:history.go(-1);" class="close">+</a>
+                <h6 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 9px 0; width:100%;">Stock Category Creation(Seconadary)</h6>
+                <form action="{% url 'savestockcategory' %}" method="post">
+                {% csrf_token %}
+                <div class="top">
+                    <div class="left1" style="color:white ;">
+                    <div><p>Name</p></div>
+                    <input type="text"name="name"class="form-control">
+                    <div><p>(Alias)</p></div>
+                    <input type="text"name="alias"class="form-control">
+                    
+        
+                        <div><p>Under</p></div>
+                       
+      
+                        <select style="background-color: #2f516f;color: white;" name="u" id="under"class="form-control">
+                            <option value="primary">primary</option> 
+                            {% for c in cat %}
+                             
+                            <option value="{{ c.name }}">{{ c.name }}</option> 
+                            {% endfor %}
+                        </select>
+                        
+                        <!-- <div><p>Should quantities of items be added</p></div>
+                        <select style="background-color: #2f516f;color: white;" name="qty"class="form-control">
+                            <option value="No">No</option> 
+                            <option value="Yes">Yes</option>
+                          
+                        </select> -->
+                        
+                            <button type="submit">create</button>
+                </div>
+                
+                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+       </div>
+            </div>
+        </div>
+        {% endblock %}

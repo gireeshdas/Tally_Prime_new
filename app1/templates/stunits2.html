@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% block body %}
+     {% load static %}
+
+     <style>
+        .flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .form1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        
+    }
+    form{
+        padding:30px;
+    }
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+        
+    }
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+
+    .hide{
+        display: none;
+    }
+    
+    
+</style>
+    <div class="m-3">
+   <div class="row container-fluid  p-0 my-5">
+    <div class="col-sm-3  m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+    <h6  class="bg-info text-light p-2">Unit Creation</h6>
+    
+            <form action="{% url 'add_units' %}" method="post">
+                {% csrf_token %}
+              
+            <div class="">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="a">Type</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="type" onchange="show()" id="type" required="" class="form-control">
+                            <option value="null">select</option>
+                            <option value="simple">simple</option> 
+                            <option value="compound">compound</option>
+                           
+                        </select>
+                    </div>
+                    
+                </div>
+                <div id="sym" class="row container-fluid hide  p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="b">Symbol</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input type="text" name="symbol" class="form-control"  placeholder=""></div>
+                    
+                </div>
+
+                <div id="for" class="row container-fluid hide   p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="c">Formal Name</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input type="text" name="formal" class="form-control"  placeholder=""></div>
+                    
+                </div>
+
+                <div id="uqc1" class="row container-fluid hide   p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="uqc">Unity Quantity Code (UQC)</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input type="text" name="uqc1" class="form-control" onclick="clicked()"  placeholder="" id="uqc"></div>
+                    
+                </div>
+
+               
+
+                <div id="num" class="row container-fluid  hide  p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="dcml">Number of decimal places</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input type="text" name="decimal"  class="form-control" id="dcml" placeholder="" value="0"></div>
+                    
+                </div>
+
+
+                <div id="ft" class="row container-fluid hide   p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="dcml">First unit</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input name="ft" type="text" onclick="clicked1()" id="ft1" class="form-control"  placeholder="" ></div>
+                    
+                </div>
+
+                <div id="con" class="row container-fluid hide   p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="dcml">conversion</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input name="con" type="text" class="form-control"  placeholder="" ></div>
+                    
+                </div>
+
+
+                <div id="sd" class="row container-fluid hide   p-2 m-0">
+                    <div class="col-sm-6 m-0 p-0"> <label for="dcml">Second unit</label></div>
+                    <div class="col-sm-6 m-0 p-0"> 
+                    <input name="sec" type="text" class="form-control"  placeholder="" ></div>
+                    
+                </div>
+
+            </div>
+            <div class="flexy w-100 py-4"><button class="btn btn-info w-25 " onclick="checker()">Create</button></div> 
+        </div>
+            </form>
+    </div>
+   
+            <div class="col-sm-3 m-0 p-2 pt-5  " >
+                <div class="hide" id="glist">
+                    <div class="col-sm-8 m-0 p-0">
+                        <div class="card" style="background-color: #000; margin-top: -450px; margin-left: auto;">
+                            <div class="card-body">
+                                <div class="card-title text-center custom-select-md for">
+                                    <h7>List of UQCs</h7><hr/>
+                                    <a href="{% url 'uqcform' %}" class="btn btn-info ">Create</a>
+                
+                                </div>
+                                <ul class="list-group ">
+                                    <li class="list-item ps" onclick="hidelist('Not Applicable')" value="End of list"> Not Applicable</li>
+                                    <li class="list-item ps" onclick="hidelist('BAG-BAGS')" value="End of list">BAG-BAGS</li>
+                                    <li class="list-item ps" onclick="hidelist('BAL-BALE')" value="End of list">BAL-BALE</li>
+                                    <li class="list-item ps" onclick="hidelist('BDL-BUNDLES')" value="End of list">BDL-BUNDLES</li>
+                                    <li class="list-item ps" onclick="hidelist('BKL-BUCKLES')" value="End of list">BKL-BUCKLES</li>
+                                    <li class="list-item ps" onclick="hidelist('BOU-BILLION OF UNITS')" value="End of list">BOU-BILLION OF UNITS</li>
+                                    <li class="list-item ps" onclick="hidelist('BOX-BOX')" value="End of list">BOX-BOX</li>
+                                    <li class="list-item ps" onclick="hidelist('BTL-BOTTLES')" value="End of list">BTL-BOTTLES</li>
+                                    <li class="list-item ps" onclick="hidelist('BUN-BUNCHES')" value="End of list">BUN-BUNCHES</li>
+                                    <li class="list-item ps" onclick="hidelist('CAN-CANS')" value="End of list">CAN-CANS</li>
+                                    <li class="list-item ps" onclick="hidelist('CBM-CUBIC METERS')" value="End of list">CBM-CUBIC METERS</li>
+                                    <li class="list-item ps" onclick="hidelist('CCM-CUBIC CENTIMETERS')" value="End of list">CCM-CUBIC CENTIMETERS</li>
+                                    <li class="list-item ps" onclick="hidelist('CMS-CENTIMETERS')" value="End of list">CMS-CENTIMETERS</li>
+                                    <li class="list-item ps" onclick="hidelist('CTN-CARTONS')" value="End of list">CTN-CARTONS</li>
+                                    <li class="list-item ps" onclick="hidelist('DOZ-DOZEN')" value="End of list">DOZ-DOZEN</li>
+                                    <li class="list-item ps" onclick="hidelist('DRM-DRUMS')" value="End of list">DRM-DRUMS</li>
+                                    <li class="list-item ps" onclick="hidelist('GGK-GREAT GROSS')" value="End of list">GGK-GREAT GROSS</li>
+                                    <li class="list-item ps" onclick="hidelist('GYD-GROSS-YARDS')" value="End of list">GYD-GROSS-YARDS</li>
+                                    <li class="list-item ps" onclick="hidelist('KGS-KILOGRAMS')" value="End of list">KGS-KILOGRAMS</li>
+                                    <li class="list-item ps" onclick="hidelist('KLR-KILOLITER')" value="End of list">KLR-KILOLITER</li>
+                                    <li class="list-item ps" onclick="hidelist('KME-KILOMETER')" value="End of list">KME-KILOMETER</li>
+                                    <li class="list-item ps" onclick="hidelist('MLT-MILLILITRE')" value="End of list">MLT-MILLILITRE</li>
+                                    <li class="list-item ps" onclick="hidelist('MTR-METERS')" value="End of list">MTR-METERS</li>
+                                    <li class="list-item ps" onclick="hidelist('MTS-METRIC TONES')" value="End of list">MTS-METRIC TONES</li>
+                                    <li class="list-item ps" onclick="hidelist('NOS-NUMBERS')" value="End of list">NOS-NUMBERS</li>
+                                    <li class="list-item ps" onclick="hidelist('OTH-OTHERS')" value="End of list">OTH-OTHERS</li>
+                                    <li class="list-item ps" onclick="hidelist('PAC-PACKS')" value="End of list">PAC-PACKS</li>
+                                    <li class="list-item ps" onclick="hidelist('PCS-PICES')" value="End of list">PCS-PICES</li>
+                                    <li class="list-item ps" onclick="hidelist('PRS-PAIRS')" value="End of list">PRS-PAIRS</li>
+                                    <li class="list-item ps" onclick="hidelist('QTL-QUINTEL')" value="End of list">QTL-QUINTEL</li>
+                                    <li class="list-item ps" onclick="hidelist('ROL-ROLLS')" value="End of list">ROL-ROLLS</li>
+                                    <li class="list-item ps" onclick="hidelist('SET-SETS')" value="End of list">SET-SETS</li>
+                                    <li class="list-item ps" onclick="hidelist('SQF-SQUAREFEET')" value="End of list">SQF-SQUAREFEET</li>
+                                    <li class="list-item ps" onclick="hidelist('SQM-SQUARE METER')" value="End of list">SQM-SQUARE METER</li>
+                                    <li class="list-item ps" onclick="hidelist('SQY-SQUARE YARDS')" value="End of list">SQY-SQUARE YARDS</li>
+                                    <li class="list-item ps" onclick="hidelist('TBS-TABLETS')" value="End of list">TBS-TABLETS</li>
+                                    <li class="list-item ps" onclick="hidelist('TGM-TEN GROSS')" value="End of list">TGM-TEN GROSS</li>
+                                    <li class="list-item ps" onclick="hidelist('THD-THOUSANDS')" value="End of list">THD-THOUSANDS</li>
+                                    <li class="list-item ps" onclick="hidelist('TON-TONNES')" value="End of list">TON-TONNES</li>
+                                    <li class="list-item ps" onclick="hidelist('TUB-TUBES')" value="End of list">TUB-TUBES</li>
+                                    <li class="list-item ps" onclick="hidelist('UNIT-UNITS')" value="End of list">UNIT-UNITS</li>
+                                    <li class="list-item ps" onclick="hidelist('YDS-YARDS')" value="End of list">YDS-YARDS</li>
+                                    
+
+                                    {% for k in uq %}
+                                    <li class="list-item ps" onclick="hidelist('{{k.new_uqc}}')" value="{{k.id}}">{{k.new_uqc}}  </li>
+                                    {% endfor %}
+                                </ul>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                            
+                <div class="col-sm-3  " style="margin-top:-350px" >
+                    <div class="hide" id="glist1">
+                        <div class="col-sm-8 m-0 p-0">
+                            <div class="card" style="background-color: #000;">
+                                <div class="card-body">
+                                    <div class="card-title text-center custom-select-md for">
+                                        <h7>Unit Creation</h7><hr/>
+                                        <a href="{% url 'employe_category_secondary' %}" class="btn btn-info ">Create</a>
+                    
+                                    </div>
+                                    <ul class="list-group ">
+                        
+                                        
+                                        
+                                        {% for i in ps %}
+                                    <li class="list-item ps" onclick="hidelist1('{{i.formal_name}}')" value="{{i.id}}">{{i.formal_name}}  </li>
+                                    {% endfor %}
+                
+                                      </ul>
+                                     
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+    </div>
+    </div>
+    <div class="col-sm-3  m-0 p-0"></div>
+
+   </div> 
+ 
+
+
+     <script>
+
+    function hidelist(valueDIv) {
+      document.getElementById("uqc").value=valueDIv;
+      document.getElementById("glist").style.display="none";
+    }
+    // function color(value){
+    //   document.body.style.backgroundColor="rgba(255, 0, 0, 0.4)";
+  
+    // }
+
+
+    function clicked() {
+
+      document.getElementById('glist').style.display="flex";
+      
+    }
+
+
+    function hidelist1(valueDIv1) {
+      document.getElementById("ft1").value=valueDIv1;
+      document.getElementById("glist1").style.display="none";
+      console.log(valueDIv1)
+    }
+    // function color(value){
+    //   document.body.style.backgroundColor="rgba(255, 0, 0, 0.4)";
+  
+    // }
+
+
+    function clicked1() {
+
+      document.getElementById('glist1').style.display="flex";
+      
+    }
+
+        function checker(){
+            var result =confirm('Are you sure?');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+
+        function show(){
+            var status =document.getElementById('type');
+            var c=status.value;
+            console.log(c);
+            if (c=='simple'){
+                console.log(c);
+                document.getElementById('sym').style.display="flex";
+                document.getElementById('for').style.display="flex";
+                document.getElementById('uqc1').style.display="flex";
+
+                document.getElementById('num').style.display="flex";
+                document.getElementById('ft').style.display="none";
+                document.getElementById('con').style.display="none";
+                document.getElementById('sd').style.display="none";
+            }
+
+            else if(c=='compound'){
+                console.log(c);
+                document.getElementById('sym').style.display="none";
+                document.getElementById('for').style.display="none";
+                document.getElementById('uqc1').style.display="none";
+
+                document.getElementById('num').style.display="none";
+                document.getElementById('ft').style.display="flex";
+                document.getElementById('con').style.display="flex";
+                document.getElementById('sd').style.display="flex";
+            }
+            else {
+                console.log(c);
+                document.getElementById('sym').style.display="none";
+                document.getElementById('for').style.display="none";
+                document.getElementById('uqc1').style.display="none";
+
+                document.getElementById('num').style.display="none";
+                document.getElementById('ft').style.display="none";
+                document.getElementById('con').style.display="none";
+                document.getElementById('sd').style.display="none";
+            }
+        }
+
+     </script>
+
+{% endblock %}     

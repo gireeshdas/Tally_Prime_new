@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% block body %}
+     {% load static %}
+
+
+     <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        .hide{
+            display:none;
+        }
+        .flexy{
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+    
+
+
+     
+     <div class="container" id="contain">
+        <h2 class="text-center">Unit creation (Secondary)</h2>
+        <div class="row" >
+            <div  class="col" style="margin-left:33% ;" >
+                <form action="{% url 'add_unit' %}" method="post">
+                    {% csrf_token %}
+
+                    <label class="form-label">Type</label>
+                    <select name="type" onchange="show()" id="pvc" class="form-control w-50">
+                        <option value="simple">Simple</option>
+                        <option value="compound">Compound</option>
+                    </select>
+
+                    <div id="sps" class="flexy w-50">
+                        <div class="w-100"><label class="form-label">Symbol</label></div>
+                        <input name="symbol" type="text" class="form-control ">
+
+                       <div  class="w-100"><label class="form-label">Formal name</label></div>
+                        <input name="formal" type="text" class="form-control ">
+                       <div  class="w-100"><label class="form-label">Number of Decimal</label></div>
+                        <input name="decimal" type="text" placeholder="0" class="form-control ">
+                    </div>
+ 
+                    <div id="fps" class="hide flexy w-50">
+
+                    
+                        <div  class="w-100"><label class="form-label">first unit</label></div>
+                        <input name="ft" type="text" class="form-control " id="first" autocomplete="off" onclick="showList2()" required>
+                    
+                        
+                       <div  class="w-100"> <label class="form-label">conversion</label></div>
+                        <input name="con" type="text" class="form-control ">
+                
+                       
+                       <div  class="w-100"><label class="form-label">second unit</label></div>
+                        <input name="sec" type="text"  class="form-control "id="second" autocomplete="off" onclick="showList3()" >
+                    </div>
+                    
+                   
+                    <button type="submit" class="form-control btn btn-info mt-3 w-50" onchange="change()">submit</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-sm-5 hide" id="aiwa" style="margin-left:750px ;margin-top: -220px;">
+            <div class="col-sm-10 m-0 p-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title text-center custom-select-md for">
+                            <h5>Units</h5> <a href="{% url 'unit3' %}" style="margin-left: 260px;"><h6>Create</h7></a><hr/>
+                           
+        
+                        </div>
+                        <ul class="list-group ">
+                            <li class="list-item ps" onclick="hidelist2('primary')" value="primary">primary</li>
+                            {% for p in p2 %}
+                            <div class="row container-fluid  p-0 m-0">
+                                <div class="col-sm-9 m-0 p-0"><li class="list-item ps" onclick="hidelist2('{{p.symbol}}')" value="{{p.symbol}}">{{p.symbol}}</li></div>
+                                <div class="col-sm-3 m-0 p-0"><center><li class="list-item ps" onclick="hidelist2('{{p.symbol}}')" value="{{p.formal_name}}"> {{p.formal_name}} </li></center></div></div>
+                            {% endfor %}
+                           
+                          </ul>
+                        
+                    </div>
+                </div>
+                
+        
+        
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-5 hide" id="aiwa2" style="margin-left:750px ;margin-top: -80px;">
+            <div class="col-sm-10 m-0 p-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title text-center custom-select-md for">
+                            <h5>Units</h5> <a href="#" style="margin-left: 260px;"><h6>Create</h7></a><hr/>
+                           
+        
+                        </div>
+                        <ul class="list-group ">
+                            <li class="list-item ps" onclick="hidelist3('primary')" value="primary">primary</li>
+                            {% for p in p2 %}
+                            <div class="row container-fluid  p-0 m-0">
+                               
+                            <div class="col-sm-9 m-0 p-0"><li class="list-item ps" onclick="hidelist3('{{p.symbol}}')" value="{{p.symbol}}">{{p.symbol}}</li></div>
+                                
+                            <div class="col-sm-3 m-0 p-0"><center><li class="list-item ps" onclick="hidelist3('{{p.symbol}}')" value="{{p.formal_name}}"> {{p.formal_name}} </li></center></div></div>
+                               
+                            {% endfor %}
+                           
+                          </ul>
+                        
+                    </div>
+                </div>
+                
+        
+        
+            </div>
+        </div>
+
+
+        
+
+     </div>
+
+     <script>
+
+        function showList2(){
+            document.getElementById('aiwa').style.display='flex';
+            
+        }
+
+        function hidelist2(valueDIv){
+
+            document.getElementById('aiwa').style.display='none'
+            document.getElementById('first').value=valueDIv
+            
+            
+
+}
+
+        function showList3(){
+            document.getElementById('aiwa2').style.display='flex';
+            
+        }
+
+
+        function hidelist3(valueDIv){
+
+            document.getElementById('aiwa2').style.display='none'
+            document.getElementById('second').value=valueDIv
+
+        }
+
+
+        function hidelist4(valueDIv){
+
+            document.getElementById('aiwa2').style.display='none'
+
+
+        }
+
+
+        function change(){
+            var result =confirm('Are you sure');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+
+
+     </script>
+
+     <script>
+
+        function show(){
+            var status=document.getElementById('pvc');
+            var c=status.value
+            console.log(c)
+
+            if (c == 'compound'){
+                console.log(c);
+
+                document.getElementById('fps').style.display="flex";
+                document.getElementById('sps').style.display="none"
+            }
+            else {
+                document.getElementById('sps').style.display="flex";
+                document.getElementById('fps').style.display="none"
+            }
+        }
+
+
+     </script>
+
+
+{% endblock %}

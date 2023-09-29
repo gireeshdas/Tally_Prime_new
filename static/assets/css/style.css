@@ -1,0 +1,121 @@
+body{
+	width: 100%;
+	height: 100%;
+	background-color: #213b52;
+}
+.container{
+	margin-top: 5px;
+}
+.multistep-container{
+	max-width: 610px;
+	margin: 0 auto;
+}
+.multistep-container .active-button{
+	display: table;
+	margin: auto;
+	padding-left: 0;
+	overflow: scroll;
+	margin-bottom: 20px;
+}
+.multistep-container .active-button li{
+	display: inline-block;
+	width: 280px;
+	margin-bottom: 10px;
+}
+.multistep-container .active-button li .round-btn{
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	background-color: #ccc;
+	display: block;
+	color: #000;
+	text-align: center;
+	font-family: 'poppins';
+	font-weight: 500;
+	line-height: 30px;
+	max-width: 100%;
+	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+}
+.multistep-container .active-button li.active .round-btn{
+	background-color: #336699;
+	color: var(--white);
+}
+/*.multistep-container .active-button li:not(:first-child) .round-btn:before{*/
+/*	position: absolute;*/
+/*	content: '';*/
+/*	width: 250px;*/
+/*	height: 3px;*/
+/*	background-color: #ccc;*/
+/*	left: -250px;*/
+/*	top: 50%;*/
+/*	transform: translateY(-50%);*/
+/*	z-index: -1;*/
+/*}*/
+.multistep-container .active-button li.active:not(:first-child) .round-btn:before{
+	background-color: #336699;
+}
+/*here begins the transition section*/
+/*creating a particular container and text only displays inside*/
+.multistep-container .multistep-form-area{
+	background-color: var(--white);
+	margin-top: 30px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+	position: relative;
+	overflow: auto;
+	min-height: 652px;
+	max-height: 712px;
+}
+/*overlaping each form boxes inside the container
+displayed like overlapped text*/
+.multistep-container .multistep-form-area .form-box{
+	position: absolute;
+	top: 25px;
+	left: 25px;
+}
+/*designing h4 text*/
+.multistep-container .multistep-form-area .form-box h4{
+	font-family: 'montserrat';
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+/*designing label text*/
+.multistep-container .multistep-form-area .form-box label{
+	font-family: 'roboto';
+	font-weight: 500;
+	font-size: 15px;
+}
+/*hiding other two forms using display none*/
+.multistep-container .multistep-form-area .form-box:nth-child(2),
+.multistep-container .multistep-form-area .form-box:nth-child(3){
+	display: none;
+}
+/*designing next, previous and submit buttons*/
+.multistep-container .multistep-form-area .form-box .button-row .next,
+.multistep-container .multistep-form-area .form-box .button-row .previous,
+.multistep-container .multistep-form-area .form-box .button-row .submit{
+	background-color: #336699;
+	border: 0;
+	box-shadow: none;
+	padding: 7px 30px;
+	min-width: 100px;
+	border-radius: 20px;
+	color: var(--white);
+	font-family: 'roboto';
+	font-weight: 500;
+	margin: 15px;
+}
+/*submit color changed to purple*/
+.multistep-container .multistep-form-area .form-box .button-row .submit{
+	background-color: #336699;
+}
+/*aligning all buttons to center*/
+.multistep-container .multistep-form-area .form-box .button-row{
+	display: table;
+	margin: auto;
+	margin-top: 20px;
+}

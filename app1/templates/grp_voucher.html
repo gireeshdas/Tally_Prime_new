@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Group Voucher</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+                        <tr>
+                            <th colspan="3">Group </th>
+                            <th colspan="3" class="text-right">FOR 1-april-2022</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Particulars</th>
+                            <th>Vch Type</th>
+                            <th>Vch No</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                       </tr>
+                       {% for i in display %}
+                        <tr class="trhover">
+                            <td>{{ i.Date }}</td>
+                            <td><a href="{% url 'Group_Voucher_Summary' i.id %}">{{ i.Particular }}</a></td>
+                            <td>{{ i.Vch_Type }}</td>
+                            <td>{{ i.Vch_No }}</td>
+                            <td>{{ i.DEBIT }}</td>
+                            <td>{{ i.Credit }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <th colspan="4" class="text-right">Opening Balance : </th>
+                            <th colspan="2">{{sum3}}</th>
+                            <!-- <th></th> -->
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="text-right">Current total : </th>
+                            <th>{{sum1}}</th>
+                            <th>{{sum2}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="text-right"><b>Closing Balance </b>: </th>
+                            <th colspan="2">{{sum4}}</th>
+                            <!-- <th></th> -->
+                        </tr>
+
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+.trhover:hover{
+    background-color: rgb(31, 40, 68);
+}
+</style>
+
+
+{% endblock %}

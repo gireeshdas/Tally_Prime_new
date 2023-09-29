@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<script src="https://code.jquery.com/jquery-git.js"></script>
+<style>
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .form-popup {
+        display: none;
+        position: fixed;
+        top: 250px;
+        right: 15px;
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+        height: 600px;
+      }
+    
+      .content a:hover {background-color: rgb(238, 167, 75);}
+      
+      /* Add styles to the form container */
+      .form-container {
+        max-width: 50px;
+        height: 500px;
+        padding: 10px;
+      }
+      .form-container1 {
+        max-width: 350px;
+        height: 500px;
+        padding: 2px;
+       
+      }
+     option{
+         margin-left: 10px;
+         color: black;
+     }
+     .scrollbar {
+        margin-left: 20px;
+        float: left;
+        height: 300px;
+        width: 270px;
+        background: rgb(216, 232, 238);
+        overflow-y: scroll;
+        margin-bottom: 25px;
+      }
+      
+      
+      .scrollbar-primary::-webkit-scrollbar {
+        width: 50px;
+        
+      }
+      
+      .scrollbar-primary::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 4px rgba(214, 57, 9, 0.1);
+        background-color: #dd9078;
+      }
+      
+      .scrollbar-primary {
+        scrollbar-color: #86d5f5 #f1f3f3;
+      }
+      .btns_prnt{
+        width: 100%;
+       
+        background-color: rgba(240, 248, 255, 0);
+        border: none;
+        /* padding: 6px; */
+    
+    }
+    .btns_prnt:hover{
+        background-color:rgb(44, 158, 187);
+        color: rgb(15, 14, 14);
+    }
+</style>
+<script>
+    function showgrp(){
+        document.getElementById('myForm1').style.visibility= "visible";
+        document.getElementById("myForm1").style.display = "block";
+    }
+    function change(){
+        
+        var group= document.getElementById("nat").value;
+        if(group=="Expense"||group=="Income")
+        {
+        document.getElementById('gross').style.visibility= "visible";
+        document.getElementById("gross").style.display = "block";
+        }
+        else
+        {
+            document.getElementById('gross').style.visibility= "hidden";
+            //document.getElementById("gross").style.display = "block";
+        }
+    }
+     
+
+    $(document).ready(function() {
+        document.getElementById('rndlmt20').style.display = "none";
+        document.getElementById('gross').style.display = "none";
+       
+    });
+
+    function setData(gr){
+        document.getElementById('under').value= gr;
+        document.getElementById('rndlmt20').style.display = "none";
+        document.getElementById('myForm1').style.visibility= "hidden";
+        }
+        function setprimary(p){
+            document.getElementById('under').value= p;
+            var status = document.getElementById("under");
+    var a = status.value
+    console.log(a);
+    if( a == "*Primary" ){
+        console.log(a);
+        document.getElementById('rndlmt20').style.display = "flex";
+        
+        
+        
+    }
+    else{
+        document.getElementById('rndlmt20').style.display = "none";
+    }
+    
+        }
+        function setGroup(under,underId){
+            document.getElementById('under').value= under;
+            document.getElementById('myForm1').style.visibility= "hidden";
+            document.getElementsByName('underhidden').value= underId;
+        }
+</script>
+{% for i in tally %}
+<div class="row container-fluid p-3 mx-0">
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+    <h6 class="bg-info text-light p-2">Group Creation</h6>
+    <div  style="text-align: center;margin-top:-35px;font-weight:900">{{i.name}}</div>
+    <!-- <div hidden  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.id}}</div> -->
+{% endfor %}
+<form id="myForm" action="{% url 'group2' %}" method="post" class="p-5">
+    {% csrf_token %}
+        <!-- <div hidden>{{cmp.id}}</div> -->
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="gname">Name :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input type="text" id="gname" onfocus="this.value=''" name="gname" class="form-control" placeholder="" required></div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alia">(Alias) :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input type="text" id="alia" name="alia" class="form-control" placeholder=""></div> 
+                    </div>
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="under">Under :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <input type="text" id="under" value="*Primary" name="under" class="form-control " placeholder="" 
+                            onclick="showgrp();" >
+
+                        </div> 
+                    </div>
+                    <div class="hide" id="rndlmt20">
+                    <div class="row container-fluid  p-2 m-0  w-100"   >
+                        <div class="col-sm-4 m-0 p-0"> <label for="pan">Nature of Group</label></div>
+                        <div class="col-sm-6 m-0 p-0"> <select id="nat" name="nature" class=" form-control w-50" 
+                            onchange="change()">
+                            <option value="Not Applicable" selected>Not Applicable</option>
+                            <option value="Assets">Assets</option>
+                            <option value="Expense">Expense</option>
+                            <option value="Income">Income</option>
+                            <option value="Liability" >Liability</option>
+                        </select></div>
+                    </div>
+                </div>
+                <div class="hide" id="gross">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="subled">Does it affect gross profits :</label></div>
+                    <div class="col-sm-8 m-0 p-0">
+                        
+                        <select id="subled" name="gross" class=" form-control w-25">
+                            <option value="True">Yes</option>
+                            <option value="False" selected>No</option>
+                        </select>
+                    </div> 
+                </div>
+            </div>
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="subled">Groups behaves like a sub-ledger:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="subled" name="sub_ledger" class=" form-control w-25">
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>
+                            </select>
+                        </div> 
+                    </div>
+
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="nett">Nett Debit/Credit Balance for Reporting:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="nett" name="nee" class=" form-control w-25">
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>
+                            </select>
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="cal">Used for
+                            calculation
+                            <br><small style="font-size: 10px;">(for example:taxes,discounts,Sales invoice
+                                entries)</small>:</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="cal" name="cal" class=" form-control w-25">
+                                <option value="True">Yes</option>
+                                <option value="False" selected>No</option>
+                            </select>
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="meth"> Method to allocate when used in purchase invoice :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select id="meth" name="meth" class=" form-control">
+                                <option value="" selected>Not Applicable</option>
+                                <option value="Appropriate by Qty">Appropriate by Qty</option>
+                                <option value="Appropriate by Value">Appropriate by Value</option>
+                            </select>
+                        </div> 
+                    </div>
+                    <div class="col text-center" >
+                        <button  onClick='save()' type="submit" class="btn btn-info" >Create</button>
+                    <!-- <input  type="submit" value="create"> -->
+                    </div>
+                    <!-- <div><input type="submit" style="margin-left: 250px;" value="create" class="btn btn-info"></div> -->
+                    <!-- <div class="flexy w-100 py-4"><button id="cbtn" type="button" class="btn btn-info w-50">Create</button></div> -->
+    
+</form>
+
+</div>
+</div>
+<div class="form-popup" id="myForm1" style="background-color: rgb(216, 232, 238);" >
+    <form action="" class="form-container1" >
+        <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Groups</h6>
+        <a  href="{% url 'group2' %}" style="margin-left:180px;color:black;cursor:pointer" >Create New</a>  
+
+    <hr >
+    <div class="scrollbar scrollbar-primary " >
+        <table >
+        <tr >
+            <option onclick="setprimary('*Primary')" class="btns_prnt" value="*Primary">*Primary</option>
+                                <option onclick="setData('Bank Accounts')" class="btns_prnt" style="color: black;" value="Bank Account">Bank Accounts</option>
+                                <option onclick="setData('Bank OCC A/c')" class="btns_prnt" >Bank OCC A/c</option>
+                                <option onclick="setData('Bank OD A/c')" class="btns_prnt" >Bank OD A/c</option>
+                                <option onclick="setData('Branch Divisions')" class="btns_prnt" >Branch Divisions</option>
+                                <option onclick="setData('Branch Divisions')" class="btns_prnt" >Capital Amount</option>
+                                <option onclick="setData('Cash in Hand')" class="btns_prnt" >Cash in Hand</option>
+                                <option onclick="setData('Current Assets')" class="btns_prnt" >Current Assets</option>
+                                <option onclick="setData('Current Liabilities')" class="btns_prnt" >Current Liabilities</option>
+                                <option onclick="setData('Deposits (Asset)')" class="btns_prnt" >Deposits (Asset)</option>
+                                <option onclick="setData('Direct Expenses')" class="btns_prnt" value="">Direct Expenses</option>
+                                <option onclick="setData('Deposits (Asset)')" class="btns_prnt" value="">Direct Incomes</option>
+                                <option onclick="setData('Duties and Taxes')" class="btns_prnt" value="">Duties and Taxes</option>
+                                <option onclick="setData('Expenses(Direct)')" class="btns_prnt" value="">Expenses(Direct)</option>
+                                <option onclick="setData('Expenses(Indirect)')" class="btns_prnt" value="">Expenses(Indirect)</option>
+                                <option onclick="setData('Fixed Assets')" class="btns_prnt" value="">Fixed Assets</option>
+                                <option onclick="setData('Income (Direct)')" class="btns_prnt" value="">Income (Direct)</option>
+                                <option onclick="setData('Income (Indirect)')" class="btns_prnt" value="">Income (Indirect)</option>
+                                <option onclick="setData('Investments')" class="btns_prnt" value="">Investments</option>
+                                <option onclick="setData('Loans & Advances (Asset)')" class="btns_prnt" value="">Loans & Advances (Asset)</option>
+                                <option onclick="setData('Loans (Liability)')" class="btns_prnt" value="">Loans (Liability)</option>
+                                <option onclick="setData('Misc. Expenses (Asset)')" class="btns_prnt" value="">Misc. Expenses (Asset)</option>
+                                <option onclick="setData('Provisions')" class="btns_prnt" value="">Provisions</option>
+                                <option onclick="setData('Purchase Accounts')" class="btns_prnt" value="">Purchase Accounts</option>
+                                <option onclick="setData('Reserves & Surplus')" class="btns_prnt" value="">Reserves & Surplus</option>
+                                <option onclick="setData('Retained Earnings')" class="btns_prnt" value="">Retained Earnings</option>
+                                <option onclick="setData('Sales Accounts')" class="btns_prnt" value="">Sales Accounts</option>
+                                <option onclick="setData('Secured Loans')" class="btns_prnt" >Secured Loans</option>
+                                <option onclick="setData('Stock-in-Hand')" class="btns_prnt" >Stock-in-Hand</option>
+                                <option onclick="setData('Sundry Creditors')" class="btns_prnt" >Sundry Creditors</option>
+                                <option onclick="setData('Sundry Debtors')" class="btns_prnt" >Sundry Debtors</option>
+                                <option onclick="setData('Suspence A/c')" class="btns_prnt" >Suspence A/c</option>
+                                <option onclick="setData('Unsecured Loans')" class="btns_prnt" >Unsecured Loans</option> 
+
+
+
+                                {% for i in grup %}
+       
+    
+        <a class="btns_prnt" onclick="setGroup('{{i.group_name}}','{{i.id}}')"  class="content" 
+        style="cursor:pointer;color:black;">&nbsp;&nbsp;{{i.group_name}}</a><br>
+        {% endfor %}
+        </tr>
+        </table>
+    </div>
+    <input type="text" name="underhidden" hidden value="{{i.id}}">
+    </form>
+</div>
+<div class="col-sm-3  m-0 p-0"></div>
+
+</div> 
+
+
+
+{% endblock body %}

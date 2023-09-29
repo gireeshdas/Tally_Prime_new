@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;    
+        }
+        .modal-content{
+            margin-top: 300px;
+            background-color: #213b52;
+            /* background-color: black; */
+        }
+    </style>
+    <div class="m-3">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">LUT / Bond Details</div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                        {{i.name}}
+                    {% endfor %}
+                    </div>
+                </div>
+                
+                <h6  class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">LUT / Bond Details</h6>
+                <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_lutbond' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <h6  class="bg-trasparent text-light p-2 m-0 text-left">LUT / Bond Details</h6>
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">LUT / Bond No.</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" name="lut_bondNo" id="d" placeholder="" value=""> 
+                            </div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"><label for="a">Validity</label></div>
+                            <div class="col-sm-4 m-0 p-0"><label data-toggle="modal" data-target="#myModal"><b>From</b></label></div>
+                            
+                            <div class="col-sm-4 m-0 p-0"><label><b>To</b></label></div>
+                        </div>
+                        <div class="container">
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                        
+                                            <h6  class=" text-light p-2 m-0 text-center">LUT / Bond Applicability</h6>
+                                            <div class="row container-fluid  p-2 m-0">
+                                                <div class="col-sm-4 m-0 p-0"> <label for="a"><b>Application From</b></label></div>
+                                                <div class="col-sm-6 m-0 p-0"><input type="date" name="application_from" class="form-control"
+                                                    value="2022-08-01" data-date-format="DD/MM/YYYY"></div>
+                                                <div class="col-sm-4 m-0 p-0"></div>
+                                            </div>
+                                            <div class="row container-fluid  p-2 m-0">
+                                                <div class="col-sm-4 m-0 p-0"> <label for="a"><b>To</b></label></div>
+                                                <div class="col-sm-6 m-0 p-0"><input type="date" name="application_to" class="form-control"></div>
+                                                <div class="col-sm-4 m-0 p-0"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>      
+{% endblock %}

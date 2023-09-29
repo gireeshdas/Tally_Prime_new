@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+
+.form-popup {
+                visibility: hidden;       
+                position: fixed;
+                top: 230px;
+                right: 15px;
+                background-color: rgb(216, 232, 238); 
+                border: 1px solid #f1f1f1;
+                z-index: 9;
+                width: 300px;
+                height: 200px;
+            }
+
+</style>
+
+<body>
+
+<div style="margin-top: 10%;">
+
+  <div class="m-3">
+       
+    <h6 class="bg-info text-light m-0 p-2">Salary Details</h6>
+
+    <form name="myForm" action="salary_details" method="post" onsubmit="return validateForm()" class="p-5" style="background-color:rgba(0,0,0,.4);">
+        {% csrf_token %}
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-2 m-0 p-0"> <label for="gname">Name :</label></div>
+        <div class="col-sm-3 m-0 p-0"><input class="custom-select-md form-control" type="text" name="name"
+            id="loc" 
+            placeholder="" autocomplete="off"/></div> 
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-2 m-0 p-0"> <label for="alia">(Alias) :</label></div>
+        <div class="col-sm-3 m-0 p-0"><input class="custom-select-md form-control" type="text" name="alias"
+             id="alia" 
+            placeholder="" autocomplete="off"></div> 
+    </div>
+  
+     <div class="row container-fluid  p-2 m-0">
+     <div class="col-sm-2 m-0 p-0"> <label for="">Date</label></div>
+     <div class="col-sm-3 m-0 p-0"> 
+     <input type="date" class="custom-select-md form-control" name="date"> </div>
+     </div>
+
+     <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-2 m-0 p-0"><label for="">Payhead Name</label></div>
+        <div class="col-sm-3 m-0 p-0"> 
+        <input type="text" class="custom-select-md form-control" name="pay_head_name" onfocus="showList()" id="primary-text" autocomplete="off"  ></div>
+     </div>
+
+     <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-2 m-0 p-0"><label for="">Rate</label></div>
+            <div class="col-sm-3 m-0 p-0">
+     <input type="number" class="custom-select-md form-control" name="rate" autocomplete="off" ></div>
+     </div>
+
+     <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-2 m-0 p-0">
+     <label for="">Type</label></div>
+     <div class="col-sm-3 m-0 p-0">
+     <input type="text" class="custom-select-md form-control" name="pay_head_type" id="payheaad_type" autocomplete="off"  ></div>
+     </div>
+     
+     <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-2 m-0 p-0">
+     <label for="">Calculation</label></div>
+     <div class="col-sm-3 m-0 p-0">
+     <input type="text" class="custom-select-md form-control" name="calculation_type" id="calculation_type" autocomplete="off"  ></div>
+        </div>
+
+     <div><button type="submit" class="btn btn-info">Enter</button></div>
+
+     <hr>
+     
+    </form>
+     
+    <div style="overflow: scroll ;max-height: 70vh; width: 100%;background-color:rgba(0,0,0,0.4); ">
+      <Table class="w-100 table text-center" border="1">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Payhead Name</th>
+            <th scope="col">Rate</th>
+            <th scope="col">Payhead Type</th>
+            <th scope="col">calculation Type</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in sal %}
+          <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.pay_head_name}}</td>
+            <td>{{i.rate}}</td>
+            <td>{{i.pay_head_type}}</td>
+            <td>{{i.calculation_type}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>
+
+      <!-- list Creation -->
+
+<div class="form-popup" id="list-div" >
+  
+    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Pay Heads</h6>
+<hr >
+<div>
+    <table >
+    <tr >
+        <td>
+            <a href="pay_head"> <button
+                type="submit"
+                style="color: black;margin-left: 310%; width: 20%"
+                class="custom-select-md form-control"
+              >
+                create
+              </button> </a>
+        </td>
+    </tr>
+
+    <tr>
+      <td>    
+
+        {% for l in pay %}
+        <div onclick="hideList('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+        {% endfor %}
+      </td>
+    </tr>  
+    
+    </table>
+</div>
+
+
+
+
+ </div>
+
+
+
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+<script>
+
+function validateForm(){
+
+var x=document.forms["myForm"]["name"].value;
+if (x==null || x=="")
+{
+alert("Name must be filled out");
+return false;
+}
+}
+
+     document.getElementById("loc").value = localStorage.getItem("name"); 
+
+     document.getElementById("alia").value = localStorage.getItem("alias"); 
+
+
+
+
+     function showList(){
+        document.getElementById('list-div').style.visibility="visible";
+     }
+
+     function hideList(valueDIv) {
+        document.getElementById("primary-text").value=valueDIv;
+        document.getElementById("list-div").style.visibility = "hidden";
+        getDetails()
+        getDetail()
+    }
+    function getDetails()
+    {
+        var did=document.getElementById("primary-text").value;
+        console.log(did)
+        //alert(did)
+        $.ajax(
+{
+
+url: "/load/",
+data:{
+     id: did
+},
+success: function( data ) 
+{
+document.getElementById("payheaad_type").value=data;
+
+}
+});
+    }
+    function getDetail()
+    {
+        var did=document.getElementById("primary-text").value;
+        console.log(did)
+        //alert(did)
+        $.ajax(
+{
+
+url: "/load_calculation/",
+data:{
+     id: did
+},
+success: function( data ) 
+{
+//alert(data);
+document.getElementById("calculation_type").value=data;
+
+}
+});
+    }
+
+</script>
+
+{% endblock %}

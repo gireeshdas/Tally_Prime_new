@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }
+
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+        height: 200px;
+      
+      }
+    
+    </style>
+    
+    <div>
+        <div style="margin-left:10% ;margin-top: 10%;">
+            <div  style="width: 90%;">
+
+        <h6  class="bg-info text-light p-2 m-0 text-left">Payroll Voucher Creation</h6>
+
+            <form name="myForm" id="" action="payroll" onsubmit="validateForm()" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control" id="a" placeholder="" name="name" autocomplete="off"></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+
+            
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                <div class="col-sm-3 m-0 p-0"> 
+                <input type="text" class="form-control" id="b" placeholder="" name="allias" autocomplete="off"></div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+
+            
+
+
+
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <h6 class="text-center"><u> <b> General Information </b> </u></h6> <br>
+                    
+                   
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Select type of Voucher</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="voucher_type" id="voucher" class="form-control">
+                                <option value="None">--Select--</option>
+                                <option value="Attendance">Attendance</option> 
+                                <option value="Payment">Payment</option>
+                                <option value="Payroll">Payroll</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="e">Abbreviation</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" name="abbreviation" class="form-control" id="c" placeholder=""
+                            autocomplete="off"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Activate This Voucher Type</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="activate_voucher" id="Activate" class="form-control">
+                                
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Method Of Voucher Numbering</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="voucher_numbering_method" id="e" class="form-control">              
+                                <option value="Automatic">Automatic</option>
+                                <option value="Automatic(Manual Override)">Automatic(Manual Override)</option>
+                                <option value="Manual">Manual</option>
+                                <option value="Multi-User Auto">Multi-User Auto</option>
+                                <option value="None">None</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Use Effective Dates For Vouchers</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="effective_dates" id="e" class="form-control">
+                                
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Allow Narration In Vouchers</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="narration_voucher" id="e" class="form-control">
+                                
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                <h5 class="text-center"> <u> <b> Printing </b></u></h5>
+                <div class="row container-fluid  p-0">
+                    <div class="col-sm-6 m-0 p-0"></div>
+                    <div class="col-sm-6 m-0 p-0"></div>
+                </div>
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="d">Print Voucher After Saving</label></div>
+                    <div class="col-sm-6 m-0 p-0">
+                        <select name="print_voucher" id="e" class="form-control">
+                            
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="e">Name of Class</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="text"  name="classs" class="form-control" id="c" placeholder="" 
+                        autocomplete="off"></div>
+                </div>
+
+            
+         </div>
+         <hr>
+                
+            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>     
+                
+           
+        </form>
+
+    </div>  
+        </div>
+    </div>
+    
+    
+    
+    <div class="form-popup" id="list-div" >
+  
+        <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Employee Groups</h6>
+    <hr >
+    <div>
+        <table >
+        <tr >
+            <td>
+              <a href="emloyee_group_secondary"><button
+                    type="submit"
+                    style="color: black;margin-left: 310%; width: 10%"
+                    class="custom-select-md form-control"
+                  >
+                    create
+                  </button></a>
+            </td>
+        </tr>
+    
+        <tr>
+          <td>    
+    
+            {% for l in grp %}
+            <div onclick="hideList('{{l.under_name}}')" style="color: black;" >{{l.under_name}}</div>
+            {% endfor %}
+          </td>
+        </tr>  
+        
+        </table>
+    </div>
+    
+    
+     </div>
+    
+                    
+    
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                    
+                    <script>
+                          localStorage.clear();
+
+                         document.getElementById("a").value = localStorage.getItem("name"); 
+
+                         localStorage.clear();
+
+                         document.getElementById("b").value = localStorage.getItem("alias");
+
+                         localStorage.clear();
+                          
+                        function passvalues()
+                        {
+                            var name=document.getElementById("a").value;
+                            //console.log(name);
+                            localStorage.setItem("name", name);
+                            var a=localStorage.getItem("name");
+                            //console.log(a);
+                        }
+
+                        function passvaluesAlias()
+                        {
+                            var name=document.getElementById("b").value;
+                            localStorage.setItem("alias",name);
+                            var b=localStorage.getItem("alias")
+                        }
+
+                        function showList() {
+                            document.getElementById("list-div").style.visibility = "visible";
+                        }
+                        function hideList(valueDIv) {
+                            document.getElementById("primary-text").value=valueDIv;
+                            document.getElementById("list-div").style.visibility = "hidden";
+                        }
+                        function validateForm(){
+
+                            var x=document.forms["myForm"]["name"].value;
+                            if (x==null || x=="")
+                            {
+                            alert("Name must be filled out");
+                            return false;
+                            }
+                        }
+                                
+                    </script>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+    * {
+        color: white;
+    }
+
+    .main-head {
+        background-color: aqua;
+        color: black;
+        font-size: medium;
+        padding: 2px;
+
+    }
+
+    .main-color {
+        background-color: rgba(0,0,0,0.2);
+        color: white;
+    }
+
+    .form-control,
+    .form-control:focus {
+        background-color: rgb(255 0 0 / 14%);
+        color:white;
+        
+    }
+    input[type="text"],input[type="date"],input[type="number"]{
+        background-color: rgba(0,0,0,0.2);
+        color: white; 
+    }
+    select{
+        background-color: rgba(0,0,0,0.2);  
+        color: white;
+    }
+    select optgroup{
+        background-color: rgb(22 244 255 / 20%);  
+        color: white;  
+    }
+</style>
+<div class="container">
+  
+    <!-- main row  -->
+    <div class="row mt-5">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+            <div class="card main-color">
+                <div class="card-body">
+                    <strong><center style="text-decoration: underline;color: white;">Dispatch Details</center></strong>
+                    <!-- card divide row  -->
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row mt-2 form-group">
+                            <div class="col-md-3">
+                                <p>Delivery Note No(s) :</p>
+                                <input class="form-control form-control-sm"  type="number" name="delivery_note_no" id="">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Dispathc Doc No(s)         :</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="number" name="dispatch_doc_no" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Dispathched through  :</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="text" name="dispatched_throught" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Destination  :</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="text" name="destination" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Carrier Name/Agent  :</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="text" name="carrier_name_agent" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Bill of Lading/LR-RR No:</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="text" name="bill_of_lading" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Motor Vehicle No:</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="text" name="mototr_vehicle_no" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Date:</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="date" name="date1" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>  <br> <br> <br><br><br><br><br><br><br>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <p style="display: inline;">Date:</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="date" name="date2" id=""
+                                            style="display: inline;">
+                                    </div>
+                                    
+                                </div>  
+                                <div class="form-group row">
+                                    <div class="col-11">
+                                        <button class="btn btn-success btn-lg w-100" type="submit">Save</button>
+                                    </div>
+                                    <div class="col-1">
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+
+
+{% endblock %}

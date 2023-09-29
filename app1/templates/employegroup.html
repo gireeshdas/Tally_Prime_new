@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+
+
+
+
+      
+<style>
+        
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    .ps:hover{
+          color: white;
+          background-color: rgb(1, 100, 213);
+        }
+        .hide{
+          display: none;
+        }
+    
+</style>
+<div class="m-4">
+<div class="row container-fluid p-0 " >
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+    <h6  class="bg-info text-light p-2">Employee Group Creation
+     <center>   {% for i in tally %}
+            {{i.name}}
+        {% endfor %}</center>
+    </h6>
+    
+    
+
+<form  action="{% url 'addemp_group' %}" method="post" class="p-5">
+        {% csrf_token %}
+   
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="gname">Name :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control"  type="text" name="name"
+                            style="width: 100%;" id="name" 
+                            placeholder="" autocomplete="off" required/></div> 
+
+                            
+                    </div>
+
+
+                
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alias">(Alias) :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="alias"
+                            style="width: 100%;" id="alias" 
+                            placeholder="" autocomplete="off"></div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="under">Under :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <input name="under" onclick="clicked()" id="under" class="form-control " style="width: 100%;">
+                               
+                        </div> 
+                    </div>
+
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label >Define salary details :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select name="sal" class="form-control "  style="width: 100%;">
+                                <option  value="No">No</option>
+                                <option  value="Yes">yes</option>
+                        
+                            </select>
+                            
+                        </div> 
+                    </div>
+
+                   
+
+
+                    <div class="flexy"><input type="submit" onclick="checker()"  value="create" class="btn btn-info w-100 mt-5"></div>
+
+                 
+
+                  
+    
+</form>
+
+    </div>
+
+
+       
+<div class="col-sm-3 m-0 p-2 pt-5  " >
+    <div class="hide" id="glist">
+        <div class="col-sm-8 m-0 p-0">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title text-center custom-select-md for">
+                        <h7>List of Employee Groups</h7><hr/>
+                        <a href="{% url 'emp_grp2' %}" class="btn btn-info ">Create</a>
+    
+                    </div>
+                    <ul class="list-group ">
+                        <li class="list-item ps" onclick="hidelist('primary')" value="End of list">primary</li>
+        
+                        {% for k in std %}
+                        <li class="list-item ps" onclick="hidelist('{{k.name}}')" value="{{k.id}}">{{k.name}}  </li>
+                        {% endfor %}
+                        
+                        {% for e in empc %}
+                        <li class="list-item ps" onclick="hidelist('{{e.cat_name}}')" value="{{e.id}}">{{e.cat_name}}  </li>
+                        {% endfor %}
+
+                      </ul>
+                     
+                    
+                </div>
+            </div>
+        </div>
+    </div></div></div>
+
+    <div class="col-sm-3  " style="margin-top:-350px" >
+        <div class="hide" id="glist1">
+            <div class="col-sm-8 m-0 p-0">
+                <div class="card" style="background-color: #000;">
+                    <div class="card-body">
+                        <div class="card-title text-center custom-select-md for">
+                            <h7>List of Employee Categories</h7><hr/>
+                            <a href="{% url 'employe_category_secondary' %}" class="btn btn-info ">Create</a>
+        
+                        </div>
+                        <ul class="list-group ">
+                            <li class="list-item ps" onclick="hidelist1('primary')" value="End of list">primary</li>
+            
+                            
+                            
+                            {% for e in empc %}
+                            <li class="list-item ps" onclick="hidelist1('{{e.cat_name}}')" value="{{e.id}}">{{e.cat_name}}  </li>
+                            {% endfor %}
+    
+                          </ul>
+                         
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+
+
+</div>
+</div>
+
+
+
+<script>
+        
+      
+    function hidelist(valueDIv) {
+      document.getElementById("under").value=valueDIv;
+      document.getElementById("glist").style.display="none";
+    }
+    // function color(value){
+    //   document.body.style.backgroundColor="rgba(255, 0, 0, 0.4)";
+  
+    // }
+
+
+    function clicked() {
+
+      document.getElementById('glist').style.display="flex";
+      
+    }
+
+    function hidelist1(valueDIv1) {
+      document.getElementById("name").value=valueDIv1;
+      document.getElementById("glist1").style.display="none";
+    }
+
+    function clicked1() {
+
+      document.getElementById('glist1').style.display="flex";
+
+}
+
+
+    function checker(){
+        var a=confirm("Are you sure")
+        if (a==false){
+            event.preventDefault()
+        }
+    }
+    
+  </script>
+
+
+{% endblock %}   

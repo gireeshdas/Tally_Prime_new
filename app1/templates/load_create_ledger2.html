@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .hide{
+			display: none;
+    	}
+    </style>
+    
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <h6  class="bg-info text-light p-2 m-0 text-center">Group Alteration</h6>
+                <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'load_create_ledger2' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="gname"  class="form-control" id=" " placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="b">Alias</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="alias"  class="form-control" id="b" placeholder=""></div> 
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="form1">
+                            <div class="col-sm-4 m-0 p-0"><label for="b">Under</label></div>
+                            <div class="col-sm-6 m-0 p-0" > 
+                                <select name="group" id="under" class="form-control"  onchange="showunder()" required>
+                                    <option value="Primary">Primary</option>
+                                    <option value="BankAccount1">BankAccounts</option>
+                                    <option value="Bank_OCC_AC">Bank OCC A/c</option>
+                                    <option value="Bankod1">Bank OD A/c</option>
+                                    <option value="Branch_divisions">Branch Divisions</option>
+                                    <option value="Capital_amount" >Capital Account</option>
+                                    <option value="Cash_in_hand">Cash in Hand</option>
+                                    <option value="Current_Assets" selected >Current Assets</option>
+                                    <option value="Current_Liabilities">Current Liabilities</option>
+                                    <option value="Deposits">Deposits (Asset)</option>
+                                    <option value="Direct_Expenses">Direct Expenses</option>
+                                    <option value="Dirct_Income">Direct Incomes</option>
+                                    <option value="Duties_And_Tax">Duties and Taxes</option>
+                                    <option value="Expences_Direct">Expenses(Direct)</option>
+                                    <option value="Expences_Indirect">Expenses(Indirect)</option>
+                                    <option value="Fixed_Assets">Fixed Assets</option>
+                                    <option value="Income_Direct">Income (Direct)</option>
+                                    <option value="Income_Indirect">Income (Indirect)</option>
+                                    <option value="Investments">Investments</option>
+                                    <option value="Loans_Advance">Loans & Advances (Asset)</option>
+                                    <option value="Loans_liability">Loans (Liability)</option>
+                                    <option value="Mis_Expenses">Misc. Expenses (Asset)</option>
+                                    <option value="Provisions">Provisions</option>
+                                    <option value="Purchase_Account">Purchase Accounts</option>
+                                    <option value="Reserves_Surplus">Reserves & Surplus</option>
+                                    <option value="Retained">Retained Earnings</option>
+                                    <option value="Sales_Account">Sales Accounts</option>
+                                    <option value="Secured_loans">Secured Loans</option>
+                                    <option value="Stock">Stock-in-Hand</option>
+                                    <option value="Sundry_Creditors">Sundry Creditors</option>
+                                    <option value="Sundry_Debtors">Sundry Debtors</option>
+                                    <option value="Suspence">Suspence A/c</option>
+                                    <option value="Unsecured_loans">Unsecured Loans</option> 
+                                </select>
+                            </div>
+                            <div class="col-sm-7 m-0 p-0"></div>
+                            <div class="row container-fluid hide p-2 m-0"  id="assets">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Current Assets)</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2 m-0"  id="bankocc">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Loans (Liability))</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2 m-0"  id="liabilities">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Current Liabilities)</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2 m-0"  id="account">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Capital Account)</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                        <div class="col-sm-12 m-0 p-4">
+                            <div class="row container-fluid hide p-2" id="primary">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Nature of Group</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="group_nature" id="nature_of_group"  class="form-control" onchange="showNature()">
+                                        <option value="Assets">Assets</option>
+                                        <option value="Expenses">Expenses</option>
+                                        <option value="Income">Income</option>
+                                        <option value="Liabilities" selected>Liabilities</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2" id="gorss_profit">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Does it affect gross profit</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="gorss_profit" id=""  class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                    <!-- <input type="text" name="gorss_profit" class="form-control" id="a" placeholder=""> -->
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Group behaves like sub-ledger</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="ledger" id="i" class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Net Debit/Credit Balances for reporting</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="debit/credit" id="i"  class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Used for Calculations(for example :tax,discounts) 
+                                    <br><p><i>&nbsp;&nbsp;&nbsp;&nbsp;(For sale invoice entries)</i></p></label>
+                                </div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="calculation" id="i" class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Method to Allocate when used in purchase invoice</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="invoice" id="i"  class="form-control">
+                                        <option value="not_applicable">Not Applicable</option>
+                                        <option value="Appropriate_by_Qty">Appropriate by Qty</option>
+                                        <option value="Appropriate_by_value">Appropriate by value</option>    
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div> 
+    
+    <script>
+        function showNature(){
+            var status = document.getElementById("nature_of_group");
+            var a = status.value
+            console.log(a);
+            if( a == "Expenses" ){
+                console.log(a);
+
+                document.getElementById('gorss_profit').style.display = "flex";
+            }
+            else if( a == "Income" ) {
+                document.getElementById('gorss_profit').style.display = "flex";
+            }
+            else if( a == "Assets" ) {
+                document.getElementById('gorss_profit').style.display = "none";
+            }
+            else{
+                document.getElementById('gorss_profit').style.display = "none";
+            }       
+        }
+        
+        function showunder(){
+            var status = document.getElementById("under");
+            var a = status.value;
+            console.log(a);
+            if( a == "Primary" ){
+                console.log(a);
+
+                document.getElementById('primary').style.display = "flex";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+                
+            }
+            else if( a == "BankAccount1" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+                
+            }
+            else if( a == "Bank_OCC_AC" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Bankod1" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+
+            else if( a == "Cash_in_hand" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none"; 
+                document.getElementById('account').style.display = "none"; 
+            }
+            else if( a == "Deposits" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Duties_And_Tax" ) {
+                document.getElementById('liabilities').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Loans_Advance" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Provisions" ) {
+                document.getElementById('liabilities').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Reserves_Surplus" ) {
+                document.getElementById('account').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+            }
+            else if( a == "Retained" ) {
+                document.getElementById('account').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+            }
+            else if( a == "Secured_loans" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Stock" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Sundry_Creditors" ) {
+                document.getElementById('liabilities').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Sundry_Debtors" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Unsecured_loans" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else{
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+        }
+    </script>
+{% endblock %}

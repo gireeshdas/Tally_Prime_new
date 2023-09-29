@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        
+
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+       
+      
+      }
+      
+      @media (max-width: 991px) {
+        .main-panel {
+            margin-left: 0;
+            width: 100%;
+        }
+        }
+
+        .content-wrapper {
+        padding: 1.875rem 1.75rem;
+        width: 100%;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        }
+      
+    
+    </style>
+    <div class="main-panel">
+    <div class="content-wrapper">
+    <div class="row">
+    <div class="col-md-4" ></div>
+        <div class="col-md-4">
+        <h6  class="bg-info text-light p-2 m-0 text-left">Stock Group Creation</h6>
+
+            <form name="myForm" id="" action="stock_group" method="post" class="p-5" onsubmit="return validateForm()" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4"> <label for="name">Name :</label></div>
+                <div class="col-md-8"><input   type="text" class=" form-control" id="a" 
+                 name="name" autocomplete="off" ></div>
+                
+            </div>
+
+            
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4 "> <label for="alia">(Alias) :</label></div>
+                <div class="col-md-8 "><input class="form-control" type="text" name="alias"
+                     id="alias" autocomplete="off"></div> 
+            </div>
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4 "> <label for="Under">Under</label></div>
+                <div class="col-md-8 "> 
+                <input type="text" class="form-control" id="primary-text" onfocus="showList()" autocomplete="off"
+                value="Primary"  name="under_name" ></div>
+             
+            </div>
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4 "> <label for="quantities">Should Quantities of items be added</label></div>
+                <div class="col-md-8 ">
+               <select   name="quantities" required="" class="form-control">
+                <option value="No">No</option> 
+                <option value="Yes">Yes</option>
+            </select></div>
+            </div>
+
+
+            <div class="row" style="margin-top: 10%;">
+                <div class="col-md-4"></div>
+                    <div class="col-md-4" ><button class="btn btn-info w-15">CREATE</button></div>   
+                </div>
+        </form>
+        </div>
+        <div class="col-md-4"></div>
+                
+    </div>
+    </div>
+    </div>
+                
+           
+      
+
+    
+    
+    
+    <div class="form-popup" id="list-div" >
+  
+        <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Stock Groups</h6>
+    <hr >
+    <div>
+        <table >
+        <tr >
+            <td>
+              <a href="stock_group_secondary"><button
+                    type="submit"
+                    style="color: black;margin-left: 310%; width: 10%"
+                    class="custom-select-md form-control"
+                  >
+                    create
+                  </button></a>
+            </td>
+        </tr>
+    
+        <tr>
+          <td>    
+    
+            {% for l in und %}
+            <div onclick="hideList('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+            {% endfor %}
+          </td>
+        </tr>  
+        
+        </table>
+    </div>
+    
+    
+     </div>
+    
+        <script>
+    
+                        
+                  function showList() {
+                      document.getElementById("list-div").style.visibility = "visible";
+                  }
+                  function hideList(valueDIv) {
+                      document.getElementById("primary-text").value=valueDIv;
+                      document.getElementById("list-div").style.visibility = "hidden";
+                  }
+
+                  function validateForm(){
+
+                        var x=document.forms["myForm"]["name"].value;
+                        if (x==null || x=="")
+                        {
+                        alert("Name must be filled out");
+                        return false;
+                        }
+                    }
+                    </script>
+{% endblock %}

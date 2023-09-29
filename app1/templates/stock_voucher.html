@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<head>
+    <style>
+          thead th {
+    border: .5px solid rgba(255, 255, 255, .2); ;
+    
+    
+ }
+ .table-row{
+cursor:pointer;
+}
+.table-row:hover{
+    background-color: rgb(216, 155, 51);
+}
+.table-row1{
+cursor:pointer;
+}
+.table-row1:hover{
+    background-color: rgb(216, 155, 51);
+}    
+  
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col "> Ledger Vouchers</div>
+                </div>
+                <div class="row  " style="height: 50px;">
+                    <div class="col ">
+                        <h6>
+                        <span class=" d-flex justify-content-start" style="margin-top: 8px;"> Ledger : &nbsp;<strong>{{std.name}} </strong> </span>
+                        <span class="d-flex  justify-content-end " style="margin-top: -15px;"> 1-Apr-22 to 30-Apr-22</span>
+                    </h6>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table " border="1px" style="background-color: rgba(33,57,77,255);color:#fff;">
+
+                        <thead>
+
+                            <tr>
+                                
+                                <th rowspan="8"   class="align-middle text-white "> <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;width: 10%;">Date</h6></th>
+                                <th rowspan="8"   class="align-middle text-white "> <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">Particular</h6></th>
+                                <th rowspan="8"   class="align-middle text-white "> <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">Vch type</h6></th>
+                                <th rowspan="8"   class="align-middle text-white "> <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">Vch no</h6></th>
+                                
+                                  
+                              </tr>
+                              <tr>
+                               
+                                <th colspan="2" class="text-center text-white" style="width: 14%;"><h6> <strong> Inwards </strong></h6></th>
+                                <th colspan="2" class="text-center text-white" style="width: 14%;"><h6> <strong> Outwards </strong></h6></th>
+                                <th colspan="2" class="text-center text-white " style="width: 14%;"><h6> <strong>closing balance</strong></h6></th>
+
+                              </tr>
+                              <tr>
+                                <th class="text-center text-white">Quantity</th>
+                                <th class="text-center text-white">value</th>
+                                <th class="text-center text-white">Quantity</th>
+                                <th class="text-center text-white">value</th>
+                                <th class="text-center text-white">Quantity</th>
+                                <th class="text-center text-white">value</th>
+                                
+                              </tr>
+
+                              
+
+                             
+
+
+
+
+
+                        </thead>
+                        
+
+                        <tbody>
+                            <tr class="table-row" data-href="">
+                                <td  style="text-align: center;"><i>Opening Balance</i><i class="float-right "></i></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td style="text-align: center;">{{std.quantity}} BTL</td>
+                                <td style="text-align: center;">{{std.value}}</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: center;">{{std.quantity}} BTL</td>
+                                <td style="text-align: center;">{{std.value}}</td>
+                                
+                               
+
+                            </tr>
+                            
+                            <!-- {% for i in mo %} -->
+                            
+                            
+                            
+                            <tr class="table-row" data-href="">
+                                <td>April  1</td>
+                                
+                                 
+                                <!-- {% if i.leger_month_closing_set.all %}
+                                 
+                                {% for j in i.leger_month_closing_set.all %}
+                                 
+                                    {% if j.Ledger == le %} -->
+
+                                 
+                                 
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td></td>
+                                <td></td>
+                                
+                               
+                                
+                                
+                                
+                                    
+                                            
+                                
+                              
+                                    <!-- {% endif %} -->
+                                    
+
+                                
+
+                               
+                                
+                                <!-- {% endfor %} -->
+                                
+                                
+
+                                 <!-- {% else%} -->
+                                 <!-- <td style="text-align: end;"><strong></strong></td>
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 <td style="text-align: end;"><strong></strong></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td> -->
+                                 <!-- {% endif %} -->
+
+                            </tr>
+                            
+                            <!-- {% endfor %} -->
+
+                           {% for v in vouch %}
+                            <tr class="table-row" >
+                                <td  style="text-align: center;"><a href="#">{{v.date}}</a></td>
+                                <td  style="text-align: center;">{{v.particular}}</td>
+                                <td  style="text-align: center;">{{v.voucher_type}}</td>
+                                <td  style="text-align: center;"><strong>{{v.voucher_number}}</strong></td>
+                            {% if v.voucher_type == 'sales' %}
+                                <td></td>
+                                <td></td>
+                                <td  style="text-align: center;">{{v.quntity}} BTL</td>
+                                <td  style="text-align: center;">{{v.value}}</td>
+                                <td></td>
+                                <td></td>
+                            {% elif v.voucher_type == 'purchase' %}
+                                <td  style="text-align: center;">{{v.quntity}} BTL</td>
+                                <td  style="text-align: center;">{{v.value}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            {% endif %}
+                            </tr>
+                            {% endfor %}
+
+                            
+<!--                            
+                            <tr class="table-row">
+                                <td>March</td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: end;"><strong></strong></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr> -->
+
+                            
+                            <tr class="table-row">
+                                <th  ><h6 class="d-flex align-items-sm-start par p-1 py-1 foot" style="margin-left: 20px;">Total as per deafault valuation</h6></th>
+                                
+                                <th  style="text-align: end;"></th>
+                                <th  style="text-align: end;"></th>
+                                <th  style="text-align: center;"></th>
+                                <th style="text-align: center;">{{total_purchase_quntity}} BTL</th>
+                                <td style="text-align: center;">{{total_purchase_value}}</td>
+                                <td style="text-align: center;">{{total_sales_quntity}} BTL</td>
+                                <td  style="text-align: center;">{{total_sales_value}}</td>
+                                <td style="text-align: center;">{{closing_qun}} BTL</td>
+                                <td style="text-align: center;">{{closing_val}}</td>
+                                
+                            </tr>
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+
+                        </tbody>
+                        
+
+
+
+
+                    
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        $(document).ready(function($) {
+            $(".table-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+
+{% endblock %}

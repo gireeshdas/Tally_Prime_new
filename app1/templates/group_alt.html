@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .hide{
+			display: none;
+    	}
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            transform: rotate(0deg);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 550px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container {
+            max-width: 50px;
+            height: 500px;
+            padding: 10px;
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 600px;
+            padding: 2px; 
+        }
+        .bt{
+            text-align: end;
+        }
+        .btns_prnt{
+            width: 100%;
+            cursor:pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        } 
+        .ScrollStyle{
+            /* max-height: 200px; */
+            overflow-y: scroll;
+        }  
+    </style>
+
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Group Creation (Secondary)</div>
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_group' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="gname" class="form-control" id="a" required></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="b">Alias</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="alias" class="form-control" id="b" placeholder=""></div> 
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="form1">
+                            <div class="col-sm-4 m-0 p-0"><label for="b">Under</label></div>
+                            <div class="col-sm-6 m-0 p-0" > 
+                                <input type="text" id="under" value="Capital Account" name="group" class="form-control" onchange="showunder()"
+                                 onclick="showgroup(); readonly">
+                            </div>
+                            <div class="col-sm-7 m-0 p-0"></div>
+                            <div class="row container-fluid hide p-2 m-0"  id="assets">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Current Assets)</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2 m-0"  id="bankocc">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Loans (Liability))</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2 m-0"  id="liabilities">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Current Liabilities)</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2 m-0"  id="account">
+                                <div class="col-sm-4 m-0 p-0"></div>
+                                <div class="col-sm-6 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;<label for=""><i>(Capital Account)</i></label></div>
+                                <div class="col-sm-4 m-0 p-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                        <div class="col-sm-12 m-0 p-4">
+                            <div class="row container-fluid hide p-2" id="primary">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Nature of Group</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="group_nature" id="nature_of_group" class="form-control" onchange="showNature()">
+                                        <option value="Assets">Assets</option>
+                                        <option value="Expenses">Expenses</option>
+                                        <option value="Income">Income</option>
+                                        <option value="Liabilities" selected>Liabilities</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid hide p-2" id="gorss_profit">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Does it affect gross profit</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="gorss_profit" id="" class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                    <!-- <input type="text" name="gorss_profit" class="form-control" id="a" placeholder=""> -->
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Group behaves like sub-ledger</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="ledger" id="i" class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Net Debit/Credit Balances for reporting</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="debit/credit" id="i" class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Used for Calculations(for example :tax,discounts) 
+                                    <br><p><i>&nbsp;&nbsp;&nbsp;&nbsp;(For sale invoice entries)</i></p></label>
+                                </div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="calculation" id="i" class="form-control">
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>  
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                            <div class="row container-fluid  p-2">
+                                <div class="col-sm-8 m-0 p-0"> <label for="c">Method to Allocate when used in purchase invoice</label></div>
+                                <div class="col-sm-4 m-0 p-0">
+                                    <select name="invoice" id="i" class="form-control">
+                                        <option value="not_applicable">Not Applicable</option>
+                                        <option value="Appropriate_by_Qty">Appropriate by Qty</option>
+                                        <option value="Appropriate_by_value">Appropriate by value</option>    
+                                    </select>
+                                </div>
+                                <div class="col-sm-0 m-0 p-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>
+
+    <div class="form-popup ScrollStyle" id="myForm" style="background-color: #213b52">
+        <form action="" class="form-container1" >
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Groups</h6>
+            <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+            <a href="{% url 'group_alt' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="showunder('Primary')" class="btns_prnt" value="Primary">Primary</option>
+                        <option onclick="showunder('Bank Accounts')" class="btns_prnt" value="Bank Accounts">Bank Accounts</option>
+                        <option onclick="showunder('Bank OCC A/c')" class="btns_prnt" value="Bank OCC A/c">Bank OCC A/c</option>
+                        <option onclick="showunder('Bank OD A/c')" class="btns_prnt" value="Bank OD A/c">Bank OD A/c</option>
+                        <option onclick="showunder('Branch Divisions')" class="btns_prnt" value="Branch_divisions">Branch Divisions</option>
+                        <option onclick="showunder('Capital Account')" class="btns_prnt" value="Capital Account">Capital Account</option>
+                        <option onclick="showunder('Cash in Hand')" class="btns_prnt" value="Cash in Hand">Cash in Hand</option>
+                        <option onclick="showunder('Current Assets')" class="btns_prnt" value="Current Assets">Current Assets</option>
+                        <option onclick="showunder('Current Liabilities')" class="btns_prnt" value="Current Liabilities">Current Liabilities</option>
+                        <option onclick="showunder('Deposits (Asset)')" class="btns_prnt" value="Deposits (Asset)">Deposits (Asset)</option>
+                        <option onclick="showunder('Direct Expenses')" class="btns_prnt" value="Direct Expenses">Direct Expenses</option>
+                        <option onclick="showunder('Direct Incomes')" class="btns_prnt" value="Direct Incomes">Direct Incomes</option>
+                        <option onclick="showunder('Duties and Taxes')" class="btns_prnt" value="Duties and Taxes">Duties and Taxes</option>
+                        <option onclick="showunder('Expenses(Direct)')" class="btns_prnt" value="Expenses(Direct)">Expenses(Direct)</option>
+                        <option onclick="showunder('Expenses(Indirect)')" class="btns_prnt" value="Expenses(Indirect)">Expenses(Indirect)</option>
+                        <option onclick="showunder('Fixed Assets')" class="btns_prnt" value="Fixed Assets">Fixed Assets</option>
+                        <option onclick="showunder('Income (Direct)')" class="btns_prnt" value="Income (Direct)">Income (Direct)</option>
+                        <option onclick="showunder('Income (Indirect)')" class="btns_prnt" value="Income (Indirect)">Income (Indirect)</option>
+                        <option onclick="showunder('Investments')" class="btns_prnt" value="Investments">Investments</option>
+                        <option onclick="showunder('Loans & Advances (Asset)')" class="btns_prnt" value="Loans & Advances (Asset)">Loans & Advances (Asset)</option>
+                        <option onclick="showunder('Loans (Liability)')" class="btns_prnt" value="Loans (Liability)">Loans (Liability)</option>
+                        <option onclick="showunder('Misc. Expenses (Asset)')" class="btns_prnt" value="Misc. Expenses (Asset)">Misc. Expenses (Asset)</option>
+                        <option onclick="showunder('Provisions')" class="btns_prnt" value="Provisions">Provisions</option>
+                        <option onclick="showunder('Purchase Accounts')" class="btns_prnt" value="Purchase Accounts">Purchase Accounts</option>
+                        <option onclick="showunder('Reserves & Surplus')" class="btns_prnt" value="Reserves & Surplus">Reserves & Surplus</option>
+                        <option onclick="showunder('Retained Earnings')" class="btns_prnt" value="Retained Earnings">Retained Earnings</option>
+                        <option onclick="showunder('Sales Accounts')" class="btns_prnt" value="Sales Accounts">Sales Accounts</option>
+                        <option onclick="showunder('Secured Loans')" class="btns_prnt" value="Secured Loans">Secured Loans</option>
+                        <option onclick="showunder('Stock-in-Hand')" class="btns_prnt" value="Stock-in-Hand">Stock-in-Hand</option>
+                        <option onclick="showunder('Sundry Creditors')" class="btns_prnt" value="Sundry Creditors">Sundry Creditors</option>
+                        <option onclick="showunder('Sundry Debtors')" class="btns_prnt" value="Sundry Debtors">Sundry Debtors</option>
+                        <option onclick="showunder('Suspence A/c')" class="btns_prnt" value="Suspence A/c">Suspence A/c</option>
+                        <option onclick="showunder('Unsecured Loans')" class="btns_prnt" value="Unsecured Loans">Unsecured Loans</option> 
+
+                        {% for i in grp %}
+                            <option onclick="setGroup('{{i.group_name}}','{{i.id}}')" class="btns_prnt">{{i.group_name}}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{i.id}}">
+        </form>
+    </div>
+
+    <script>
+        function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+        }
+        function showgroup(){
+        document.getElementById('myForm').style.visibility= "visible";
+        document.getElementById("myForm").style.display = "block";
+        }
+
+        function showNature(){
+            var status = document.getElementById("nature_of_group");
+            var a = status.value
+            console.log(a);
+            if( a == "Expenses" ){
+                console.log(a);
+
+                document.getElementById('gorss_profit').style.display = "flex";
+            }
+            else if( a == "Income" ) {
+                document.getElementById('gorss_profit').style.display = "flex";
+            }
+            else if( a == "Assets" ) {
+                document.getElementById('gorss_profit').style.display = "none";
+            }
+            else{
+                document.getElementById('gorss_profit').style.display = "none";
+            }       
+        }
+        
+        function showunder(p){
+            document.getElementById('under').value= p;
+            var status = document.getElementById("under");
+            var a = status.value
+            console.log(a);
+            
+            if( a == "Primary" ){
+                console.log(a);
+
+                document.getElementById('primary').style.display = "flex";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+                
+            }
+            else if( a == "Bank Accounts" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+                
+            }
+            else if( a == "Bank OCC A/c" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Bank OD A/c" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Cash in Hand" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none"; 
+                document.getElementById('account').style.display = "none"; 
+            }
+            else if( a == "Deposits" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Duties and Taxes" ) {
+                document.getElementById('liabilities').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Loans Advance" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Provisions" ) {
+                document.getElementById('liabilities').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Reserves Surplus" ) {
+                document.getElementById('account').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+            }
+            else if( a == "Retained Earnings" ) {
+                document.getElementById('account').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+            }
+            else if( a == "Secured Loans" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Stock-in-Hand" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Sundry Creditors" ) {
+                document.getElementById('liabilities').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Sundry Debtors" ) {
+                document.getElementById('assets').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else if( a == "Unsecured Loans" ) {
+                document.getElementById('bankocc').style.display = "flex";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+            else{
+                document.getElementById('bankocc').style.display = "none";
+                document.getElementById('primary').style.display = "none";
+                document.getElementById('gorss_profit').style.display = "none";
+                document.getElementById('assets').style.display = "none";
+                document.getElementById('liabilities').style.display = "none";
+                document.getElementById('account').style.display = "none";
+            }
+        }
+        function setGroup(under,underId){
+            document.getElementById('under').value= under;
+            document.getElementById('myForm1').style.visibility= "block";
+            document.getElementsByName('underhidden').value= underId;
+        }
+    </script>
+
+{% endblock %}

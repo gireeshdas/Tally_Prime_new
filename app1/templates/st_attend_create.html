@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid p-3 mx-0">
+            <div class="col-sm-2 m-0 p-0"></div>
+            <div class="col-sm-8 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <h6 class="bg-info text-light p-2">Attendance / Production Type Creation (Secondary)</h6>
+        <div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
+   
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'statistics_add_attend' %}" autocomplete="off">
+                    {% csrf_token %}
+                   
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="a" name="name" value="{{ a.Symbol }}"  placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="a">alias</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="a" name="alias"  value="{{ a.FormalName }}"   placeholder=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-8 m-0 p-0"> <label for="a"><b>Under</b></label></div>
+                            <div class="col-sm-4 m-0 p-0">
+                                <select name="show_amt" id="i" class="form-control">
+                                    <option value="primary">Primary</option>
+                                    {% for a in aaa %}
+                                    <option value="{{ a.name }}">{{ a.name }}</option>
+                                    {% endfor %}
+                                     
+                                </select>
+                            </div>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-md-4"> <label for="attendance">Attendance Type :</label></div>
+                                <div class="col-md-8">
+                                <select name="attendance" id="type" class="custom-select-md form-control " 
+                                onchange="show()">
+                                    <option value="{{ a.attendance }}">{{ a.attendance }}</option>
+                                    <option value="leave_with_pay">Attendance/Leave with Pay</option>
+                                    <option value="leave_without_pay">Leave without Pay</option>
+                                    <option value="production">Production</option>
+                                    <option value="user_defined">User Defined Calendar Type</option>
+                                </select></div>
+                            </div>
+                            <div id="pt" class="row container-fluid hide  p-2 m-0">
+                                <div class="col-md-4"> <label for="alia">Period Type :</label></div>
+                                <div class="col-md-8"><input class="custom-select-md form-control" type="text" name="period" value="Days"
+                                  id="alias" 
+                                    placeholder="" autocomplete="off"></div> 
+                            </div>
+                
+                           
+            </div>
+        </div> <div class="row" style="margin-top: 10%;">
+            <div class="col-md-4"></div>
+                <div class="col-md-4" ><button class="btn btn-info w-15">SAVE</button></div>   
+            </div>
+             
+       
+    </div>
+
+
+  <script>
+    function show(){
+        var status=document.getElementById("type");
+        var c=status.value;
+      
+        if (c=='leave_with_pay'){
+         document.getElementById('pt').style.display="flex";
+         document.getElementById('uni').style.display="none";
+        }
+        else if(c=='leave_without_pay'){
+         document.getElementById('pt').style.display="flex";
+         document.getElementById('uni').style.display="none";
+        }
+        else if(c=='production'){
+        document.getElementById('uni').style.display="flex";
+         document.getElementById('pt').style.display="none";
+        }
+        else if(c=='leave_without_pay'){
+         document.getElementById('pt').style.display="flex";
+         document.getElementById('uni').style.display="none";
+        }
+        else {
+         document.getElementById('pt').style.display="none";
+         document.getElementById('uni').style.display="none";
+      
+        }
+      
+      
+      
+      
+      
+      }
+      
+      
+      </script>
+{% endblock %}

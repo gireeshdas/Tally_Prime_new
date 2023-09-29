@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6">Person Responsible Details</div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+            
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'person_tds' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <h6  class=" text-light p-2 m-0 text-center">Person Responsible Details</h6>
+                    <div class="p-3">
+                        
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Name</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="name" class="form-control" id="a" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="b">Son / Daughter of</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="son_daughter" class="form-control" id="b" placeholder=""></div> 
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="b">Designation</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="designation" class="form-control" id="b" placeholder=""></div> 
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">PAN</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="pan" class="form-control"  maxlength="10"
+                                pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" title="Please enter valid PAN number. E.g. AAAAA9999A" required>
+                            </div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Flat No.</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="flat_no" class="form-control" id="a" placeholder="" value=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Name of the primises / building</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="premise_name" class="form-control" id="a" placeholder=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Road/Street/Lane</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="street" class="form-control" id="a" placeholder="" value=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Area/Location</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="area" class="form-control" id="a" placeholder="" value=""></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Town/City/District</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="city" class="form-control" id="a" placeholder="" value=""></div>
+                            <div class="col-sm-4 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="b">State</label></div>
+                            <div class="col-sm-6 m-0 p-0"> 
+                                <select name="state" id="" class="form-control">
+                                    <option value="">Not Applicable</option>
+                                    <option value="">Andaman & Nicobar Islands</option> 
+                                    <option value="">Andhra Pradesh</option>
+                                    <option value="">Arunachal Pradesh</option>
+                                    <option value="">Assam</option> 
+                                    <option value="">Bihar</option> 
+                                    <option value="">Chandigarh</option> 
+                                    <option value="">Chhattisgarh</option> 
+                                    <option value="">Dadra & Nagar Haveli and Daman & Diu</option> 
+                                    <option value="">Delhi</option> 
+                                    <option value="">Goa</option> 
+                                    <option value="">Gujarat</option> 
+                                    <option value="">Haryana</option> 
+                                    <option value="">Himachal Pradesh</option> 
+                                    <option value="">Jammu & Kashmir</option> 
+                                    <option value="">Jharkhand</option> 
+                                    <option value="">Karnataka</option> 
+                                    <option value="Kerala" selected>Kerala</option> 
+                                    <option value="">Ladakh</option> 
+                                    <option value="">Lakshadweep</option> 
+                                    <option value="">Madhya Pradesh</option> 
+                                    <option value="">Maharashtra</option>
+                                    <option value="">Manipur</option> 
+                                    <option value="">Meghalaya</option> 
+                                    <option value="">Mizoram</option> 
+                                    <option value="">Nagaland</option> 
+                                    <option value="">Odisha</option> 
+                                    <option value="">Puducherry</option> 
+                                    <option value="">Punjab</option> 
+                                    <option value="">Rajasthan</option> 
+                                    <option value="">Sikkim</option> 
+                                    <option value="">Tamil Nadu</option> 
+                                    <option value="">Telangana</option> 
+                                    <option value="">Tripura</option> 
+                                    <option value="">Uttarakhand</option> 
+                                    <option value="">Uttarakhand</option> 
+                                    <option value="">West Bengal</option> 
+                                </select>
+                            </div>
+                            <div class="col-sm-7 m-0 p-0"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Pincode</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="pincode" class="form-control" maxlength="6"
+                                pattern="^[1-9][0-9]{5}$" title="Please enter valid pincode">
+                            </div>
+                        </div><br>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Mobile No.</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="mobile_no" class="form-control" maxlength="10"
+                                pattern="[6-9]{1}[0-9]{9}" title="Please enter valid phone number"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">STD Code</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="std_code" class="form-control" pattern="^\d{3,4}$"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Telephone</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="telephone" class="form-control" maxlength="8"
+                                pattern="[0-9]{3}[0-9]{2}[0-9]{3}"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="a">Email ID</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="email" name="email" class="form-control"></div>
+                            <br><br><br>  
+                        </div>
+                        <center><p>(Note : All the above details will used in Challan,Forms,Returns)</p></center>
+                    </div>
+                    <div class="enter w-100 "><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+{% endblock %}

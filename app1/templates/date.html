@@ -1,0 +1,61 @@
+
+    {% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            .container{
+                display: flex;
+                height:15vh;
+                align-items: center;
+                justify-content: center;
+            }
+        .form1{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            
+        }
+        form{
+            padding:30px;
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+            transform: rotate(45deg);
+            cursor: pointer;
+            text-decoration: none;
+            
+        }
+        button{
+            background-color:rgb(103, 175, 220) ;
+            color:white;
+            padding:10px 20px;
+        }
+    </style>
+    <div class="container">
+        <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+            <a href="javascript:history.go(-1);" class="close">+</a>
+            <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">Current Date</h5>
+            <form action="" method="post">
+
+    <!-- <div class="container">
+    <div class="form1">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+        <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">Group Alteration(Secondary)</h5>
+        <form action="" method="post"> -->
+        
+            
+            <div><p>Date</p></div>
+            <input type="date">
+            <br><br>
+            
+<button><h5>ALTER</h5></button>
+        </form>
+    </div>
+</div>
+{% endblock %}

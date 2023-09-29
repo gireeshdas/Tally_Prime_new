@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .inp{
+            border: none;
+            color: #fff;
+            background-color: rgba(0,0,0,.001);
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>GST Details</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                <h6  class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">GST Details for Company
+                    <center>
+                        <!-- <input type="text" class="form-control inp" id="stock_name"> -->
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"></div>
+                            <div class="col-sm-4 m-0 p-0"><input type="text" class="inp text-center" id="stock_name"></div>
+                            <div class="col-sm-5 m-0 p-0"></div>
+                        </div>
+                    </center>
+                </h6>
+                
+                <form class="p-3" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'gst_stock' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"></div>
+                        <div class="col-sm-3 m-0 p-0"><h6>Tax Details</h6></div>
+                        <div class="col-sm-5 m-0 p-0"></div>
+                    </div>
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-2 m-0 p-0"> </div>
+                            <div class="col-sm-3 m-0 p-0"><label for="a">Calculation type</label></div>
+                            <div class="col-sm-5 m-0 p-0"><input type="text" name="calc_typ" class="form-control" value="On Value"></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-2 m-0 p-0"></div>
+                            <div class="col-sm-3 m-0 p-0"><label for="a">Taxability</label></div>
+                            <div class="col-sm-5 m-0 p-0">
+                                <select name="taxability" id="primary" class="form-control" onchange="showgst()">
+                                    <option value="Unknown">Unknown</option>
+                                    <option value="Exempt">Exempt</option>
+                                    <option value="Nill Rated">Nill Rated</option>
+                                    <option value="Taxable">Taxable</option>
+                                </select>
+                            </div>   
+                        </div>   
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+
+    <script>
+        document.getElementById("stock_name").value = localStorage.getItem("status");
+
+        function showgst(){
+            var status = document.getElementById("primary");
+            var a = status.value;
+            if( a=="Exempt"){
+    
+                window.location.href="{% url 'load_rev' %}"
+            }
+            else{
+                window.location.href="{% url 'load_rev' %}" 
+            }
+        }
+    </script>
+{% endblock %}

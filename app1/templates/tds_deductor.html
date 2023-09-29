@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        button{
+            background-color:rgb(23, 127, 192) ;
+            color:white;
+            padding:10px 10px;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        function alter(){
+            window.location.href="{% url 'person_details' company.id %}";
+        }
+    </script>
+
+  <div class="m-5 p-4">
+    <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+        <a href="javascript:history.go(-2);" class="close">x</a>
+        <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">Company TDS deductor details</h5>
+             <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'add_tds' company.id %}"> 
+                
+                
+                {% csrf_token %}
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-12 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                       
+                        <div class="row container-fluid  p-50">
+                            <div class="col-sm-12 m-0 p-0"></div>
+                           
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            {% comment %} <h5><u>Company TDS deductor details</u></h5> {% endcomment %}
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="c">TAN registration number</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="tan_number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="d">Tax deduction and collection number(TAN)</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="tan" class="form-control" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Please enter a valid TAN number,Eg:ABCDE1234X">
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="e">Deductor type</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="deductor" class="form-control" value="company">
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="f">Deductor branch/division</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="branch" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">set/alter details of person responsible</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="person_details" id="g" class="form-control" onchange="alter()">
+                                    <option value="yes">Yes</option> 
+                                    <option value="no" selected>No</option>
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <h5><u>Rate and Exemption details</u></h5>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Ignore IT exemption limit for TDS deduction</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="exemption" id="exemption" class="form-control" >
+                                    <option value="yes">Yes</option> 
+                                    <option value="no">No</option>
+                                   
+                                </select>
+                            </div>
+                            </div>
+                        
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">Activate TDS for stock items</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="active_tds" id="g" class="form-control">
+                                    <option value="yes">Yes</option> 
+                                    <option value="no">No</option>
+                                   
+                                </select>
+                            </div>
+                            </div>
+                        </div>  
+                        <div class="enter w-100 py-4"><button class="btn btn-info w-15" onclick="goBack()">CREATE</button></div>   
+            </form>
+        </div>
+        
+    {% endblock %}

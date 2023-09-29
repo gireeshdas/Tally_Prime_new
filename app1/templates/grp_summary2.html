@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Group Summary</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table  table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+                        <tr>
+                          <th rowspan="6"  class="align-middle text-white">Particular</th>
+                          <th colspan="6" class="text-center text-white"><h5>{{ display.Name }}</h5>For 1-Apr-2022</th>
+                        </tr>
+                        <tr>
+                          <th colspan="6" class="text-center text-white">Closing Balance</th>
+                        </tr>
+                        <tr>
+                          <th class="text-center text-white">Debit</th>
+                          <th class="text-center text-white">credit</th>
+                        </tr>
+                        <tbody>
+                            {% for i in data %}
+                            <tr  class="trhover">                               
+                                <td class="text-white"><a href="{% url 'Voucher_Group_Summary' i.id %}">{{ i.Particular }}</a></td>
+                                <td class="text-center text-white">{{ i.Debit }}</td>
+                                <td class="text-center text-white">{{ i.Credit }}</td>
+                            </tr>
+                            {% endfor %}
+                         
+                            <tr>
+                                <th class="text-white">Grand Total</th>
+                                <th class="text-center text-white">{{sum2}}</th>
+                                <th class="text-center text-white">{{sum1}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+<style>
+    .trhover:hover{
+        background-color: rgb(31, 40, 68);
+    }
+</style>
+{% endblock %}

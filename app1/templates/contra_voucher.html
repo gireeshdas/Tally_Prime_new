@@ -1,0 +1,1248 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+
+<style>
+    
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 17px;
+        transform: rotate(0deg);
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .popup1 {
+        display: none;
+        position: fixed;
+        top: 150px;
+        right: 30px;
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 350px;
+        height: 250px;
+    }
+   
+    .content a:hover {
+        background-color: rgb(238, 167, 75);
+    }
+    .form-container1 {
+        max-width: 350px;
+        height: 300px;
+        padding: 0px; 
+    }
+    .form-container2 {
+        max-width: 500px;
+        height: 200px;
+        padding: 2px; 
+        margin-left: 100px;
+        margin-top: 100px;
+    }
+    .btns_prnt{
+        color: #fff;
+        width: 100%;
+        cursor:pointer;
+        background-color: rgba(240, 248, 255, 0);
+        border: none;
+        list-style: none;
+
+    }
+    .btns_prnt:hover{
+        background-color:#5bc9e4;
+        color: rgb(15, 14, 14);
+    }
+    .bt{
+        text-align: end;
+    }
+    .ScrollStyle{
+        overflow-y: scroll;
+    }
+    .hide{
+        display: none;
+    }
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(124, 186, 224);
+}
+
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+        
+        
+    
+    .opt {
+        color: #000;
+        text-align:top;
+        padding: 0px;
+        background-color: rgb(255, 229, 183);
+        
+    } 
+
+    
+    .acc {
+        color: #000;
+        text-align:top;
+        padding: 0px;
+        height: 25px; 
+        width: 150px;
+        background-color: rgb(255, 229, 183);
+        
+    } 
+
+    .txt{
+        height: 23px; 
+        width: 150px;
+        padding: 0;
+        background-color: rgb(255, 229, 183);
+        color: #000;
+        text-align: left;
+        
+    }
+    .butn{
+        
+        height: 15px; 
+        /*width: 32px;*/
+        padding: 0px;
+        border:none;
+        color: rgb(0, 0, 0);
+        margin-top: 11px;
+        text-align: center;
+        
+    
+    }
+    .modal-content{
+        position: relative;
+        color:rgb(17, 54, 86) ;
+        width: 800px;
+        height: 800px;
+        border-radius: 10px;
+        margin-top: 50px;
+        margin-left: 30px;
+    }
+    
+    .btn{
+        color: azure;
+        background-color: rgb(13, 63, 92);
+        width: 200px;
+        justify-content: center;
+    }
+
+    td{
+        width: 30px;
+    }
+  
+        
+</style>
+<div class="container-fluid" >
+    <div class="main-panel" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <div class="content-wrapper" >
+            <div class="row d-flex" style="background-color:  rgb(124, 186, 224);color:rgb(0, 0, 0);width: 100%;margin: auto;">
+                <div class="col" style="font-weight:600 ;text-transform:capitalize;">Accounting Voucher Creation</div>
+                <div class="col-4" style="font-weight:600 ;text-transform:capitalize;">{{company.name}}</div>
+          
+                <div class= 'col-2'><a href="javascript:history.go(-1);">
+                    <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
+                </div>                      
+            </div>
+            <form action="create_contra_voucher" id="frmvouch" method="POST" >
+                {% csrf_token %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm border-dark" style="background-color: rgb(245, 240, 230);color:rgb(0, 0, 0);">
+                  <tr  class="p-2">
+                    <th colspan="18" style="border-bottom: solid 0.5px rgba(205, 196, 196, 0.2) ; border-right:none ;">
+                      <div>
+                      <label style="font-weight:600 ;text-transform:capitalize; font-size: 18px;background-color: rgb(17, 54, 86);" 
+                        name = 'vouchtype' value = '{{name}}'>&nbsp;&nbsp;&nbsp;&nbsp;{{name}}&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <input type="hidden" value="{{name}}" name="type">
+                        <label style="font-weight: 400; color: #000;">No.</label>&nbsp;&nbsp;
+
+                        {% if vouch.voucherNumber == 'Automatic' %}
+                        <label style="font-weight: 400; color: #000;" name = 'idlbl'>{{v}}</label>
+                        <input type="hidden" value="{{v}}" name="idlbl">
+                        {% elif vouch.voucherNumber == 'Manual'%}
+                        <input type="number" id = 'vouchNum' style="background-color: rgb(255, 229, 183);height: 20px;" name = 'idlbl'>
+                        {% elif vouch.voucherNumber == 'None' %}
+                        <input type="hidden" value="" name="idlbl">
+                        <label name = 'idlbl'></label>
+                        {% elif vouch.voucherNumber == 'Automatic(Manual Override)' %}
+                        <input type="number" id = 'vouchNum' style="background-color: rgb(255, 229, 183);height: 20px;">
+                        {% endif %}
+
+                      </div>
+
+                      <div  class= "account" style="color: #000;font-weight:500 ;text-transform:capitalize; font-size: 18px;">
+                        <span class = 'input-group'>
+                            <label>&nbsp;&nbsp;Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</label>
+                            <a href="" data-dismiss="modal" data-target="#sl_acc" data-toggle="modal"><input type="text" class="txt" name="acc"  id="payacc" ></a><br><br>
+                            
+                           
+                        </span>
+                    <span class="input-group">
+                    <label>&nbsp;&nbsp;Current Balance :&nbsp;&nbsp;</label>
+                    <label id ='curbalance'></label>
+                   
+                    </span>
+                </div>
+                
+                </th>
+                    <th colspan="10" class="text-right mt-0" style="border-bottom: solid 0.5px rgba(255, 255, 255, .2);
+                            border-left:none ; color: #000;">                           
+                      
+                      <div >{{date1 | date:'d-M-Y'}}</div>
+                      <input type="hidden" name = 'date1' value="{{date1|date:'Y-m-d'}}">
+                      <div>{{date1 | date:'l'}}</div>
+                </th>
+
+                  </tr>
+
+                    <tbody style="border-color: rgb(112, 111, 111); " class = 'part'>
+                        <div>
+                        <tr>
+                            <th colspan="18" class="text-dark" style="border: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Particulars</th>
+                            <th colspan="2" class="text-right text-dark" style=" font: weight 8px;size: 15px; border: none;">Amount&nbsp;</th>
+                        </tr></div>
+
+                        <!--<div class = 'part'>-->
+                            <tr style="border: none;">
+                             
+                                <td colspan="18" style="border: none;" class="mt-4">
+
+                                      
+                                        <a href="" data-dismiss="modal" data-target="#sl_acc1" data-toggle="modal"><input type="text" class="txt" name="acc1"  id="payacc1" ></a><br><br>
+                                        <label class = 'blnc1' style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label>
+                                        <label class = 'blnc1' id="blnc1" class="p-0 mt-0" style="color: #000;"></label>
+                                        <label id ='onacc1' class="onacc" name = 'onacc' style="color: #000; margin-left: 25px;"></label>
+                                </td>
+                                <td colspan="2" class="text-right mt-0" style="border: none; ">
+                                    <input type="number" class = 'txt amnt' id= 'amnt1' name = 'amnt' oninput='calculateTotal();' onchange='showTransaction();'>
+                                    <button type="button" class="butn" id = 'butn1'  onclick="createRow()">
+                                        <i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button>
+                                </td>
+                            </tr>
+                            
+                    </tbody>
+                    <tfoot >
+                        {% if vouch.voucherNarration == 'Yes' %}
+                      <td colspan="18" style="border: none; ">
+                       
+                        <label class="text-dark">Narration : </label>
+                            <textarea name  = 'narrate' style="height: 30px; width:250px; background-color: rgb(255, 229, 183); color: #000;"></textarea></td>
+                        {% else %}
+                        <td colspan="18" style="border: none;" name  = 'narrate'></td> 
+                        {% endif %}    
+                      <td colspan="2" class="text-right" style="border: none; " >
+                        <label class="text-dark text-right" >Total : </label>
+                        <input type="number" class="txt " id ='total' name="total" readonly style="width: 175px;">
+                    </td>
+                    </tfoot>
+                </table>
+                
+              </div>
+             
+              <div class="enter w-100 py-1 mt-0">
+                <button type = 'submit' class="btn  w-30">SAVE</button></div>    
+
+            </form>
+            
+        </div>
+
+        
+         <div class="modal fade" id="sl_acc">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="background-color: #213b52; color:azure;">
+                    <div class="modal-header">
+                        <h3 class="m-3">List Of Ledger Account</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                            
+                    
+                    <div class="modal-body">
+                        
+                            {% csrf_token %}                    
+
+                                        <a href="{% url 'ledgers' %}" style="color: white;"><h3 style="text-align:right">Create</h4></a>
+                                        <ul>
+                                
+                                            {% for p in ledg %}
+                                            <li i><a onclick="addsl('{{p.name}}','{{p.id}}')" data-dismiss="modal" aria-label="Close"><p  class="name" value="{{p.name}}"  id="sl-name{{forloop.counter}}" name="sl-name">
+                                                {{p.name}}
+                                            </p></a>
+                                            {% endfor %}</li>
+                                        </ul>
+                                    
+                                    </div>
+                                    
+                                </div>
+                                <hr>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="modal fade" id="sl_acc1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="background-color: #213b52; color:azure;">
+                    <div class="modal-header">
+                        <h3 class="m-3">List Of Ledger Account</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                            
+                    
+                    <div class="modal-body">
+                        
+                            {% csrf_token %}                    
+
+                                        <a href="{% url 'ledgers' %}" style="color: white;"><h3 style="text-align:right">Create</h4></a>
+                                        <ul>
+                                
+                                            {% for p in ledg %}
+                                            <li i><a onclick="addsm('{{p.name}}','{{p.id}}')" data-dismiss="modal" aria-label="Close"><p  class="name" value="{{p.name}}"  id="sl-name{{forloop.counter}}" name="sl-name">
+                                                {{p.name}}
+                                            </p></a>
+                                            {% endfor %}</li>
+                                        </ul>
+                                    
+                                    </div>
+                                    
+                                </div>
+                                <hr>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    <!--popup form -->
+       <div class="form-popup popup1 p-0 m-0 " id="trs_type" style="background-color: #213b52; border-radius: 2px;" >
+        <div class="row d-flex" style="background-color:  rgb(17, 169, 240);color:rgb(0, 0, 0);width: 100%;margin: auto;">
+            <div class="col-10" style="font-weight:600 ;text-transform:capitalize;">Transaction Types</div>
+            <div class= 'col'>
+                <span class="pull-right clickable" data-effect="fadeOut" onclick="closeForm()"><i class="fa fa-times"></i></span></a>
+            </div>                      
+        </div>
+
+        <form class="form-container1">
+
+            <div class="col-sm-6 p-3">
+                <ul id = 'trlist'>
+                    <li class="btns_prnt" id = "opts"  data-target="#others" data-toggle="modal"> ATM</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#others" data-toggle="modal">Card</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#cheque" data-toggle="modal">Cheque</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#others" data-toggle="modal">ECS</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#efund" data-toggle="modal">e-Fund Transfer</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#others" data-toggle="modal">Electronic Cheque</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#others" data-toggle="modal">Electronic DD/PO</li>
+                    <li class="btns_prnt" id = "opts"  data-target="#others" data-toggle="modal">Others</li> 
+                </ul>                       
+            </div>
+        </form> 
+    </div> 
+
+    <!--end of popup form1-->
+    <!--popup form -->
+    <div class="form-popup popup1 p-0 m-0 " id="trs_type1" style="background-color: #213b52; border-radius: 2px;" >
+        <div class="row d-flex" style="background-color:  rgb(17, 169, 240);color:rgb(0, 0, 0);width: 100%;margin: auto;">
+            <div class="col-10" style="font-weight:600 ;text-transform:capitalize;">Transaction Types</div>
+            <div class= 'col'>
+                <span class="pull-right clickable" data-effect="fadeOut" onclick="closeForm1()"><i class="fa fa-times"></i></span></a>
+            </div>                      
+        </div>
+
+        <form class="form-container1">
+
+            <div class="col-sm-6 p-3">
+                <ul id = 'trlist1'>
+                    <li class="btns_prnt" id = "opts"  data-target="#cash" data-toggle="modal">CASH</li>
+                </ul>                  
+            </div>
+        </form> 
+    </div> 
+
+    <!--end of popup form1-->
+
+    <!-- Modal others -->
+    <div class="modal fade" id="others">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background-color: #213b52; color:azure;">
+                <div class="modal-header">
+                    <div class="row container m-0 p-2">
+                        <div class="col-10 text-align-center">
+                        
+                            <label>Bank Allocation for &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id ='othacc' name = 'bacc' class="font-weight-bold font-italic"></label><br>
+                            <label>For  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id = 'tramt'></label>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="close align-items-end" data-dismiss="modal" >&times;</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <form class=" 100vw" id = 'modalForm' action="" method='post' >
+
+                        {% csrf_token %}
+                            <div class="row container m-0 p-2">
+                                <div class="col-7 ">
+                                    <h4 class="font-weight-bold">Transaction Type</h4>
+                                    
+                                </div>
+                                <div class="col-3">
+                                    <h4 class="text-align-end font-weight-bold">Amount</h4>
+                                
+                                </div>
+                                
+                            </div>
+                            <hr>
+                            <div class="row container m-0 p-2">
+                                <div class="col-7">
+                                    <label id = 't_type' name = 't_type' class="font-italic"></label> 
+                                </div>
+                                <div class="col-3">
+                                    <label id = 'amount' name = "amount"></label>
+                                
+                                </div>
+                                
+                            </div>
+                            <hr>
+                            <div class="row container m-0 p-4">
+                                <div class="col-5 form-group">
+                                    <label>Inst No.</label>
+                                    <input type="text" class="form-control" id = 'instnum' name = 'instnum' style="width: 250px;height: 25px;">
+                                    
+                                </div>
+                        
+                                <div class="col-5 form-group">
+                                    <label>Inst Date</label>
+                                    <input type="date" id = 'instdate' class="form-control" name = 'instdate' style="width: 250px;height: 25px;">
+                                    
+                                </div>
+                                
+                            </div>
+            
+                            <button type="submit" class="btn btn-block text-uppercase text-shadow" data-dismiss="modal" style="margin-left: 300px;" id = 'modalSave'>SAVE</button>
+ 
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <!-- Modal cheque -->
+    <div class="modal fade" id="cheque">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background-color: #213b52; color:azure;">
+                <div class="modal-header">
+                    <div class="row container m-0 p-2">
+                        <div class="col-10 text-align-center">
+                        
+                            <label>Bank Allocation for &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id ='chacc' name = 'bacc' class="font-weight-bold text-emphasis font-italic"></label><br>
+                            <label>For  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id = 'chamt'></label>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="close align-items-end" data-dismiss="modal" >&times;</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <form class=" 100vw" id = 'modalForm' action="" method='post' >
+
+                        {% csrf_token %}                    
+                                <div class="row container m-0 p-2">
+                                <div class="col-7">
+                                    <h4>Transaction Type</h4>
+
+                                    
+                                </div>
+                                <div class="col-3">
+                                    <h4 class="text-align-end">Amount</h4>
+                                
+                                </div>
+                                
+                            </div>
+                            <hr>
+                            <div class="row container m-0 p-0">
+                                <div class="col-7" >
+                                    <label id = 't_type' name = 't_type'><em>Cheque</em></label>
+
+                                    
+                                </div>
+                                <div class="col-3">
+                                    <label id = 'chamnt' name = "amount"></label>
+                                
+                                </div>
+                                
+                            </div>
+                            <hr>
+ 
+                            
+                            <div class="row container m-0 p-3">
+                                <div class="col-5">
+                                    <label >Cheque Range:</label>
+                                    <label id = 'chrange'></label>
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="row container m-0 p-0">
+                                <div class="col-5">
+                                    <label>Inst No.</label><br>
+                                    <label id = 'chnum' ></label>
+
+                                </div>
+                        
+                                <div class="col-5 form-group" >
+                                    <label>Inst Date</label>
+                                    <input type="date" id = 'chdate' class="form-control" name="instdate" style="width: 250px;height: 25px;" >
+                                    
+                                </div>
+                                
+                            </div>
+    
+                            <button type="submit" class="btn btn-block text-uppercase text-shadow" data-dismiss="modal" style="margin-left: 300px;" id = 'modalSave'>SAVE</button>
+ 
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal efund -->
+    <div class="modal fade" id="efund">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background-color: #213b52; color:azure;">
+                <div class="modal-header">
+                    <div class="row container m-0 p-2">
+                        <div class="col-10 text-align-center">
+                        
+                            <label>Bank Allocation for &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id ='efacc' name = 'bacc' class="font-weight-bold text-emphasis font-italic"></label><br>
+                            <label>For  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id = 'efamt'></label>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="close align-items-end" data-dismiss="modal" >&times;</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <form class=" 100vw" id = 'modalForm' action="" method='post' >
+
+                        {% csrf_token %}    
+                        <div class="row container m-0 p-0">
+                            <div class="col-7">
+                                <h4>Transaction Type</h4>
+                                
+                            </div>
+                            <div class="col-3">
+                                <h4 class="text-align-end">Amount</h4>
+                            
+                            </div>
+                            
+                        </div>
+                        <hr>
+                        <div class="row container m-0 p-0">
+                            <div class="col-7">
+                                <label id="t_type" name = 't_type'><em>e-Fund Transfer</em></label>
+
+                                
+                            </div>
+                            <div class="col-3">
+                                <label id = 'efamnt' name = "amount"></label>
+                            
+                            </div>
+                            
+                        </div>
+                         <hr>   
+                        <div class="row container m-0 p-2"></div>
+
+                        <div class="row container m-0 p-0 justify-content-right">
+                            <div class="col-5 form-group">
+                                <label >A/c No.:</label>
+                                <input type="text" id = 'efaccnum' class="form-control"  style="width: 250px; height: 25px;">
+                                
+                            </div>
+                            
+                            <div class="col-5 form-group">
+                                <label >IFS Code:</label>
+                                <input type="text" id = 'efifs' class="form-control"  style="width: 250px; height: 25px;">
+                                
+                            </div>
+                        </div>
+                        <div class="row container m-0 p-0">
+                            <div class="col-5 form-group">
+                                <label >Bank Name:</label>
+                                <input type="text" id = 'efbank' class="form-control" style="width: 250px;height: 25px; ">
+                                
+                            </div>
+                        
+                        </div>
+                        <div class="row container m-0 p-0">
+                            <div class="col-5 form-group">
+                                <label>Inst No.</label>
+                                <input type="text" id = 'efnum' class="form-control" name="instnum" style="width: 250px; height: 25px;">  
+                            </div>
+                    
+                            <div class="col-5 form-group">
+                                <label>Inst Date</label>
+                                <input type="date" id = 'efdate' class="form-control" name="instdate" style="width: 250px;height: 25px;">
+                            </div>
+                            
+                        </div>
+                        <button type="submit" class="btn btn-block text-uppercase text-shadow" data-dismiss="modal" style="margin-left: 300px;" id = 'modalSave'>SAVE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!------------modal end------------->     
+     <!-- Modal cash -->
+     <div class="modal fade" id="cash">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background-color: #213b52; color:azure;">
+                <div class="modal-header">
+                    <div class="row container m-0 p-2">
+                        <div class="col-10 text-align-center">
+                        
+                            <label>Bank Allocation for &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id ='csacc' name = 'bacc' class="font-weight-bold text-emphasis font-italic"></label><br>
+                            <label>For  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <label id = 'csamt'></label>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="close align-items-end" data-dismiss="modal" >&times;</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <form class=" 100vw" id = 'modalForm' action="" method='post' >
+
+                        {% csrf_token %}    
+                        <div class="row container m-0 p-0">
+                            <div class="col-7">
+                                <h4>Transaction Type</h4>
+
+                                
+                            </div>
+                            <div class="col-3">
+                                <h4 class="text-align-end">Amount</h4>
+                            
+                            </div>
+                            
+                        </div>
+                        <hr>
+                        <div class="row container m-0 p-0">
+                            <div class="col-7">
+                                <label id="t_type" name = 't_type'><em>cash</em></label>
+
+                                
+                            </div>
+                            <div class="col-3">
+                                <label id = 'csamnt' name = "amount"></label>
+                            </div>
+                            
+                        </div>
+                         <hr>   
+                        <div class="row container m-0 p-2"></div>
+
+                        <div class="row container m-0 p-0 justify-content-center">
+                            <div class="col-5 form-group">
+                                <label >Denomination</label><br>
+                            </div>
+                            <div class="row col-8  p-0 ">
+                            <table class="table-bordered" style="max-width: 400px;">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-8">Denominations</td>
+                                        <td >Amount</td> 
+                                      </tr>
+                                  <tr>
+                                    <td>2000X&nbsp;&nbsp;<input id="i1" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a1" type="number" name=""></label></td>
+                                   
+                                  </tr>
+                                  <tr>
+                                    <td>500X&nbsp;&nbsp;&nbsp;&nbsp;<input id="i2" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a2" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>200X&nbsp;&nbsp;&nbsp;&nbsp;<input id="i3" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a3" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>100X&nbsp;&nbsp;&nbsp;&nbsp;<input id="i4" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a4" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>50X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="i5" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a5" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>20X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="i6" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a6" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>10X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="i7" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a7" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>5X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="i8" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a8" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>2X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="i9" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a9" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>1X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="i10" type="number" name="i1" style="color: #000;"></td>
+                                    <td><label id="a10" type="number" name=""></label></td>  
+                                  </tr>
+                                  <tr>
+                                    <td>Total</td>
+                                    <td><label id="a11" type="number" name=""></label></td>  
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>  
+                        </div>
+                        
+                        </div>
+                        <div class="row container m-0 p-0">
+                            <div class="col-5 form-group">
+                                <label>Inst No.</label>
+                                <input type="text" id = 'instnum1' class="form-control" name="instnum" style="width: 250px; height: 25px;">
+                                
+                            </div>
+                    
+                            <div class="col-5 form-group">
+                                <label>Inst Date</label>
+                                <input type="date" id = 'instdate1' class="form-control" name="instdate" style="width: 250px;height: 25px;">
+                                
+                            </div>
+                            
+                        </div>
+                        <button type="submit" class="btn btn-block text-uppercase text-shadow" data-dismiss="modal" style="margin-left: 300px;" id = 'modalSave'>SAVE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+       
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" ></script>   
+<script>
+
+
+/*-----------------------set current balance-----------*/
+function addsl(name,id){
+    
+    document.getElementById('payacc').value= name;
+    $.ajax({
+        url: '{% url "cur_balance" %}',
+        data: {
+                'id': id
+        },
+        
+        success: function (data) {
+            if(data[0].current_blnc_type == 'Dr'){       
+            curData = '<input id ="led" class= "txt" readonly value = '+data[0].current_blnc +'> <input id ="ledt" class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+            else{
+            curData = '<input id ="led" class= "txt" readonly value = '+ data[0].current_blnc +' style="color: red;"> <input id ="ledt" style="color: red;"  class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+
+            $("#curbalance").html(curData);
+            // console.log(data);
+        }
+        
+    });
+
+}
+function addsm(name,id){
+    const id1 = $(this).attr("id")
+    document.getElementById('payacc'+id1).value= name;
+    
+    $.ajax({
+        url: '{% url "cur_balance" %}',
+        data: {
+                'id': id
+        },
+        
+        success: function (data) {
+            
+            if(data[0].current_blnc_type == 'Dr'){       
+            curData1 = '<input id ="pled" class= "txt" readon value = '+ data[0].current_blnc +'> <input id ="pledt" class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+            else{
+            curData1 = '<input id ="pled" class= "txt" readonly value = '+ data[0].current_blnc +' style="color: red;"> <input id ="pledt" style="color: red;"  class= "txt" readonly value = '+data[0].current_blnc_type+'>';}
+           
+            $("#blnc"+id1).html(curData1);
+        }
+        
+    });
+
+}
+
+
+
+
+    
+    
+// }
+/*----------------------end of set current balance-----------*/
+
+
+/*----------------- create new row----&---change current balance while entering amount------*/
+var id = 1
+function createRow(){
+
+    const name = ($('#payacc').val());
+    const curblnc = $('#led').val();
+    const curblnct = $('#ledt').val();
+    var amount1= $('#amnt'+id).val();
+    // console.log(ac)
+    $.ajax({
+            url: '{% url "contra_cur_balance_change" %}',
+            data: {
+                    'curblnc': curblnc,
+                    'amount' : amount1,
+                    'curblnct': curblnct,
+                    'name' : name,
+            },
+            
+            success: function (data) {
+                // console.log(data)
+                
+                $("#curbalance").html(data);
+                // console.log(cur_change);
+            }
+            
+        });
+              
+    const pac = $('#payacc'+id).val();
+    const curblnc1 = ($('#pled').val()).split(" ")[0];
+    const curblnct1 = $('#pledt').val();
+  
+    
+    
+    
+    $.ajax({
+        url: '{% url "ccur_balance_change" %}',
+        data: {
+                'curblnc': curblnc1,
+                'amount' : amount1,
+                'curblnct': curblnct1,
+                'pac' : pac,
+        },
+        success: function (data) {
+            $("#blnc"+(id-1)).html(data);
+            
+        }
+    
+    });
+        
+
+   
+    id++;
+    $(".part").append('<tr style="border: none;"><td colspan="18" style="border: none;" class="mt-4"><a href="" data-dismiss="modal" data-target="#sl_acc1" data-toggle="modal"><input type="text" class="txt" name="acc1"  id="payacc'+id+'" ></a><br><br><br><label class = "blnc1" style="color: #000;" >&nbsp;&nbsp;Cur Bal:&nbsp;&nbsp;</label><label class = "blnc1" id="blnc'+id+'" class="p-0 mt-0" style="color: #000;"></label><label id ="onacc'+id+'" class="onacc" name = "onacc" style="color: #000; margin-left: 25px;"></label></td><td colspan="2" class="text-right mt-0" style="border: none; "><input type="number" class = "txt amnt" id= "amnt'+id+'" name = "amnt" oninput="calculateTotal();" onchange="showTransaction();"><button type="button" class="butn" id = "butn'+id+'"  onclick="createRow()"><i class="bi bi-plus-square-fill" style="font-size: 20px;"></i></button></td></tr>');
+    
+}
+
+/*---------------end of create new row-------------*/
+
+/*--------- Total----------*/
+
+function calculateTotal() {
+    var sum = 0 ;
+    var count = $('.amnt').length
+    
+  for(var i = 1; i <= count; i++) {
+    var value1 = document.getElementById("amnt" + i);
+    if(isNaN(value1.value) == false){
+        sum += parseInt(value1.value) ;
+    }
+    //console.log(value1);
+  }
+  $('#total').val(sum);
+  
+}
+
+/************** close pop up form*****************/
+
+function closeForm() {
+
+    document.getElementById("trs_type").style.display = "none";
+
+}
+function closeForm1() {
+
+document.getElementById("trs_type1").style.display = "none";
+
+}
+
+/*****************show popup form****************/
+function showTransaction(){   
+    var val_name = $('#payacc').val();
+    const id1 = $(this).attr("id")
+    const parname =$('#payacc'+id1).val();
+    
+    
+    $.ajax({
+        url: '{% url "under_" %}',
+        data: {
+                'parname': parname
+        },
+       
+        success: function (data) {
+            val_under=data[0].under
+            
+            if (val_under == "Bank_Accounts"){
+              
+        
+                document.getElementById('trs_type').style.display= "block";
+                
+                var count = $('.amnt').length
+            
+                for(var i = 1; i <= count; i++) {
+
+                    value1 = document.getElementById("amnt" + i).value;
+
+                    document.getElementById('onacc'+i).innerHTML = "On Account";
+                    document.getElementById('onacc'+i).style.display = "block";
+                    
+                }
+                    
+            }
+            else if(val_under=="Cash_in_Hand"){
+                document.getElementById("trs_type1").style.display = "block";
+                var count = $('.amnt').length
+            
+            for(var i = 1; i <= count; i++) {
+
+                value1 = document.getElementById("amnt" + i).value;
+
+                document.getElementById('onacc'+i).innerHTML = "On Account";
+                document.getElementById('onacc'+i).style.display = "block";
+                
+            }
+            }
+            else{
+                document.getElementById("trs_type").style.display = "hide";
+                
+            }
+             /*-----others----*/
+    $("#othacc").html(val_name);
+    $("#tramt").html(value1);
+    $("#amount").html(value1);
+    /*-----cheque----*/
+    $("#chacc").html(val_name);
+    $("#chamt").html(value1);
+    $("#chamnt").html(value1);
+    /*-----efund----*/
+    $("#efacc").html(val_name);
+    $("#efamt").html(value1);
+    $("#efamnt").html(value1);
+ /*-----cash----*/
+    $("#csacc").html(val_name);
+    $("#csamt").html(value1);
+    $("#csamnt").html(value1);
+    
+    $("#trlist").click(function(e){
+        trvalue= e.target.innerHTML;
+        $("#t_type").html(trvalue);
+        //console.log(trvalue);
+    });
+    $("#trlist1").click(function(e){
+        trvalue= e.target.innerHTML;
+        $("#t_type").html(trvalue);
+        
+    });
+                    
+        }
+        
+    });
+    
+
+    
+   
+   
+    
+    /*---------------------cheque range display--&---show cheque number automatically-------------------------*/
+    $.ajax({
+        
+        url: '{% url "cheque_range" %}',
+        data: {
+                'account_name' : $("#chacc").text(),
+                //csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function (data) {
+            // console.log(data)
+            if(data[0] != 0){
+                chrange = '<label>&nbsp;&nbsp;&nbsp;&nbsp;'+data[0]+'</label><label>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</label><label>'+ data[1]+'</label>'
+            }
+            else{
+                chrange = '&nbsp;&nbsp;&nbsp;&nbsp; Not Applicable'
+            }
+            $('#chrange').html(chrange);
+            if(data[0] != 0){
+                if(data[2] != 0){
+                cqnumber = '<input type="text" id = "chnumber" class="form-control" name = "instnum" value = "' + data[2]+'" style="width: 250px;height: 25px;">'
+                }
+                else{
+                    cqnumber = '<input type="text" id = "chnumber" class="form-control" name = "instnum" value = "Cheque Range Exceeded" style="width: 250px;height: 25px;">'
+
+                }
+            }
+            else{
+                cqnumber = '<input type="text" id = "chnumber" class="form-control" name = "instnum"  style="width: 250px;height: 25px;">'
+            }
+
+            $('#chnum').html(cqnumber);
+        }
+    });
+
+}
+
+/*----------------------save modal data to the table--------*/
+ /*----others transactions type ----*/
+
+
+  $(document).on("click","#modalSave",function(){
+
+    document.getElementById("trs_type").style.display = "none";
+    document.getElementById("trs_type1").style.display = "none";// close pop up form
+    
+
+
+    //console.log($('#t_type').text());
+
+    
+
+    if ($("#t_type").text() === 'Cheque'){
+
+        $.ajax({
+                    type : 'POST',
+                    url:"{% url 'bank_transcation' %}",
+                
+                    data:{
+                        bacc : $("#chacc").text(),
+                        t_type : $("#t_type").text(),
+                        instnum:$("#chnumber").val(),
+                        instdate :$("#chdate").val(),
+                        efaccnum :$("#efaccnum").val(),
+                        efifs :$("#efifs").val(),
+                        efbank : $("#efbank").val(),
+                        amount :$("#chamnt").text(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                        
+                    },
+                    
+                    success: function(response) {
+
+                        if(response.message === 'success'){
+                            $('#modalForm')[0].reset();
+                        
+                        }
+                        
+                    },
+                    
+                });
+    }
+    else if($("#t_type").text() === 'e-Fund Transfer'){
+        
+
+        $.ajax({
+                    type : 'POST',
+                    url:"{% url 'bank_transcation' %}",
+                
+                    data:{
+                        bacc : $("#efacc").text(),
+                        t_type : $("#t_type").text(),
+                        instnum:$("#efnum").val(),
+                        instdate :$("#efdate").val(),
+                        efaccnum :$("#efaccnum").val(),
+                        efifs :$("#efifs").val(),
+                        efbank : $("#efbank").val(),
+                        amount :$("#efamnt").text(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                        
+                    },
+                    
+                    success: function(response) {
+                    if(response.message === 'success'){
+                        $('#modalForm')[0].reset();
+                        
+                    }
+                    },
+                    
+                });
+    }
+    else if($("#t_type").text() === 'CASH'){  
+        console.log($("#instdate1").val())
+        console.log($("#instnum1").val()) 
+
+        $.ajax({
+                    type : 'POST',
+                    url:"{% url 'bank_transcation' %}",
+                
+                    data:{
+                        bacc : $("#csacc").text(),
+                        t_type : $("#t_type").text(),
+                        instnum:$("#instnum1").val(),
+                        instdate :$("#instdate1").val(),
+                        efaccnum :$("#csaccnum").val(),
+                        efifs :$("#csifs").val(),
+                        efbank : $("#csbank").val(),
+                        amount :$("#amount").text(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                        
+                    },
+                    
+                    success: function(response) {
+                    if(response.message === 'success'){
+                        $('#modalForm')[0].reset();
+                        
+                    }
+                    },
+                    
+                });
+        }
+    else{   
+        
+
+        $.ajax({
+                    type : 'POST',
+                    url:"{% url 'bank_transcation' %}",
+                
+                    data:{
+                        bacc : $("#othacc").text(),
+                        t_type : $("#t_type").text(),
+                        instnum:$("#instnum").val(),
+                        instdate :$("#instdate").val(),
+                        efaccnum :$("#efaccnum").val(),
+                        efifs :$("#efifs").val(),
+                        efbank : $("#efbank").val(),
+                        amount :$("#amount").text(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                        
+                    },
+                    
+                    success: function(response) {
+                    if(response.message === 'success'){
+                        $('#modalForm')[0].reset();
+                        
+                    }
+                    },
+                    
+                });
+        }
+  });
+
+
+  $("#i1").change(function(){
+    a=document.getElementById('i1').value
+    b=a*2000
+    document.getElementById('a1').innerHTML=b
+    TotalAmount();
+});  
+$("#i2").change(function(){
+    a=document.getElementById('i2').value
+    b=a*500
+    document.getElementById('a2').innerHTML=b
+    TotalAmount();
+}); 
+ $("#i3").change(function(){
+    a=document.getElementById('i3').value
+    b=a*200
+    document.getElementById('a3').innerHTML=b
+    TotalAmount();
+});
+  $("#i4").change(function(){
+    a=document.getElementById('i4').value
+    b=a*100
+    document.getElementById('a4').innerHTML=b
+    TotalAmount();
+});
+  $("#i5").change(function(){
+    a=document.getElementById('i5').value
+    b=a*50
+    document.getElementById('a5').innerHTML=b
+    TotalAmount();
+});
+  $("#i6").change(function(){
+    a=document.getElementById('i6').value
+    b=a*20
+    document.getElementById('a6').innerHTML=b
+    TotalAmount();
+});
+  $("#i7").change(function(){
+    a=document.getElementById('i7').value
+    b=a*10
+    document.getElementById('a7').innerHTML=b
+    TotalAmount();
+}); 
+ $("#i8").change(function(){
+    a=document.getElementById('i8').value
+    b=a*5
+    document.getElementById('a8').innerHTML=b
+    TotalAmount();
+}); 
+ $("#i9").change(function(){
+    a=document.getElementById('i9').value
+    b=a*2
+    document.getElementById('a9').innerHTML=b
+    TotalAmount();
+}); 
+$("#i10").change(function(){
+    a=document.getElementById('i10').value
+    b=a*1
+    document.getElementById('a10').innerHTML=b
+    TotalAmount();
+}); 
+
+function TotalAmount(){
+    var sum=0
+    for(var i = 1; i <= 10; i++) {
+
+value1 = document.getElementById("a" + i).innerHTML;
+value1=Number(value1)
+sum=sum+value1;
+}
+document.getElementById("a11").innerHTML=sum
+}
+</script>
+
+{% endblock %}

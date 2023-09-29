@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+  .a{
+    text-align: center;
+    
+   
+   }
+  .btns_prnt{
+      width: 100%;
+      text-align: end;
+      background-color: rgba(240, 248, 255, 0);
+      border: none;
+      /* padding: 6px; */
+
+  }
+  .btns_prnt:hover{
+      background-color:orange;
+      color: rgb(15, 14, 14);
+  }
+
+</style>   
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<center></center><h5 class="text-capitalize" style="text-align:center;"></h5></center>   
+<a href="javascript:;" class="has-arrow">
+  <div class="row container-fluid p-8 mx-0">
+          <div class="col-sm-12 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+        <div  class="bg-info text-light">Group Summary</div>
+<div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);"></div>
+    <table class="table-bordered" width="100%">
+      <thead class="thead-dark"> 
+        <tr>
+                  
+          <th rowspan="6" colspan="2" class="a"><br/>Particulars 
+        
+          <th colspan="7" class="a">Current Liabilities<br/>{{company.name}}<BR>{% for m in msg1 %}
+            {{m}}
+            {% endfor %}</th>
+            <tr><td  colspan="7" class="a"><br/>ClosingBalance</td>
+              <tr><td colspan="3" class="a"  >credit</td><td  class="a" >Dedit</td></tr>
+           </th>     
+        </tr>   
+           
+      </thead>
+      <tbody>
+        {% for i in gnam %} 
+        
+           <tr>
+            <td  colspan="2"><a href="{% url 'ledgersummary1'  %}" class="btns_prnt">{{i.group_name}} </a></td>
+            {% endfor %}  
+            <td  colspan="4" class="a" ></td>
+              
+            <td  colspan="4" class="a"></td>
+           </tr>
+           <tr>
+            <td colspan="2" >Grand Total</td>
+            <td colspan="3" class='a' >{{s}}</td>
+            <td colspan="3" class='a'></td>
+        </tr>
+               
+        </tbody>
+       
+       <!-- <div class="row container-fluid m-0 w-100 p-0">
+        <table class="table p-0 m-0">
+            <tbody>
+                 <tr>
+                    <td colspan="2" >Grand Total</td>
+                    <td colspan="2" class="a" >{{total1}}&nbsp</td>
+                </tr> 
+            </tbody>
+        </table>   
+    </table>
+    </div> -->
+  </div>
+
+{% endblock %}

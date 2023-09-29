@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<head>
+    <style>
+        
+        thead th {
+                    border: .5px solid rgba(180, 150, 150, 0.3); ;
+                }
+
+        .table-row{
+                    cursor:pointer;
+                }
+        .table-row:hover{
+                    background-color: rgb(216, 155, 51);
+                }
+        tr{
+            background-color: rgba(33,57,77); 
+            color:#fff;
+        }
+ 
+        .btn{
+                    background-color: rgb(41, 51, 51);
+                    border: 1px,solid,cornflowerblue;
+                    width: 292px;
+                    margin-left: 12px;
+            }
+
+        
+    </style>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- <script src="jquery-3.6.0.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(71, 79, 84);color:#fff;width:100%;margin: auto;">
+
+                    <div class="col-5"> Group Summary</div>
+                    <div class="col-5" style="font-weight:900 ;text-transform:capitalize;">{{company.name}}</div>
+
+                    
+                    <div class= 'col-2'><a href="javascript:history.go(-1);">
+                        <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times"></i></span></a>
+                    </div>
+                   
+                </div>
+                
+                <div class="table-responsive">
+                    <table  class="table" >
+                        <thead>
+                        <tr>
+                          <th rowspan="3" colspan="2"   class="align-middle text-white "> 
+                            <h6 class="d-flex  p-1 py-1" style="margin-left: 20px;">Particulars</h6></th>
+                          
+                          <th colspan="2" class="text-center text-white"><h5><i>{{ group.group_name}}</i></h5>
+                            <h5 style="text-transform:capitalize;">{{company.name}}</h5>For {{company.fin_begin}}</th>
+                        </tr>
+                        <tr>
+                          <th colspan="2" class="text-center text-white">Closing Balance</th>
+                        </tr>
+                        <tr>
+                          <th class="col-3 text-center text-white">Debit</th>
+                          <th class="col-3 text-center text-white">Credit</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody >
+                        {% for led in ledger %}
+                        
+                        <tr class="table-row " id = 'table'>                           
+                             
+                            <td colspan="2" class="fields"><a href="{% url 'ledgermonthly' led.id %}">{{led.name}}</a></td>
+                            
+                            {% if voucher is not None %}
+                            {% if led.type_of_ledger == 'Dr'%}
+                                {% if deb > credit %}
+                                    <td class=" text-center" id = 'dr'></td>
+                                    <td class=" text-center" id = 'cr' ><b>{{led.c_balance}}</b></td>
+                                {% else %}
+                                    <td class=" text-center" id = 'dr'><b>{{led.c_balance}}</b></td>
+                                    <td class=" text-center" id = 'cr'></td>
+                                {% endif %}
+                                
+                            {% else %}
+                           
+                                {% if cred > debit %}
+                                    <td class=" text-center" id = 'dr'><b>{{led.c_balance}}</b></td>
+                                    <td class=" text-center" id = 'cr'></td>
+                                {% else %}
+                                    <td class=" text-center" id = 'dr'><b></b></td>
+                                    <td class=" text-center" id = 'cr'><b>{{led.c_balance}}</b></td>
+                                {% endif %}
+                            {% endif %}
+
+                            {% else %}
+
+                            {% if led.type_of_ledger == 'Dr'%}
+                            <td class=" text-center" id = 'dr'><b>{{led.c_balance}}</b></td>
+                            <td class=" text-center" id = 'cr' ></td>
+                            {% else %}
+                            <td class=" text-center" id = 'dr'></td>
+                            <td class=" text-center" id = 'cr'><b>{{led.c_balance}}</b></td>
+                            {% endif %}
+                            {% endif %}
+                            
+                        </tr>
+                        
+                        {% endfor %}
+
+                        <tr id="grand">
+                            <th colspan="2" ><h6 class="d-flex" style="margin-left: 20px;">Grand Total</h6></th>
+                            
+                            
+                            <th class ='col-3 text-center' id = 'gdr'>{{d}}</th>
+                            <th class = 'col-3 text-center' id = 'gcr'>{{c}}</th>
+
+                        </tr>
+                    </tbody>
+
+                    </table>
+                   
+                </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+
+    
+<!-- 
+    <table class="table1 col" style="text-align: right; margin-top: 10px;" >
+        <thead>
+            <th ><a href="{% url 'quit' %}" role="button"  class="btn" >QUIT</a></th>
+            <th><button type="button"  class="btn" onclick="myFunction()">SELECT</button></th>
+             <th><b  type="button"  class="btn p-1 px-4"  onclick="Delete()" >Delete</button></th> -->
+            <!-- <th><button type="button"  class="btn " onclick="removeSelectedRow()">REMOVE LINE</button></th>
+            <th><a href="{{ request.META.HTTP_REFERER }}" type="button"  class="btn" >RESTORE LINE</a></th>
+        </thead>
+    </table> --> -->
+
+    <!-- <script>
+
+        function myFunction() {
+            var se = document.getElementsByClassName('table-row');
+            se[0].style.backgroundColor = "lightblue";
+                
+        }
+        var index;  
+        function getSelectedRow()
+                {
+            var table = document.getElementById("table");
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                table.rows[i].onclick = function()
+                {
+                    // clear the selected from the previous selected row
+                    // the first time index is undefined
+                    if(typeof index !== "undefined"){
+                        table.rows[index].classList.toggle("selected");
+                    }
+                   
+                    index = this.rowIndex;
+                    this.classList.toggle("selected");
+                    
+
+                };
+            } 
+                
+        }
+
+        getSelectedRow();
+
+        function removeSelectedRow()
+        {
+            table.deleteRow(index);
+            
+        }
+
+    </script>-->
+{% endblock %}
+
+

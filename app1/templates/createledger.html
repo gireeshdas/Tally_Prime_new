@@ -1,0 +1,1695 @@
+
+    {% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                box-sizing: border-box;
+            }
+          
+            .form1{
+                background-color: white;
+                box-shadow: 2px 2px 2px rgba(200,200,200,);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                width:100%;
+                position: absolute;
+            }
+            
+            form{
+            
+                width: 100%;
+                /* display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center; */
+                height:auto;
+                background-color: rgba(0,0,0,0.0);
+            }
+    
+            input,select,textarea{
+               padding: 10px 20px;
+                width: 100%;
+                border: none;
+                background-color: rgba(255, 255, 255, 0.4);
+               
+            }
+            .top input{
+                padding: 10px 20px;
+                width: 90%;
+                border: none;
+                background-color: rgba(255, 255, 255, 0.4);
+    
+            }
+           
+    
+            form div{
+                width: 100%;
+            }
+            button{
+                padding: 6px 30px;
+                border-radius: 10px;
+                border: 4px solid rgb(0, 0, 0,0);
+                color: white;
+                background-color: rgb(103, 175, 220);
+            }
+            button:hover{
+                
+                
+                color: white;
+                background-color: rgb(26, 102, 153);
+            }
+            .top{
+                display: flex; 
+            }
+            .top .left1{
+                width:33.333%;
+               
+                border-bottom: 1px solid rgba(128, 128, 128, 0.6);
+                display: flex;
+                flex-direction: column;
+                
+                padding: 30px;
+                
+    
+            }
+            .top .right1{
+                width: 20%;
+                display: flex;
+                flex-direction: column;
+                align-items:center;
+                background-color: rgba(128, 128, 128, 0.09);
+                
+                padding: 25px;
+                
+                
+            }
+            .left1 div{
+                width: 100%;
+                
+                padding: 3px 0;
+            }
+            
+            .bottom{
+                display: flex;
+            }
+            .bottom .left2{
+                width: 33.333%;
+                padding: 30px;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+               
+            }
+            .bottom .right3{
+                width: 30%;
+                padding: 30px;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                
+            }
+            
+            .bottom .right2{
+                width: 33.333%;
+                padding: 30px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+                
+                
+                
+            }
+            .bottom .center{
+                width: 33.333%;
+                padding: 30px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+                
+                
+                
+            }
+            .left2 div,.right2 div,.center div{
+                width: 100%;
+                padding: 3px 0;
+            }
+            
+    p{
+        font-size: 13px;
+    }
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+        
+    }
+    .close:hover{
+        color: yellow;
+    }
+      #pDetails{
+        display: none;
+
+      }
+      #pDetail{
+        display: none;
+
+      }
+      #odac{
+        display: none;
+
+      }
+      #ass{
+        display: none;
+
+      }
+      #dirx1{
+        display: none;
+
+      }
+      #dirn1{
+        display: none;
+
+      }
+      #dut1{
+        display: none;
+
+      }
+      #sc{
+        display: none;
+
+      }
+      #sd{
+        display: none;
+
+      }
+      #sales1{
+        display: none;
+
+      }
+      
+      
+      
+
+      
+       .show{
+        display: block;
+           }
+           .huh:hover{
+            background-color: orange;
+           }
+           
+            
+           
+            .gst{
+                display: none;
+            }
+            .bo{
+                display: none;
+            }
+            .goo{
+                display: none;
+            }
+            .ser{
+                display: none;
+            }
+           
+            .stdet{
+                display: none;
+            }
+            .appli{
+                display: none;
+            }
+            .notapp{
+                display: none;
+            }
+            .gd{
+                display: none;
+            }
+            .und{
+                display: none;
+            }
+            .inv{
+                display: none;
+            }
+            
+            .stdetn{
+                display: none;
+            }
+            .invc{
+                display: none;
+            }
+            .applii{
+                display: none;
+            }
+            .notappp{
+                display: none;
+            }
+            .undd{
+                display: none;
+            }
+            .gdd{
+                display: none;
+            }
+           
+            .dutt{
+                display: none;
+            }
+            .ctx{
+                display: none;
+            }
+            .rm{
+                display: none;
+            }
+            .rmmm{
+                display: none;
+            }
+            .rrm{
+                display: none;
+            }
+            .gsgt{
+                display: none;
+            }
+            .oth{
+                display: none;
+            }
+            .scy{
+                display: none;
+            }
+            .sdy{
+                display: none;
+            }
+            .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 150px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 190px;
+        overflow-y: auto;
+        
+       
+      
+      }
+        </style>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        
+<div class="row container-fluid p-0 mx-0 "  >
+    <div class="col-sm-2 m-0 p-0"></div>
+    <div class="col-sm-8 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+<!--        <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <h6  class="bg-info text-light p-2">Ledger Creation (secondary)</h6>
+    <div class="container">
+        
+
+<form class="" autocomplete="off" action="{% url 'ledgercreations' %}" method="post" >
+    {% csrf_token %}
+    
+    <div class="top">
+        <div class="left1 form-group">
+        <label >Name</label>
+        <input type="text" class="form-control"  id="sname" name="name" required>
+        <label>Alias</label>
+        <input type="text" class="form-control" name="alias">
+        
+    </div></div>
+
+   
+    
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 p-0" > <label for="Under">Under</label>
+        <div class="col-sm-8  p-0" style="padding-left: 40px;"> 
+        <input type="text" class="custom-select-md form-control"  id="primary-text" onfocus="showList()" 
+          name="under" ></div></div>
+        <div class="col-sm-8 m-0 p-0 form-group" >
+            <fieldset  >
+                <div class="form-popup" id="list-div"  >
+
+                    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Groups</h6>
+                <hr >
+                
+                <div   style="max-height: 400px; color: black; padding: 10px;cursor: pointer;">
+
+                    <section class="under" id="under">
+
+                    <a class="huh" style="color: black; padding-left: 110px;"  href="creategroup" >Create</a>
+                    <hr style="background-color: black;">
+
+                    <div class="huh" onclick="hideList('Bank Account'),showit()"  > Bank Account  </div>
+                    <div class="huh" onclick="hideList('Bank OCC A/c'),showz()" >Bank OCC A/c </div>
+                    <div class="huh" onclick="hideList('Bank OD A/c'),sh3()" >Bank OD A/c</div>
+                            <div class="huh" onclick="hideList('Branch Divisions'),sh10()">Branch Divisions</div>
+                            <div class="huh" onclick="hideList('Capital Amount'),sh10()">Capital Amount</div>
+                            <option class="huh"  onclick="hideList('Cash in Hand'),sh10()">Cash in Hand</option>
+                    <div class="huh" onclick="hideList('Current Assets'),sh4()" >Current Assets</div>
+                            <option class="huh"  onclick="hideList('Current Liabilities'),sh10()">Current Liabilities</option>
+                            <option class="huh"  onclick="hideList('Deposits (Asset)'),sh10()">Deposits (Asset)</option>
+                    <div class="huh" onclick="hideList('Direct Expenses'),sh5()" >Direct Expenses</div>
+                    <div class="huh" onclick="hideList('Direct Incomes'),sh6()">Direct Incomes</div>
+                    <div class="huh"  onclick="hideList('Duties and Taxes'),sh7()">Duties and Taxes</div>
+                           
+                            <option class="huh"  onclick="hideList('Fixed Assets'),sh10()">Fixed Assets</option>
+                            <option class="huh"  onclick="hideList('Income (Direct)'),sh10()">Income (Direct)</option>
+                            <option class="huh"  onclick="hideList('Income (Indirect)'),sh10()">Income (Indirect)</option>
+                            <option class="huh"  onclick="hideList('Investments'),sh10()">Investments</option>
+                            <option class="huh"  onclick="hideList('Loans & Advances (Asset)'),sh10()">Loans & Advances (Asset)</option>
+                            <option class="huh" onclick="hideList('Loans (Liability)'),sh10()">Loans (Liability)</option>
+                            <option class="huh"  onclick="hideList('Misc. Expenses (Asset)'),sh10()">Misc. Expenses (Asset)</option>
+                            <option class="huh"  onclick="hideList('provisions'),sh10()">provisions</option>
+                            <option class="huh"  onclick="hideList('Purchase Accounts'),sh10()">Purchase Accounts</option>
+                            <option class="huh"  onclick="hideList('Reserves & Surplus'),sh10()">Reserves & Surplus</option>
+                            <option class="huh"  onclick="hideList('Retained Earnings'),sh10()">Retained Earnings</option>
+                            <option class="huh"  onclick="hideList('Sales Accounts'),sh11()">Sales Accounts</option>
+                            <option class="huh"  onclick="hideList('Secured Loans'),sh10()">Secured Loans</option>
+                            <option class="huh"  onclick="hideList('Stock-in-Hand'),sh10()">Stock-in-Hand</option>
+                    <div class="huh" onclick="hideList('Sundry Creditors'),sh8()">Sundry Creditors</div>
+                    <div class="huh" onclick="hideList('Sundry Debtors'),sh9()">Sundry Debtors</div>
+                            <option class="huh"  onclick="hideList('Suspence A/c'),sh10()">Suspence A/c</option>
+                            <option class="huh"  onclick="hideList('Unsecured Loans'),sh10()">Unsecured Loans</option> 
+                            
+                            {% for grp in grp %}
+            
+                            <div class="huh" onclick="hideList('{{ grp.group_name }}'),sh10()" style="color: black;" >{{ grp.group_name }}</div>
+                            {% endfor %}
+
+                        </section>
+                       
+                        </div>
+                        
+            
+                </div>
+        </fieldset>
+        
+            
+           
+           
+
+        </div> 
+    </div>
+   
+<div class="bottom ">
+   
+<div class=" right2 " >
+    <div class="" id="pDetails">
+        <div class="form-group">
+        <h4>Bank Account Details</h4>
+        
+        <label for="ac">A/C holders name</label>
+        <input type="text" id="ac" name="ac_holder_nm"  class="form-control">
+        <label>A/c No</label>
+        <input type="number" name="acc_no"  class="form-control">
+        <label>Ifsc code</label>
+        <input type="number" name="ifsc_code" class="form-control">
+        <label>swiftcode</label>
+        <input type="number" name="swift_code" class="form-control">
+        <label>Bank Name</label>
+        <input type="text" name="bank_name" class="form-control">
+        <label>Branch</label>
+        <input type="text" name="branch" class="form-control">
+        <h4 style="margin:20px 0 10px ;">Bank Configuration</h4>
+        <label>Set /Alter range for check Books</label>
+        <select name="SA_cheque_bk" id="" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+      <div> <label>Enable check printing</label></div> 
+      <div>
+        <select name="Echeque_p" id="" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+    </div>
+        
+        
+   
+
+</div></div>
+
+
+
+    <div class="hi" id="pDetail">
+
+        <label style="padding-left: 25px;padding-bottom: 8px;">(Loans(Liability))</label> <br>
+
+        <label >Set OD limit :</label>  
+        <input type="number" name="occ_set_odl" id="set_odl" class="form-control"> 
+        <h4>Bank Account Details</h4>
+        <label>A/C holders name</label>
+        <input type="text" name="occ_ac_holder_nm" class="form-control">
+        <label>A/c No</label>
+        <input type="number" name="occ_acc_no"  class="form-control">
+        <label>Ifsc code</label>
+        <input type="number" name="occ_ifsc_code" class="form-control">
+        <label>swiftcode</label>
+        <input type="number" name="occ_swift_code" class="form-control">
+        <label>Bank Name</label>
+        <input type="text" name="occ_bank_name" class="form-control">
+        <label>Branch</label>
+        <input type="text" name="occ_branch" class="form-control">
+        <h4 style="margin:20px 0 10px ;">Bank Configuration</h4>
+        <label>Set /Alter range for check Books</label>
+        <select name="occ_SA_cheque_bk" id="" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+        <label>Enable check printing</label>
+        <select name="occ_Echeque_p" id="" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+    </div>
+
+
+
+
+    <div class="od" id="odac">
+
+        <label style="padding-left: 25px;padding-bottom: 8px;">(Loans(Liability))</label> <br>
+        <label >Set OD limit :</label>  
+        <input type="number" name="od_set_odl" class="form-control"> 
+        <h4>Bank Account Details</h4>
+        <label>A/C holders name</label>
+        <input type="text" name="od_ac_holder_nm" class="form-control">
+        <label>A/c No</label>
+        <input type="number" name="od_acc_no"  class="form-control">
+        <label>Ifsc code</label>
+        <input type="number" name="od_ifsc_code" class="form-control">
+        <label>swiftcode</label>
+        <input type="number" name="od_swift_code" class="form-control">
+        <label>Bank Name</label>
+        <input type="text" name="od_bank_name" class="form-control">
+        <label>Branch</label>
+        <input type="text" name="od_branch" class="form-control">
+        <h4 style="margin:20px 0 10px ;">Bank Configuration</h4>
+        <label>Set /Alter range for check Books</label>
+        <select name="od_SA_cheque_bk" id="" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+        <label>Enable check printing</label>
+        <select name="od_Echeque_p" id="" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+    </div>
+
+    <div class="assets" id="ass">
+
+        <h4>Statutory Details</h4>
+        <label>Include in assessable value calculation for :</label>
+        <fieldset>
+        <select class="ast" name="statutory_details" id="ast">
+            <option >Not Applicable</option>
+            <option value="GST">GST</option>
+        </select>
+    </fieldset>
+
+        <div class="gst" id="gst1" >
+            <label>Appropriate to method if calculation :</label>
+            <fieldset>
+            <select class="appr" id="appr" name="Appropriate" >
+                <option value="both">Both</option>
+                <option value="goods">Goods</option>
+                <option value="service">Service</option>
+            </select>
+        </fieldset>
+
+        </div>
+
+        <div class="bo" id="bo1">
+            <label>method of calculation : &nbsp; Based on value </label>
+            
+        </div>
+        <div class="goo" id="goo1">
+            <label>Method of calculation</label>
+            <select>
+                <option>Based on value </option>
+                <option>Based on quantity </option>
+            </select>
+
+        </div>
+        
+        <div class="ser" id="ser1">
+            <label>method of calculation : &nbsp; Based on value </label>
+            
+        </div>
+
+    </div>
+
+
+    <div class="dirx" id="dirx1">
+
+            <label>Type of ledgers :</label>
+            <select class="tled"  name="type_of_ledger" id="tled">
+                <option value="Not Applicable">Not Applicable</option>
+                <option>Discount</option>
+                <option value="Invoice Rounding">Invoice Rounding</option>
+            </select>
+
+            <div class="inv" id="inv1">
+                <label>Rounding Method</label>
+                <select name="rounding_method">
+                    <option>Downward rounding</option>
+                    <option>Normal rounding</option>
+                    <option>Upward rounding</option>
+                </select>
+                <label>Rounding limit :</label>
+                <input type="number" name="rounding_limit">
+
+            </div>
+
+            
+        <div class="stdet" id="stdet1">
+            <h3>Statuary Details</h3>
+            <label>Is GST Applicable :</label>
+            <select class="gstapp" name="GST_Applicable" id="gstapp">
+                <option value="Applicable">Applicable </option>
+                <option value="Not applicable">Not applicable </option>
+                <option value="undefined">Undefined</option>
+            </select>
+        </div>
+
+        <div class="appli" id="appli1">
+            <label>Set/Alter GST Details :</label>
+            <select name="Alter_GST_Details">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+            <label>Types of Supply :</label>
+            <select name="Types_of_supply">
+                <option>Goods</option>
+                <option>Services</option>
+            </select>
+        </div>
+        <div class="notapp" id="notapp1">
+            <label>include in assessable value calculation for :</label>
+            <select class="gsttt" id="gsttt" name="gsttt">
+                <option>Not Applicable </option>
+                <option value="gstt">GST</option>
+            </select>
+
+        </div>
+        <div class="gd" id="gd1">
+            <label>Appropriate To :</label>
+            <select name="Appropriate">
+                <option>Both</option>
+                <option>Goods</option>
+                <option>Services</option>
+            </select>
+
+        </div>
+
+        <div class="und" id="und1">
+            <label>Types of supply :</label>
+            <select name="Types_of_supply">
+                <option>Goods</option>
+                <option>Services</option>
+            </select>
+
+        </div>
+
+          
+
+    </div>
+
+    <div class="sales" id="sales1">
+
+        <label>Type of ledgers :</label>
+        <select class="tled"  name="tled" id="tled">
+            <option value="Not Applicable">Not Applicable</option>
+            <option>Discount</option>
+            <option value="Invoice Rounding">Invoice Rounding</option>
+        </select>
+
+        <div class="inv" id="inv1">
+            <label>Rounding Method</label>
+            <select>
+                <option>Downward rounding</option>
+                <option>Normal rounding</option>
+                <option>Upward rounding</option>
+            </select>
+            <label>Rounding limit :</label>
+            <input type="number">
+
+        </div>
+
+        
+    <div class="stdet" id="stdet1">
+        <h3>Statuary Details</h3>
+        <label>Is GST Applicable :</label>
+        <select class="gstapp" name="gstapp" id="gstapp">
+            <option value="Applicable">Applicable </option>
+            <option value="Not applicable">Not applicable </option>
+            <option value="undefined">Undefined</option>
+        </select>
+    </div>
+
+    <div class="appli" id="appli1">
+        <label>Set/Alter GST Details :</label>
+        <select>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+        <label>Types of Supply :</label>
+        <select>
+            <option>Goods</option>
+            <option>Services</option>
+        </select>
+    </div>
+    <div class="notapp" id="notapp1">
+        <label>include in assessable value calculation for :</label>
+        <select class="gsttt" id="gsttt" name="gsttt">
+            <option>Not Applicable </option>
+            <option value="gstt">GST</option>
+        </select>
+
+    </div>
+    <div class="gd" id="gd1">
+        <label>Appropriate To :</label>
+        <select>
+            <option>Both</option>
+            <option>Goods</option>
+            <option>Services</option>
+        </select>
+
+    </div>
+
+    <div class="und" id="und1">
+        <label>Types of supply :</label>
+        <select>
+            <option>Goods</option>
+            <option>Services</option>
+        </select>
+
+    </div>
+
+      
+
+</div>
+
+
+    <div class="dirn" id="dirn1">
+
+        <label>Type of ledgers :</label>
+        <select class="tled"  name="tledn" id="tled">
+            <option value="Not Applicables">Not Applicable</option>
+            <option>Discount</option>
+            <option value="Invoice Roundings">Invoice Rounding</option>
+        </select>
+
+        <div class="invc" id="invc1">
+            <label>Rounding Method</label>
+            <select>
+                <option>Downward rounding</option>
+                <option>Normal rounding</option>
+                <option>Upward rounding</option>
+            </select>
+            <label>Rounding limit :</label>
+            <input type="number">
+
+        </div>
+
+        
+    <div class="stdetn" id="stdetn1">
+        <h3>Statuary Details</h3>
+        <label>Is GST Applicable :</label>
+        <select class="gstapp" name="gstapp" id="gstapp">
+            <option value="Applicablee">Applicable </option>
+            <option value="Not applicablee">Not applicable </option>
+            <option value="undefinedd">Undefined</option>
+        </select>
+    </div>
+
+    <div class="applii" id="applii1">
+        <label>Set/Alter GST Details :</label>
+        <select>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+        <label>Types of Supply :</label>
+        <select>
+            <option>Goods</option>
+            <option>Services</option>
+        </select>
+    </div>
+    <div class="notappp" id="notappp1">
+        <label>include in assessable value calculation for :</label>
+        <select class="gsttt" id="gsttt" name="gsttt">
+            <option>Not Applicable </option>
+            <option value="gstttt">GST</option>
+        </select>
+
+    </div>
+    <div class="gdd" id="gdd1">
+        <label>Appropriate To :</label>
+        <select>
+            <option>Both</option>
+            <option>Goods</option>
+            <option>Services</option>
+        </select>
+
+    </div>
+
+    <div class="undd" id="undd1">
+        <label>Types of supply :</label>
+        <select>
+            <option>Goods</option>
+            <option>Services</option>
+        </select>
+
+    </div>
+
+      
+
+</div>
+
+
+
+<div class="dut" id="dut1">
+    <label>Type of duty/tax</label>
+    <select class="dugs" id="dugs1" name="type_duty_tax">
+        <option value="ggst">GST</option>
+        <option value="others">others</option>
+    </select>
+
+    <div class="dutt" id="dut2">
+        <label> Tax Type : </label>
+        <select class="txty" name="tax_type" id="txty1">
+            <option value="Central Tax">Central Tax</option>
+            <option>Cess</option>
+            <option>Integrated Tax</option>
+            <option>State Tax</option>
+        </select>
+
+    </div>
+
+    <div class="ctx" id="ctx1">
+
+        <label>Persentage of calculation :</label>
+        <input type="number" name="percentage_of_calcution">
+        <label>Rounding Method :</label>
+        <select class="rmm" id="rmm1" name="rond_method">
+            <option>Not Applicable </option>
+            <option value="Downward Roundings">Downward Rounding</option>
+            <option value="Normal Roundings">Normal Rounding</option>
+            <option value="Upward Roundings">Upward Rounding</option>
+        </select>
+
+        <div class="rm" id="rm1">
+            <label>Rounding Limit :</label>
+            <input type="number" name="rond_limit">
+
+        </div>
+        <div class="rmmm" id="rm2">
+            <label>Rounding Limit :</label>
+            <input type="number" name="rond_limit">
+
+        </div>
+        <div class="rrm" id="rrm1">
+            <label>Rounding Limit :</label>
+            <input type="number" name="rond_limit">
+
+        </div>
+
+    </div>
+
+    <div class="oth" id="oth1">
+        <label>Persentage of calculation :</label>
+        <input type="number">
+        <h4>Statuary Details</h4>
+        <label>Include in assessable value calculation for :</label>
+        <select class="stst">
+            <option>Not Applicable</option>
+            <option value="gs">GST</option>
+        </select>
+
+        <div class="gsgt" id="gsgt1">
+            <label>Apprpriate to method of calculation :</label>
+            <select>
+                <option>Both</option>
+                <option>Good</option>
+                <option>Service</option>
+            </select>
+        </div>
+
+    </div>
+
+
+
+</div>
+<div class="" id="sc">
+    <label>Maintain balances bill by bill :</label>
+    <select class="yezz" id="yezz1" name="balance_billbybill">
+        <option value="yes">Yes</option>
+        <option >No</option>
+    </select>
+
+    <div class="scy" id="scy1">
+        <label>Default Credit Period :</label>
+        <input type="number" name="credit_period">
+        <label>Check for credit days during voucher entry :</label>
+        <input type="text" name="creditdays_voucher">
+    </div>
+
+    
+</div>
+<div class="" id="sd">
+    <label>Maintain balances bill by bill :</label>
+    <select class="yesd" id="yesd1">
+        <option value="yesdd">Yes</option>
+        <option >No</option>
+    </select>
+
+    <div class="sdy" id="sdy1">
+        <label>Default Credit Period :</label>
+        <input type="number">
+        <label>Check for credit days during voucher entry :</label>
+        <input type="text">
+    </div>
+
+</div>
+
+        
+        
+    
+</div>
+
+
+
+
+
+
+
+    <div class="left2 form-group">
+        <h4>Mailing Details</h4>
+        <label>Name</label>
+        <input type="text" name="mname" class="form-control">
+        <label>Address</label>
+        <textarea row="5" name="address" class="form-control"></textarea>
+        <label>Country</label>
+        <select name="country" id="mailcontry" class="form-control">
+            <option value="">Select Country</option>
+            <option value="['Nigeria','NG']">Nigeria</option>
+            <option value="['Afghanistan','AF']">Afghanistan</option>
+            <option value="['Ãƒâ€¦land Islands','AX']">Ãƒâ€¦land Islands</option>
+            <option value="['Albania','AL']">Albania</option>
+            <option value="['Algeria','DZ']">Algeria</option>
+            <option value="['American Samoa','AS']">American Samoa</option>
+            <option value="['Andorra','AD']">Andorra</option>
+            <option value="['Angola','AO']">Angola</option>
+            <option value="['Anguilla','AI']">Anguilla</option>
+            <option value="['Antarctica','AQ']">Antarctica</option>
+            <option value="['Antigua and Barbuda','AG']">Antigua and Barbuda</option>
+            <option value="['Argentina','AR']">Argentina</option>
+            <option value="['Armenia','AM']">Armenia</option>
+            <option value="['Aruba','AW']">Aruba</option>
+            <option value="['Australia','AU']">Australia</option>
+            <option value="['Austria','AT']">Austria</option>
+            <option value="['Azerbaijan','AZ']">Azerbaijan</option>
+            <option value="['Bahamas','BS']">Bahamas</option>
+            <option value="['Bahrain','BH']">Bahrain</option>
+            <option value="['Bangladesh','BD']">Bangladesh</option>
+            <option value="['Barbados','BB']">Barbados</option>
+            <option value="['Belarus','BY']">Belarus</option>
+            <option value="['Belgium','BE']">Belgium</option>
+            <option value="['Belize','BZ']">Belize</option>
+            <option value="['Benin','BJ']">Benin</option>
+            <option value="['Bermuda','BM']">Bermuda</option>
+            <option value="['Bhutan','BT']">Bhutan</option>
+            <option value="['Bolivia, Plurinational State of','BO']">"Bolivia, Plurinational State of"</option>
+            <option value="['Bonaire, Sint Eustatius and Saba','BQ']">"Bonaire, Sint Eustatius and Saba"</option>
+            <option value="['Bosnia and Herzegovina','BA']">Bosnia and Herzegovina</option>
+            <option value="['Botswana','BW']">Botswana</option>
+            <option value="['Bouvet Island','BV']">Bouvet Island</option>
+            <option value="['Brazil','BR']">Brazil</option>
+            <option value="['British Indian Ocean Territory','IO']">British Indian Ocean Territory</option>
+            <option value="['Brunei Darussalam','BN']">Brunei Darussalam</option>
+            <option value="['Bulgaria','BG']">Bulgaria</option>
+            <option value="['Burkina Faso','BF']">Burkina Faso</option>
+            <option value="['Burundi','BI']">Burundi</option>
+            <option value="['Cambodia','KH']">Cambodia</option>
+            <option value="['Cameroon','CM']">Cameroon</option>
+            <option value="['Canada','CA']">Canada</option>
+            <option value="['Cape Verde','CV']">Cape Verde</option>
+            <option value="['Cayman Islands','KY']">Cayman Islands</option>
+            <option value="['Central African Republic','CF']">Central African Republic</option>
+            <option value="['Chad','TD']">Chad</option>
+            <option value="['Chile','CL']">Chile</option>
+            <option value="['China','CN']">China</option>
+            <option value="['Christmas Island','CX']">Christmas Island</option>
+            <option value="['Cocos (Keeling) Islands','CC']">Cocos (Keeling) Islands</option>
+            <option value="['Colombia','CO']">Colombia</option>
+            <option value="['Comoros','KM']">Comoros</option>
+            <option value="['Congo','CG']">Congo</option>
+            <option value="['Congo, the Democratic Republic of the','CD']">"Congo, the Democratic Republic of the"</option>
+            <option value="['Cook Islands','CK']">Cook Islands</option>
+            <option value="['Costa Rica','CR']">Costa Rica</option>
+            <option value="['Croatia','HR']">Croatia</option>
+            <option value="['Cuba','CU']">Cuba</option>
+            <option value="['CuraÃƒÂ§ao','CW']">CuraÃƒÂ§ao</option>
+            <option value="['Cyprus','CY']">Cyprus</option>
+            <option value="['Czech Republic','CZ']">Czech Republic</option>
+            <option value="['Denmark','DK']">Denmark</option>
+            <option value="['Djibouti','DJ']">Djibouti</option>
+            <option value="['Dominica','DM']">Dominica</option>
+            <option value="['Dominican Republic','DO']">Dominican Republic</option>
+            <option value="['Ecuador','EC']">Ecuador</option>
+            <option value="['Egypt','EG']">Egypt</option>
+            <option value="['El Salvador','SV']">El Salvador</option>
+            <option value="['Equatorial Guinea','GQ']">Equatorial Guinea</option>
+            <option value="['Eritrea','ER']">Eritrea</option>
+            <option value="['Estonia','EE']">Estonia</option>
+            <option value="['Ethiopia','ET']">Ethiopia</option>
+            <option value="['Falkland Islands (Malvinas)','FK']">Falkland Islands (Malvinas)</option>
+            <option value="['Faroe Islands','FO']">Faroe Islands</option>
+            <option value="['Fiji','FJ']">Fiji</option>
+            <option value="['Finland','FI']">Finland</option>
+            <option value="['France','FR']">France</option>
+            <option value="['French Guiana','GF']">French Guiana</option>
+            <option value="['French Polynesia','PF']">French Polynesia</option>
+            <option value="['French Southern Territories','TF']">French Southern Territories</option>
+            <option value="['Gabon','GA']">Gabon</option>
+            <option value="['Gambia','GM']">Gambia</option>
+            <option value="['Georgia','GE']">Georgia</option>
+            <option value="['Germany','DE']">Germany</option>
+            <option value="['Ghana','GH']">Ghana</option>
+            <option value="['Gibraltar','GI']">Gibraltar</option>
+            <option value="['Greece','GR']">Greece</option>
+            <option value="['Greenland','GL']">Greenland</option>
+            <option value="['Grenada','GD']">Grenada</option>
+            <option value="['Guadeloupe','GP']">Guadeloupe</option>
+            <option value="['Guam','GU']">Guam</option>
+            <option value="['Guatemala','GT']">Guatemala</option>
+            <option value="['Guernsey','GG']">Guernsey</option>
+            <option value="['Guinea','GN']">Guinea</option>
+            <option value="['Guinea-Bissau','GW']">Guinea-Bissau</option>
+            <option value="['Guyana','GY']">Guyana</option>
+            <option value="['Haiti','HT']">Haiti</option>
+            <option value="['Heard Island and McDonald Islands','HM']">Heard Island and McDonald Islands</option>
+            <option value="['Holy See (Vatican City State)','VA']">Holy See (Vatican City State)</option>
+            <option value="['Honduras','HN']">Honduras</option>
+            <option value="['Hong Kong','HK']">Hong Kong</option>
+            <option value="['Hungary','HU']">Hungary</option>
+            <option value="['Iceland','IS']">Iceland</option>
+            <option value="['India','IN']">India</option>
+            <option value="['Indonesia','ID']">Indonesia</option>
+            <option value="['Iran, Islamic Republic of','IR']">"Iran, Islamic Republic of"</option>
+            <option value="['Iraq','IQ']">Iraq</option>
+            <option value="['Ireland','IE']">Ireland</option>
+            <option value="['Isle of Man','IM']">Isle of Man</option>
+            <option value="['Israel','IL']">Israel</option>
+            <option value="['Italy','IT']">Italy</option>
+            <option value="['Jamaica','JM']">Jamaica</option>
+            <option value="['Japan','JP']">Japan</option>
+            <option value="['Jersey','JE']">Jersey</option>
+            <option value="['Jordan','JO']">Jordan</option>
+            <option value="['Kazakhstan','KZ']">Kazakhstan</option>
+            <option value="['Kenya','KE']">Kenya</option>
+            <option value="['Kiribati','KI']">Kiribati</option>
+            <option value="['Korea, Democratic People's Republic of','KP']">"Korea, Democratic People's Republic of"</option>
+            <option value="['Korea, Republic of','KR']">"Korea, Republic of"</option>
+            <option value="['Kuwait','KW']">Kuwait</option>
+            <option value="[Kyrgyzstan','KG']">yrgyzstan</option>
+            <option value="['Lao People`s Democratic Republic','LA']">Lao People's Democratic Republic</option>
+            <option value="['Latvia','LV']">Latvia</option>
+            <option value="['Lebanon','LB']">Lebanon</option>
+            <option value="['Lesotho','LS']">Lesotho</option>
+            <option value="['Liberia','LR']">Liberia</option>
+            <option value="['Libya','LY']">Libya</option>
+            <option value="['Liechtenstein','LI']">Liechtenstein</option>
+            <option value="['Lithuania','LT']">Lithuania</option>
+            <option value="['Luxembourg','LU']">Luxembourg</option>
+            <option value="['Macao','MO']">Macao</option>
+            <option value="['Macedonia, the Former Yugoslav Republic of','MK']">"Macedonia, the Former Yugoslav Republic of"</option>
+            <option value="['Madagascar','MG']">Madagascar</option>
+            <option value="['Malawi','MW']">Malawi</option>
+            <option value="['Malaysia','MY']">Malaysia</option>
+            <option value="['Maldives','MV']">Maldives</option>
+            <option value="['Mali','ML']">Mali</option>
+            <option value="['Malta','MT']">Malta</option>
+            <option value="['Marshall Islands','MH']">Marshall Islands</option>
+            <option value="['Martinique','MQ']">Martinique</option>
+            <option value="['Mauritania','MR']">Mauritania</option>
+            <option value="['Mauritius','MU']">Mauritius</option>
+            <option value="['Mayotte','YT']">Mayotte</option>
+            <option value="['Mexico','MX']">Mexico</option>
+            <option value="['Micronesia, Federated States of','FM']">"Micronesia, Federated States of</option>
+            <option value="['Moldova, Republic of','MD']">"Moldova, Republic of"</option>
+            <option value="['Monaco','MC']">Monaco</option>
+            <option value="['Mongolia','MN']">Mongolia</option>
+            <option value="['Montenegro','ME']">Montenegro</option>
+            <option value="['Montserrat','MS']">Montserrat</option>
+            <option value="['Morocco','MA']">Morocco</option>
+            <option value="['Mozambique','MZ']">Mozambique</option>
+            <option value="['Myanmar','MM']">Myanmar</option>
+            <option value="['Namibia','NA']">Namibia</option>
+            <option value="['Nauru','NR']">Nauru</option>
+            <option value="['Nepal','NP']">Nepal</option>
+            <option value="['Netherlands','NL']">Netherlands</option>
+            <option value="['New Caledonia','NC']">New Caledonia</option>
+            <option value="['New Zealand','NZ']">New Zealand</option>
+            <option value="['Nicaragua','NI']">Nicaragua</option>
+            <option value="['Niger','NE']">Niger</option>
+            <option value="['Niue','NU']">Niue</option>
+            <option value="['Norfolk Island','NF']">Norfolk Island</option>
+            <option value="['Northern Mariana Islands','MP']">Northern Mariana Islands</option>
+            <option value="['Norway','NO']">Norway</option>
+            <option value="['Oman','OM']">Oman</option>
+            <option value="['Pakistan','PK']">Pakistan</option>
+            <option value="['Palau','PW']">Palau</option>
+            <option value="['Palestine, State of','PS']">"Palestine, State of"</option>
+            <option value="['Panama','PA']">Panama</option>
+            <option value="['Papua New Guinea','PG']">Papua New Guinea</option>
+            <option value="['Paraguay','PY']">Paraguay</option>
+            <option value="['Peru','PE']">Peru</option>
+            <option value="['Philippines','PH']">Philippines</option>
+            <option value="['Pitcairn','PN']">Pitcairn</option>
+            <option value="['Poland','PL']">Poland</option>
+            <option value="['Portugal','PT']">Portugal</option>
+            <option value="['Puerto Rico','PR']">Puerto Rico</option>
+            <option value="['Qatar','QA']">Qatar</option>
+            <option value="['RÃƒÂ©union','RE']">RÃƒÂ©union</option>
+            <option value="['Romania','RO']">Romania</option>
+            <option value="['Russian Federation','RU']">Russian Federation</option>
+            <option value="['Rwanda','RW']">Rwanda</option>
+            <option value="['Saint BarthÃƒÂ©lemy','BL']">Saint BarthÃƒÂ©lemy</option>
+            <option value="['Saint Helena','Ascension and Tristan da Cunha','SH']">"Saint Helena, Ascension and Tristan da Cunha"</option>
+            <option value="['Saint Kitts and Nevis','KN']">Saint Kitts and Nevis</option>
+            <option value="['Saint Lucia','LC']">Saint Lucia</option>
+            <option value="['Saint Martin (French part)','MF']">Saint Martin (French part)</option>
+            <option value="['Saint Pierre and Miquelon','PM']">Saint Pierre and Miquelon</option>
+            <option value="['Saint Vincent and the Grenadines','VC']">Saint Vincent and the Grenadines</option>
+            <option value="['Samoa','WS']">Samoa</option>
+            <option value="['San Marino','SM']">San Marino</option>
+            <option value="['Sao Tome and Principe','ST']">Sao Tome and Principe</option>
+            <option value="['Saudi Arabia','SA']">Saudi Arabia</option>
+            <option value="['Senegal','SN']">Senegal</option>
+            <option value="['Serbia','RS']">Serbia</option>
+            <option value="['Seychelles','SC']">Seychelles</option>
+            <option value="['Sierra Leone','SL']">Sierra Leone</option>
+            <option value="['Singapore','SG']">Singapore</option>
+            <option value="['Sint Maarten (Dutch part)','SX']">Sint Maarten (Dutch part)</option>
+            <option value="['Slovakia','SK']">Slovakia</option>
+            <option value="['Slovenia','SI']">Slovenia</option>
+            <option value="['Solomon Islands','SB']">Solomon Islands</option>
+            <option value="['Somalia','SO']">Somalia</option>
+            <option value="['South Africa','ZA']">South Africa</option>
+            <option value="['South Georgia and the South Sandwich Islands','GS']">South Georgia and the South Sandwich Islands</option>
+            <option value="['South Sudan','SS']">South Sudan</option>
+            <option value="['Spain','ES']">Spain</option>
+            <option value="['Sri Lanka','LK']">Sri Lanka</option>
+            <option value="['Sudan','SD']">Sudan</option>
+            <option value="['Suriname','SR']">Suriname</option>
+            <option value="['Svalbard and Jan Mayen','SJ']">Svalbard and Jan Mayen</option>
+            <option value="['Swaziland','SZ']">Swaziland</option>
+            <option value="['Sweden','SE']">Sweden</option>
+            <option value="['Switzerland','CH']">Switzerland</option>
+            <option value="['Syrian Arab Republic','SY']">Syrian Arab Republic</option>
+            <option value="['Taiwan, Province of China','TW']">"Taiwan, Province of China"</option>
+            <option value="['Tajikistan','TJ']">Tajikistan</option>
+            <option value="['Tanzania, United Republic of','TZ']">"Tanzania, United Republic of"</option>
+            <option value="['Thailand','TH']">Thailand</option>
+            <option value="['Timor-Leste','TL']">Timor-Leste</option>
+            <option value="['Togo','TG']">Togo</option>
+            <option value="['Tokelau','TK']">Tokelau</option>
+            <option value="['Tonga','TO']">Tonga</option>
+            <option value="['Trinidad and Tobago','TT']">Trinidad and Tobago</option>
+            <option value="['Tunisia','TN']">Tunisia</option>
+            <option value="['Turkey','TR']">Turkey</option>
+            <option value="['Turkmenistan','TM']">Turkmenistan</option>
+            <option value="['Turks and Caicos Islands','TC']">Turks and Caicos Islands</option>
+            <option value="['Tuvalu','TV']">Tuvalu</option>
+            <option value="['Uganda','UG']">Uganda</option>
+            <option value="['Ukraine','UA']">Ukraine</option>
+            <option value="['United Arab Emirates','AE']">United Arab Emirates</option>
+            <option value="['United Kingdom','GB']">United Kingdom</option>
+            <option value="['United States','US']">United States</option>
+            <option value="['United States Minor Outlying Islands','UM']">United States Minor Outlying Islands</option>
+            <option value="['Uruguay','UY']">Uruguay</option>
+            <option value="['Uzbekistan','UZ']">Uzbekistan</option>
+            <option value="['Vanuatu','VU']">Vanuatu</option>
+            <option value="['Venezuela, Bolivarian Republic of','VE']">"Venezuela, Bolivarian Republic of"</option>
+            <option value="['Viet Nam','VN']">Viet Nam</option>
+            <option value="['Virgin Islands, British','VG']">"Virgin Islands, British"</option>
+            <option value="['Virgin Islands, U.S.','VI']">"Virgin Islands, U.S."</option>
+            <option value="['Wallis and Futuna','WF']">Wallis and Futuna</option>
+            <option value="['Western Sahara','EH']">Western Sahara</option>
+            <option value="['Yemen','YE']">Yemen</option>
+            <option value="['Zambia','ZM']">Zambia</option>
+            <option value="['Zimbabwe','ZW']">Zimbabwe</option>
+            </select>
+            <label>State</label>
+        <input type="text" name="state" class="form-control">
+        <label>Pincode</label>
+        <input type="number" name="pincode" class="form-control">
+
+
+ 
+
+    </div>
+    
+    <div class="center container form-group " >
+        
+        <h4 >Banking Details</h4>
+        <label>Provide Bank Details</label>
+        <select name="bank_details" id="prbankdetals" class="form-control">
+            <option value="No">No</option> 
+            <option value="Yes">Yes</option>
+             
+        </select>
+   
+
+    
+        
+
+        <h4 style="margin:20px 0 10px ;"  class="" >Tax Registration Details</h4>
+        <label>PAN/IT No.</label>
+        <input type="number" name="pan_no" class="form-control">
+        <label>Registration Type</label>
+        <select name="registration_type" id="regtype" class="form-control">
+            <option value="No">Regular</option> 
+            <option value="Yes">Composition</option>
+            <option value="Yes">Consumer</option>
+            <option value="Yes">Unregistered</option>
+            <option value="Yes">Unknown</option>
+             
+        </select>
+        <label>GSTIN/UN</label>
+        <input type="text" name="gst_uin" class="form-control">
+        <label>Set/Alter GST details</label>
+        <input type="text" name="set_alter_gstdetails" class="form-control">
+
+    </div>
+ 
+
+    </div>
+    <div class="enter flexy"><button>CREATE</button></div>  
+
+    
+    
+</div>
+</div>
+        
+      
+
+    </form>
+</div>
+</div>
+</div>
+
+    <script>
+
+function showz() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("pDetail").style.display ="block";
+}             
+
+function showit() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="block";
+    
+}   
+
+function sh3() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="block";
+}
+
+function sh4() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="block";
+}
+function sh5() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="block";
+}
+function sh6() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("dirn1").style.display="block";
+}
+function sh7() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dut1").style.display="block";
+}
+function sh8() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("sc").style.display="block";
+}
+function sh9() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("sd").style.display="block";
+}
+function sh10() {
+    document.getElementById("sales1").style.display="none";
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("sd").style.display="none";
+}
+function sh11() {
+    document.getElementById("pDetail").style.display ="none";
+    document.getElementById("pDetails").style.display ="none";
+    document.getElementById("odac").style.display="none";
+    document.getElementById("ass").style.display="none";
+    document.getElementById("dirx1").style.display="none";
+    document.getElementById("dirn1").style.display="none";
+    document.getElementById("dut1").style.display="none";
+    document.getElementById("sc").style.display="none";
+    document.getElementById("sd").style.display="none";
+    document.getElementById("sales1").style.display="block";
+}
+
+
+
+
+function showList() {
+                      document.getElementById("list-div").style.visibility = "visible";
+                  }
+                  function hideList(valueDIv) {
+                      document.getElementById("primary-text").value=valueDIv;
+                      document.getElementById("list-div").style.visibility = "hidden";
+                  }
+        $('.under').change(function(){
+            var responseID = $(this).val();
+           
+            if(responseID =="Bank OD A/c"){
+                $('#pDetail').removeClass("hi");
+                $('#pDetail').addClass("show");
+           }else{
+                $('#pDetail').removeClass("show");
+                $('#pDetail').addClass("hi");
+            }
+            if(responseID =="Bank OCC A/c"){
+                $('#odac').removeClass("od");
+                $('#odac').addClass("show");
+           }else{
+                $('#odac').removeClass("show");
+                $('#odac').addClass("od");
+            }
+            if(responseID =="Current Assets"){
+                $('#ass').removeClass("assets");
+                $('#ass').addClass("show");
+           }else{
+                $('#ass').removeClass("show");
+                $('#ass').addClass("assets");
+            }
+            if(responseID =="Direct Expenses"){
+                $('#dirx1').removeClass("dirx");
+                $('#dirx1').addClass("show");
+           }else{
+                $('#dirx1').removeClass("show");
+                $('#dirx1').addClass("dirx");
+            }
+            if(responseID =="Direct Incomes"){
+                $('#dirn1').removeClass("dirn");
+                $('#dirn1').addClass("show");
+           }else{
+                $('#dirn1').removeClass("show");
+                $('#dirn1').addClass("dirn");
+            }
+            if(responseID =="Duties and Taxes"){
+                $('#dut1').removeClass("dut");
+                $('#dut1').addClass("show");
+           }else{
+                $('#dut1').removeClass("show");
+                $('#dut1').addClass("dut");
+            }
+            
+            
+        });
+
+        $('.ast').change(function(){
+            var responseID = $(this).val();
+            if(responseID == "GST"){
+                $('#gst1').removeClass("gst");
+                $('#gst1').addClass("show");
+            }
+            else{
+                $('#gst1').removeClass("show");
+                $('#gst1').addClass("gst");
+            }
+
+        })
+
+
+        $('.appr').change(function(){
+            var responseID = $(this).val();
+            if(responseID == "both"){
+                $('#bo1').removeClass("bo");
+                $('#bo1').addClass("show");
+            }
+            else{
+                $('#bo1').removeClass("show");
+                $('#bo1').addClass("bo");
+            }
+            if(responseID == "goods"){
+                $('#goo1').removeClass("goo");
+                $('#goo1').addClass("show");
+            }
+            else{
+                $('#goo1').removeClass("show");
+                $('#goo1').addClass("goo");
+            }
+            if(responseID == "service"){
+                $('#ser1').removeClass("ser");
+                $('#ser1').addClass("show");
+            }
+            else{
+                $('#ser1').removeClass("show");
+                $('#ser1').addClass("ser");
+            }
+
+        })
+
+        $('.tled').change(function(){
+            var responseID = $(this).val();
+            if(responseID == "Not Applicable"){
+                $('#stdet1').removeClass("stdet");
+                $('#stdet1').addClass("show");
+            }
+            else{
+                $('#stdet1').removeClass("show");
+                $('#stdet1').addClass("stdet");
+            }
+            if(responseID == "Invoice Rounding"){
+                $('#inv1').removeClass("inv");
+                $('#inv1').addClass("show");
+            }
+            else{
+                $('#inv1').removeClass("show");
+                $('#inv1').addClass("inv");
+            }
+            if(responseID == "Not Applicables"){
+                $('#stdetn1').removeClass("stdetn");
+                $('#stdetn1').addClass("show");
+            }
+            else{
+                $('#stdetn1').removeClass("show");
+                $('#stdetn1').addClass("stdetn");
+            }
+            if(responseID == "Invoice Roundings"){
+                $('#invc1').removeClass("invc");
+                $('#invc1').addClass("show");
+            }
+            else{
+                $('#invc1').removeClass("show");
+                $('#invc1').addClass("invc");
+            }
+
+        })
+
+        $('.gstapp').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "Applicable"){
+                $('#appli1').removeClass("appli");
+                $('#appli1').addClass("show");
+            }
+            else{
+                $('#appli1').removeClass("show");
+                $('#appli1').addClass("appli")
+            }    
+            if (responseID == "Not applicable"){
+                $('#notapp1').removeClass("notapp");
+                $('#notapp1').addClass("show");
+            }
+            else{
+                $('#notapp1').removeClass("show");
+                $('#notapp1').addClass("notapp")
+            }    
+            if (responseID == "undefined"){
+                $('#und1').removeClass("und");
+                $('#und1').addClass("show");
+            }
+            else{
+                $('#und1').removeClass("show");
+                $('#und1').addClass("und")
+            }  
+            if (responseID == "Applicablee"){
+                $('#applii1').removeClass("applii");
+                $('#applii1').addClass("show");
+            }
+            else{
+                $('#applii1').removeClass("show");
+                $('#applii1').addClass("applii")
+            }     
+            if (responseID == "Not applicablee"){
+                $('#notappp1').removeClass("notappp");
+                $('#notappp1').addClass("show");
+            }
+            else{
+                $('#notappp1').removeClass("show");
+                $('#notappp1').addClass("notappp")
+            }     
+            
+
+
+            
+        })
+        $('.gsttt').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "gstt"){
+                $('#gd1').removeClass("gd");
+                $('#gd1').addClass("show");
+            }
+            else{
+                $('#gd1').removeClass("show");
+                $('#gd1').addClass("gd")
+            }  
+            if (responseID == "gstttt"){
+                $('#gdd1').removeClass("gdd");
+                $('#gdd1').addClass("show");
+            }
+            else{
+                $('#gdd1').removeClass("show");
+                $('#gdd1').addClass("gdd")
+            }  
+            
+
+        })
+
+        $('.dugs').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "ggst"){
+                $('#dut2').removeClass("dutt");
+                $('#dut2').addClass("show");
+            }
+            else{
+                $('#dut2').removeClass("show");
+                $('#dut2').addClass("dutt")
+            }  
+            if (responseID == "others"){
+                $('#oth1').removeClass("oth");
+                $('#oth1').addClass("show");
+            }
+            else{
+                $('#oth1').removeClass("show");
+                $('#oth1').addClass("oth")
+            }  
+
+        })
+
+        $('.txty').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "Central Tax"){
+                $('#ctx1').removeClass("ctx");
+                $('#ctx1').addClass("show");
+            }
+            else{
+                $('#ctx1').removeClass("show");
+                $('#ctx1').addClass("ctx")
+            }  
+
+        })
+        $('.rmm').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "Downward Roundings"){
+                $('#rm1').removeClass("rm");
+                $('#rm1').addClass("show");
+            }
+            else{
+                $('#rm1').removeClass("show");
+                $('#rm1').addClass("rm")
+            }  
+            if (responseID == "Normal Roundings"){
+                $('#rm2').removeClass("rmmm");
+                $('#rm2').addClass("show");
+            }
+            else{
+                $('#rm2').removeClass("show");
+                $('#rm2').addClass("rmmm")
+            } 
+            if (responseID == "Upward Roundings"){
+                $('#rrm1').removeClass("rrm");
+                $('#rrm1').addClass("show");
+            }
+            else{
+                $('#rrm1').removeClass("show");
+                $('#rrm1').addClass("rrm")
+            }   
+
+
+
+        })
+
+        $('.stst').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "gs"){
+                $('#gsgt1').removeClass("gsgt");
+                $('#gsgt1').addClass("show");
+            }
+            else{
+                $('#gsgt1').removeClass("show");
+                $('#gsgt1').addClass("gsgt")
+            }  
+           
+            
+
+        })
+
+        $('.yezz').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "yes"){
+                $('#scy1').removeClass("scy");
+                $('#scy1').addClass("show");
+            }
+            else{
+                $('#scy1').removeClass("show");
+                $('#scy1').addClass("scy")
+            }  
+           
+            
+
+        })
+        $('.yesd').change(function(){
+            var responseID = $(this).val();
+            if (responseID == "yesdd"){
+                $('#sdy1').removeClass("sdy");
+                $('#sdy1').addClass("show");
+            }
+            else{
+                $('#sdy1').removeClass("show");
+                $('#sdy1').addClass("sdy")
+            }  
+           
+            
+
+        })
+
+
+       
+    </script>
+
+    
+    
+
+   
+    {% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style></style>
+    
+    <div class="row">
+    <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+        <h6  class="bg-info text-light p-2 m-0 text-left">Company Price Levels</h6>
+
+        <form id="" action="price_levels" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+            {% csrf_token %}
+
+       
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4"></div>
+               
+                <div class="col-md-4"><input type="number" class="form-control" id="a" placeholder="" name="number" autocomplete="off"></div>
+            </div>
+            
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+<div class=" table table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for i in price %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.number}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+            
+        <div><input type="submit" style="margin-left: 38%;" value="create" class="btn btn-info"></div>
+                   
+    
+</form>
+
+</div>
+</div>
+</div>
+
+
+ 
+
+
+
+
+{% endblock %}

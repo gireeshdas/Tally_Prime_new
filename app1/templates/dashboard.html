@@ -1,0 +1,324 @@
+{% extends 'base.html' %}
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateway tally</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body{
+            height: 100vh;
+        }
+        table,th,td
+{
+    border-collapse: collapse;
+    text-align: center;
+}
+table
+{
+    width: 100%;
+   
+}
+
+
+th
+{
+   
+    border-top: 1.5px solid rgb(121, 186, 255);
+    font-size: 12px;
+    padding: 6px;
+    color: rgb(0, 104, 214);
+    border-bottom: 1.5px solid rgb(121, 186, 255);
+    
+}
+
+td
+{
+    padding: 8px;
+    font-size: 13px;
+ 
+}
+.lists{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.titles{
+    width: 100%;
+    text-align: center;
+  
+    padding: 10px 5px 5px;
+    color: rgb(59, 159, 252);
+    font-size: 10px;
+
+}
+
+.btns{
+    color: black;
+    text-decoration: none;
+    
+  
+
+}
+.btns_prnt{
+    width: 100%;
+    text-align: center;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    padding: 6px;
+
+}
+.btns_prnt:hover{
+    background-color:orange;
+    color: white;
+}
+
+.btns_prnt2{
+    width: 100%;
+    text-align: start;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    padding: 3px;
+
+}
+.btns_prnt2:hover{
+    background-color:orange;
+    color: white;
+}
+.btns_2{
+    width: 100%;
+    text-align: end;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    padding: 6px;
+
+}
+.btns_2:hover{
+    background-color:rgb(181, 213, 240);
+    color: rgb(0, 9, 105);
+}
+
+
+.bg-model {
+	background-color: rgba(0, 0, 0, 0.3);
+
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+
+	display:none;
+	justify-content: center;
+	align-items: center;
+}
+.titles2{
+    width: 100%;
+    text-align: start;
+  
+    padding: 10px 5px 5px;
+    color: black;
+    font-size: 13px;
+
+}
+.close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 30px;
+	color: rgb(255, 255, 255);
+	transform: rotate(45deg);
+	cursor: pointer;
+	
+}
+.close:hover {
+		color: rgb(255, 128, 0);
+	}
+    </style>
+    <script>
+        function dateChange()
+        {
+            var a=document.getElementById("cdate").value;
+            
+            document.getElementById("d").innerHTML=a;
+        }
+        function periodChange(){
+            var f=document.getElementById("fdate").value;
+            var t=document.getElementById("tdate").value;
+            document.getElementById("p").innerHTML=f+" "+"to"+" "+t;
+        }
+        function select(name){
+        
+          document.getElementById("newname").innerHTML=name;
+        }
+    </script>
+</head>
+<body>
+   
+    <h5 style="color: rgb(0, 0, 65); background-color: rgb(142, 211, 250);padding: 5px;">Gateway of Tally</h5>
+    <div style=" display:flex; height: 100%;">
+    <div style="border-right: .5px solid rgb(218, 218, 218); width:47%;  height: 100%; ">
+      <div style="display:flex; padding: 25px;">
+        <div style="width: 50%;">
+          <p style="color: rgb(0, 104, 214);padding:5px; font-size: 12px;">CURRENT PERIOD</p>
+          <h6 style="padding:5px;" id="p">{{comp1.fin_begin|date:'d-m-Y'}} to {{comp1.fin_end|date:'d-m-Y'}}</h6>
+
+      </div>
+      <div style="width: 50%; text-align: end;">
+        <p style="color: rgb(0, 104, 214); padding:5px;font-size: 12px;">CURRENT DATE</p>
+        <h6 style="padding:5px;" id="d">{{comp1.fin_begin|date:'d-m-Y'}}</h6>
+
+      </div>
+      </div>
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        
+       
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Current Date</h4>
+            </div>
+            <div class="modal-body">
+              <input type="date" class="form-control" name="cdate" id="cdate" >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="dateChange()">Close</button>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+      <div id="myModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        
+       
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Change Period</h4>
+            </div>
+            <div class="modal-body">
+              <label>From</label>
+              <input type="date" class="form-control" name="fdate" id="fdate" ><br>
+              <label>To</label>
+              <input type="date" class="form-control" name="tdate" id="tdate" >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="periodChange()">Close</button>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+<table>
+    <thead>
+        <tr>
+        <th>NAME OF COMPANY</th>
+        <th>DATE OF LAST ENTRY</th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        <tr>
+            {% if comp1 %}
+            <td><h6 style="color:black;" id="newname">{{comp1.name}}</b></h6></td>
+           
+            <td><h6 style="color:black;"><b>No Vouchers entered</b></h6></td>
+            {% endif %}
+        </tr>
+       
+        <tr><td></td></tr>
+        
+       {% for i in com1 %}
+        
+        <tr>
+           <a> <td onclick="select('{{i.name}}')" id="company">{{i.name}}</td></a>
+            <td>No Vouchers entered</td>
+        </tr>
+       
+      {% endfor %}
+      
+    </tbody>
+</table>
+
+    </div>
+    
+    <div style=" width:47%; height: 100%" class="lists">
+        <div style="width: 50%; padding: ; height: auto; border:1px solid  rgb(177, 203, 225);background-color: rgb(222, 242, 255);">
+           <h5 style="background-color:rgb(27, 117, 173) ; color:white; text-align: center; padding: 8px;">Gateway  of Tally</h5>
+           <div style="margin-bottom:10px ;">
+
+            
+           <p class="titles">MASTERS</p>
+           <!-- <button  class="btns_prnt" id="create">Create</button> -->
+           <a href="#"><button  class="btns_prnt">Create</button></a>
+           <a href="#"><button  class="btns_prnt">Alter</button></a>
+           <button  class="btns_prnt" id="charts">Charts of accounts</button>
+
+           <!-- <a href="#"><button  class="btns_prnt">Charts of accounts</button></a> -->
+           <p class="titles">TRANSACTIONS</p>
+           <a href="#"><button  class="btns_prnt">Vouchers</button></a>
+           <a href="#"><button  class="btns_prnt">Day Book</button></a>
+           <p class="titles">UTILITIES</p>
+           <a href="#"><button  class="btns_prnt">Banking</button></a>
+           <p class="titles">REPORTS</p>
+           <a href="#"><button  class="btns_prnt">Balance Sheet</button></a>
+           <a href="#"><button  class="btns_prnt">Profit & Loss A/C </button></a>
+           <a href="#"><button  class="btns_prnt">Stock Summary</button></a>
+           <a href="#"><button  class="btns_prnt">Ratio Analysis</button></a>
+           <a href="#"><button  class="btns_prnt">Display More Reports</button></a>
+           <a href="#"><button  class="btns_prnt"> Quit</button></a>
+        </div>
+        </div>
+    </div>
+    <div style=" width:6%; background-color: rgb(142, 211, 250);height: 100%"></div>
+</div>
+<div class="bg-model">
+    <div style="width: 25%; height: auto; border:1px solid  rgb(177, 203, 225);background-color: rgb(222, 242, 255); position: relative;">
+        <div class="close">+</div>
+        <h5 style="background-color:rgb(115, 201, 255) ; color:white; text-align: center; padding: 8px;">MASTER CREATION</h5>
+        <h5 style="background-color:rgb(27, 117, 173) ; color:white; text-align: start; padding: 8px;">List of Masters</h5>
+        <div style="margin-bottom:10px ;">
+        <a href="#"><button  class="btns_2">Change Company</button></a>
+        <a href="#"><button  class="btns_2" style="padding: 6px;">show more</button></a>
+        <h6 class="titles2">Accounting Masters</h6>
+        <a href="group"><button  class="btns_prnt2">Groups</button></a>
+        <a href="ledger"><button  class="btns_prnt2">Ledgers</button></a>
+        <a href="#"><button  class="btns_prnt2">Voucher Types </button></a>
+        <a href="#"><button  class="btns_prnt2">Currencies</button></a>
+        <a href="#"><button  class="btns_prnt2">Budgets</button></a>
+        <a href="#"><button  class="btns_prnt2">Scenarios</button></a>
+        <!-- <a href="#"><button  class="btns_prnt2">Credit Limits</button></a> -->
+        <h6 class="titles2">Inventory Masters</h6>
+        <a href="#"><button  class="btns_prnt2">Stock groups</button></a>
+        <a href="#"><button  class="btns_prnt2">Stock Items</button></a>
+        <a href="#"><button  class="btns_prnt2">Stock Categories</button></a>
+        <a href="#"><button  class="btns_prnt2">Units</button></a>
+        <a href="#"><button  class="btns_prnt2">Godowns</button></a>
+        <!-- <h6 class="titles2">Statutory Details</h6>
+        <a href="#"><button  class="btns_prnt2">GST Details</button></a>
+        <a href="#"><button  class="btns_prnt2">PAN/CIN Details</button></a>
+         -->
+     </div>
+     </div>
+
+</div>
+<script>
+    document.getElementById('charts').addEventListener("click", function() {
+	document.querySelector('.bg-model').style.display = "flex";
+});
+
+document.querySelector('.close').addEventListener("click", function() {
+	document.querySelector('.bg-model').style.display = "none";
+});
+</script>
+    
+</body>
+{% endblock %}

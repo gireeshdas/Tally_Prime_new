@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+
+.flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .form1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+    }
+    
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+
+    .hide{
+        display: none;
+    }
+        
+
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(0, 0, 0,.2); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+       
+      
+      }
+      @media (max-width: 991px) {
+        .main-panel {
+            margin-left: 0;
+            width: 100%;
+        }
+        }
+
+        .content-wrapper {
+        padding: 1.875rem 1.75rem;
+        width: 100%;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        }
+      
+    
+    </style>
+    <div class="main-panel">
+        <div class="content-wrapper">
+    <div class="row">
+    <div class="col-md-4" ></div>
+    <div class="col-md-4" >
+        <h6  class="bg-info text-light p-2 m-0 text-left">unit alteration (Secondary)</h6>
+        {% for a in uni %}
+            <form id="" action="{% url 'statistics_su_alter' a.id %}" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+               
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4"> <label for="type">Type :</label></div>
+                <div class="col-md-8"><select name="type"  id="type" required="" class="form-control">
+                    <option value="simple">simple</option> 
+                </select></div>
+                
+            </div>
+
+            
+            <div id="sym" class="row container-fluid  p-2 m-0">
+                <div class="col-md-4"> <label for="b">Symbol</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="symbol" class="form-control"  value="{{ a.symbol }}" autocomplete="off"></div>
+                
+            </div>
+
+
+            <div id="for" class="row container-fluid   p-2 m-0">
+                <div class="col-md-4"> <label for="c">Formal Name</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="formal_name" class="form-control"  value="{{ a.formal_name }}" autocomplete="off"></div>
+                
+            </div>
+
+           
+
+            <div id="num" class="row container-fluid   p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">Number of decimal places</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="decimal" class="form-control" id="dcml" value="{{ a.decimal }}" value="0" autocomplete="off"></div>
+                
+            </div>
+
+           
+            <div id="uqc" class="row container-fluid  p-2 m-0">
+                <div class="col-md-4" > <label for="c">UQC</label></div>
+                <div class="col-md-8"> 
+                <input id="primary-text" type="text" name="uqc" class="form-control"  value="{{ a.uqc }}" onfocus="showList()" autocomplete="off"></div>
+                
+            </div>
+
+            <div class="row" style="margin-top: 10%;">
+                <div class="col-md-4"></div>
+                    <div class="col-md-4" ><button class="btn btn-info w-15">Alter</button></div>   
+                </div> 
+        
+
+      
+        
+        </form>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-4"></div>
+
+    </div>
+        </div>
+    </div>
+    
+
+
+
+
+<!-- list of units -->
+
+<div class="form-popup" id="list-div" >
+
+<h6 style="background-color:rgb(17, 169, 240) ;color:white">List of UQC</h6>
+<hr >
+<div>
+<table >
+<tr >
+    <td>
+      
+    </td>
+</tr>
+
+<tr>
+  <td>    
+
+    {% for l in unit %}
+  <div onclick="hideList('{{l.uqc}}')" style="color:white;" >{{l.uqc}}</div>
+  {% endfor %}
+  </td>
+</tr>  
+
+</table>
+</div>
+
+
+
+
+</div>
+
+
+
+ <script>
+    function showList() {
+        document.getElementById("list-div").style.visibility = "visible";
+    }
+    function hideList(valueDIv) {
+        document.getElementById("primary-text").value=valueDIv;
+        document.getElementById("list-div").style.visibility = "hidden";
+    }
+
+
+ 
+    
+
+ </script>
+
+{% endblock %}

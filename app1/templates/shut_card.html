@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .text1{
+            margin-top: 50px;
+            font-size: 20px;
+            padding: 10px;
+            margin-bottom: 50px;
+        }
+        .yes{
+            color: #fff;
+            
+        }
+        .no{
+            color: #fff;
+        }
+        
+    </style>
+    <div class="row container-fluid p-0 mx-0">
+        <div class="col-sm-3 m-0 p-0"></div>
+        <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <p class="text1" style="text-align: center;">This will close all the open Reports,Vouchers,and Masters,<br> without saving changes you might have made.Do you want to <br>shut the company?</p>
+           <center><a href="" class="yes">Yes </a>or<a href="" class="no"> No</a></center> 
+        {% endblock %}

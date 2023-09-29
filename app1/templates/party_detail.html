@@ -1,0 +1,357 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+  
+
+    .main-head {
+
+        background-color: #70c5c5;
+        color: white;
+        font-size: medium;
+        padding: 2px;
+    }
+
+    .main-color {
+        background-color: rgba(0,0,0,0.2);
+        color: white;
+    }
+    .form-control,
+    .form-control:focus {
+        background-color: rgb(255 0 0 / 14%);
+        color:white;
+        
+    }
+
+    select{
+        background-color: rgba(0,0,0,0.2);  
+        color: white;
+    }
+    select optgroup{
+        background-color: rgb(22 244 255 / 20%);  
+        color: white;  
+    }
+</style>
+<div class="container">
+    <h2 class="main-head">Party details </h2>
+    <div class="row">
+        <div class="col-md-3"> </div>
+        <div class="col-md-5">
+            <div class="card main-color">
+                <div class="card-body">
+                    <form action="" method="post">
+                        
+                        {% csrf_token %}
+                        <input type="hidden" name="party_id" id="party_id" />
+                    <strong>
+                        <center style="text-decoration: underline;">Party Details
+                        </center> </strong>
+                        
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">Buyer (Bill to)</label> 
+                            </div>
+                            <div class="col-8">
+                                <select onchange=newpage() id="myselect" class="form-control form-control-sm" name="buyer_bill_to" >
+                                    <optgroup  label="List Of Ledger Accounts"></optgroup>
+                                    <option   selected disabled ></option>
+                                    <option   >Create</option>
+                                    <option value="#">New party</option>
+                                    <option value="Cash">Cash</option>
+                                </select> 
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">Mailing Name</label> 
+                            </div>
+                            <div class="col-8">
+                                <input name="mailing_name" class="form-control form-control-sm" type="text"  id="mailing_name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">Adress</label> 
+                            </div>
+                            <div class="col-8">
+                                <textarea class="form-control form-control-sm" name="adress" id="adress" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">States</label> 
+                            </div>
+                            <div class="col-8">
+                                <select id="state" class="form-control form-control-sm" name="state">
+                                    <optgroup  label="List Of States"></optgroup>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option selected value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                    <option value="Daman and Diu">Daman and Diu</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                </select> 
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">Country</label> 
+                            </div>
+                            <div class="col-8">
+                                <select id="country" class="form-control form-control-sm" name="country">
+                                    <optgroup  label="List Of Countries"></optgroup>
+                                    <option value="India">India</option>
+                                </select> 
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                             <label style="font-size:11px;" for="">GST Registration type</label> 
+                            </div>
+                            <div class="col-8">
+                                <select id="gst_reg_typ"  class="form-control form-control-sm" name="gst_reg_typ">
+                                    <optgroup  label="Registration types"></optgroup>
+                                    <option value="Unknown">Unknown</option>
+                                    <option value="Composition">Composition</option>
+                                    <option value="Consumer">Consumer</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Unregistered">Unregistered</option>
+                                </select> 
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">GSTIN/UN</label> 
+                            </div>
+                            <div class="col-8">
+                                <input id="txt_gstin" class="form-control form-control-sm" type="text" name="GSTIN" id="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4">
+                               <label for="">Place of Supply</label> 
+                            </div>
+                            <div class="col-8">
+                                <select id="place_of_supply" class="form-control form-control-sm" name="place_of_supply">
+                                    <optgroup  label="List Of States"></optgroup>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                    <option value="Daman and Diu">Daman and Diu</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                </select> 
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-8">
+                                
+                                {% if check_avai %}
+                                <button disabled  id="btnsave" class="btn btn-lg btn-success w-75" type="submit">
+                                    Save
+                                </button>
+                                {% else %}
+                                <button  id="btnsave" class="btn btn-lg btn-success w-75" type="submit">
+                                    Save
+                                </button>
+                                {% endif %}
+                                    
+  
+                                
+
+                            </div>
+                        </div>
+                   </form>
+                   <br><button type="button" onclick="goBack()" id="myButton"  class="btn btn-secondary btn-sm w-25">Back</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"> </div>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+  // Get the country dropdown
+  var countryDropdown = $("#country");
+
+  // Get the state dropdown
+  var stateDropdown = $("#state");
+
+  // Fetch the list of countries from the API
+  $.ajax({
+    url: "https://api.countrystatecity.in/v1/countries",
+    success: function(data) {
+      // Clear the country dropdown
+      countryDropdown.empty();
+
+      // Add the countries to the country dropdown
+      $.each(data, function(index, country) {
+        countryDropdown.append("<option value='" + country.code + "'>" + country.name + "</option>");
+      });
+
+      // Set up the event listener for the country dropdown
+      countryDropdown.on("change", function() {
+        // Get the selected country code
+        var countryCode = $(this).val();
+
+        // Make an API call to get a list of states for the selected country
+        $.ajax({
+          url: "https://api.countrystatecity.in/v1/countries/" + countryCode + "/states",
+          success: function(data) {
+            // Clear the state dropdown
+            stateDropdown.empty();
+
+            // Add the states to the state dropdown
+            $.each(data, function(index, state) {
+              stateDropdown.append("<option value='" + state.code + "'>" + state.name + "</option>");
+            });
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      });
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+});
+
+
+
+
+
+    //gst reg_typ
+    var gstreg=document.getElementById("gst_reg_typ")
+    var txt_gsti=document.getElementById("txt_gstin")
+    gstreg.addEventListener("change",function(){
+        if (gstreg.value=="Consumer" || gstreg.value=="Unregistered")
+        {
+            txt_gsti.disabled=true; 
+        }else{
+            txt_gsti.disabled=false; 
+        }
+    })
+    function newpage(){
+            var sel = document.getElementById("myselect");
+            var a = sel.value;
+            console.log(a);
+            if(a=="Create"){
+                window.location.href="{% url 'ledgers' %}"
+            }
+        }
+
+
+//         $("#btnsave").click(function (event){
+      
+      
+//       console.clear()
+//       console.log("Save clicked")
+//       let party_id=$("#party_id").val();
+//       let buyer_bill_to =$("#myselect").val();  //biller to dropdown
+      
+//       let mailing_name =$("#mailing_name").val();  //party ac dropdown id
+//       let adress=$("#adress").val();
+//       let state  =$("#state").val(); //sale ledger dropdown id
+//       let gst_reg_typ   =$("#gst_reg_typ").val();
+//       let GSTIN =$("#txt_gstin").val();
+//       let place_of_supply=$("#place_of_supply").val();
+//       let csr = $("input[name=csrfmiddlewaretoken").val();
+//       mydata = {
+//         buyer_bill_to : buyer_bill_to ,
+//         party_id:party_id,
+//         mailing_name : mailing_name ,
+//         adress: adress,
+//         state  : state  ,
+//         gst_reg_typ: gst_reg_typ,
+//         GSTIN : GSTIN ,
+//         place_of_supply: place_of_supply,
+//         csrfmiddlewaretoken: csr,
+//       };
+//     $.ajax({
+//         url: "{% url 'party_detail'  %}",
+//         method: "POST",
+//         data: mydata,
+//         dataType: "json",
+//         success:function(data){
+//             if (data.status=="save")
+//                {
+//                 window.history.pushState(null, null, '/salesvoucher/');
+//                }
+//             else{
+//                     alert("some error")
+//                }
+//         }
+//     })
+//   })
+
+  function goBack() {
+    window.history.go(-3);
+}
+$(document).ready(function() {
+  $('#myButton').click(function() {
+    $(this).prop('disabled', true);
+  });
+});
+</script>
+{% endblock %}

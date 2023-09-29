@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col ">Stock Item Voucher</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+
+                       <tr>
+                        <th colspan="4" >Stock Item {{ display.Particular.Pro_Stock_Forgn.Particular }}</th>
+                        <th colspan="6" class="text-right">1-april-2022 to 30-april-2022</th>
+                       </tr>
+
+                       <tr>
+                        <th>Date</th>
+                        <th>Particulars</th>
+                        <th>Vch Type</th>
+                        <th>Vch No</th>
+                        <th colspan="2" class="text-center">Inwards</th>
+                        <th colspan="2" class="text-center">Outwards</th>
+                        <th colspan="2" class="text-center">Closing</th>
+                       </tr>
+
+                       <tr class="">
+                        <th colspan="4"></th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                        <th>Quantity</th>
+                        <th>Value</th> 
+                       </tr>
+                       {% for i in data %}
+                       <tr class="trhover">
+                        <td>{{ i.Date }}</td>
+                        <td>{{ i.Particular }}</td>
+                        <td>{{ i.Voucher_Type }}</td>
+                        <td>{{ i.Vch_No }}</td>
+                        <td>{{ i.Inwards_Qty }}</td>
+                        <td>{{ i.Inwards_Vlu }}</td>
+                        <td>{{ i.Outwards_Qty }}</td>
+                        <td>{{ i.Outwards_Vlu }}</td>
+                        <td>{{ display.Closing_Bal_Qty }}</td>
+                        <td>{{ display.Closing_Bal_Vlu }}</td>
+                       </tr>
+                       {% endfor %}
+                       
+                       
+                       
+                       
+                       <!-- <tr>
+                        <td colspan="10" class="py-5"></td>
+                       </tr> -->
+
+                       <tr>
+                        <th colspan="4">TOTAL AS PER VALUATION :</th>
+                        <th>{{sum1}}</th>
+                        <th>{{sum2}}</th>
+                        <th>{{sum3}}</th>
+                        <th>{{sum4}}</th>
+                        <th>{{sum5}}</th>
+                        <th>{{sum6}}</th>
+                       </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+.trhover:hover{
+    background-color: rgb(31, 40, 68);
+}
+</style>
+
+{% endblock %}

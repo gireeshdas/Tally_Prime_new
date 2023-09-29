@@ -1,0 +1,1516 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+</style>
+
+<div class="m-0">
+<h6 style="" class="bg-info text-light p-2 m-0 text-center">Create ledger</h6>
+        <form  style="background-color:rgba(0,0,0,.4);" method="post" action="save_ledger">
+            {% csrf_token %}
+            
+            <div class="row container-fluid p-0 m-0" >
+
+                <div class="col-sm-6 m-0 p-4">
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="a" >Name</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input required type="text" class="form-control" id="ledger_name" oninput="addname()" placeholder="" name="ledger_name"></div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="b">Alias</label></div>
+                        <div class="col-sm-8 m-0 p-0"> 
+                        <input type="text" class="form-control" id="b" placeholder="" name="ledger_alias"></div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-sm-3 m-0 p-0"></div>
+                <div class="col-sm-3 m-0 p-0" style="background-color:rgba(0,0,0,.2);"><h6 class="text-center p-3">Total Opening Balance</h6></div>
+
+            
+            
+        </div>
+
+            
+                
+               
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-4 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="c">Under</label></div>
+                        
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="group_under" id="under" class="form-control" onchange="showunder()" required>
+                                <option value="">----Select-----</option>
+                                <option value="BankAccount1">BankAccouts</option>
+                                <option value="Bank_OCC_AC">Bank OCC A/c</option>
+                                <option value="Bankod1">Bank OD A/c</option>
+                                <option value="Branch_divisions">Branch Divisions</option>
+                                <option value="Capital_amount">Capital Amount</option>
+                                <option value="Cash_in_hand">Cash in Hand</option>
+                                <option value="curntasts1">Current Assets</option>
+                                <option value="current_liabilities">Current Liabilities</option>
+                                <option value="Bank_Account">Deposits (Asset)</option>
+                                <option value="Direct Expenses">Direct Expenses</option>
+                                <option value="Direct Incomes">Direct Incomes</option>
+                                <option value="dutiesAndtax">Duties and Taxes</option>
+                                <option value="Expences_Direct">Expenses(Direct)</option>
+                                <option value="Expences_Indirect">Expenses(Indirect)</option>
+                                <option value="Fixed_Assets">Fixed Assets</option>
+                                <option value="income_direct">Income (Direct)</option>
+                                <option value="income_Indirect">Income (Indirect)</option>
+                                <option value="Investments">Investments</option>
+                                <option value="loans_advance">Loans & Advances (Asset)</option>
+                                <option value="Loans_liability">Loans (Liability)</option>
+                                <option value="Mis_Expenses">Misc. Expenses (Asset)</option>
+                                <option value="provisions">provisions</option>
+                                <option value="Purchase_Account">Purchase Accounts</option>
+                                <option value="retained">Retained Earnings</option>
+                                <option value="Sales_Account">Sales Accounts</option>
+                                <option value="Secured_loans">Secured Loans</option>
+                                <option value="stock">Stock-in-Hand</option>
+                                <option value="Sundry_Creditors">Sundry Creditors</option>
+                                <option value="Sundry_Debtors">Sundry Debtors</option>
+                                <option value="Suspence">Suspence A/c</option>
+                                <option value="Unsecured_loans">Unsecured Loans</option>   
+                            </select>
+                        </div>
+                        
+
+
+<div class="bankac hide p-0 m-0 w-100" id="bankac">
+    
+    <h6 class="p-3">Bank Account Details</h6>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c Holders Name</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="acna" placeholder="" name="holder_name"></div>
+        
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c Number</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="acno" placeholder="" name="ac_number"></div>
+        
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">IFS Code</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="ifs" placeholder="" name="ifsc"></div>
+        
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">SWIfT Code</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="swift" placeholder="" name="swift_code"></div>
+        
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Bank Name</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="bank_name" id="" class="form-control">
+                <option value="not applicable">Not applicable</option> 
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">Branch</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="branch" placeholder="" name="branch_name"></div>
+        
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Set/Alter Range of cheque Books</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="alter_chk_bks" id="chqrng" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Enable Cheque printing</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Set/Alter Cheque Printing Configuration</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="" id="chqconfg" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="bankod hide p-0 py-sm-3 m-0 w-100"id="bankod">
+
+<div class="row container-fluid  p-2 m-0" >
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Set OD limit</label></div>
+    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="odlimit" placeholder="" name="odlimit"></div>
+    
+</div>
+
+<h6>Bank Account Details</h6>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c Holders Name</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="acna" placeholder="" name="holder_name"></div>
+        
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">A/c Number</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="acno" placeholder="" name="ac_number"></div>
+        
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">IFS Code</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="ifs" placeholder="" name="ifsc"></div>
+        
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">SWIfT Code</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="swift" placeholder="" name="swift_code"></div>
+        
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Bank Name</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="bank_name" id="" class="form-control">
+                <option value="not applicable">Not applicable</option> 
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="row container-fluid  p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">Branch</label></div>
+        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="branch" placeholder="" name="branch_name"></div>
+        
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Set/Alter Range of cheque Books</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="alter_chk_bks" id="chqrng" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Enable Cheque printing</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>
+    </div>
+
+    <div class="row container-fluid   p-2 m-0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Set/Alter Cheque Printing Configuration</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="chqconfg" id="chqconfg" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>
+    </div>
+
+</div>
+
+
+
+<style>
+.hide{
+    display: none;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+}
+</style>
+
+
+<script>
+function showAssets(){
+        var status = document.getElementById("calcgst");
+        var a = status.value
+        console.log(a);
+        if( a == "GST" ){
+            console.log(a);
+
+            document.getElementById('mtdcalc0').style.display = "flex";
+            document.getElementById('Approp0').style.display = "flex";
+        }
+        else{
+            
+            document.getElementById('mtdcalc0').style.display = "none";
+            document.getElementById('Approp0').style.display = "none";
+        }
+    }
+
+    
+    function showbased(){
+        var status = document.getElementById("Approp");
+        var a = status.value
+        console.log(a);
+        if( a == "Services" ){
+            console.log(a);
+
+            document.getElementById('qlty').style.display = "none";
+            
+        }
+        else{
+            document.getElementById('qlty').style.display = "flex";
+            
+        }
+    }
+
+
+    function showunder(){
+        
+        var name = document.getElementById("ledger_name");
+        var mail_name = name.value;
+        document.getElementById("mailname").value= mail_name;
+
+
+        var status = document.getElementById("under");
+        var a = status.value;
+        console.log(a);
+        if( a == "BankAccount1" ){
+            console.log(a);
+
+            document.getElementById('bankac').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('curntasts').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('bank2').style.display = "none";
+            document.getElementById('bank3').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+            
+        }
+    
+        else if( a == "Bank_OCC_AC" ) {
+            
+            document.getElementById('bankod').style.display = "flex";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('bank2').style.display = "none";
+            document.getElementById('bank3').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Bankod1" ) {
+            
+            document.getElementById('bankod').style.display = "flex";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('bank2').style.display = "none";
+            document.getElementById('bank3').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "curntasts1" ) {
+            document.getElementById('roundmd20').style.display = "flex";
+            document.getElementById('Statutory_Details').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "dirctexpncs1" ) {
+            
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        
+        else if( a == "dirctincome" ) {
+            
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "dutiesAndtax" ) {
+
+            document.getElementById('dutiesandtax1').style.display = "flex";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Expences_Direct" ) {
+            
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Expences_Inirect" ) {
+            
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Fixed_Assets" ) {
+
+            document.getElementById('dirctexpns4').style.display = "flex";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+
+           
+        }
+        else if( a == "income_direct" ) {
+            
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "income_Indirect" ) {
+            
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Loans_liability" ) {
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Purchase_Account" ) {
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Sales_Account" ) {
+            document.getElementById('direct_expences').style.display = "flex";
+            document.getElementById('applicablegst0').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Secured_loans" ) {
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Sundry_Creditors" ) {
+            document.getElementById('Sundry_commit').style.display = "flex";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+        else if( a == "Sundry_Debtors" ) {
+            document.getElementById('Sundry_commit').style.display = "flex";
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+           
+        }
+
+        else if( a == "Unsecured_loans" ) {
+            document.getElementById('roundmd20').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "flex";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('applicablegst0').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+        }
+
+        else{
+            document.getElementById('Sundry_commit').style.display = "none";
+            document.getElementById('dirctexpns4').style.display = "none";
+            document.getElementById('direct_expences').style.display = "none";
+            document.getElementById('dutiesandtax1').style.display = "none";
+            document.getElementById('bankod').style.display = "none";
+            document.getElementById('bankac').style.display = "none";
+            document.getElementById('Statutory_Details').style.display = "none";
+            document.getElementById('bank2').style.display = "block";
+            document.getElementById('bank3').style.display = "flex";
+            document.getElementById('applicablegst0').style.display = "none";
+           
+
+        }
+
+    }
+    
+function rounding(){
+var status = document.getElementById("roundmd2");
+var a = status.value
+console.log(a);
+if( a == "null" ){
+    console.log(a);
+    document.getElementById('rndlmt20').style.display = "none";
+    
+    
+    
+}
+else{
+    document.getElementById('rndlmt20').style.display = "flex";
+    document.getElementById('valtyp0').style.display = "none";
+
+    
+    
+}
+}
+
+</script>
+
+
+
+
+<div class="dirctexpncs hide p-0 m-0 w-100" id="direct_expences">
+
+<div class="row container-fluid   p-2 m-0 " id="typldr0">
+    <div class="col-sm-6 m-0 p-0 "> <label for="">Types of ledger</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="ledger_type" id="typldr" class="form-control" onchange="showdirctexp2()">
+            <option value="null">----Select---</option>
+            <option value="Not_applicable">Not Applicable</option>
+            <option value="Discount">Discount</option>
+            <option value="invroundg">Invoice Rounding</option>    
+        </select>
+    </div>
+</div>
+
+<div class="row container-fluid   p-2 m-0 hide w-100" id="roundmd0">
+    <div class="col-sm-6 m-0 p-0 "> <label for="">Rounding Method</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="Rounding_Method" id="roundmd" class="form-control">
+            <option value="Down_Rounding">Down Rounding</option>
+            <option value="Normal_Rounding">Normal Rounding</option>
+            <option value="Up_Rounding">Up Rounding</option>
+        </select>
+    </div>
+</div>
+
+<div class="row container-fluid  p-2 m-0 hide w-100"  id="rndlmt0" >
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Round limit</label></div>
+    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="rndlmt" placeholder="" name="Round_limit" value="1"></div>
+</div>
+
+
+<div class="dirctexpns2 hide p-0 m-0 w-100" id="dirctexpns2">
+
+
+    <h6>Statutory Details</h6>
+    <div class="row container-fluid   p-2 m-0" id="applicablegst0">
+        <div class="col-sm-6 m-0 p-0 "> <label for="">Is GST applicable</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="is_gst_applicable" id="applicablegst" class="form-control" onchange="showdirctexp3()">
+                <option value="Not_Applicable"> Not Applicable</option>
+                <option value="Applicable">Applicable</option>
+                <option value="Undefined">Undefined</option>
+            </select>
+        </div>
+    </div>         
+
+    <div class="row container-fluid  p-2 m-0 hide" id="stgst0">
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">Set/Alter GST details </label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="Set_alter_GST" id="stgst" class="form-control">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>  
+                
+            </select>
+        </div>          
+    </div>
+
+    <div class="row container-fluid  p-2 m-0 hide w-100"  id="typsofsply0" >
+        <div class="col-sm-6 m-0 p-0"> <label for="pan">Types of Supply</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="type_of_supply" id="typsofsply" class="form-control">
+                <option value="Service">Service</option>
+                <option value="Goods">Goods</option>  
+                
+            </select>
+        </div>
+    </div>
+
+
+    <div class="row container-fluid   p-2 m-0 hide" id="calcgst0">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Include assessable value calculations for </label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="assessable_calculation" id="calcgst2" class="form-control" onchange="showAssets2()">
+                <option value="Not_Applicable">Not Applicable</option>
+                <option value="GST">GST</option>  
+                
+            </select>
+        </div>
+    </div>
+    
+    
+    
+    <div class="row container-fluid   p-2 m-0 hide" id="Approp01">
+        <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Appropriate to</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="Appropriate_to" id="Approp1" class="form-control" onchange="showbased()">
+                <option value="Both">Both</option>
+                <option value="Goods">Goods</option>
+                <option value="Services">Services</option>   
+                
+            </select>
+        </div>
+    </div>
+    
+    <div class="row container-fluid   p-2 m-0 hide " id="mtdcalc01">
+        <div class="col-sm-6 m-0 p-0 "> <label for="mtdcalc">Method of Calculation</label></div>
+        <div class="col-sm-6 m-0 p-0">
+            <select name="Method_of_calc" id="mtdcalc1" class="form-control">
+                <option value="Based_on_Value" >Based on value</option>
+                <option value="Based_on_Quntity" id="qlty">Based on quantity</option>    
+            </select>
+        </div>
+    </div>
+    
+    
+    
+    
+
+
+
+</div>
+<script>
+
+function showdirctexp2(){
+var status = document.getElementById("typldr");
+var a = status.value
+console.log(a);
+if( a == "Not_applicable" ){
+    console.log(a);
+
+    document.getElementById('dirctexpns2').style.display = "block";
+    document.getElementById('roundmd0').style.display = "none";
+    document.getElementById('rndlmt0').style.display = "none";
+}
+else if( a == "invroundg" ){
+    console.log(a);
+
+    document.getElementById('roundmd0').style.display = "block";
+    document.getElementById('rndlmt0').style.display = "block";
+    document.getElementById('dirctexpns2').style.display = "none";
+    
+}
+else{
+    document.getElementById('dirctexpns2').style.display = "none";
+    document.getElementById('roundmd0').style.display = "none";
+    document.getElementById('rndlmt0').style.display = "none";
+    
+}
+}
+function showdirctexp3(){
+var status = document.getElementById("applicablegst");
+var a = status.value
+console.log(a);
+if( a == "Applicable" ){
+    console.log(a);
+
+    document.getElementById('stgst0').style.display = "block";
+    document.getElementById('typsofsply0').style.display = "block";
+    document.getElementById('calcgst0').style.display = "none";
+    
+}
+else if( a == "Not_Applicable" ){
+    console.log(a);
+
+    document.getElementById('calcgst0').style.display = "block";
+    document.getElementById('stgst0').style.display = "none";
+    document.getElementById('typsofsply0').style.display = "none";
+    
+}
+else if( a == "Undefined" ){
+    console.log(a);
+
+    document.getElementById('calcgst0').style.display = "none";
+    document.getElementById('stgst0').style.display = "block";
+    document.getElementById('typsofsply0').style.display = "block";
+    
+}
+
+else{
+    document.getElementById('stgst0').style.display = "none";
+    document.getElementById('typsofsply0').style.display = "none";
+    document.getElementById('calcgst0').style.display = "none";
+}
+}
+
+function showAssets2(){
+var status = document.getElementById("calcgst2");
+var a = status.value;
+console.log(a);
+if( a == "GST" ){
+    console.log(a);
+
+    document.getElementById('mtdcalc01').style.display = "flex";
+    document.getElementById('Approp01').style.display = "flex";
+}
+else{
+    
+    document.getElementById('mtdcalc01').style.display = "none";
+    document.getElementById('Approp01').style.display = "none";
+}
+}
+
+</script>
+
+
+</div>
+
+<div class="dutiesandtax1 p-0 m-0 w-100 hide" id="dutiesandtax1">
+
+<div class="row container-fluid   p-2 m-0 " id="typdty0">
+    <div class="col-sm-6 m-0 p-0 "> <label for="">Type of Duty/Tax</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="type_of_duty_or_tax" id="typdty" class="form-control" onchange="showdutiesandtax2()">
+            <option value="null">----Select---</option>
+            <option value="gst">GST</option>
+            <option value="other">Other</option>
+             
+        </select>
+    </div>
+</div>
+
+<div class="row container-fluid   p-2 m-0 hide " id="taxtyp0">
+    <div class="col-sm-6 m-0 p-0 "> <label for="">Tax Type</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="type_of_tax" id="taxtyp" class="form-control" onchange="showdutiesandtax3()">
+            <option value="null">----Select---</option>
+            <option value="central">Central Tax</option>
+            <option value="cess">Cess</option>
+            <option value="integrated">Integrated Tax</option>
+            <option value="state">State Tax</option>
+             
+        </select>
+    </div>
+</div>
+
+<div class="row container-fluid   p-2 m-0 hide " id="valtyp0">
+    <div class="col-sm-6 m-0 p-0 "> <label for="mtdcalc">Valuation Type</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="valuation_type" id="valtyp" class="form-control" onchange="showdutiesandtax4()">
+            <option value="" >---Select---</option>
+            <option value="any" >Any</option>
+            <option value="Based_on_Value" >Based on value</option>
+            <option value="Based_on_Quntity">Based on quantity</option>    
+        </select>
+    </div>
+</div>
+
+<div class="row container-fluid  p-2 m-0 hide w-100"  id="rtprunit0" >
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Rate per unit</label></div>
+    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="rtprunit" placeholder="" name="rate_per_unit" value="0"></div>
+</div>
+
+<div class="row container-fluid  p-2 m-0 hide w-100"  id="prstgcalc0" >
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Percentage of calcution </label></div>
+    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="prstgcalc" placeholder="" name="Persentage_of_calculation" value="0%"></div>
+</div>
+</div>
+
+<script>
+function showdutiesandtax2(){
+var status = document.getElementById("typdty");
+var a = status.value
+console.log(a);
+if( a == "gst" ){
+    console.log(a);
+    document.getElementById('taxtyp0').style.display = "flex";
+    document.getElementById('roundmd20').style.display = "flex";
+    document.getElementById('rndlmt20').style.display = "none";
+    document.getElementById('Statutory_Details').style.display = "none";
+    document.getElementById('prstgcalc0').style.display = "none";
+    document.getElementById('valtyp0').style.display = "none";
+}
+else if( a == "other" ){
+    console.log(a);
+
+    document.getElementById('prstgcalc0').style.display = "flex";
+    document.getElementById('Statutory_Details').style.display = "flex";
+    document.getElementById('taxtyp0').style.display = "none";
+    document.getElementById('roundmd20').style.display = "none";
+    document.getElementById('rndlmt20').style.display = "none";
+    document.getElementById('valtyp0').style.display = "none";
+    
+}
+else{
+    document.getElementById('Statutory_Details').style.display = "none";
+    document.getElementById('prstgcalc0').style.display = "none";
+    document.getElementById('taxtyp0').style.display = "none";
+    document.getElementById('roundmd20').style.display = "none";
+    document.getElementById('rndlmt20').style.display = "none";
+    document.getElementById('valtyp0').style.display = "none";
+    
+    
+}
+}
+
+
+function showdutiesandtax3(){
+var status = document.getElementById("taxtyp");
+var a = status.value
+console.log(a);
+if( a == "central" ){
+    console.log(a);
+
+    document.getElementById('prstgcalc0').style.display = "flex";
+    document.getElementById('valtyp0').style.display = "none";
+    
+}
+else if( a == "cess" ){
+    console.log(a);
+
+    document.getElementById('valtyp0').style.display = "flex";
+    document.getElementById('prstgcalc0').style.display = "none";
+  
+    
+}
+else{
+    document.getElementById('valtyp0').style.display = "none";
+    document.getElementById('prstgcalc0').style.display = "none";
+    
+    
+}
+}
+
+function showdutiesandtax4(){
+var status = document.getElementById("valtyp");
+var a = status.value
+console.log(a);
+if( a == "Based_on_Value" ){
+    console.log(a);
+
+    document.getElementById('prstgcalc0').style.display = "flex";
+    document.getElementById('rtprunit0').style.display = "none";
+    
+}
+else if( a == "Based_on_Quntity" ){
+    console.log(a);
+
+    document.getElementById('rtprunit0').style.display = "flex";
+    document.getElementById('prstgcalc0').style.display = "none";
+  
+    
+}
+else if( a == "any" ){
+    console.log(a);
+    document.getElementById('prstgcalc0').style.display = "flex";
+    document.getElementById('rtprunit0').style.display = "none";
+  
+    
+}
+else{
+    document.getElementById('rtprunit0').style.display = "none";
+    document.getElementById('prstgcalc0').style.display = "none";
+    
+    
+}
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row container-fluid   p-2 m-0 hide w-100" id="roundmd20">
+<div class="col-sm-6 m-0 p-0 "> <label for="">Rounding Method</label></div>
+<div class="col-sm-6 m-0 p-0">
+    <select name="Rounding_Method" id="roundmd2" class="form-control" onchange="rounding()">
+        <option value="null">Not Applicable</option>
+        <option value="Down_Rounding">Down Rounding</option>
+        <option value="Normal_Rounding">Normal Rounding</option>
+        <option value="Up_Rounding">Up Rounding</option>
+    </select>
+</div>
+</div>
+
+<div class="row container-fluid  p-2 m-0 hide w-100"  id="rndlmt20" >
+<div class="col-sm-6 m-0 p-0"> <label for="pan">Round limit</label></div>
+<div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="rndlmt2" placeholder="" name="Round_limit" value="1"></div>
+</div>
+
+<div class="dirctexpns4 hide py-3 m-0 w-100" id="dirctexpns4">
+
+<h5>Statutory Details</h5>
+<div class="row container-fluid   p-2 m-0 " id="applicablegst20">
+    <div class="col-sm-6 m-0 p-0 "> <label for="">Is GST applicable</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="is_gst_applicable" id="applicablegst2" class="form-control" onchange="showdirctexp4()">
+            <option value="">----Select----</option>
+            <option value="Not_Applicable"> Not Applicable</option>
+            <option value="Applicable">Applicable</option>
+            <option value="Undefined">Undefined</option>
+        </select>
+    </div>
+</div>         
+
+<div class="row container-fluid  p-2 m-0 hide" id="stgst20">
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Set/Alter GST details </label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="Set_alter_GST" id="stgst2" class="form-control">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>  
+            
+        </select>
+    </div>          
+</div>
+
+<div class="row container-fluid  p-2 m-0  w-100 hide"  id="typsofsply20" >
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Types of Supply</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="type_of_supply" id="typsofsply2" class="form-control">
+            <option value="Service">Service</option>
+            <option value="Goods">Goods</option>  
+            
+        </select>
+    </div>
+</div>
+</div>
+<script>
+
+function showdirctexp4(){
+var status = document.getElementById("applicablegst2");
+var a = status.value
+console.log(a);
+console.log("hope");
+if( a == "Applicable" ){
+    console.log(a);
+
+    document.getElementById('stgst20').style.display = "flex";
+    document.getElementById('typsofsply20').style.display = "flex";
+    
+    
+}
+else if( a == "Not_Applicable" ){
+    console.log(a);
+
+    
+    document.getElementById('stgst20').style.display = "none";
+    document.getElementById('typsofsply20').style.display = "none";
+    
+}
+else if( a == "Undefined" ){
+    console.log(a);
+
+   
+    document.getElementById('stgst20').style.display = "none";
+    document.getElementById('typsofsply20').style.display = "flex";
+    
+}
+
+else{
+    document.getElementById('stgst20').style.display = "none";
+    document.getElementById('typsofsply20').style.display = "none";
+    
+}
+}
+
+
+</script>
+
+
+<div class="Sundry_commit py-2 m-0 hide" id="Sundry_commit">
+
+<div class="row container-fluid  p-2 m-0 " id="billbybill0">
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Maintain balance Bill by Bill</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="maintain_balance_bill_by_bill" id="billbybill" class="form-control" onchange="bill()">
+            <option value="">--Select---</option> 
+            <option value="Yes">Yes</option>  
+            <option value="No">No</option>
+
+        </select>
+    </div>          
+</div>
+
+<div class="row container-fluid  p-2 m-0 hide w-100"  id="Default_Credit_period0" >
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Default credit period</label></div>
+    <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="Default_Credit_period" placeholder="" name="Default_credit_period" value="1"></div>
+</div>
+
+<div class="row container-fluid  p-2 m-0 hide" id="creditdays0">
+    <div class="col-sm-6 m-0 p-0"> <label for="pan">Check for credit days during voucher enter</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="Check_for_credit_days" id="creditdays" class="form-control">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>  
+        </select>
+    </div>          
+</div>
+
+
+
+</div>
+<script>
+
+function bill(){
+        var status = document.getElementById("billbybill");
+        var a = status.value
+        console.log(a);
+        if( a == "Yes" ){
+            console.log(a);
+
+            document.getElementById('Default_Credit_period0').style.display = "flex";
+            document.getElementById('creditdays0').style.display = "flex";
+        }
+        else{
+            
+            document.getElementById('Default_Credit_period0').style.display = "none";
+            document.getElementById('creditdays0').style.display = "none";
+        }
+    }
+
+</script>
+
+
+
+
+
+<div class="Statutory_Details hide p-0 m-0 w-100" id="Statutory_Details">
+<h6 class="p-3">Statutory Details</h6>
+
+<div class="row container-fluid   p-2 m-0 ">
+    <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Include assessable value calculations for </label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="assessable_calculation" id="calcgst" class="form-control" onchange="showAssets()">
+            <option value="Not_Applicable">Not Applicable</option>
+            <option value="GST">GST</option>  
+            
+        </select>
+    </div>
+</div>
+
+
+
+<div class="row container-fluid   p-2 m-0 hide w-100 " id="Approp0">
+    <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Appropriate to</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="Appropriate_to" id="Approp" class="form-control" onchange="showbased()">
+            <option value="Both">Both</option>
+            <option value="Goods">Goods</option>
+            <option value="Services">Services</option>   
+            
+        </select>
+    </div>
+</div>
+
+<div class="row container-fluid   p-2 m-0 hide w-100 " id="mtdcalc0">
+    <div class="col-sm-6 m-0 p-0 "> <label for="mtdcalc">Method of Calculation</label></div>
+    <div class="col-sm-6 m-0 p-0">
+        <select name="" id="Method_of_calc" class="form-control">
+            <option value="Based_on_Value" >Based on value</option>
+            <option value="Based_on_Quntity" id="qlty">Based on quantity</option>    
+        </select>
+    </div>
+</div>
+</div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-sm-4 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <h5 class="text-center">Mailing Address</h5>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="a">Name</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input name="name" type="text" id="mailname" class="form-control" placeholder=""></div>
+                        
+                    </div>
+                    <div class="row container-fluid   p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="adrs">Address</label></div>
+                        <div class="col-sm-6 m-0 p-0"><textarea name="address" type="text" rows="4" class="form-control" id="adrs" placeholder=""></textarea></div>
+                    </div>
+
+                    <div class="row container-fluid   p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="ctry">Country</div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="country" id="ctry" class="form-control">
+                                <option value="">Select Country</option>
+                                <option value="['Nigeria','NG']">Nigeria</option>
+                                <option value="['Afghanistan','AF']">Afghanistan</option>
+                                <option value="['Ãƒâ€¦land Islands','AX']">Ãƒâ€¦land Islands</option>
+                                <option value="['Albania','AL']">Albania</option>
+                                <option value="['Algeria','DZ']">Algeria</option>
+                                <option value="['American Samoa','AS']">American Samoa</option>
+                                <option value="['Andorra','AD']">Andorra</option>
+                                <option value="['Angola','AO']">Angola</option>
+                                <option value="['Anguilla','AI']">Anguilla</option>
+                                <option value="['Antarctica','AQ']">Antarctica</option>
+                                <option value="['Antigua and Barbuda','AG']">Antigua and Barbuda</option>
+                                <option value="['Argentina','AR']">Argentina</option>
+                                <option value="['Armenia','AM']">Armenia</option>
+                                <option value="['Aruba','AW']">Aruba</option>
+                                <option value="['Australia','AU']">Australia</option>
+                                <option value="['Austria','AT']">Austria</option>
+                                <option value="['Azerbaijan','AZ']">Azerbaijan</option>
+                                <option value="['Bahamas','BS']">Bahamas</option>
+                                <option value="['Bahrain','BH']">Bahrain</option>
+                                <option value="['Bangladesh','BD']">Bangladesh</option>
+                                <option value="['Barbados','BB']">Barbados</option>
+                                <option value="['Belarus','BY']">Belarus</option>
+                                <option value="['Belgium','BE']">Belgium</option>
+                                <option value="['Belize','BZ']">Belize</option>
+                                <option value="['Benin','BJ']">Benin</option>
+                                <option value="['Bermuda','BM']">Bermuda</option>
+                                <option value="['Bhutan','BT']">Bhutan</option>
+                                <option value="['Bolivia, Plurinational State of','BO']">"Bolivia, Plurinational State of"</option>
+                                <option value="['Bonaire, Sint Eustatius and Saba','BQ']">"Bonaire, Sint Eustatius and Saba"</option>
+                                <option value="['Bosnia and Herzegovina','BA']">Bosnia and Herzegovina</option>
+                                <option value="['Botswana','BW']">Botswana</option>
+                                <option value="['Bouvet Island','BV']">Bouvet Island</option>
+                                <option value="['Brazil','BR']">Brazil</option>
+                                <option value="['British Indian Ocean Territory','IO']">British Indian Ocean Territory</option>
+                                <option value="['Brunei Darussalam','BN']">Brunei Darussalam</option>
+                                <option value="['Bulgaria','BG']">Bulgaria</option>
+                                <option value="['Burkina Faso','BF']">Burkina Faso</option>
+                                <option value="['Burundi','BI']">Burundi</option>
+                                <option value="['Cambodia','KH']">Cambodia</option>
+                                <option value="['Cameroon','CM']">Cameroon</option>
+                                <option value="['Canada','CA']">Canada</option>
+                                <option value="['Cape Verde','CV']">Cape Verde</option>
+                                <option value="['Cayman Islands','KY']">Cayman Islands</option>
+                                <option value="['Central African Republic','CF']">Central African Republic</option>
+                                <option value="['Chad','TD']">Chad</option>
+                                <option value="['Chile','CL']">Chile</option>
+                                <option value="['China','CN']">China</option>
+                                <option value="['Christmas Island','CX']">Christmas Island</option>
+                                <option value="['Cocos (Keeling) Islands','CC']">Cocos (Keeling) Islands</option>
+                                <option value="['Colombia','CO']">Colombia</option>
+                                <option value="['Comoros','KM']">Comoros</option>
+                                <option value="['Congo','CG']">Congo</option>
+                                <option value="['Congo, the Democratic Republic of the','CD']">"Congo, the Democratic Republic of the"</option>
+                                <option value="['Cook Islands','CK']">Cook Islands</option>
+                                <option value="['Costa Rica','CR']">Costa Rica</option>
+                                <option value="['CÃƒÂ´te d'Ivoire','CI']">CÃƒÂ´te d'Ivoire</option>
+                                <option value="['Croatia','HR']">Croatia</option>
+                                <option value="['Cuba','CU']">Cuba</option>
+                                <option value="['CuraÃƒÂ§ao','CW']">CuraÃƒÂ§ao</option>
+                                <option value="['Cyprus','CY']">Cyprus</option>
+                                <option value="['Czech Republic','CZ']">Czech Republic</option>
+                                <option value="['Denmark','DK']">Denmark</option>
+                                <option value="['Djibouti','DJ']">Djibouti</option>
+                                <option value="['Dominica','DM']">Dominica</option>
+                                <option value="['Dominican Republic','DO']">Dominican Republic</option>
+                                <option value="['Ecuador','EC']">Ecuador</option>
+                                <option value="['Egypt','EG']">Egypt</option>
+                                <option value="['El Salvador','SV']">El Salvador</option>
+                                <option value="['Equatorial Guinea','GQ']">Equatorial Guinea</option>
+                                <option value="['Eritrea','ER']">Eritrea</option>
+                                <option value="['Estonia','EE']">Estonia</option>
+                                <option value="['Ethiopia','ET']">Ethiopia</option>
+                                <option value="['Falkland Islands (Malvinas)','FK']">Falkland Islands (Malvinas)</option>
+                                <option value="['Faroe Islands','FO']">Faroe Islands</option>
+                                <option value="['Fiji','FJ']">Fiji</option>
+                                <option value="['Finland','FI']">Finland</option>
+                                <option value="['France','FR']">France</option>
+                                <option value="['French Guiana','GF']">French Guiana</option>
+                                <option value="['French Polynesia','PF']">French Polynesia</option>
+                                <option value="['French Southern Territories','TF']">French Southern Territories</option>
+                                <option value="['Gabon','GA']">Gabon</option>
+                                <option value="['Gambia','GM']">Gambia</option>
+                                <option value="['Georgia','GE']">Georgia</option>
+                                <option value="['Germany','DE']">Germany</option>
+                                <option value="['Ghana','GH']">Ghana</option>
+                                <option value="['Gibraltar','GI']">Gibraltar</option>
+                                <option value="['Greece','GR']">Greece</option>
+                                <option value="['Greenland','GL']">Greenland</option>
+                                <option value="['Grenada','GD']">Grenada</option>
+                                <option value="['Guadeloupe','GP']">Guadeloupe</option>
+                                <option value="['Guam','GU']">Guam</option>
+                                <option value="['Guatemala','GT']">Guatemala</option>
+                                <option value="['Guernsey','GG']">Guernsey</option>
+                                <option value="['Guinea','GN']">Guinea</option>
+                                <option value="['Guinea-Bissau','GW']">Guinea-Bissau</option>
+                                <option value="['Guyana','GY']">Guyana</option>
+                                <option value="['Haiti','HT']">Haiti</option>
+                                <option value="['Heard Island and McDonald Islands','HM']">Heard Island and McDonald Islands</option>
+                                <option value="['Holy See (Vatican City State)','VA']">Holy See (Vatican City State)</option>
+                                <option value="['Honduras','HN']">Honduras</option>
+                                <option value="['Hong Kong','HK']">Hong Kong</option>
+                                <option value="['Hungary','HU']">Hungary</option>
+                                <option value="['Iceland','IS']">Iceland</option>
+                                <option value="['India','IN']">India</option>
+                                <option value="['Indonesia','ID']">Indonesia</option>
+                                <option value="['Iran, Islamic Republic of','IR']">"Iran, Islamic Republic of"</option>
+                                <option value="['Iraq','IQ']">Iraq</option>
+                                <option value="['Ireland','IE']">Ireland</option>
+                                <option value="['Isle of Man','IM']">Isle of Man</option>
+                                <option value="['Israel','IL']">Israel</option>
+                                <option value="['Italy','IT']">Italy</option>
+                                <option value="['Jamaica','JM']">Jamaica</option>
+                                <option value="['Japan','JP']">Japan</option>
+                                <option value="['Jersey','JE']">Jersey</option>
+                                <option value="['Jordan','JO']">Jordan</option>
+                                <option value="['Kazakhstan','KZ']">Kazakhstan</option>
+                                <option value="['Kenya','KE']">Kenya</option>
+                                <option value="['Kiribati','KI']">Kiribati</option>
+                                <option value="['Korea, Democratic People's Republic of','KP']">"Korea, Democratic People's Republic of"</option>
+                                <option value="['Korea, Republic of','KR']">"Korea, Republic of"</option>
+                                <option value="['Kuwait','KW']">Kuwait</option>
+                                <option value="[Kyrgyzstan','KG']">yrgyzstan</option>
+                                <option value="['Lao People`s Democratic Republic','LA']">Lao People's Democratic Republic</option>
+                                <option value="['Latvia','LV']">Latvia</option>
+                                <option value="['Lebanon','LB']">Lebanon</option>
+                                <option value="['Lesotho','LS']">Lesotho</option>
+                                <option value="['Liberia','LR']">Liberia</option>
+                                <option value="['Libya','LY']">Libya</option>
+                                <option value="['Liechtenstein','LI']">Liechtenstein</option>
+                                <option value="['Lithuania','LT']">Lithuania</option>
+                                <option value="['Luxembourg','LU']">Luxembourg</option>
+                                <option value="['Macao','MO']">Macao</option>
+                                <option value="['Macedonia, the Former Yugoslav Republic of','MK']">"Macedonia, the Former Yugoslav Republic of"</option>
+                                <option value="['Madagascar','MG']">Madagascar</option>
+                                <option value="['Malawi','MW']">Malawi</option>
+                                <option value="['Malaysia','MY']">Malaysia</option>
+                                <option value="['Maldives','MV']">Maldives</option>
+                                <option value="['Mali','ML']">Mali</option>
+                                <option value="['Malta','MT']">Malta</option>
+                                <option value="['Marshall Islands','MH']">Marshall Islands</option>
+                                <option value="['Martinique','MQ']">Martinique</option>
+                                <option value="['Mauritania','MR']">Mauritania</option>
+                                <option value="['Mauritius','MU']">Mauritius</option>
+                                <option value="['Mayotte','YT']">Mayotte</option>
+                                <option value="['Mexico','MX']">Mexico</option>
+                                <option value="['Micronesia, Federated States of','FM']">"Micronesia, Federated States of</option>
+                                <option value="['Moldova, Republic of','MD']">"Moldova, Republic of"</option>
+                                <option value="['Monaco','MC']">Monaco</option>
+                                <option value="['Mongolia','MN']">Mongolia</option>
+                                <option value="['Montenegro','ME']">Montenegro</option>
+                                <option value="['Montserrat','MS']">Montserrat</option>
+                                <option value="['Morocco','MA']">Morocco</option>
+                                <option value="['Mozambique','MZ']">Mozambique</option>
+                                <option value="['Myanmar','MM']">Myanmar</option>
+                                <option value="['Namibia','NA']">Namibia</option>
+                                <option value="['Nauru','NR']">Nauru</option>
+                                <option value="['Nepal','NP']">Nepal</option>
+                                <option value="['Netherlands','NL']">Netherlands</option>
+                                <option value="['New Caledonia','NC']">New Caledonia</option>
+                                <option value="['New Zealand','NZ']">New Zealand</option>
+                                <option value="['Nicaragua','NI']">Nicaragua</option>
+                                <option value="['Niger','NE']">Niger</option>
+                                <option value="['Niue','NU']">Niue</option>
+                                <option value="['Norfolk Island','NF']">Norfolk Island</option>
+                                <option value="['Northern Mariana Islands','MP']">Northern Mariana Islands</option>
+                                <option value="['Norway','NO']">Norway</option>
+                                <option value="['Oman','OM']">Oman</option>
+                                <option value="['Pakistan','PK']">Pakistan</option>
+                                <option value="['Palau','PW']">Palau</option>
+                                <option value="['Palestine, State of','PS']">"Palestine, State of"</option>
+                                <option value="['Panama','PA']">Panama</option>
+                                <option value="['Papua New Guinea','PG']">Papua New Guinea</option>
+                                <option value="['Paraguay','PY']">Paraguay</option>
+                                <option value="['Peru','PE']">Peru</option>
+                                <option value="['Philippines','PH']">Philippines</option>
+                                <option value="['Pitcairn','PN']">Pitcairn</option>
+                                <option value="['Poland','PL']">Poland</option>
+                                <option value="['Portugal','PT']">Portugal</option>
+                                <option value="['Puerto Rico','PR']">Puerto Rico</option>
+                                <option value="['Qatar','QA']">Qatar</option>
+                                <option value="['RÃƒÂ©union','RE']">RÃƒÂ©union</option>
+                                <option value="['Romania','RO']">Romania</option>
+                                <option value="['Russian Federation','RU']">Russian Federation</option>
+                                <option value="['Rwanda','RW']">Rwanda</option>
+                                <option value="['Saint BarthÃƒÂ©lemy','BL']">Saint BarthÃƒÂ©lemy</option>
+                                <option value="['Saint Helena','Ascension and Tristan da Cunha','SH']">"Saint Helena, Ascension and Tristan da Cunha"</option>
+                                <option value="['Saint Kitts and Nevis','KN']">Saint Kitts and Nevis</option>
+                                <option value="['Saint Lucia','LC']">Saint Lucia</option>
+                                <option value="['Saint Martin (French part)','MF']">Saint Martin (French part)</option>
+                                <option value="['Saint Pierre and Miquelon','PM']">Saint Pierre and Miquelon</option>
+                                <option value="['Saint Vincent and the Grenadines','VC']">Saint Vincent and the Grenadines</option>
+                                <option value="['Samoa','WS']">Samoa</option>
+                                <option value="['San Marino','SM']">San Marino</option>
+                                <option value="['Sao Tome and Principe','ST']">Sao Tome and Principe</option>
+                                <option value="['Saudi Arabia','SA']">Saudi Arabia</option>
+                                <option value="['Senegal','SN']">Senegal</option>
+                                <option value="['Serbia','RS']">Serbia</option>
+                                <option value="['Seychelles','SC']">Seychelles</option>
+                                <option value="['Sierra Leone','SL']">Sierra Leone</option>
+                                <option value="['Singapore','SG']">Singapore</option>
+                                <option value="['Sint Maarten (Dutch part)','SX']">Sint Maarten (Dutch part)</option>
+                                <option value="['Slovakia','SK']">Slovakia</option>
+                                <option value="['Slovenia','SI']">Slovenia</option>
+                                <option value="['Solomon Islands','SB']">Solomon Islands</option>
+                                <option value="['Somalia','SO']">Somalia</option>
+                                <option value="['South Africa','ZA']">South Africa</option>
+                                <option value="['South Georgia and the South Sandwich Islands','GS']">South Georgia and the South Sandwich Islands</option>
+                                <option value="['South Sudan','SS']">South Sudan</option>
+                                <option value="['Spain','ES']">Spain</option>
+                                <option value="['Sri Lanka','LK']">Sri Lanka</option>
+                                <option value="['Sudan','SD']">Sudan</option>
+                                <option value="['Suriname','SR']">Suriname</option>
+                                <option value="['Svalbard and Jan Mayen','SJ']">Svalbard and Jan Mayen</option>
+                                <option value="['Swaziland','SZ']">Swaziland</option>
+                                <option value="['Sweden','SE']">Sweden</option>
+                                <option value="['Switzerland','CH']">Switzerland</option>
+                                <option value="['Syrian Arab Republic','SY']">Syrian Arab Republic</option>
+                                <option value="['Taiwan, Province of China','TW']">"Taiwan, Province of China"</option>
+                                <option value="['Tajikistan','TJ']">Tajikistan</option>
+                                <option value="['Tanzania, United Republic of','TZ']">"Tanzania, United Republic of"</option>
+                                <option value="['Thailand','TH']">Thailand</option>
+                                <option value="['Timor-Leste','TL']">Timor-Leste</option>
+                                <option value="['Togo','TG']">Togo</option>
+                                <option value="['Tokelau','TK']">Tokelau</option>
+                                <option value="['Tonga','TO']">Tonga</option>
+                                <option value="['Trinidad and Tobago','TT']">Trinidad and Tobago</option>
+                                <option value="['Tunisia','TN']">Tunisia</option>
+                                <option value="['Turkey','TR']">Turkey</option>
+                                <option value="['Turkmenistan','TM']">Turkmenistan</option>
+                                <option value="['Turks and Caicos Islands','TC']">Turks and Caicos Islands</option>
+                                <option value="['Tuvalu','TV']">Tuvalu</option>
+                                <option value="['Uganda','UG']">Uganda</option>
+                                <option value="['Ukraine','UA']">Ukraine</option>
+                                <option value="['United Arab Emirates','AE']">United Arab Emirates</option>
+                                <option value="['United Kingdom','GB']">United Kingdom</option>
+                                <option value="['United States','US']">United States</option>
+                                <option value="['United States Minor Outlying Islands','UM']">United States Minor Outlying Islands</option>
+                                <option value="['Uruguay','UY']">Uruguay</option>
+                                <option value="['Uzbekistan','UZ']">Uzbekistan</option>
+                                <option value="['Vanuatu','VU']">Vanuatu</option>
+                                <option value="['Venezuela, Bolivarian Republic of','VE']">"Venezuela, Bolivarian Republic of"</option>
+                                <option value="['Viet Nam','VN']">Viet Nam</option>
+                                <option value="['Virgin Islands, British','VG']">"Virgin Islands, British"</option>
+                                <option value="['Virgin Islands, U.S.','VI']">"Virgin Islands, U.S."</option>
+                                <option value="['Wallis and Futuna','WF']">Wallis and Futuna</option>
+                                <option value="['Western Sahara','EH']">Western Sahara</option>
+                                <option value="['Yemen','YE']">Yemen</option>
+                                <option value="['Zambia','ZM']">Zambia</option>
+                                <option value="['Zimbabwe','ZW']">Zimbabwe</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="state">State</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control " id="state" placeholder="" name="state"></div>
+                        
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="pin">PIN</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="pin" placeholder="" name="pincode"></div>
+                        
+                    </div>
+                </div>
+             
+    
+
+
+                    <div class="col-sm-4 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="row container-fluid   p-2 m-0" >
+                        <h6 id="bank2">Banking Details</h6>
+                        <div class="row container-fluid   p-2 m-0" id="bank3" >
+                            <div class="col-sm-6 m-0 p-0"> <label for="bank">Provide bank details</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="Activate" id="bank" class="form-control">
+                                    <option value="No">No</option> 
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h6>Tax Registration Details</h6>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="pan">PAN/IT No.</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="pan" placeholder=""></div>
+                            
+                        </div>
+
+                        <div class="row container-fluid   p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >registration Type</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="register_type" id="regtype" class="form-control">
+                                    <option value="Regular">Regular</option> 
+                                    <option value="Composition">Composition</option>
+                                    <option value="Consumer">Consumer</option>
+                                    <option value="Unregistered">Unregistered</option>
+                                    <option value="Unknown">Unknown</option>
+                                     
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="gstin">GSTIN/UN No.</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="gstin" placeholder="" name="gst_uin"></div>
+                            
+                        </div>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="setgst">Set/Alter GST Details</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="alter_gst_details" id="stgst" class="form-control">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>  
+                                </select>
+                        </div>
+                            
+                        </div>
+
+                    
+                
+                    </div>
+            </div>
+        </div><div class="row container-fluid  p-2 my-2">
+            <div class="col-sm-4 m-0 p-0"></div>
+            <div class="col-sm-2 m-0 p-0"> <p for="setgst" class="text-center p-2 m-0" style="height:100%;" >Opening balance (on 1-Aprl-22)</p></div>
+            <div class="col-sm-2 m-0 p-0"><input type="text" class="form-control" name="ledger_opening_bal" id="opening_balance" placeholder=""></div>
+            <div class="col-sm-1 ml-1 p-0"><select type="text" class="form-control" name="cd_db" id="opening_balance" placeholder="">
+                <option value="Cr">Cr</option>
+                <option value="Dr">Dr</option>
+            </select>
+            </div>
+        </div>
+            <div class="enter w-100 py-4"><button class="btn btn-info w-25 px-4">CREATE</button></div>   
+            
+        </form>
+    </div>
+
+
+    
+{% endblock %}

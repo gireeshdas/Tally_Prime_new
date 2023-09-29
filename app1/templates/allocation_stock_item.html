@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+    
+    
+    .form-popup {
+                visibility: hidden;       
+                position: fixed;
+                top: 230px;
+                right: 15px;
+                background-color: rgb(216, 232, 238); 
+                border: 1px solid #f1f1f1;
+                z-index: 9;
+                width: 300px;
+                height: 200px;
+            }
+</style>
+    <div class="m-3">
+       
+
+     
+        
+            <h6 class="bg-info text-light m-0 p-2">Stock Item Allocations</h6>
+
+       
+       
+
+        <div style="overflow: scroll ;max-height: 70vh; width: 100%;background-color:rgba(0,0,0,0.4); ">
+            <Table class="w-100 table text-center" border="1">
+                <tr>
+                    <th style="width: 2%;" >Godown</th>
+                    <th >Quantity</th>
+                    <th >Rate</th>
+                    <th >Per</th>
+                    <th >Amount</th>
+    
+                </tr>
+                
+                <tr>
+                    <form action="stock_item_allocations" method="post">
+                        {% csrf_token %}
+                     
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="allocate">Allocations of :</label></div>
+                            <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="allocate"
+                                style="width: 30%" id="loc" 
+                                placeholder="" autocomplete="off"/></div> 
+                        </div>
+    
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-4 m-0 p-0"> <label for="for">for :</label></div>
+                            <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="for_allocate"
+                                style="width: 30%;" id="for" 
+                                placeholder="" autocomplete="off"></div> 
+                        </div>
+                
+
+                       
+
+                  <td style="width: 30%;"> <input class="custom-select-md form-control" type="text" name="godown"
+                    id="primary-text" onfocus="showList()"
+                   placeholder="Primary" autocomplete="off"></td>
+                  <td> <input class="custom-select-md form-control" type="number" id="quantity" name="quantity"
+                    placeholder="" autocomplete="off"/> </td>
+                  <td> <input class="custom-select-md form-control" type="number" id="rate" name="rate"
+                    id="" 
+                   placeholder="" autocomplete="off"/></td>
+                  <td style="width: 10%;"> <input class="custom-select-md form-control" type="text" id="per" name="per"
+                    id="" 
+                   placeholder="" autocomplete="off"/></td>
+                  <td> <input class="custom-select-md form-control" type="number" id="amount" name="amount"
+                    placeholder="" autocomplete="off"/></td>
+                  <td> <button class="btn btn-info">Enter</button></td> 
+                </form>
+                </tr>
+                
+            
+                
+            </Table>
+
+        </div>
+   
+ 
+    </div>
+
+    <div class="form-popup" id="list-div" >
+  
+        <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Godowns</h6>
+    <hr >
+    <div>
+        <table >
+        <tr >
+            <td>
+                 <a href="godown_secondary"> <button
+                    type="submit"
+                    style="color: black;margin-left: 310%; width: 20%"
+                    class="custom-select-md form-control"
+                  >
+                    create
+                  </button></a>
+            </td>
+        </tr>
+    
+        <tr>
+          <td>    
+    
+            {% for l in gd %}
+            <div onclick="hideList('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+            {% endfor %}
+          </td>
+        </tr>  
+        
+        </table>
+    </div>
+    
+     </div>
+    
+    
+    
+    
+        <script>
+           
+            document.getElementById("loc").value = localStorage.getItem("name");
+    
+         
+    
+            document.getElementById("for").value = localStorage.getItem("units");
+            
+       
+            document.getElementById("per").value = localStorage.getItem("units");
+         
+    
+            localStorage.clear();
+            // document.getElementById("per").value = localStorage.getItem("units");
+           
+    
+    
+    
+            function checker(){
+                var result =confirm('Are you sure?');
+                if (result==false){
+                    event.preventDefault();
+                }
+            }
+          
+    
+            
+            function showList() {
+                document.getElementById("list-div").style.visibility = "visible";
+            }
+            function hideList(valueDIv) {
+                document.getElementById("primary-text").value=valueDIv;
+                document.getElementById("list-div").style.visibility = "hidden";
+            }
+    
+            $('#quantity, #rate').on('input',function(){
+                var quantity = parseFloat($('#quantity').val()) || 0;
+                var rate = parseFloat($('#rate').val()) || 0;
+    
+                $('#amount').val(quantity * rate);    
+            });
+            
+           
+            
+            
+    
+        </script>
+                
+           
+          
+            
+           
+        
+    {% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .card {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          max-width: 600px;
+          margin: auto;
+          text-align: center;
+          font-family: arial;
+        }
+        
+        .price {
+          color: white;
+          font-size: 20px;
+        }
+        
+        .card button {
+          border: none;
+          outline: 0;
+          padding: 12px;
+          color: white;
+          background-color: #000;
+          text-align: center;
+          cursor: pointer;
+          width: 40%;
+          font-size: 18px;
+        }
+        .card button:hover {
+          opacity: 0.7;
+        }
+        </style>
+
+        <div class="card"><br><br><br><br>
+          <p class="price">Currency ₹ exists by defualt for the company.</p>
+          <p>Do you want to alter currency ₹ or create a new currency ?</p>
+          <div>
+            <a href="{% url 'c_create' cmp.id %}" class="btn btn-outline-warning w-15">C:CREATE</a>&nbsp;&nbsp;&nbsp;
+              <a href="{% url 'c_alter' cmp.id %}" class="btn btn-outline-info w-15">A:ALTER</a>
+          </div><br><br><br><br>
+          <!-- <div class="enter w-100 py-4"><a href="c_create" class="btn btn-outline-warning w-15">C:CREATE</a>
+          <div class="enter w-100 py-4"><a href="c_alter" class="btn btn-outline-info w-15">A:ALTER</a></div>  -->
+        </div>
+        
+{% endblock %}

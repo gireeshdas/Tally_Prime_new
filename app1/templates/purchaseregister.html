@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+  div.a {
+  text-align: center;
+  }
+  th.a{
+    text-align: center;
+    width: 120px;
+   }
+  .btns_prnt{
+      width: 100%;
+      text-align: end;
+      background-color: rgba(240, 248, 255, 0);
+      border: none;
+      /* padding: 6px; */
+
+  }
+  .btns_prnt:hover{
+      background-color:orange;
+      color: rgb(15, 14, 14);
+  }
+  tr:hover{
+    background-color: rgb(255, 196, 0);
+}
+
+</style>                                                    
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<center></center><h5 class="text-capitalize" style="text-align:center;"></h5></center>   
+<a href="javascript:;" class="has-arrow">
+  <div class="row container-fluid p-8 mx-0">
+          <div class="col-sm-12 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+        <div  class="bg-info text-light"> Purchase Register<span style="margin-left: 40%;">{{data.cmp.name}}</span></div>
+<div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);"></div>
+    <table class="table-bordered" width="100%">
+      <thead class="thead-dark"> 
+        <tr>
+          <th colspan="4" class="a"></th>
+          <th class="a"></th></tr>
+          <tr>
+            <th colspan="5" class="a"><br/>Particulars</th>
+            
+            <th colspan="5" class="a">Transactions</th>
+          </tr>
+        </thead>
+         <tr>
+          <th colspan="5"></th>
+          <th colspan="2" class="a"><br/>Credit</th>
+          <th colspan="2" class="a"><br/>Debit</th>
+          <th colspan="2" class="a"><br/>closingBalance</th>
+         </tr>      
+           <tr>
+              <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 04  %}" class="btns_prnt">April</a></td>
+              <td colspan="2" class="a" text-align="center"><center>{{data.april}}</center></td>
+              <td colspan="2" class="a" text-align="center"><center></center></td>
+              <td colspan="2" class="a" text-align="center"><center>{{data.april}}</center></td>
+           </tr> 
+           <tr>
+            <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 05  %}" class="btns_prnt">May</a></td>
+            <td colspan="2" class="a" text-align="center"><center>{{data.may}}</center></td>
+            <td colspan="2" class="a" text-align="center"><center></center></td>
+            <td colspan="2" class="a" text-align="center"><center>{{data.may}}</center></td>
+         </tr> 
+         <tr>
+          <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 06  %}" class="btns_prnt">June</a></td>
+          <td colspan="2" class="a" text-align="center"><center>{{data.june}}</center></td>
+          <td colspan="2" class="a" text-align="center"><center></center></td>
+          <td colspan="2" class="a" text-align="center"><center>{{data.june}}</center></td>
+       </tr> 
+       <tr>
+        <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 07  %}" class="btns_prnt">July</a></td>
+        <td colspan="2" class="a" text-align="center"><center>{{data.july}}</center></td>
+        <td colspan="2" class="a" text-align="center"><center></center></td>
+        <td colspan="2" class="a" text-align="center"><center>{{data.july}}</center></td>
+     </tr> 
+     <tr>
+      <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 08  %}" class="btns_prnt">August</a></td>
+      <td colspan="2" class="a" text-align="center"><center>{{data.august}}</center></td>
+      <td colspan="2" class="a" text-align="center"><center></center></td>
+      <td colspan="2" class="a" text-align="center"><center>{{data.august}}</center></td>
+   </tr> 
+   <tr>
+    <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 09  %}" class="btns_prnt">September</a></td>
+    <td colspan="2" class="a" text-align="center"><center>{{data.september}}</center></td>
+    <td colspan="2" class="a" text-align="center"><center></center></td>
+    <td colspan="2" class="a" text-align="center"><center>{{data.september}}</center></td>
+ </tr> 
+ <tr>
+  <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 10  %}" class="btns_prnt">October</a></td>
+  <td colspan="2" class="a" text-align="center"><center>{{data.october}}</center></td>
+  <td colspan="2" class="a" text-align="center"><center></center></td>
+  <td colspan="2" class="a" text-align="center"><center>{{data.october}}</center></td>
+</tr> 
+<tr>
+  <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 11  %}" class="btns_prnt">November</a></td>
+  <td colspan="2" class="a" text-align="center"><center>{{data.november}}</center></td>
+  <td colspan="2" class="a" text-align="center"><center></center></td>
+  <td colspan="2" class="a" text-align="center"><center>{{data.november}}</center></td>
+</tr> 
+<tr>
+<td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 12 %}" class="btns_prnt">December</a></td>
+<td colspan="2" class="a" text-align="center"><center>{{data.december}}</center></td>
+<td colspan="2" class="a" text-align="center"><center></center></td>
+<td colspan="2" class="a" text-align="center"><center>{{data.december}}</center></td>
+</tr> 
+<tr>
+<td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 01  %}" class="btns_prnt">January</a></td>
+<td colspan="2" class="a" text-align="center"><center>{{data.january}}</center></td>
+<td colspan="2" class="a" text-align="center"><center></center></td>
+<td colspan="2" class="a" text-align="center"><center>{{data.january}}</center></td>
+</tr> 
+<tr>
+<td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 02  %}" class="btns_prnt">Febuary</a></td>
+<td colspan="2" class="a" text-align="center"><center>{{data.febuary}}</center></td>
+<td colspan="2" class="a" text-align="center"><center></center></td>
+<td colspan="2" class="a" text-align="center"><center>{{data.febuary}}</center></td>
+</tr> 
+<tr>
+  <td colspan="5" text-align="center"><a href="{% url 'listofpurchasevoucher' 03  %}" class="btns_prnt">March</a></td>
+  <td colspan="2" class="a" text-align="center"><center>{{data.march}}</center></td>
+  <td colspan="2" class="a" text-align="center"><center></center></td>
+  <td colspan="2" class="a" text-align="center"><center>{{data.march}}</center></td>
+  </tr> 
+   
+      <div class="row container-fluid m-0 w-100 p-0">
+        <table class="table p-0 m-0">
+          <tbody>
+              <tr>
+                  <td class="w-75 m-0 p-0 pl-3">Grand Total</td>
+                  <td class="w-25 m-0 p-0 text-center"><h3 class="btns_prnt">{{total1}}</h3</td>
+              </tr>
+          </tbody>
+      </table>   
+    </table>
+    </div>
+  </div>
+
+{% endblock %}
+ 

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .card {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          max-width: 500px;
+          margin: auto;
+          text-align: right;
+          font-family: arial;
+        }
+        a{
+            margin-right: 10px;
+        }
+        .btns{
+            color: black;
+            text-decoration: none;
+        }
+        .btns_prnt{
+            width: 100%;
+            text-align: end;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+            /* padding: 6px; */
+
+        }
+        .btns_prnt:hover{
+            background-color:orange;
+            color: rgb(15, 14, 14);
+        }
+    </style> 
+    
+    <div class="m-2">
+        <form class="p-0">
+            <div class="p-1">
+                <div class="card">
+                    <h6  class="bg-info text-light p-0 m-0 text-left">Select Company</h6>
+                    <h6  class=" text-light p-1 m-0 text-center" >List of companies</h6><hr>
+                    <div class="row" style="width: 100%;text-align:left;background-color: rgba(240, 248, 255, 0);border: none;">
+                        <div class="col-md-4" style="margin-left: 10px;">Data Path/Name</div>
+                        <div class="col-md-5">Number</div>
+                        <div class="col-md-2">Period</div>
+                    </div><br>
+                    <a href="{% url 'create_cmpny' %}"><h6>Create Company</h6></a><br>
+                    
+                    <table>
+                        {% for i in com %}
+                        <tr>
+                            <div style="margin-left:10px;">
+                                <a href="{% url 'enable' i.id %}">
+                                    <div class="row">
+                                        <div class="col-md-3" style="color: white;">{{i.name}}</div>
+                                        <div class="col-md-3" style="color: white;">({{i.id}})</div>
+                                        <div class="col-md-6" style="color: white;">{{i.fin_begin}} to {{i.fin_end}}&nbsp;&nbsp; </div>
+                                    </div>
+                                
+                                 
+                                </a>
+                            </div>
+                         </tr>
+                        {% endfor %}
+                    </table>
+                    
+                    
+                    
+                    
+                    
+                    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br><br>
+                </div>    
+            </div>   
+        </form>
+    </div>      
+{% endblock %}

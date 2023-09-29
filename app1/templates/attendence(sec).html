@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+         .hide{
+            display:none;
+        }
+        .flexy{
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+
+    </style>
+
+    <h3 class="text-center mb-5 ">Attendence/Production Type creation (Secondary)</h3>
+    <div class="container"  style="width: 50%;margin-left: 35%;">
+        
+        <div class="row" >
+            <div class="col">
+               
+                <form action="{% url 'attendence3' %}"  method="post">
+                    {% csrf_token %} 
+        
+                    <label class="form-label">Name</label>
+                    <input name="name" type="text" class="form-control w-50">
+                    <label class="form-label">alias</label>
+                    <input  name="alias" type="text" class="form-control w-50">
+                    <label class="form-label">Under</label>
+                    <input name="under" class="form-control w-50" onclick="showList2()" id="first">
+                        <!--{% for p2 in p %}
+                        <option name="under" value="primary">Primary</option>
+                        <option name="under" >{{p2.name}}</option>
+                        {% endfor %}
+                    </select>-->
+                    <label class="form-label">Attendence type Period type</label>
+                    <select name="type" class="form-control w-50">
+                        <option  name="type">Select the option</option>
+                        <option value="Attendance/Leave with pay" name="type">Attendance/Leave with pay</option>
+                        <option value="Leave without pay" name="type">Leave without pay</option>
+                        <option value="Production" name="type">Production</option>
+                        <option value="User Defined Calender Type" name="type">User Defined Calender Type</option>
+                    </select>
+
+                    <button type="submit"  class=" btn btn-info mt-3 w-50" >submit</button>
+
+
+
+                    <div>
+                        <div class="col-sm-7 hide" id="aiwa" style="margin-left:350px ;margin-top: -180px;">
+                          <div class="col-sm-12 m-0 p-0">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="card-title text-center custom-select-md for">
+                                          <h5>Attendence/Production Type</h5> <a href="{% url 'unit3' %}" style="margin-left: 220px; margin-top: 20px;"><h6>Create</h7></a><hr/>
+                                         
+                      
+                                      </div>
+                                      <ul class="list-group ">
+                                          <li class="list-item ps" onclick="hidelist2('primary')" value="primary">primary</li>
+                                          {% for p2 in p %}
+                                          <div class="row container-fluid  p-0 m-0">
+                                              <div class="col-sm-9 m-0 p-0"><li class="list-item ps" onclick="hidelist2('{{p2.name}}')" value="{{p2.name}}">{{p2.name}}</li></div>
+                                          </div>
+                                          {% endfor %}
+                                         
+                                        </ul>
+                                      
+                                  </div>
+                              </div>
+                              
+                      
+                      
+                          </div>
+                      </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+     </div>
+
+     <script>
+        
+
+function showList2(){
+    document.getElementById('aiwa').style.display='flex';
+    document.getElementById('si').style='buto';
+    
+    
+}
+
+function hidelist2(valueDIv){
+
+    document.getElementById('aiwa').style.display='none'
+    document.getElementById('first').value=valueDIv
+    
+    
+
+}
+
+
+
+        function checker(){
+            var result = confirm('Are you sure ?');
+            if (result== false){
+                event.preventDefault();
+
+            }
+        }
+     </script>
+
+
+
+{% endblock %}

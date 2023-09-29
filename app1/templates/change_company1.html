@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .card {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          max-width: 450px;
+          margin: auto;
+          text-align: right;
+          font-family: arial;
+        }
+        a{
+            margin-right: 10px;
+        }
+        .btns{
+            color: black;
+            text-decoration: none;
+        }
+        .btns_prnt{
+            width: 100%;
+            text-align: end;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+            /* padding: 6px; */
+
+        }
+        .btns_prnt:hover{
+            background-color:orange;
+            color: rgb(15, 14, 14);
+        }
+        .row{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+            text-align: left;
+            font-family: arial; 
+        }
+    </style> 
+    <div class="card">
+        <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: left; padding: 5px 0; width:100%;">List of companies</h5>
+        <div class="row" style="width: 100%;text-align:left;background-color: rgba(240, 248, 255, 0);border: none;">
+            
+        </div>
+        
+            <br>
+            <a href="{% url 'create' %}"><button  class="btns_prnt" id="create"><h6>Create Company</h6></button></a>
+            <a href="{% url 'select_company' %}"><button  class="btns_prnt" id="create"><h6>Select Company</h6></button></a>
+            <a href="{% url 'shut_company' %}"><button  class="btns_prnt" id="create"><h6>Shut Company</h6></button></a>
+           
+            
+          
+        
+        
+        
+        
+        
+        
+       
+        
+        
+    
+        <br>
+        <table class="table">
+            {% for c in com %}
+        <a href="{% url 'dash_board' c.id %}">
+            <button  class="btns_prnt" id="create">
+            <div class="row">
+                <div class="col-md-8">{{c.name}}</div>
+                <div class="col-md-4">({{c.id}})</div>
+               
+            </div>
+            </button>
+            </a>
+            {% endfor %}
+            
+                <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    </div>   
+    
+{% endblock %}

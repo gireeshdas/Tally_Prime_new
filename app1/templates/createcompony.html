@@ -1,0 +1,288 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Group</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items:flex-start;
+            justify-content: center;
+            background-color: rgb(204, 212, 228);
+        }
+        .form1{
+            background-color: white;
+            box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.662);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            width:30%;
+            position: absolute;
+            
+        }
+        form{
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        input,select{
+            /* margin: 10px;
+            padding: 5px; */
+            width: 100%;
+            border: none;
+            background-color: rgba(0, 0, 0, 0.04);
+            border: 2px solid rgb(0, 0, 0,0);
+        }
+        input:focus-within,select:focus{
+         border: 2px solid rgb(103, 175, 220,0.5);
+        }
+        form div{
+            width: 100%;
+        }
+        button{
+            padding: 6px 30px;
+            border-radius: 10px;
+            border: 4px solid rgb(0, 0, 0,0);
+            color: white;
+            background-color: rgb(103, 175, 220);
+        }
+        button:hover{
+            
+            border: 4px solid rgb(103, 175, 220);
+            color: rgb(103, 175, 220);
+            background-color: white;
+        }
+        .close {
+	position: absolute;
+	top: 0;
+	right: 8px;
+	font-size: 25px;
+	color: rgb(255, 255, 255);
+	transform: rotate(45deg);
+	cursor: pointer;
+    text-decoration: none;
+	
+}
+.close:hover{
+    color: yellow;
+}
+    </style>
+</head>
+<body> -->
+    {% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            .container{
+                display: flex;
+                height:60vh;
+                align-items: center;
+                justify-content: center;
+            }
+        .form1{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            
+        }
+        form{
+            padding:30px;
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+            transform: rotate(45deg);
+            cursor: pointer;
+            text-decoration: none;
+            
+        }
+        button{
+            background-color:rgb(103, 175, 220) ;
+            color:white;
+            padding:10px 20px;
+        }
+    </style>
+    <div class="container">
+        
+        <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+            <a href="javascript:history.go(-1);" class="close">+</a>
+            <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">Compony Creation</h5>
+            <form method="post" action="{% url 'crtecompony' %}">
+                {% csrf_token %}
+
+    <!-- <div class="container">
+    <div class="form1">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+        <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">Group Alteration(Secondary)</h5>
+        <form action="" method="post"> -->
+        
+            
+            <div><p name="componyname"> Compony Name</p></div>
+            <input  type="text" name="componyname">
+            <div><p>Mailing Name</p></div>
+            <input type="text" name="mailingname">
+            <div><p>Address</Address></p></div>
+            <input type="text" name="address">
+            <div><p>State</p></div>
+            <select  id="primary" name="state">
+                <option value="primary">Not Applicable</option>
+                <option value="primary">Andaman & Nicobar Islands</option>
+                <option value="primary">Andhra Pradesh</option>
+                <option value="primary">Arunachal Pradesh</option>
+                <option value="primary">Assam</option>
+                <option value="primary">Bihar</option>
+                <option value="primary">Chandigarh</option>
+                <option value="primary">Chhattisgarh</option>
+                <option value="primary">Dadra and Nagar Haveli and Daman and Diu</option>
+                <option value="primary">Delhi</option>
+                <option value="primary">Goa</option>
+                <option value="primary">Gujarat</option>
+                <option value="primary">Haryana</option>
+                <option value="primary">Himachal Pradesh</option>
+                <option value="primary">Jammu and Kashmir</option>
+                <option value="primary">Jharkhand</option>
+                <option value="primary">Karnataka</option>
+                <option value="primary">Kerala</option>
+                <option value="primary">Ladakh</option>
+                <option value="primary">Lakshadweep</option>
+                <option value="primary">Madhya Pradesh</option>
+                <option value="primary">Maharashtra</option>
+                <option value="primary">Manipur</option>
+                <option value="primary">Meghalaya</option>
+                <option value="primary">Mizoram</option>
+                <option value="primary">Nagaland</option>
+                <option value="primary">Odisha</option>
+                <option value="primary">Puducherry</option>
+                <option value="primary">Punjab</option>
+                <option value="primary">Rajasthan</option>
+                <option value="primary">Sikkim</option>
+                <option value="primary">Tamil Nadu</option>
+                <option value="primary">Telangana</option>
+                
+
+            </select>
+            <div><p>Country</p></div>
+            <select  id="country" name="country">
+                <option value="Countryt">Not Applicable</option>
+                <option value="Country">Bangladesh</option>
+                <option value="Country">Bhutan</option>
+                <option value="Country">Botswana</option>
+                <option value="Country">Egypt</option>
+                <option value="Country">Ghana</option>
+                <option value="Country">Hong Kong</option>
+                <option value="Country">India</option>
+                <option value="Country">Indonesia</option>
+                <option value="Country">Kenya</option>
+                <option value="Country">Kingdom of Bahrain</option>
+                <option value="Country">Kuwait</option>
+                <option value="Country">Liberia</option>
+                <option value="Country">Malawi</option>
+                <option value="Country">Malasia</option>
+                <option value="Country">Myanmar(Burma)</option>
+                <option value="Country">Nepal</option>
+                <option value="Country">Nigeria</option>
+                <option value="Country">Philippines</option>
+                <option value="Country">Qatar</option>
+                <option value="Country">Saudi Arabia</option>
+                <option value="Country">Singapore</option>
+                <option value="Country">South Africa</option>
+                <option value="Country">Sri Lanka</option>
+                <option value="Country">Sultanate of Oman</option>
+                <option value="Country">Tanzania</option>
+                <option value="Country">Tailand</option>
+                <option value="Country">UAE</option>
+                <option value="Country">Uganda</option>
+                <option value="Country">UK</option>
+                <option value="Country">USA</option>
+                <option value="Country">Zambia</option>
+                
+            </select>
+            <div><p>Postal Code</p></div>
+            <input type="text" name="pincode">
+            <div><p>Telephone</p></div>
+            <input type="text" name="telphone">
+            <div><p>Mobile</p></div>
+            <input type="text" name="mobile">
+            <div><p>Fax</p></div>
+            <input type="text" name="fax">
+            <div><p>E-Mail</p></div>
+            <input type="text" name="email">
+            <div><p>Website</p></div>
+            <input type="text" name="website">
+            <div><p>Financial year beginning from</p></div>
+            <input type="date" name="fyearbgn">
+            <div><p>Books beginning from</p></div>
+            <input type="date" name="booksbgn">
+            <hr>
+            <div><p>Base Currency Symbol</p></div>
+            <select id="sub-ledger" name="curncysymbl">
+                <option value="No">TK</option> 
+                <option value="Yes">Nu</option>
+                <option value="Yes">P</option>
+                <option value="Yes">EGP</option>
+                <option value="Yes">GH₵</option>
+                <option value="Yes">HKD</option>
+                <option value="Yes">₹</option>
+                <option value="Yes">Rp</option>
+                <option value="Yes">KSh</option>
+                <option value="Yes">BHD</option>
+                <option value="Yes">KWD</option>
+                <option value="Yes">$</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                <option value="Yes">Nu</option>
+                 
+            </select>
+            <div><p>Formal name</p></div>
+            <select name="crncyname" id="sub-ledger" >
+                <option value="No">Bangladeshi taka</option> 
+                <option value="Yes">Buhtanese Ngultrum</option>
+                <option value="Yes">Botswana Pula</option>
+                <option value="Yes">Egyptian Pound</option>
+                <option value="Yes">Ghanaian cedi</option>
+                <option value="Yes">Hong Kong Doller</option>
+                <option value="Yes">INR</option>
+                <option value="Yes">Indonasian Rupiah</option>
+                <option value="Yes">Kenyan Shiling</option>
+                <option value="Yes">Behraini Dinar</option>
+                <option value="Yes">Kuwaiti Dinar</option>
+                <option value="Yes">Doller</option>
+                <option value="Yes">Hong Kong Doller</option>
+                <option value="Yes">Hong Kong Doller</option>
+                <option value="Yes">Hong Kong Doller</option>
+
+                 
+            </select><br>
+            
+               
+            <br>
+            
+                <button type="submit">CREATE</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

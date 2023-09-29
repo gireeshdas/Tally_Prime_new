@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }
+        .hide{
+			display: none;
+    	}
+    </style>
+
+  <div class="m-2">
+        <h6 class="bg-info text-light p-2 m-0 text-left"><a href="javascript:history.go(-1);" class="close">&times;</a>
+            Cheque Dimensions
+        </h6>
+        <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'ledger_cheque_dimenssion' %}" autocomplete="off">
+            {% csrf_token %}
+         <center>   <div class="col-sm-6 m-0 p-4">
+        <div class="row container-fluid  p-2 ">
+            <div class="col-sm-6 m-0 p-0"> <h6 for="a"><u>Cheque Printing Configuration For :</u></h6><br>All Dimension in MM Only</div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" name="ccon"  class="form-control" id="loc" placeholder=""></div>
+        </div>
+    </div>
+</center>    
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="row container-fluid p-0">
+                        <h5 class="p-3">Cheque Dimension</h5>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Width of Cheque</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="cheque_height"></div>     
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for=""></label>Height of Cheque</div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="cheque_width"></div>       
+                        </div>
+                        <h5 class="p-3">Cross Cheque</h5>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Starting Location from Left Edge</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="startL_leftEdge"></div>     
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for=""></label>Starting Location from Top Edge</div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="startL_topEdge"></div>       
+                        </div>
+                        <h5 class="p-3">Cheque Date</h5>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Distance of Line from Top Edge</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="distancel_leftEdge"></div>     
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Distance of Line from Left Edge</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="distancel_topEdge"></div>       
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Style of Date</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select class="form-control countries" name="date_style" id="">
+                                    <option value="dd-mmm-yyyy">dd-mmm-yyyy</option>
+                                    <option value="d d m m y y">d d m m y y</option>
+                                    <option value="d d m m y y y y">d d m m y y y y</option>
+                                    <option value="d d m m__y y">d d m m__y y</option>
+                                </select>
+                            </div>       
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Separator Used in Date</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" name="date_seperator"></div>       
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Separator Width</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="separator_width"></div>       
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Distance Between Characters</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="character_distance"></div>       
+                        </div>
+                        <h5 class="p-3">Party's / Payee Name</h5>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Distance of Line from Top Edge</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="Pdistancel_topEdge"></div>     
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for=""></label>Starting Location from Left Edge</div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="Pdistancel_leftEdge"></div>       
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for=""></label>Width Area</div>
+                            <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="area_width"></div>       
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="row container-fluid p-0"><h5 class="p-3">Amount in Words</h5></div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="">(A) Distance of 2nd Line from Top Edge</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="secondL_DTE"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="">(B) Height (gap) between 2nd and 1st Line</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="secondfirstL_height"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for=""><i>Distance of 1st line from Top Edge (A-B)</i></label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="firstL_dTE"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Starting Location 1st Line from Left Edge</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="sl_fisrtl_LE"></div>       
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Starting Location 2nd Line from Left Edge</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="sl_secondl_LE"></div>       
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Width Area</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="amount_widtharea"></div>       
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Print Currency format Name</div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select class="form-control" name="currencyFNM_print" id="">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>       
+                    </div>
+                    <div class="row container-fluid p-0"><h5 class="p-3">Amount in Figures</h5></div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="">Distance from Top Edge</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="df_TE"></div>     
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Starting Location from Left Edge</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="startL_LE"></div>       
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Width Area</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="amt_widtharea"></div>       
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Print Currency format Name</div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select class="form-control" name="currencyS_print" id="">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>       
+                    </div>
+                </div>
+            </div> 
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-3 m-0 p-4"></div>
+                <div class="col-sm-6 m-0 p-4">
+                    <h5 class="p-3 text-center">Company Signatory Details</h5> 
+                    <div class="row container-fluid p-2" id="">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">Company Name on Cheque</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" name="company_name" class="form-control"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Print Company Name on Cheque</div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select class="form-control" name="print_CN" id="">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>       
+                    </div>
+                    <div class="row container-fluid p-2" id="">
+                        <div class="col-sm-6 m-0 p-0"> <label for="">Salutation of 1st Signatory (if 2 Signatories)</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" name="salutation_Fsign" class="form-control"></div>
+                    </div>
+                    <div class="row container-fluid p-2" id="">
+                        <div class="col-sm-6 m-0 p-0"> <label for="">Salutation of 2nd Single Signatory</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" name="salutation_Ssign" class="form-control"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="">Distance from Top Edge</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" name="top_Edistance" class="form-control" name=""></div>     
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Starting Location from Left Edge</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="startLF_leftE"></div>       
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="">Width of Signature Area</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="width_sign_area"></div>     
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for=""></label>Height of Signature Area</div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" class="form-control" name="height_sign_area"></div>       
+                    </div>
+                </div>
+                <div class="col-sm-3 m-0 p-4"></div> 
+            </div>
+            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>       
+        </form>
+    </div>
+    
+    <script>
+         document.getElementById("loc").value=localStorage.getItem("status")
+    </script>
+    
+{% endblock %}

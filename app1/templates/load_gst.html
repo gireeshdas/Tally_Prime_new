@@ -1,0 +1,593 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .hide2{
+        display:none;
+    }
+    .form-popup {
+            display: none;       
+            margin-top: -900px;
+            margin-left: 1070px;
+            top: 230px;
+            right: 15px;
+            background-color: rgb(43, 57, 87); 
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 900px;
+        
+        }
+
+    
+    </style>
+
+  <div class="m-0">
+    <h6 style="" class="bg-info text-light p-2 m-0 text-center">GST Details</h6>
+            <form  style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'gst2' %}">
+                {% csrf_token %}
+                
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        
+
+                        <div class="row container-fluid  p-0 m-0">
+                            <h5 class="text-center  ">GST Registration Details</h5>
+                            <div class="row container-fluid  p-2 m-0">
+                                <div class="col-sm-6 m-0 p-0"> <label for="pan">State</label></div>
+                                <div class="col-sm-6 m-0 p-0">
+                                    <input name="state" id="first" class="form-control" onclick="showList2()">
+                                        
+                                    
+                                </div>
+                                
+                            </div>
+                    
+                        </div>
+                        
+                   
+                  
+                            
+
+
+    <div class="bankac hide p-0 m-0 w-100" id="bankac">
+        
+        <!-- <h6 class="p-3">Bank Account Details</h6> -->
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Registration Type</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="type" id="sh" class="form-control" onchange="am()">
+                    
+                    <option value="Regular">Regular</option>  
+                    <option value="Composition">Composition</option>
+                    
+                </select>
+
+
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">Assessee of Other Teretory</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="teretory" id="an" class="form-control" onchange="qr()" >
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>  
+                   
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">GST Applicable from</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input type="date" name="gst" class="form-control">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">GSTIN/UIN</label></div>
+            <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="swift" placeholder="" name="uin"></div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="rgtype" >Periodicity of GSTR1</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="gstr1" id="" class="form-control">
+                    <option value="Monthly">Monthly</option> 
+                    <option value="Quaterly">Quaterly</option> 
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-0 m-0 mt-8" style="margin-top: 50px;" >
+            <h5 class="text-center  " style="margin-top: 60px;">Additional Featchers</h5>
+
+            <div class="row container-fluid  p-2 m-0" id="am6">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Kerala Flood cess applicable</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="kerala" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+
+            <div class="row container-fluid  p-2 m-0" id="am1">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Set\Alter GST rate details</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="set" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid  p-2 m-0" id="am2">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Enable tax liability on advance receipts</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="enable" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+    
+            <div class="row container-fluid  p-2 m-0" id="am3">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Enable tax liability on reverse charge</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="enable2" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid  p-2 m-0" id="am4">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Enable GST Classifications</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="enable3" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid  p-2 m-0" id="am5">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Provide LUT/Bond Details</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="bond" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid hide2  p-2 m-0" id="am7">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Tax rate for taxable turnover<br>(From 1-Apr-22)</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <input type="text" name="taxrate" class="form-control">
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid hide2  p-2 m-0" id="am8">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Basis of Tax Calculation<br>(Applicable for GST CMP-08)</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="basistax" id="chqrng" class="form-control">
+                        <option value="Taxable Value">Taxable Value</option>
+                        
+                        <option value="Taxable">Taxable,Exempt and Nil rated values</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            <div class="row container-fluid hide2 p-2 m-0" id="am9">
+                <div class="col-sm-6 m-0 p-0"> <label for="pan">Enable Tax rate for Purchase<br>(Includes purchases under RCM)</label></div>
+                <div class="col-sm-6 m-0 p-0">
+                    <select name="purchase" id="chqrng" class="form-control">
+                        <option value="No">No</option>
+                        
+                        <option value="Yes">Yes</option>
+                        
+                    </select>
+                </div>
+                
+            </div>
+
+            
+
+            
+           
+    
+        </div>
+
+        
+        
+
+
+
+
+    </div>
+
+
+                    </div>
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+
+                        <h5 class=" col-sm-12-m-0 p-0 text-center mb-2">Invoice Featchers</h5>
+                        
+        <div class="row container-fluid   p-2 m-0">
+            <div class="col-sm-6 m-0 p-0 mt-2"> <label for="rgtype" >E-Way Bill Applicable</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <select name="eway" id="ab" class="form-control" onchange="pk()">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>  
+                   
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="vc">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan" style="margin-left: 30px;" >Applicable from</label></div>
+            <div class="col-sm-4 m-0 p-0">
+                <input type="date" name="applicable" class="form-control" >
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0" id="vc2">
+            <div class="col-sm-6 m-0 p-0 mt-0"> <label for="rgtype" style="margin-left: 30px;">Thresholt Limit Includes</label></div>
+            <div class="col-sm-4 m-0 p-0">
+                <select name="thresholt" id="chqprnt" class="form-control">
+                    <option value="Invoice Value">Invoice Value</option>
+                    <option value="Taxable and Exempt good values">Taxable and Exempt good values</option>
+                    <option value="Taxable good value">Taxable good value</option>  
+                   
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="vc3">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan" style="margin-left: 30px;">Thresholt Limit</label></div>
+            <div class="col-sm-4 m-0 p-0">
+                <input type="text" name="limit" class="form-control" id="pc" value="50000">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid   p-2 m-0" id="vc4">
+            <div class="col-sm-6 m-0 p-0 mt-0"> <label for="rgtype" style="margin-left: 30px;">Applicable For Infrastate</label></div>
+            <div class="col-sm-4 m-0 p-0">
+                <select name="infrastate" id="pc2" class="form-control" onchange="vc()">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                   
+                    
+                </select>
+            </div>
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="vc5">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan" style="margin-left: 60px;">Thresholt Limit</label></div>
+            <div class="col-sm-4 m-0 p-0">
+                <input type="text" name="thresholt2" class="form-control" id="pc3">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0" id="vc6">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan" style="margin-left: 30px;">Print e-way Bill with Invoice</label></div>
+            <div class="col-sm-4 m-0 p-0">
+                <input type="text" name="invoice" class="form-control">
+            </div>
+            
+        </div>
+
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-6 m-0 p-0"> <label for="pan">e-Invoice applicable</label></div>
+            <div class="col-sm-6 m-0 p-0">
+                <input type="text" name="einvoice" class="form-control">
+            </div>
+            
+        </div>
+
+        </div>
+        <div class="enter w-100 py-4"><button type="submit" class="btn btn-info w-75 px-4">CREATE</button></div> 
+        
+        
+
+        
+<!-- list Creation -->
+
+<div class="form-popup" id="list" >
+
+    <h6 style="color:white">States</h6>
+    <hr>
+    <div>
+    <table style="margin-top: 40px; margin-right:30px;">
+    
+    
+    <tr>
+      <td>  <ul style="font-size: 15px;" >
+        
+           	<li class="list-item ps" onclick="hidelist2('Arunachal Pradesh')">Arunachal Pradesh</li>	
+            	<li class="list-item ps" onclick="hidelist2('Assam')">Assam</li>
+                <li class="list-item ps"onclick="hidelist2('Bihar')">Bihar</li>
+                <li class="list-item ps"onclick="hidelist2('Chhattisgarh')">Chhattisgarh</li>
+                <li class="list-item ps"onclick="hidelist2('Goa')">Goa</li>
+                <li class="list-item ps"onclick="hidelist2('Gujarat')">Gujarat</li>
+                <li class="list-item ps"onclick="hidelist2('Haryana')">Haryana</li>	
+                <li class="list-item ps"onclick="hidelist2('Himachal')">Himachal</li>	
+                <li class="list-item ps"onclick="hidelist2('Jammu and Kashmir')">Jammu and Kashmir</li>	
+                <li class="list-item ps"onclick="hidelist2('Jharkhand')">Jharkhand</li>	
+                <li class="list-item ps"onclick="hidelist2('Karnataka')">Karnataka</li>	
+                <li class="list-item ps"onclick="hidelist2('Kerala')">Kerala</li>	
+                <li class="list-item ps"onclick="hidelist2('Madhya Pradesh')">Madhya Pradesh</li>	
+                <li class="list-item ps"onclick="hidelist2('Maharashtra')">Maharashtra</li>	
+                <li class="list-item ps"onclick="hidelist2('Manipur')">Manipur</li>	
+                <li class="list-item ps"onclick="hidelist2('Meghalaya')">Meghalaya</li>	
+                <li class="list-item ps"onclick="hidelist2('Mizoram')">Mizoram</li>	
+                <li class="list-item ps"onclick="hidelist2('Nagaland')">Nagaland</li>
+                <li class="list-item ps"onclick="hidelist2('Odisha')">Odisha</li>
+                <li class="list-item ps"onclick="hidelist2('Punjab')">Punjab</li>
+                <li class="list-item ps"onclick="hidelist2('Rajasthan')">Rajasthan</li>
+                <li class="list-item ps"onclick="hidelist2('Sikkim')">Sikkim</li>
+                <li class="list-item ps"onclick="hidelist2('Tamil Nadu')">Tamil Nadu</li>	
+                <li class="list-item ps"onclick="hidelist2('Telangana')">Telangana</li>
+                <li class="list-item ps"onclick="hidelist2('Tripura')">Tripura</li>
+                <li class="list-item ps"onclick="hidelist2('Uttar Pradesh')">Uttar Pradesh</li>
+                <li class="list-item ps"onclick="hidelist2('Uttarakhand')">Uttarakhand</li>
+                <li class="list-item ps"onclick="hidelist2('West Bengal')">West Bengal</li>
+            	
+            	
+            		
+            	
+      </ul>  
+        
+       
+      </td>
+    </tr>  
+    
+    </table>
+    </div>
+    
+    
+    
+    
+    </div>
+        </div>
+                </div>               
+
+                
+
+
+
+
+
+                    <!-- <div class="row container-fluid p-0 m-0">
+                        <div class="col-sm-6-p-2 m-2">
+                            <h5 class="text-center">Rounding of Information</h5>
+                            <div class="col-sm-3-m-0 p-0"><label>Round method</label></div>
+                            <div class="col-sm-3-m-0 p-0">
+                                <select name="enbl_chk_printing" id="chqprnt" class="form-control">
+                                    <option value="">On current Deduction Total</option>
+                                    <option value="">On current Earning Total</option>  
+                                    <option value="">On current Sub Total</option> 
+                                    <option value="">On Specified Formula</option> 
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
+
+<!-- 
+<style>
+    .hide{
+        display: none;
+        align-items:center;
+        justify-content:center;
+        flex-direction: column;
+    }
+</style> -->
+<script>
+    
+
+function showList2(){
+    document.getElementById('list').style.display='flex'
+    
+    
+}
+
+function hidelist2(valueDIv){
+
+    document.getElementById('list').style.display='none'
+    document.getElementById('first').value=valueDIv
+    
+    
+
+}
+
+
+
+
+
+
+
+
+    function pk(){
+        var status = document.getElementById('ab');
+        var c = status.value
+        console.log(c);
+        if (c=='No'){
+            console.log(c); 
+            document.getElementById('vc').style.display="none";
+            document.getElementById('vc2').style.display="none";
+            document.getElementById('vc3').style.display="none";
+            document.getElementById('vc4').style.display="none";
+            document.getElementById('vc5').style.display="none";
+            document.getElementById('vc6').style.display="none";
+            
+        }
+        if (c=='Yes'){
+            console.log(c); 
+            document.getElementById('vc').style.display="flex";
+            document.getElementById('vc2').style.display="flex";
+            document.getElementById('vc3').style.display="flex";
+            document.getElementById('vc4').style.display="flex";
+            document.getElementById('vc5').style.display="flex";
+            document.getElementById('vc6').style.display="flex";
+            
+        }
+    }
+
+    function vc(){
+        var status= document.getElementById('pc2');
+        var status2= document.getElementById('pc');
+        var c= status.value
+        var d= status2.value
+        if (c == 'Yes'){
+        document.getElementById('pc3').value=d
+    }
+        if (c == 'No'){
+        document.getElementById('pc3').value=""
+    }
+}
+
+    function qr(){
+        var status = document.getElementById('an');
+        var c = status.value
+        console.log(c);
+        if (c=='yes'){
+            console.log(c); 
+            document.getElementById('am2').style.display="flex";
+            document.getElementById('am1').style.display="flex";
+            document.getElementById('am6').style.display="none";
+            document.getElementById('am4').style.display="flex";
+            document.getElementById('am5').style.display="flex";
+            document.getElementById('am3').style.display="flex";
+            document.getElementById('am7').style.display="none";
+            document.getElementById('am8').style.display="none";
+            document.getElementById('am9').style.display="none";
+            
+            
+        }
+        if (c=='no'){
+            console.log(c); 
+            document.getElementById('am1').style.display="flex";
+            document.getElementById('am2').style.display="flex";
+            document.getElementById('am3').style.display="flex";
+            document.getElementById('am4').style.display="flex";
+            document.getElementById('am5').style.display="flex";
+            document.getElementById('am6').style.display="flex";
+            document.getElementById('am7').style.display="none";
+            document.getElementById('am8').style.display="none";
+            document.getElementById('am9').style.display="none";
+            
+            
+            
+        }
+    }
+
+
+    function am(){
+        var status = document.getElementById('sh');
+        var ab = document.getElementById('an')
+        var c = status.value
+        var d = ab.value
+        console.log(c);
+        if (c=='Regular'){
+            function qr(){
+                if (d=='yes'){
+                    document.getElementById('am2').style.display="flex";
+                    document.getElementById('am1').style.display="flex";
+                    document.getElementById('am6').style.display="flex";
+                    document.getElementById('am4').style.display="flex";
+                    document.getElementById('am5').style.display="flex";
+                    document.getElementById('am3').style.display="flex";
+                    document.getElementById('am7').style.display="none";
+                    document.getElementById('am8').style.display="none";
+                    document.getElementById('am9').style.display="none";
+
+                } 
+                else if(d=='no'){
+                
+                    document.getElementById('am1').style.display="flex";
+                    document.getElementById('am2').style.display="flex";
+                    document.getElementById('am3').style.display="none";
+                    document.getElementById('am4').style.display="none";
+                    document.getElementById('am5').style.display="flex";
+                    document.getElementById('am6').style.display="flex";
+                    document.getElementById('am7').style.display="none";
+                    document.getElementById('am8').style.display="none";
+                    document.getElementById('am9').style.display="none";
+
+                
+            }}
+            
+             
+            
+        }
+        else if (c=='Composition'){
+            document.getElementById('am2').style.display="none";
+            document.getElementById('am1').style.display="none";
+            document.getElementById('am6').style.display="none";
+            document.getElementById('am4').style.display="none";
+            document.getElementById('am5').style.display="none";
+            document.getElementById('am3').style.display="none";
+            document.getElementById('am7').style.display="flex";
+            document.getElementById('am8').style.display="flex";
+            document.getElementById('am9').style.display="flex";
+            
+            
+            
+        }
+    }
+
+</script>
+
+
+
+
+{% endblock %}

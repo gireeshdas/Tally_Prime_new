@@ -1,0 +1,21 @@
+<style>
+    .balance{
+        height: 20px; 
+        width: 75px;
+        background-color: rgb(255, 229, 183);
+        color: #000;
+        text-align: left;
+        left: 10px;
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    {% if cur_type == 'Cr'%}
+    <input type="text" value="{{val}} " readonly class="balance" style="color: red;">
+    <input type="text"  value="{{cur_type}}" readonly class="balance" style="width: 30px; color: red;">
+    {% else  %}
+    <input type="text"  value="{{val}}" readonly class="balance">
+    <input type="text"  value="{{cur_type}}" readonly class="balance" style="width: 30px;">
+    {% endif%}
+    
+    

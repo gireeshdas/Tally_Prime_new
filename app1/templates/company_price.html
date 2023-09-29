@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;    
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 15px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 550px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 600px;
+            padding: 2px; 
+        }
+        body{
+            overflow: hidden;
+        }
+        .btns_prnt{
+            color: #fff;
+            width: 100%;
+            cursor: pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        }
+    </style>
+    <div class="m-3">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-6"><b>Price Levals</b></div>
+                    <div class="col-md-6">
+                        {% for i in tally %}
+                        {{i.name}}
+                    {% endfor %}
+                    </div>
+                </div>
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'price_levels' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <h6  class="bg-trasparent text-light p-2 m-0 text-center">Company Price Levals</h6>
+                    <div class="p-2">
+                        <center>
+                            <div class="col-sm-6 m-0 p-0">
+                                <!-- <input type="text" class="form-control" name="number" id="num" placeholder="" value="">  -->
+                                <input type="number" id="number" name="number" class="form-control" onclick="showform();">
+                            </div> 
+                            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>    
+                        </center>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-popup" id="underForm" style="background-color: #213b52" >
+        <form action="" class="form-container1" >
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">Price Levals</h6>
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        {% for p in pr %}
+                            <option onclick="setvalue('{{p.number}}','{{p.id}}')" class="btns_prnt">&nbsp;&nbsp;{{p.number}}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{p.id}}">
+        </form>
+        <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+    </div>
+
+    <script>
+        function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+        }
+        function showform(){
+            document.getElementById('underForm').style.display= "block";
+        }
+        function setvalue(number,numberId){
+            document.getElementById('number').value= number;
+            document.getElementById('underForm').style.visibility= "block";
+            document.getElementsByName('underhidden').value= numberId;
+        }
+    </script>    
+{% endblock %} 

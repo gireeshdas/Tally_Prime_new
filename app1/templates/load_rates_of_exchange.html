@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .form1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        
+    }
+    form{
+        padding:30px;
+    }
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+        
+    }
+    .back{
+        background-color:rgba(0,0,0,0.4);
+        color: white;
+
+    }
+    btns:hover{
+        background-color:rgba(225,225,225,0.4);
+        color:black;
+    }
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+    input{
+        background-color:white;
+    }
+</style>
+    <div class="m-3">
+        <h6 class="bg-info text-light m-0 p-2">Multi Currency Alteration</h6>
+        
+        <div class="col-sm-2   m-0 p-0">
+            <input type="date"  class="w-100 from-control" name="">
+        </div>
+
+       
+
+        <div style="overflow: scroll ;max-height: 70vh; width: 100%;background-color:rgba(0,0,0,0.4); ">
+            <Table class="w-100 table text-center" border="1">
+                <tr>
+                    <th rowspan="2">Sl.no</th>
+                    <th rowspan="2">currency</th>
+                    <th rowspan="2">Std.rate</th>
+                    <th colspan="2">Selling rate</th>
+                    <th colspan="2">Buying rate</th>
+                    <th rowspan="2">Action</th>
+    
+                </tr>
+                <tr>
+    
+                    <th>last voucher rate</th>
+                    <th>Specified rate</th>
+                    <th>last voucher rate</th>
+                    <th>Specified rate</th>
+    
+                </tr>
+                {% for p in curcc %}
+                <tr>
+                    <form action="load_rates_of_exchange" method="post">
+                        
+                        {% csrf_token %}
+                       
+                  <td> {{ forloop.counter }} </td>
+                  <td> <input type="text" name="curname" id="" value="{{ p.Symbol }}" class="form-control" >
+                    
+    
+                  </td>
+                  
+                  <td> <input type="text" class="w-100 from-control" value="{{ p.stdrate }}" name="stdr"></td>
+                  <td> </td>
+                  <td> <input type="text" class="w-100 from-control" value="{{ p.selspecirate }}" name="sr"></td>
+                  <td> </td>
+                  <td> <input type="text" class="w-100 from-control" value="{{ p.buyspecirate }}" name="sr2"></td>
+                  
+                  <td> <button class="btn btn-info">Enter</button></td> 
+                </form>
+                </tr>
+                {% endfor %}
+                
+                
+            </Table>
+
+        </div>
+   
+    </div> 
+    
+   
+
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<div class="container-fluid">
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#000000;width:100%;margin: auto;">
+        <div class="col-5 ">Ledger Vouchers</div>
+        <div class="col-5" style="font-weight:600 ;text-transform:capitalize;">{{company.name}}</div>
+        <div class= 'col-2'><a href="javascript:history.go(-1);">
+          <span class="pull-right clickable" data-effect="fadeOut"><i class="fa fa-times" style="color: black;"></i></span></a>
+        </div> 
+      </div>
+      <div class="row d-flex mt-3 mb-3 " >
+        <div class="col-md-10 ">Ledger : <b>{{ledger.name}}</b></div>
+        <div class="col-md-2" style="font-weight:600 ;text-transform:capitalize;">{{first_day  |date:'d-M-Y'}} to {{last_day  |date:'d-M-Y'}}</div>
+        
+      </div>
+
+      <div class="table-responsive">
+        <table class="table  table-bordered border-dark " style="background-color: rgba(33,57,77,255);color:#fff;">
+          <thead>
+            <tr>
+              <td  class="text-center text-white">Date</td>
+              <th  class="text-center text-white">Particulars</th>
+              <td  class="text-center text-white">Vch Type</td>
+              <td  class="text-center text-white">Vch No</td>
+              <th  class="text-center text-white">Debit</th>
+              <th  class="text-center text-white">Credit</th>
+            </tr>
+            
+          </thead>
+          <tbody>
+            
+            {% if vouchers %}
+            {% for i in vouchers %}
+            <tr  class="trhover">                               
+              <td class="text-center text-white">{{i.date}}</td>
+              <td class="text-center text-white"><a href="{% url 'trialbalance_voucher_alter' i.id %}">{{i.particulars}}</a></td>
+              <td class="text-center text-white">{{i.voucher_type}}</td>
+              <td class="text-center text-white">{{i.voucher_no}}</td>
+              <td class="text-center text-white">{{i.debit}}</td>
+              <td class="text-center text-white">{{i.credit}}</td>
+            </tr>
+            {% endfor %}
+          
+            <tr>
+              <td colspan="4" class="text-white" style="text-align: end;border-bottom: none;">Opening Balance :</td>
+
+              {% if ledger.opening_blnc_type == 'Dr' %}
+              <th class="text-center text-white">{{ ledger.opening_blnc }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+              {% if ledger.opening_blnc_type == 'Cr' %}
+              <th class="text-center text-white">{{ ledger.opening_blnc }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+            </tr>
+            <tr>
+              <td colspan="4" class="text-white" style="text-align: end;border-top: none;">Current Total :</td>
+              <th class="text-center text-white">{{ td }}</th>
+              <th class="text-center text-white" >{{ tc }}</th>
+            </tr>
+
+            {% for i in cl_balance %}
+            <tr>
+              <th colspan="4" class="text-white" style="text-align: end;">Closing  Balance :</th>
+              {% if i.balance_type == 'Dr' %}
+              <th class="text-center text-white">{{ i.closing_balance }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+              {% if i.balance_type == 'Cr' %}
+              <th class="text-center text-white">{{ i.closing_balance }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+            </tr>
+            {% endfor %}
+
+            {% else %}
+
+            <tr  class="trhover">                               
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+              <td class="text-center text-white"></td>
+            </tr>
+            
+          
+            <tr>
+              <td colspan="4" class="text-white" style="text-align: end;border-bottom: none;">Opening Balance :</td>
+
+              {% if ledger.opening_blnc_type == 'Dr' %}
+              <th class="text-center text-white">{{ ledger.opening_blnc }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+              {% if ledger.opening_blnc_type == 'Cr' %}
+              <th class="text-center text-white">{{ ledger.opening_blnc }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+            </tr>
+            <tr>
+              <td colspan="4" class="text-white" style="text-align: end;border-top: none;">Current Total :</td>
+              <th class="text-center text-white"></th>
+              <th class="text-center text-white" ></th>
+            </tr>
+
+            
+            <tr>
+              <th colspan="4" class="text-white" style="text-align: end;">Closing  Balance :</th>
+              {% if ledger.current_blnc_type == 'Dr' %}
+              <th class="text-center text-white">{{ ledger.current_blnc }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+              {% if ledger.current_blnc_type == 'Cr' %}
+              <th class="text-center text-white">{{ ledger.current_blnc }}</th>
+              {% else %}
+              <th class="text-center text-white"></th>
+              {% endif %}
+
+              
+
+            </tr>
+            
+
+
+            {% endif %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .trhover:hover{
+    background-color: rgb(31, 40, 68);
+  }
+</style>
+{% endblock %}

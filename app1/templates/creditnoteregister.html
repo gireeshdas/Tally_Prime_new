@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+    .enter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .month
+    {
+        
+        display: grid;
+        margin-left: 10px;
+        font-size:medium
+    }
+    .text{
+        text:center;
+    }
+    a:hover {
+  background-color: rgb(255, 196, 0);
+}
+tr:hover{
+    background-color: rgb(255, 196, 0);
+}
+
+</style>
+<script>
+function setPeriod(){
+
+    console.log('hi')
+    document.getElementById("fdate").defaultValue= "2022-04-01"
+    document.getElementById('ldate').defaultValue= "2022-04-30"
+    var f = document.getElementById('fdate').value;
+    var l = document.getElementById('ldate').value;
+    
+    
+}
+
+
+</script>
+
+<div class="row container-fluid p-0 mx-0 justify-content-center">
+    <div class="col-sm-10 p-0" style="background-color:rgba(0,0,0,0.2);height: 100%;">
+        <div hidden id="cid">{{ com.id }}</div>
+        <div  class="bg-info text-light">&nbsp; &nbsp;  Credit Note Register<span style="margin-left: 40%;">{{cmp.name}}</span></div>
+        <div class="row container-fluid m-0 mt-4 w-100 p-0">
+            <span class="card border-bottom border-top w-75 rounded-0 contra_head">
+                <div class="card-body">
+                    <div class="card-text mt-3"><b>P a r t i c u l a r s</b></div>
+                </div>
+            </span>
+            <span class="card border w-25 text-center rounded-0 contra_head">
+                <div class="card-body p-0">
+                    <div class="card-title border-bottom mb-0">
+                    
+                        <i id="Vname">Credit Note</i><br><b>{{cmp.name}}</b><br>For 
+                        
+                    </div>
+                    
+                    <div class="card-text border-bottom">
+                        <b>Transactions</b>
+                    </div>
+                    <div class="card-text row container-fluid p-0 ml-1">
+                        <span class="col-sm-6 border-right p-0">Total Vouchers</span>
+                        <span class="col-sm-6 p-0">(Cancelled)</span>
+                    </div>
+                </div>
+            </span>
+        </div>
+<script>
+    document.getElementById("currentDate").innerHTML=new Date().toDateString();
+    function setDate(){
+            document.getElementById("currentDate").innerHTML= document.getElementById('enterDate').value;
+        }
+        var table = document.getElementById("table");
+            var cells = table.getElementsByTagName("td");
+            for (var i = 0; i < cells.length; i++) {
+                if(i == 0){
+        
+                    document.getElementById("compName").innerHTML= cells[0].innerText;
+                    setName(cells[0].innerText, cells[1].innerText);
+                }
+             }
+</script>
+
+<div class="row container-fluid m-0 w-100 p-0">
+    <table class="table p-0 m-0">
+        <tbody>
+            
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '4' %}">April</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '4' %}">  {{april}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '5' %}">May</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '5' %}">  {{may}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '6' %}">June</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '6' %}">  {{june}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '7' %}">July</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '7' %}">  {{july}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '8' %}" > August</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '8' %}" > {{august}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '9' %}">September</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '9' %}">  {{september}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '10' %}"> October</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '10' %}">  {{october}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '11' %}">November</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '11' %}">  {{november}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '12' %}">December</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '12' %}">  {{december}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '1' %}">January</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '1' %}">  {{january}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '2' %}"> February</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '2' %}">  {{february}}</a></td>
+            </tr>
+            <tr>
+                <td class="w-75 m-0 p-0 pl-3"><a href="{% url 'voucherregister' '3' %}"> March</a></td>
+                <td class="w-25 m-0 p-0 text-center"><a href="{% url 'voucherregister' '3' %}">  {{march}}</a></td>
+            </tr>
+
+            
+        </tbody>
+    </table>
+</div>  
+
+
+
+{% endblock %}
+

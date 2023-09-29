@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        
+      
+    
+    </style>
+    <div style="margin-left:20% ;margin-top: 10%;">
+    <div class="m-0" style="width: 70%;">
+
+
+        <form id="" action="bank" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+            {% csrf_token %}
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-4 m-0 p-0"></div>
+            <h6>  Bank details for: &nbsp;  &nbsp;  </h6>
+                <h6 id="loc" > </h6>
+            </div> <br><br>
+
+                <h5> <center> <u>  For Statuatory And Payroll Reports </u> </center></h5>
+
+        
+            <div style="margin-top: 5%;">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="acc_no">Acc no :</label></div>
+                    <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="accno"
+                        style="width: 50%;margin-left: 20%;" id="alias" 
+                        placeholder="" autocomplete="off"/></div> 
+                </div>
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="alia">IFSC Code :</label></div>
+                    <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="ifsc_Code"
+                        style="width: 50%;margin-left: 20%;" id="alias" 
+                        placeholder="" autocomplete="off"></div> 
+                </div>
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="under">Bank Name :</label></div>
+                    <div class="col-sm-8 m-0 p-0">
+                         <input class="custom-select-md form-control" type="text" name="bank_name"
+                               style="width: 50%;margin-left: 20%;" id="primary-text" 
+                               autocomplete="off">       
+                    </div> 
+                </div>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="gname">Branch :</label></div>
+                    <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="branch"
+                        style="width: 50%;margin-left: 20%;" id="alias" 
+                        placeholder="" autocomplete="off"/></div> 
+                </div>
+
+
+            </div>
+
+                
+
+                <input type="submit" value="create" class="btn btn-info">
+
+               
+            
+        </div>
+                
+    </div>
+                
+           
+        </form>
+
+    </div>  
+    
+    
+
+    
+<script>
+    document.getElementById("loc").innerHTML = localStorage.getItem("name");     
+</script>
+
+
+{% endblock %}

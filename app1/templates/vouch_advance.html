@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }  
+    </style>
+
+    <div class="m-2">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Voucher Type Creation (Secondary)</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <form class="p-0" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_voucher_advance' %}" autocomplete="off">
+            {% csrf_token %}
+            <div class="p-3">
+                <div class="col-sm-6 m-0 p-4">
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Starting Number</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="number" value="1" class="form-control" name="starting_no"></div>
+                    </div>
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >width Of Neumerical Part</label></div>
+                        <div class="col-sm-4 m-0 p-0"><input required type="number" value="0" class="form-control" name="numerical_partwidth"></div>
+                    </div>
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="" >Prefill With Zero</label></div>
+                        <div class="col-sm-4 m-0 p-0">
+                            <select name="prefill_zero" id="" class="form-control">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive-sm" style="background-color:rgba(0,0,0,.4);">
+                    <Table class="table text-center" border="1">
+                        <thead>
+                            <tr>
+                                <th colspan="3">Restart Numbering</th>
+                                <th colspan="2">prefix Details</th>
+                                <th colspan="2">Suffix Details</th>
+                                <th rowspan="2">Action</th>
+                            </tr>
+                            <tr><th>Applicable<br>Form</th>
+                                <th>Starting<br> Number</th>
+                                <th>Particulars</th>
+                                <th>Applicable<br>Form</th>
+                                <th>Particulars</th>
+                                <th>Applicable<br>Form</th>
+                                <th>Particulars</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="date" value="2022-04-01" data-date-format="DD/MM/YYYY" class="form-control" name="restart_applicable_dt"></td>
+                                <td><input type="number" value="1" class="w-100 form-control" name="restart_startingno"></td>
+                                <td>
+                                    <select name="restart_particular" id="" class="form-control">
+                                        <option value="Daily">Daily</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Never">Never</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Yearly">Yearly</option>
+                                    </select>
+                                </td>      
+                                <td>
+                                    {% for i in tally %}
+                                        <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="prefix_applicable_dt">
+                                    {% endfor %}
+                                </td>
+                                <td><input type="text" class="w-100 form-control" name="prefix_particular"></td>
+                                <td>
+                                    {% for i in tally %}
+                                        <input type="date" value="{{i.fin_begin|date:'Y-m-d'}}" class="form-control" name="suffix_applicable_dt">
+                                    {% endfor %}
+                                </td>
+                                <td><input type="text" class="w-100 form-control" name="suffix_particular"></td>
+                                <td> <button class="btn btn-info">Accept</button></td> 
+                            </tr>    
+                        </tbody>
+                    </Table>
+               </div>  
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
+

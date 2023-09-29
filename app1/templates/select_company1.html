@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .card {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          max-width: 600px;
+          margin: auto;
+          text-align: right;
+          font-family: arial;
+        }
+        a{
+            margin-right: 10px;
+        }
+        .btns{
+            color: black;
+            text-decoration: none;
+        }
+        .btns_prnt{
+            width: 100%;
+            text-align: end;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+            /* padding: 6px; */
+
+        }
+        .btns_prnt:hover{
+            background-color:orange;
+            color: rgb(15, 14, 14);
+        }
+        .row{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+            text-align: left;
+            font-family: arial; 
+        }
+    </style> 
+    <div class="card">
+        <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: left; padding: 5px 0; width:100%;">List of companies</h5>
+        <div class="row" style="width: 100%;text-align:left;background-color: rgba(240, 248, 255, 0);border: none;">
+            <div class="col-md-4">Data Path/Name</div>
+            <div class="col-md-3">Number</div>
+            <div class="col-md-5">Period</div>
+        </div>
+        
+            <br>
+            <a href="{% url 'create' %}"><button  class="btns_prnt" id="create"><h6>Create Company</h6></button></a>
+            {% comment %} <a href="create_cmpny"><button  class="btns_prnt" id="create"><h6>Select Remote Company</h6></button></a>
+            <a href=""><button  class="btns_prnt" id="create"><h6>Specify Path</h6></button></a>
+            <a href=""><button  class="btns_prnt" id="create"><h6>Select From Drive</h6></button></a> {% endcomment %}
+            
+          
+        
+        
+        
+        
+        
+        
+       
+        
+        
+    
+        <br>
+        <table class="table">
+            {% for c in comp1 %}
+        <a href="{% url 'dash_board' c.id %}">
+            <button  class="btns_prnt" id="create">
+            <div class="row">
+                <div class="col-md-4">{{c.name}}</div>
+                <div class="col-md-3">({{c.id}})</div>
+                <div class="col-md-5">{{c.fin_begin}} to {{c.fin_end}} </div>
+            </div>
+            </button>
+            </a>
+            {% endfor %}
+            
+                <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    </div>   
+    
+{% endblock %}

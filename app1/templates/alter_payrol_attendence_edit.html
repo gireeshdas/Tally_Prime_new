@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+
+
+
+          
+<style>
+        
+    .flexy{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .hide{
+        display: none;
+    }
+    .ps:hover{
+          color: white;
+          background-color: rgb(1, 100, 213);
+        }
+</style>
+<div class="">
+<div class="row container-fluid p-0 " >
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+        <a href="javascript:history.go(-1);" class="close">+</a>
+    <h6  class="bg-info text-light p-2">Attendence/Production Type creation</h6>
+
+    
+    
+
+<form  action="{% url 'alter_payrol_attendence_edit2' p.id %}" method="post" class="p-5">
+        {% csrf_token %}
+   
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="gname">Name :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="name" value="{{p.name}}"
+                            style="width: 100%;" id="alias" 
+                            placeholder="" autocomplete="off" required/></div> 
+
+                            
+                    </div>
+
+
+                
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alias">(Alias) :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input class="custom-select-md form-control" type="text" name="alias" value="{{p.alias}}"
+                            style="width: 100%;" id="alias" 
+                            placeholder="" autocomplete="off"></div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="under">Under :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <input name="under" id="under" onclick="clicked()" class="form-control " style="width: 100%;" value="{{p.under}}">
+                               
+                            
+                        </div> 
+                    </div>
+
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label >Attendence Type :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select name="type" onchange="salary()" id="sal" class="form-control " style="width: 100%;">
+                                <option value="">Select  </option>
+                                <option value="Attendance/Leave with pay" name="type">Attendance/Leave with pay</option>
+                                <option value="Leave without pay" name="type">Leave without pay</option>
+                                <option value="Production" name="type">Production</option>
+                                <option value="User Defined Calender Type" name="type">User Defined Calender Type</option>
+                        
+                            </select>
+                            
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid hide  p-2 m-0" id="period">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alias">Period Type :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select class="form-control" name="period">
+                                <option value="Days">Days</option>
+                            </select>
+                        </div> 
+                    </div>
+
+                    <div class="row container-fluid hide p-2 m-0" id="units">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alias">units :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <select class="form-control" name="units">
+                                <option value="">select units</option>
+                                {% for k in pk %}
+                                <option value="{{k.symbol}}">{{k.symbol}}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+                    </div>
+
+                   
+
+
+                    <div class="flexy"><input type="submit" onclick="checker()"  value="create" class="btn btn-info w-100 mt-5"></div>
+
+                 
+
+                  
+    
+</form>
+
+    </div>
+
+    <div class="col-sm-3 m-0 p-2 pt-5  " >
+        <div class="hide" id="glist">
+            <div class="col-sm-8 m-0 p-0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title text-center custom-select-md for">
+                            <h7>List of Attendance/Production Types</h7><hr/>
+                            <a href="{% url 'attendence2' %}" class="btn btn-info ">Create</a>
+        
+                        </div>
+                        <ul class="list-group ">
+                            <li class="list-item ps" onclick="hidelist('primary')" value="End of list">primary</li>
+            
+                            {% for k in std %}
+                            <li class="list-item ps" onclick="hidelist('{{k.name}}')" value="{{k.id}}">{{k.name}}  </li>
+                            {% endfor %}
+                           
+                          </ul>
+                         
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+    
+    </div>
+
+
+
+
+</div>
+</div>
+
+
+     <script>
+        function checker(){
+            var result = confirm('Are you sure ?');
+            if (result== false){
+                event.preventDefault();
+
+            }
+        }
+
+        function salary(){
+            var static = document.getElementById('sal');
+            a =static.value;
+            console.log(a);
+            if (a =='Attendance/Leave with pay'){
+                document.getElementById('period').style.display="flex";
+                document.getElementById('units').style.display="none";
+            }
+            else if (a == 'Leave without pay'){
+                document.getElementById('period').style.display="flex";
+                document.getElementById('units').style.display="none";
+
+            }
+            else if (a =='User Defined Calender Type'){
+                document.getElementById('period').style.display="flex";
+                document.getElementById('units').style.display="none";
+
+
+            }
+            else if (a =='Production'){
+                document.getElementById('period').style.display="none";
+                document.getElementById('units').style.display="flex";
+
+        
+            }
+            else{
+                document.getElementById('period').style.display="none";
+                document.getElementById('units').style.display="none";
+
+            }
+        }    
+     </script>
+
+
+<script>
+        
+      
+    function hidelist(valueDIv) {
+      document.getElementById("under").value=valueDIv;
+      document.getElementById("glist").style.display="none";
+    }
+    // function color(value){
+    //   document.body.style.backgroundColor="rgba(255, 0, 0, 0.4)";
+  
+    // }
+
+
+    function clicked() {
+
+      document.getElementById('glist').style.display="flex";
+      
+    }
+
+    function checker(){
+        var a=confirm("Are you sure")
+        if (a==false){
+            event.preventDefault()
+        }
+    }
+    
+  </script>
+
+
+
+{% endblock %}    

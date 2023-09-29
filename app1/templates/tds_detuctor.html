@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <div class="m-4">
+    <div class="row container-fluid p-0 mx-">
+        <div class="col-sm-3 m-0 p-0"></div>
+        <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+            <a href="javascript:history.go(-1);" class="close">+</a>
+        <h6 class="bg-info text-light p-2">Company TDS Deductor Details</h6>
+        
+    
+    <form id="myForm" action="{% url 'tds_detuctor' id.id %}" method="post" class="p-5">
+        {% csrf_token %}
+                          <center><div class="col-sm-6 m-0 p-0"><input type="text" name="tcmpname" id="loca"  class="form-control"></div>
+                          </center>
+                        <div class="row container-fluid  p-3 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">TAN Registration Number</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" id=""  name="ttr" class="form-control" placeholder="" required></div> 
+                        </div>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Tax deduction and collection Account Number(TAN)</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" id="" name="ttx" class="form-control" placeholder="" required></div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="nett">Deductor Type</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select id="nett" name="tdr" class=" form-control">
+                                <option value="Company">Company</option>
+                                <option value="Individual/HUf">Individual/HUf</option>
+                            </select>
+                        </div> 
+                    </div>
+                        
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"><label for="">Deductor branch/division</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" id="" name="tdrb" class="form-control" placeholder="" required></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2 m-0" id="tsd">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Set/alter details of person responsible</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="tsd0" onchange="showtsd()" name="tsad" class=" form-control">
+                                    <option value="True">Yes</option>
+                                    <option value="False" selected>No</option>
+                                </select>
+                            </div> 
+                        </div>
+                        <h6 class=" p-2" style="text-align: center;">Company TDS Deductor Details</h6>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Ignore IT exemption limit for TDS deduction</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="" name="ii" class=" form-control">
+                                    <option value="True">Yes</option>
+                                    <option value="False" selected>No</option>
+                                </select>
+                            </div> 
+                        </div>
+
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Active TDS for stock items</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="" name="at" class=" form-control">
+                                    <option value="True">Yes</option>
+                                    <option value="False" selected>No</option>
+                                </select>
+                            </div> 
+                        </div>
+                        
+                        <div class="enter w-100 py-4"style="text-align: center;"><button class="btn btn-info w-15" >Submit</button></div>
+    </form>
+       
+    <script>
+                document.getElementById("loca").value = localStorage.getItem("status");
+
+        function showtsd(){
+            var status = document.getElementById("tsd0")
+            var a = status.value;
+            if(a=="True"){
+
+                window.location.href="{% url 'tds_personal' id.id %}"
+        }
+        else{
+            document.getElementById('tsd').style.display="flex";
+        }
+
+            }
+        
+    </script>
+
+
+    {% endblock %}

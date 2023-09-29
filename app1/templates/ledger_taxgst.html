@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;        
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+    <div class="m-0">
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-3 m-0 p-0"></div>  
+            <div class="col-sm-6 m-0 p-0">
+                <div class="row bg-info text-light p-2 m-0">
+                    <div class="col-md-5">GST Details</div>
+                    <a href="javascript:history.go(-1);" class="close">x</a>
+
+                    <div class="col-md-2">
+                        {% for i in tally %}
+                            {{i.name}}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <h6  class=" text-light p-2 m-0 text-center" style="background-color: rgba(0,0,0,.4);">GST Details</h6>
+                <form class="p-4" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_ledger_taxgst' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="p-3">
+                        <div class="row container-fluid  p-2 m-0">
+                            <div class="col-sm-6 m-0 p-0"> <label for="e">Registration Type</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="registration_type" id="registration_type" class="form-control" onchange="reg_type()">
+                                    <option value="Unknown">Unknown</option> 
+                                    <option value="Composition">Composition</option>
+                                    <option value="Consumer">Consumer</option>
+                                    <option value="Regular" selected>Regular</option>
+                                    <option value="Unregistred">Unregistred</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="aoot">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Assessee of Other Teritory</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="assessee_teritory" id="assce" class="form-control" onchange="assessee()">
+                                    <option value="No">No</option> 
+                                    <option value="Yes">Yes</option> 
+                                </select>
+                            </div>    
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="iseco">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Is e-commerce Operator</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="commerce_operator" id="ecom" class="form-control" onchange="e_com()">
+                                    <option value="No">No</option> 
+                                    <option value="Yes">Yes</option> 
+                                </select>
+                            </div>    
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="cpadefp">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Consider Party as Deemed Exporter for purchase</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="party_deemed" id="" class="form-control">
+                                    <option value="No">No</option> 
+                                    <option value="Yes">Yes</option> 
+                                </select>
+                            </div>    
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="party_typ">
+                            <div class="col-sm-6 m-0 p-0"> <label for="e">Party Type</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="party_type" id="e" class="form-control">
+                                    <option value="Not Applicable">Not Applicable</option> 
+                                    <option value="Deemed Export">Deemed Export</option>
+                                    <option value="Embassy/UN Body">Embassy/UN Body</option>
+                                    <option value="SEZ">SEZ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2 m-0" id="gst">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">GSTIN / UIN</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="gstin_uin" class="form-control" pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$" title="Invalid GST Number."></div>
+                        </div>  
+                        <div class="row container-fluid  p-2 m-0" id="trans">
+                            <div class="col-sm-6 m-0 p-0"> <label for="">Is a Transporter</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="transporter" id="is_a_transporter" class="form-control" onchange="transport()">
+                                    <option value="No">No</option> 
+                                    <option value="Yes">Yes</option> 
+                                </select>
+                            </div>    
+                        </div> 
+                        <div class="row container-fluid p-2 m-0 hide" id="transporter_id">
+                            <div class="col-sm-6 m-0 p-0"><label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transporter ID</label></div>
+                            <div class="col-sm-6 m-0 p-0"><input type="text" name="transporter_id" class="form-control"></div>
+                        </div>      
+                    </div>
+                    <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>  
+                </form>
+            </div>
+        <div class="col-sm-5 m-0 p-0"></div>
+    </div>  
+
+    <script>
+        function reg_type(){
+            var status = document.getElementById("registration_type");
+            var a = status.value
+            console.log(a);
+            if( a == "Unknown" ){
+                console.log(a);
+                document.getElementById('gst').style.display = "flex";
+                document.getElementById('aoot').style.display = "flex";
+                document.getElementById('iseco').style.display = "flex";
+                document.getElementById('cpadefp').style.display = "flex";
+                document.getElementById('party_typ').style.display = "flex";
+                document.getElementById('trans').style.display = "flex";
+            }
+            else if( a == "Regular" ){
+                document.getElementById('gst').style.display = "flex";
+                document.getElementById('aoot').style.display = "flex";
+                document.getElementById('iseco').style.display = "flex";
+                document.getElementById('cpadefp').style.display = "flex";
+                document.getElementById('party_typ').style.display = "flex";
+                document.getElementById('trans').style.display = "flex";
+            }
+            else if( a == "Composition" ){
+                document.getElementById('gst').style.display = "flex";
+                document.getElementById('aoot').style.display = "flex";
+                document.getElementById('iseco').style.display = "flex";
+                document.getElementById('cpadefp').style.display = "flex";
+                document.getElementById('trans').style.display = "flex";
+                document.getElementById('party_typ').style.display = "none";
+            }
+            else if( a == "Unregistred" ){
+                document.getElementById('trans').style.display = "flex";
+                document.getElementById('gst').style.display = "none";
+                document.getElementById('aoot').style.display = "none";
+                document.getElementById('iseco').style.display = "none";
+                document.getElementById('cpadefp').style.display = "none";
+                document.getElementById('party_typ').style.display = "none";
+            }
+            else{
+                document.getElementById('trans').style.display = "none";
+                document.getElementById('gst').style.display = "none";
+                document.getElementById('aoot').style.display = "none";
+                document.getElementById('iseco').style.display = "none";
+                document.getElementById('cpadefp').style.display = "none";
+                document.getElementById('party_typ').style.display = "none";
+                document.getElementById('transporter_id').style.display = "none";
+            }
+        } 
+        function transport(){
+            var status = document.getElementById("is_a_transporter");
+            var a = status.value
+            console.log(a);
+            if( a == "Yes" ){
+                console.log(a);
+
+                document.getElementById('transporter_id').style.display = "flex";
+            }
+            else{
+                document.getElementById('transporter_id').style.display = "none";
+            }
+        }
+        function assessee(){
+            var status = document.getElementById("assce");
+            var a = status.value
+            console.log(a);
+            if( a == "No" ){
+                console.log(a);
+
+                document.getElementById('iseco').style.display = "flex";
+            }
+            else{
+                document.getElementById('iseco').style.display = "none";
+            }
+        } 
+        function e_com(){
+            var status = document.getElementById("ecom");
+            var a = status.value
+            console.log(a);
+            if( a == "No" ){
+                console.log(a);
+
+                document.getElementById('cpadefp').style.display = "flex";
+                document.getElementById('party_typ').style.display = "flex";
+            }
+            else{
+                document.getElementById('cpadefp').style.display = "none";
+                document.getElementById('party_typ').style.display = "none";
+            }
+        } 
+    </script>
+{% endblock %}

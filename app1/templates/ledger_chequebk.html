@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        } 
+        .inp{
+            border: none;
+            color: #fff;
+            background-color: rgba(0,0,0,.001);
+            width: 100px;
+        }
+    </style>
+    
+    <div class="m-2">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Cheque Book Management</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                    {{i.name}}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <form class="p-1" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'create_ledger_chequebk' %}" autocomplete="off">
+            {% csrf_token %}
+            <div class="p-3">
+                <h6 class="text-light p-2 m-0 text-center">Cheque Range For
+                    <center><input type="text" class="form-control inp text-center" id="ledgernm"></center>
+                </h6>
+                
+                <div class="table-responsive-sm" style="background-color:rgba(0,0,0,.4);">
+                    <Table class="w-100 table text-center">
+                        <thead>
+                            <tr>
+                                <th>From Number</th>
+                                <th>To Number</th>
+                                <th>Number of Cheques</th>
+                                <th>Name Of Cheque Book</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control" name="from_number" id="w" maxlength="9" pattern="^\d{6,9}$" 
+                                    title="Cheque Number atleast 6 digit long">
+                                </td>
+                                <td><input type="text" class="form-control" name="to_number" id="l" maxlength="9" pattern="^\d{6,9}$" 
+                                    title="Cheque Number atleast 6 digit long and ">
+                                </td>
+                                <td><input type="number" class="form-control" name="number_cheques" onclick="f()" id="p"></td>
+                                <td><input type="text" class="form-control" name="name_chequebk"></td>
+                                <td><button class="btn btn-info">Enter</button></td>
+                            </tr>
+                        </tbody>
+                    </Table>
+               </div>  
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("ledgernm").value = localStorage.getItem("status");
+
+        function f(){
+            var j=document.getElementById("w").value;
+            var k=document.getElementById("l").value;
+            var n=k-j;
+            document.getElementById("p").value=n;
+        }
+    
+    </script>
+{% endblock %}

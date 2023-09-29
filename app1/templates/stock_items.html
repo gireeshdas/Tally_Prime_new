@@ -1,0 +1,419 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .form-stock {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+      
+      
+      }
+
+      .form-category {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+      
+      
+      }
+      .form-units {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+
+      
+      }
+      .hide{
+        display: none;
+    }
+
+    
+    </style>
+    
+    <div class="" style="width: 85%;margin-left: 7%;margin-top: 2%;">
+        <h6  class="bg-info text-light p-2 m-0 text-left">Stock Items</h6>
+
+            <form name="myForm" id="" action="stock_items" onsubmit="validateForm()" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                <div class="col-sm-3 m-0 p-0"><input type="text" name="name" class="form-control" id="a" placeholder=""
+                    onblur="passvalues()" autocomplete="off"></div>
+               
+            </div>
+
+            
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                <div class="col-sm-3 m-0 p-0"> 
+                    <input type="text" class="form-control" id="" placeholder="" name="alias" autocomplete="off"> </div>
+                <div class="col-sm-7 m-0 p-0"></div>
+            </div>
+
+
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    
+                    
+                    <div class="row container-fluid  p-2" id="e">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Under</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" class="form-control" id="group" onfocus="showGroup()" autocomplete="off"
+                            placeholder="" value="Primary"  name="under" ></div>
+                    </div>
+                    <div class="row container-fluid  p-2" id="a_t">
+                        <div class="col-sm-6 m-0 p-0"> <label for="d">Category</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input class="custom-select-md form-control" type="text" name="category"
+                            id="categ" onfocus="showCategory()"
+                           placeholder="" value="Primary" autocomplete="off"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="unit">Units</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input id="u" type="text" name="units" class="form-control"  
+                            placeholder="" onfocus="showUnits()" 
+                            autocomplete="off"
+                            onblur="passUnits()"
+                            onchange="additional()"></div>
+                    </div>
+
+                    <!-- <div class="row container-fluid  p-2 ">
+                        <div class="col-sm-6 m-0 p-0"> <label for="salary">Godown</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" 
+                             name="godown" id="gd" class="form-control">
+                                <option value="No">No</option> 
+                                <option value="/stock_item_allocations">Yes</option>
+                            </select> <br><br>
+                        </div>
+                    </div> -->
+                    
+                    <div class="row container-fluid  p-2 ">
+                        <div class="col-sm-6 m-0 p-0"> <label for="">Additional Details</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select onchange="show()()" 
+                             name="additional" id="additional" class="form-control">
+                                <option value="null">select</option>
+                                <option value="No">No</option> 
+                                <option value="Yes">Yes</option>
+                            </select> <br><br>
+                        </div>
+                    </div>
+
+
+
+
+                    <hr>
+                   
+                    <h5 id="add" class="row container-fluid hide  p-2 m-0" ><u><b>Additional Details</b></u></h5>
+
+                    <div id="id_batches" class="row container-fluid hide  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="">Maintain in batches</label></div>
+                        <div class="col-sm-6 m-0 p-0"><select name="batches" id="id_batches" class="form-control">
+                            <option value="no">No</option> 
+                            <option value="yes">Yes</option>
+                          
+                        </select></div>
+                    </div>
+                    <div id="manu_date" class="row container-fluid hide  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="">Track Date of manufacturing</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="manufacturing_date" id="manu_date" class="form-control">
+                                <option value="no">No</option> 
+                                <option value="yes">Yes</option>
+                              
+                            </select>
+                        </div>
+                    </div>
+                    <div id="expiry" class="row container-fluid hide  p-2 m-0">
+                        <div class="col-sm-6 m-0 p-0"> <label for="">Use Expiry Dates</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="expiry_dates" id="expiry" class="form-control">
+                                <option value="no">No</option> 
+                                <option value="yes">Yes</option>
+                             
+                            </select></div>
+                    </div>
+                
+            </div>
+            
+            <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                <h5 class="text-center"> <u> <b> Statutary Details </b></u></h5>
+                <div class="row container-fluid  p-0">
+                    <div class="col-sm-6 m-0 p-0"></div>
+                    <div class="col-sm-6 m-0 p-0"></div>
+                </div>
+
+                <hr>
+                <div class="row container-fluid  p-2">
+                    <div class="col-sm-6 m-0 p-0"> <label for="e">Rate of Duty</label></div>
+                    <div class="col-sm-6 m-0 p-0"><input type="number" name="rate_of_duty" class="form-control" id="c" placeholder="" autocomplete="off"></div>
+                </div><br>
+        
+                
+
+            </div>
+        </div>
+        <h5><u><b>Opening Balance</b></u></h5>
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-2 m-0 p-0"> <label for="">Quantity</label></div>
+            <div class="col-sm-3 m-0 p-0"> 
+                <input class="custom-select-md form-control" type="number" id="quantity" name="quantity"
+                    placeholder="" autocomplete="off"/></div>
+            <div class="col-sm-7 m-0 p-0"></div>
+        </div>
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-2 m-0 p-0"> <label for="">Rate</label></div>
+            <div class="col-sm-3 m-0 p-0"> 
+                <input class="custom-select-md form-control" type="number" id="rate" name="rate"
+                    id="" 
+                   placeholder="" autocomplete="off"/>
+                </div>
+            <div class="col-sm-7 m-0 p-0"></div>
+        </div>
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-2 m-0 p-0"> <label for="">Per</label></div>
+            <div class="col-sm-3 m-0 p-0"> 
+                <input type="number" class="form-control" id="per" placeholder="" name="per" autocomplete="off"> </div>
+            <div class="col-sm-7 m-0 p-0"></div>
+        </div>
+        <div class="row container-fluid  p-2 m-0">
+            <div class="col-sm-2 m-0 p-0"> <label for="">Value</label></div>
+            <div class="col-sm-3 m-0 p-0"> 
+                <input class="custom-select-md form-control" type="number" id="amount" name="value"
+                    placeholder="" autocomplete="off"/> </div>
+            <div class="col-sm-7 m-0 p-0"></div>
+        </div>
+
+                
+            <div class="enter w-100 py-4"><button onclick="checker()" class="btn btn-info w-15" >CREATE</button></div>     
+                
+           
+        </form>
+
+    </div>  
+    
+
+    <!-- list creation -->
+
+    <!-- Form Creation stock Groups -->
+<div class="form-stock" id="list-group" >
+  
+    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Groups</h6>
+<hr >
+<div>
+    <table >
+    <tr >
+        <td>
+          <a href="stock_group"><button
+                type="submit"
+                style="color: black;margin-left: 310%; width: 10%"
+                class="custom-select-md form-control"
+              >
+                create
+              </button></a>
+        </td>
+    </tr>
+
+    <tr>
+      <td>    
+
+        {% for l in grp %}
+        <div onclick="hideGroup('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+        {% endfor %}
+      </td>
+    </tr>  
+    
+    </table>
+</div>
+ </div>
+
+ <!--List Creation stock Category -->
+
+ <div class="form-category" id="list-categ" >
+  
+    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Stock Category</h6>
+<hr >
+<div>
+    <table >
+    <tr >
+        <td>
+            <a href="stock_category"><button
+                type="submit"
+                style="color: black;margin-left: 310%; width: 20%"
+                class="custom-select-md form-control"
+              >
+                create
+              </button></a>
+        </td>
+    </tr>
+
+    <tr>
+      <td>    
+
+        {% for l in cat %}
+        <div onclick="hideCateg('{{l.name}}')" style="color: black;" >{{l.name}}</div>
+        {% endfor %}
+      </td>
+    </tr>  
+    
+    </table>
+</div>
+ </div>
+
+  <!-- List Creation Units -->
+
+   <div class="form-units" id="list-units" >
+  
+    <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Units</h6>
+<hr >
+<div>
+    <table >
+    <tr >
+        <td>
+            <a href="unit_creation"><button
+                type="submit"
+                style="color: black;margin-left: 310%; width: 20%"
+                class="custom-select-md form-control"
+              >
+                create
+              </button></a> 
+        </td>
+    </tr>
+
+    <tr>
+      <td>    
+
+        {% for l in unt %}
+      <div onclick="hideUnits('{{l.symbol}}')" style="color:black;" >{{l.symbol}}</div>
+      {% endfor %}
+      </td>
+    </tr>  
+    
+    </table>
+</div>
+ </div> 
+
+
+
+
+
+
+<script>
+        function validateForm(){
+
+            var x=document.forms["myForm"]["name"].value;
+            if (x==null || x=="")
+            {
+            alert("Name must be filled out");
+            return false;
+            }
+        }
+    
+        function checker(){
+            var result =confirm('Are you sure?');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+
+        function passvalues(){
+            var name=document.getElementById("a").value;
+            localStorage.setItem("name", name);
+            var a=localStorage.getItem("name")
+        }
+
+        
+
+         function passUnits(){
+             var un=document.getElementById("u").value;
+             localStorage.setItem("units",un);
+             var u=localStorage.getItem("units")
+          }
+    
+
+        // list showgroup
+        function showGroup() {
+            document.getElementById("list-group").style.visibility = "visible";
+        }
+        function hideGroup(valueDIv) {
+            document.getElementById("group").value=valueDIv;
+            document.getElementById("list-group").style.visibility = "hidden";
+        }
+        // list Show Category
+
+        function showCategory() {
+            document.getElementById("list-categ").style.visibility = "visible";
+        }
+        function hideCateg(valueDIv) {
+            document.getElementById("categ").value=valueDIv;
+            document.getElementById("list-categ").style.visibility = "hidden";
+        }
+
+        // list show Units
+
+        function showUnits() {
+            document.getElementById("list-units").style.visibility = "visible";
+        }
+        function hideUnits(valueDIv) {
+            document.getElementById("u").value=valueDIv;
+            document.getElementById("list-units").style.visibility = "hidden";
+        }
+
+        function show(){
+        var status =document.getElementById('additional');
+        var c=status.value;
+        console.log(c);
+        if (c=='Yes'){
+            console.log(c);
+            document.getElementById('add').style.display="flex";
+            document.getElementById('id_batches').style.display="flex";
+            document.getElementById('manu_date').style.display="flex";
+            document.getElementById('expiry').style.display="flex";
+        }
+
+        else if(c=='No'){
+            console.log(c);
+            document.getElementById('add').style.display="none";
+            document.getElementById('id_batches').style.display="none";
+            document.getElementById('manu_date').style.display="none";
+            document.getElementById('expiry').style.display="none";
+        }
+        else {
+            document.getElementById('add').style.display="none";
+            document.getElementById('id_batches').style.display="none";
+            document.getElementById('manu_date').style.display="none";
+            document.getElementById('expiry').style.display="none";
+        }
+    }
+
+
+        
+        $('#quantity,#rate').keyup(function(){
+            var a =$('#quantity').val();
+            var b = $('#rate').val();
+
+        $('#amount').val(a * b); 
+        });
+        
+        
+</script>
+
+                        
+{% endblock %}

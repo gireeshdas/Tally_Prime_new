@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% load static %}
+    <style>
+        .container{
+            
+            display: flex;
+            height:35vh;
+            align-items: center;
+            justify-content: center;
+            
+        }
+    .form1{
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        
+    }
+    form{
+        padding:30px;
+        width: 420px;
+        height: 570px;
+    }
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+        
+    }
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+</style>
+
+    
+<div class="container">
+<div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+    <a href="javascript:history.go(-1);" class="close">+</a>
+    <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">List of Employee </h5>
+    <form action="" method="post">
+    
+        
+        <a href="employee"><h8 style="text-align:left; margin-left: 320px;">Create </h8></a><br>
+        <a href="changecompany"><h8 style="text-align:left; margin-left: 320px;">Back</h8></a><br>
+        
+        
+        <hr>
+
+        {% for p in data %}
+        <div class="row container-fluid  p-0 m-0">
+            
+               <div class="col-sm-9 m-0 p-0"> <a href="{% url 'alter_payrol_employee_edit' p.id %}"><h7>{{p.name}}</h7></div>
+                <div class="col-sm-3 m-0 p-0"><i class=" bx bx-caret-right">{{ p.under}}</i></a></div>
+                
+                
+                
+            </div>
+        {% endfor %}
+
+        
+        
+</div>
+{% endblock %}

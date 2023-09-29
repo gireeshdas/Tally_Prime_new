@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+    </style>
+
+  <div style="width: 700px;margin-left: 300px;margin-top: 100px;">
+    <h6 style="" class="bg-info text-light p-2 m-0 text-center">PAN/CIN Details</h6>
+            <form class="p-5" style="background-color:rgba(0,0,0,.4);" action="{% url 'alter_statutory_panadd' %}" method="post" >
+                {% csrf_token %}
+                
+                <div class="col-sm-12 p-2 " style=" rgba(128, 128, 128, 0.6); margin-left: 50px;">
+
+                <div class="row p-2 m-0 sm-8">
+                    <div class="col-sm-4 m-0 p-0"> <label for="a">PAN/Income tax no:</label></div>
+                    <div class="col-sm-5 m-0 p-0"><input type="text" class="form-control" id="a" placeholder="" name="tax"></div>
+                    
+                </div>
+
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-4 m-0 p-0"> <label for="b">Corporate Identity no (CIN):</label></div>
+                    <div class="col-sm-5 m-0 p-0"> 
+                    <input type="text" class="form-control" id="b" placeholder="" name="no"></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+            
+                <button type="submit" onclick="change()" class="form-control btn btn-info mt-3 w-50" style="margin-left: 100px;" >submit</button>     
+                
+
+                
+        </div>
+
+                
+                    
+                   
+                
+
+                    
+                </form>
+                </div>
+
+
+                    
+        
+    {% endblock %}

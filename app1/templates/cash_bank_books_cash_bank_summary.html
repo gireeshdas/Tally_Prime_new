@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<head>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            
+            
+
+        </script>
+    
+    <style>
+
+    thead th {
+    border: .5px solid rgba(255, 255, 255, .3); ;
+    
+    
+ }
+ .table-row{
+cursor:pointer;
+}
+.table-row:hover{
+    background-color: rgb(216, 155, 51);
+}
+.table-row1{
+cursor:pointer;
+}
+.table-row1:hover{
+    background-color: rgb(216, 155, 51);
+}
+        
+    </style>
+</head>
+<body>
+    
+ 
+
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col "> Cash/Bank Summary</div>
+                </div>
+                
+                <div class="table-responsive ">
+                    <table  class="table  " style="background-color: rgba(33,57,77,255);color:#fff;">
+                    <thead>
+                        <tr>
+                          <th rowspan="3" colspan="2"   class="align-middle text-white " > 
+                            <h6 class="d-flex align-items-sm-start par p-1 py-1" style="margin-left: 20px;">Particular</h6>
+                        </th>
+                          
+                          <th colspan="2" class="text-center text-white" style="width: 25%;"><h5><i>Bank Accounts</i></h5>
+                            <h5>ABC PVT.LTD</h5>For 1-Apr-2022</th>
+                        </tr>
+                        <tr>
+                          <th colspan="2" class="text-center text-white" >Closing Balance</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center text-white">Debit</th>
+                            <th class="text-center text-white">Credit</th>
+                          </tr>
+                    </thead>
+
+                    <tbody >
+
+                        
+                        
+                        {% for i in group %}
+                       
+                        {% if i.account_books_ledger_set.all.exists %}
+                        
+                          <tr class="table-row1"  data-href="{% url 'cash_bank_books_group_summary' i.id %}">
+                            {% if i.cash_bank_books_group_under_closing_balance_set.all.exists %}
+                            {% for m in i.cash_bank_books_group_under_closing_balance_set.all %}
+                            <td colspan="2"  >  {{ i.group_under_Name }}  </td>
+                            
+                            
+
+                            
+                            <td style="text-align: end;" ><strong>
+                                {% if m.total_closing_balance_debit %}
+                                {{m.total_closing_balance_debit }}
+                                {% endif %}
+                            </strong></td>
+                            <td style="text-align: end;" ><strong>
+                                {% if m.total_closing_balance_credit %}
+                                {{m.total_closing_balance_credit }}
+                                {% endif %}
+                            </strong></td>
+                            
+                            
+                            
+                           {% endfor %}
+                           {% else %}
+                           <td colspan="2"  >  {{ i.group_under_Name }}  </td>
+                            <td style="text-align: end;" ><strong></strong></td>
+                            <td style="text-align: end;" ><strong></strong></td>
+                           {% endif %}
+                        
+                        </tr>
+                        {% endif %}
+                        
+                                
+                        {% for j in i.account_books_ledger_set.all %}
+
+                        
+
+                        <tr class="table-row">
+                            <td colspan="2"><span style="margin-left: 20px;">{{j.ledger_name}} </span></td>
+                            {% if j.cash_bank_books_totalclosing_balance_set.all.exists %}
+                            {% for l in j.cash_bank_books_totalclosing_balance_set.all %}
+                            
+                            {% if l.type == "Dr" %}
+                            <td style="text-align: end;"><strong>
+                                {% if l.Total_Closing_balance  %}
+                                {{l.Total_Closing_balance }}
+                                {% endif %}
+                            </strong></td>
+                            <td style="text-align: end;"><strong></strong></td>
+                            {% else %}
+                            <td style="text-align: end;"><strong></strong></td>
+                            <td style="text-align: end;"><strong>
+                                {% if l.Total_Closing_balance  %}
+                                {{l.Total_Closing_balance }}
+                                {% endif %}
+                            </strong></td>
+                            {% endif %}
+
+
+                            {% endfor %}
+                            {% else %}
+                            <td style="text-align: end;"></td>
+                            <td></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                           
+                        
+                        {% endfor %}
+                        
+                    
+                    
+                    
+                        <tr class="table-row">
+                            <th colspan="2" ><h6 class="d-flex align-items-sm-start par p-1 py-1 foot" style="margin-left: 20px;">Grand Total</h6></th>
+                            
+                            
+                            <th   style="text-align: end;">{{total_debit}}</th>
+                            <th  style="text-align: end;">{{total_credit}}</th>
+                            
+                        </tr>
+
+                    </tbody>
+
+
+
+
+                    </table>
+
+
+                  </div>
+
+              
+                  
+
+
+               
+
+
+
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function($) {
+        $(".table-row1").click(function() {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock %}

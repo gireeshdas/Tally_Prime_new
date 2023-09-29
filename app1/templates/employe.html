@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+
+{% block body %}
+   {% load static %}
+
+   
+<style>
+    .hide{
+        display: none;
+    }
+    .flexy{
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+
+    }
+    .form-popup {
+                visibility: hidden;       
+                position: fixed;
+                top: 230px;
+                right: 15px;
+                background-color: rgb(7, 46, 60); 
+                border: 1px solid #f1f1f1;
+                z-index: 9;
+                width: 250px;
+                
+                color: #f1f1f1;
+                text-align: center;
+            
+    }
+    .ps:hover{
+        background-color: rgb(29, 109, 230);
+    }
+            
+    
+</style>
+   <!-- <div class="container text-center">
+    {% for message in messages %}
+<h5>
+    <div class="alert alert-success mt-5" style="width: 50%;">
+        {{ message }}
+    </div>
+</h5>
+   </div> -->
+    <!-- {% endfor %} -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="bg-info text-center m-0" >Employee creation</h1>
+            <form action="{% url 'addemployee' %}" method="post" style=" background-color:rgba(0,0,0,0.5);"class="p-2">
+            {% csrf_token %}
+
+                <label  class="form-label">Name</label>
+                <input name="name" id="nm" type="text" onblur="passvalue()" class="form-control" required>
+                
+                <label  class="form-label">alias</label>
+                <input name="alias" type="text" class="form-control">
+                <label class="form-label">Under</label>
+                <input name="under" onblur="passvalue1()" & onclick="showList()" id="un" class="form-control">
+                    
+                <label class="form-label">date of joining</label>
+                <input name="join" type="date" class="form-control">
+                <label class="form-label">Define salary details</label>
+                <select name="sal" onchange="save()" id="sal" class="form-control">
+                    <option name="sal" value="No">No</option>
+                    <option name="sal" value="yes">Yes</option>
+
+                </select>
+                <h3 class="mt-4">General Information</h3>
+                <div class="row">
+                    <div class="col">
+                       
+                        <label class="form-label">Employee Number</label>
+                        <input name="empname" type="text" class="form-control  w-100">
+                        <label class="form-label">Designation</label>
+                        <input name="desig" type="text" class="form-control w-100">
+                        <label class="form-label">Function</label>
+                        <input name="fn" type="text" class="form-control w-100">
+                        <label class="form-label">Location</label>
+                        <input name="loc" type="text" class="form-control w-100">
+                        <label class="form-label">Gender</label>
+                        <select name="gen" class="form-control w-100">
+                            <option name="gen" value="unknown">Unknown</option>
+                            <option name="gen" value="male">Male</option>
+                            <option name="gen" value="female">Female</option>
+                            <option name="gen" value="other">Other</option>
+
+                        </select>
+                        <label class="form-label">Date of birth</label>
+                        <input name="dob" type="date" class="form-control w-100" >
+                        <label class="form-label">Blood Group</label>
+                        <input name="blood" type="text" class="form-control w-100" >
+                        <label class="form-label">Father's/Mother's name</label>
+                        <input name="prnts" type="text" class="form-control w-100" >
+                        <label class="form-label">Spouse's name</label>
+                        <input name="spouse" type="text" class="form-control w-100" >
+                        <label class="form-label">Address</label>
+                        <textarea name="adrs" class="md-textarea form-control w-100"></textarea>
+
+                        <label class="form-label" >Phone number</label>
+                        <input name="phone" type="number" class="form-control  w-100" >
+                        <label class="form-label ">Email</label>
+                        <input name="email" type="email" class="form-control w-100" >
+
+
+                        
+                    </div>
+
+                    <div class="col">
+                        
+                        <label class="form-labelb ">Provide Bank details</label>
+                        <select onchange="show()" id="bank" name="bank" class="form-control w-100">
+                            <option name="bank" value="unknown">Unknown</option>
+                            <option name="bank" value="Yes">Yes</option>
+                            <option name="bank" value="No">No</option>
+                        </select>
+
+                       <div class="hide flexy" id="fsp" >
+                        <h3 class="text-center mt-3">For Statutory & Payroll Reports</h3>
+
+                        <label class="form-label w-100">A/C NO</label>
+                        <input name="acount" type="text" class="form-control w-100">
+                        <label class="form-label w-100">IFSC CODE</label>
+                        <input name="ifsc" type="text" class="form-control w-100">
+                        <label class="form-label w-100">Bank Name</label>
+                        <input name="bank_name" type="text" class="form-control w-100">
+                        <label class="form-label w-100">Branch Name</label>
+                        <input name="branch_name" type="text" class="form-control w-100">
+
+                        <h5 class="text-center mt-2">For bankimg</h5>
+                        <label class="form-labelb w-100 ">Transaction Type</label>
+                        <select onchange="shw()" id="tt" name="Transaction_type" class="form-control w-100">
+                            <option  value="unknown">Unknown</option>
+                            <option  value="End of List">End of List</option>
+                            <option  value="Cheque">Cheque</option>
+                            <option  value="e-fund Transfer">e-fund Transfer</option>
+                            <option  value="ATM">ATM</option>
+                            <option  value="Card">Card</option>
+                            <option  value="ECS">ECS</option>
+                            <option  value="Others">Others</option>
+                        </select>
+                       </div>
+
+                        <div class="mt-2 hide flexy" id="ef">
+                            <label class="form-label">A/C NO</label>
+                            <input name="acnumber" type="text" class="form-control w-50">
+                            <label class="form-label">IFSC CODE</label>
+                            <input name="ifsccode" type="text" class="form-control w-50">
+                            <label class="form-label">Bank Name</label>
+                            <input name="bank_name2" type="text" class="form-control w-50">
+
+                        </div>
+
+                        <div class="hide flexy mt-2" id="cu">
+                            <h5>Cheque</h5>
+                            <label class="form-label">Cross using</label>
+                            <input name="cheque" type="text" class="form-control w-50">
+
+                        </div>
+
+
+
+
+
+
+
+
+                        <h3 class="text-center mt-3">Statutory Details</h3>
+                        <label class="form-label ">Income Tax Number(PAN)</label>
+                        <input name="taxno" type="text" class="form-control mt-2 w-100" >
+                        <label class="form-label">Adhar No</label>
+                        <input name="aadhar" type="number" class="form-control w-100" >
+                        <label class="form-label">Universal Acount Number(UAN)</label>
+                        <input name="uan" type="number" class="form-control w-100">
+                        <label class="form-label">PF acount number</label>
+                        <input name="pfn" type="number" class="form-control w-100" >
+                        <label class="form-label">PR acount number(PRAN)</label>
+                        <input name="pran" type="text" class="form-control w-100" >
+                        <label class="form-label">ESI number</label>
+                        <input name="esin" type="text" class="form-control w-100" >
+
+
+                    </div>
+
+
+                </div>
+                <button type="submit" class="btn btn-info w-100 mt-5">Submit</button>
+
+            </form>
+           
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Button trigger modal -->
+
+
+
+
+<div class="form-popup" id="list-div2" >
+  
+    <div class="" id="glist">
+        <div class="col-sm-12 m-0 p-0">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title text-center custom-select-md for">
+                        <h7 class="text-center">List of Employe groups</h7><hr/>
+                         <a href="{% url 'addemp_group2' %}" class="btn btn-info ">Create</a>
+    
+                    </div>
+                    <ul class="list-group ">
+                        <li class="list-item ps" onclick="hidelist('primary')" value="End of list">primary</li>
+        
+                        {% for k in std %}
+                        <li class="list-item ps" onclick="hidelist('{{k.name}}')" value="{{k.id}}">{{k.name}}  </li>
+                        {% endfor %}
+                       
+                      </ul>
+                     
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+
+
+
+
+
+
+<script>
+ 
+    function showList(){
+
+        document.getElementById('list-div2').style.visibility="visible";
+    }
+
+    function hidelist(valueDIv) {
+        document.getElementById("un").value=valueDIv;
+        document.getElementById("list-div2").style.visibility = "hidden";
+                    
+    }  
+
+
+
+
+    function show(){
+        var status=document.getElementById('bank');
+        var a=status.value;
+        console.log(a);
+        if (a=='Yes'){
+            console.log(a);
+            document.getElementById('fsp').style.display="flex";
+
+        }
+        else if(a=='No'){
+            document.getElementById('fsp').style.display="none";
+        }
+        else{
+            document.getElementById('fsp').style.display="none";
+        }
+    }
+
+</script>
+
+<script>
+    function shw(){
+        var name=document.getElementById('tt');
+        var a=name.value;
+        console.log(a);
+
+        if (a=='e-fund Transfer'){
+            document.getElementById('ef').style.display="flex";
+            document.getElementById('cu').style.display="none";
+        }
+        else if (a=='Cheque'){
+            document.getElementById('cu').style.display="flex";
+            document.getElementById('ef').style.display="none";
+        }
+        else{
+            document.getElementById('cu').style.display="none";
+            document.getElementById('ef').style.display="none";
+        }
+
+    
+    }
+
+    function save() {
+
+        var static =document.getElementById('sal');
+        var a =static.value;
+        console.log(a);
+
+        if (a == 'yes'){
+            window.location.href="{% url 'salary1' %}"
+
+        }
+
+    }
+
+    function passvalue(){
+        var status= document.getElementById('nm').value;
+        console.log(status);
+
+        localStorage.setItem("status",status);
+        var a =localStorage.getItem('status');
+        console.log(a);
+    }
+
+    function passvalue1(){
+        var under =document.getElementById('un').value;
+        console.log(under)
+         
+        localStorage.setItem('under',under);
+        var b=localStorage.getItem('under');
+        console.log(a);
+        
+    }
+    // document.getElementById('nm').value=localStorage.getItem("static");
+
+
+</script>
+
+
+
+
+
+{% endblock %}   

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }  
+    </style>
+
+    <div class="m-2">
+        <h6  class="bg-info text-light p-2 m-0 text-left">Cheque Book Management :</h6>
+        
+        <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="ledger_chequebook" autocomplete="off">
+            {% csrf_token %}
+            <div class="p-3">
+                <center>   <div class="col-sm-6 m-0 p-4">
+                    <div class="row container-fluid  p-2 ">
+                        <div class="col-sm-6 m-0 p-0"> <h6 for="a">Cheque Range For :</h6></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="text" name="ccon"  class="form-control" id="loc" placeholder=""></div>
+                    </div>
+                </div>
+            </center>    
+                <div class="table-responsive-sm">
+                    <Table class="w-100 table text-center">
+                        <thead>
+                            <tr>
+                                <th>From Number</th>
+                                <th>To Number</th>
+                                <th>Number of Cheques</th>
+                                <th>Name Of Cheque Book</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        
+                         
+                        <tbody>
+                            <tr>
+                                <td><input type="number" class="form-control" name="from_no" id="s"></td>
+                                <td><input type="number" class="form-control" name="to_no" id="e"></td>
+                                <td><input type="number" class="form-control" name="no_chq" onclick="f()" id="t"></td>
+                                <td><input type="text" class="form-control" name="nm_chq"></td>
+                                <td><button class="btn btn-info">create</button></td>
+                            </tr>
+                        </tbody>
+                    </Table>
+               </div>  
+            </div>
+        </form>
+    </div>
+
+    <script>
+        
+        function f(){
+            var p1=document.getElementById("s").value;
+            var p2=document.getElementById("e").value;
+            var p=p2-p1;
+            document.getElementById("t").value=p;
+        }
+        
+         document.getElementById("loc").value=localStorage.getItem("status")
+ 
+    </script>
+
+{% endblock %}

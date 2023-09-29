@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<head>
+    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    
+        
+
+    </script>
+    <style>
+        .loss2{
+        visibility: hidden;
+       
+        
+    }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:#fff;width:100%;margin: auto;">
+                    <div class="col "> Ledger Vouchers</div>
+                   
+                </div>
+                <div class="row  " style="height: 50px;">
+                <div class="col ">
+                    <h6>
+                    <span class=" d-flex justify-content-start" style="margin-top: 8px;"> Ledger : &nbsp;<strong>{{std.ledger_name}} </strong> </span>
+                    <span class="d-flex  justify-content-end " style="margin-top: -15px;"> 1-Apr-22 to 30-Apr-22</span>
+                </h6>
+                </div>
+            </div>
+                <div class="table-responsive" >
+                    <table  class="table  " style="background-color: rgba(33,57,77,255);color:#fff;">
+                        <thead >
+                        <tr>
+                          <th style="text-align: center;">Date</th>
+                          <th >Particulars</th>
+                          <th >Vch Type</th>
+                          <th style="text-align: right ;">Vch No.</th>
+                          <th style="text-align: right ;">Debit</th>
+                          <th style="text-align: right ;">Credit</th>
+                          
+                        </tr>
+                    </thead>
+
+                    <tbody >
+                        {% for p in vouch2 %}
+                        <tr>
+                            <td style="text-align: center;">{{p.date}}</td>
+                            <td ><strong></strong>{{p.particular}}</td>
+                            <td><strong></strong>{{p.voucher_type}}</td>
+                            <td style="text-align: right ;">{{p.voucher_number}}</td>
+                            <td class="debit" style="text-align: right ;">{{p.debit}}<strong>
+                            
+                            <td style="text-align: right ;"><strong>{{p.credit}}</strong></td>
+    
+                            
+    
+    
+                        </tr>
+                        {% endfor %}
+                    
+                 
+                
+
+
+                  <div class="" style="margin-top: 0;">
+
+                    <tr class="" style="margin-top: 00; height: 20px;">
+                        <td colspan="4" style="text-align: right;"> Opening Balance : 
+                            
+                           
+                    
+                            <td style="text-align: right;">
+
+                                <strong></strong>
+
+                                <br>
+                                <strong id=""></strong>
+                         
+                            </td>
+                            <td style="text-align: right;" id=""><strong></strong><br>
+                                <strong style="margin-top: 30px;" id="bab2">{{ std.ledger_opening_bal }}.00</strong></td>
+
+                          
+                             
+                               
+                        
+                    </tr>
+                    
+                    <tr class="" style="margin-top: 200;">
+                        <td colspan="4" style="text-align: right;"> 
+                            Current Balance :
+                            
+                           
+                    
+                            <td style="text-align: right;">
+
+                                <strong></strong>
+
+                                <br>
+                                <strong id="bab4">{{total_debit}}.00</strong>
+                         
+                            </td>
+                            <td style="text-align: right;" ><strong  class="loss2"></strong><br>
+                                <strong style="margin-top: 30px;" id="bab">{{total_credit}}.00</strong></td>
+
+                          
+                             
+                                
+    
+                                  
+   
+                        
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td colspan="4" style="text-align: right;"><strong >Closing Balance : </strong>  
+                        </td>
+                          
+                            
+                            <td style="text-align: right;"><strong id="bab5">{{opening_balance}}.00</strong></td>
+                            <td style="text-align: right;" ><strong></strong></td>
+                            
+                            <!-- <td style="text-align: right;"><strong></strong></td>
+                            <td style="text-align: right;"><strong></strong></td> -->
+                            
+                        
+                    </tr>
+                  </div>
+
+
+              
+                       
+                    
+                      
+                    
+                    </tbody>
+
+
+
+
+                    
+
+                    </table>
+
+
+                  </div>
+
+              
+                  
+
+
+               
+
+
+
+            </div>
+        </div>
+    </div>
+    <!-- <script>
+        setTimeout(function ad(){ 
+    var a=document.getElementById('bab').innerHTML
+    var b=document.getElementById('bab2').innerHTML
+    var c=document.getElementById('bab4').innerHTML
+    
+    
+    var d1 = parseInt(a);
+    var d2 = parseInt(b);
+    var d4 = parseInt(c);
+    
+    
+    var d=d1+d2;
+    var d5=d4-d;
+    
+    
+    document.getElementById("bab5").innerHTML = d5+".00";
+   
+    }, 2000);
+    
+    </script> -->
+
+{% endblock %}

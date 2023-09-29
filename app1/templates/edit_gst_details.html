@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        button{
+            background-color:rgb(23, 127, 192) ;
+            color:white;
+            padding:10px 10px;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        function goBack() {
+           window.history.back();
+        }
+        </script>
+
+  <div class="m-4">
+    <div class="form1"style=" background-color:rgba(0,0,0,0.3);">
+        <a href="javascript:history.go(-2);" class="close">x</a>
+        <h5 style="background-color:rgb(103, 175, 220) ; color:white; text-align: center; padding: 5px 0; width:100%;">GST details</h5>
+         <form class="p-5" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'add_newgstdetails' comp.id %}"> 
+                
+         {% csrf_token %}     
+                
+                    
+                   
+                <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        <h5 class="text-center">Edit GST registration details</h5>
+                        <div class="row container-fluid  p-0">
+                            <div class="col-sm-6 m-0 p-0"></div>
+                            <div class="col-sm-6 m-0 p-0"></div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="c">State</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="state" value="{{gst.state}}" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="d">Registration type</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="registration_type" id="e" class="form-control">
+                                    <option value="Regular" selected>Regular</option> 
+                                    <option value="Composition">Composition</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="e">Assessee of Other Territory</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="assessee" id="e" class="form-control">
+                                    <option value="Yes" selected>Yes</option> 
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="f">GST applicable from</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="fdate" value="{{gst.gst_applicable}}" class="form-control" >
+                            </div>
+                        </div>
+                        
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="g">GSTIN/UIN</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="gstin" value="{{gst.gstin}}"class="form-control"  title="Invalid GST Number Eg:07FFFF0000B2Z9"  pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" >
+                                
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="h">Periodicity of GSTR1</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="periodicity" id="e" class="form-control">
+                                    <option value="monthly" selected>Monthly</option> 
+                                    <option value="qurterly">Quarterly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                        <h5>Additional features</h5>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            
+                            <div class="col-sm-6 m-0 p-0"> <label for="i">set/alter GST rate details</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="alter_gst" id="i" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="j">Enable tax liability on advanced receipts</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="tax_liabilityadvance" id="j" class="form-control">
+                                    <option value="yes">Yes</option> 
+                                    <option value="no" selected>No</option>   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Enable tax liability on reverse charges</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="tax_liability" id="k" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Enable GST classifications</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="gst_classifications" id="k" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Provide LUT/Bond details</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="bond_details" id="k" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                        <h5 class="text-center">Invoice features</h5>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="l">e-way bill applicable</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="eway_bill" id="l" class="form-control">
+                                    <option value="no">No</option>
+                                    <option value="yes" selected>Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        {% comment %} <div class="row container-fluid  p-2">9
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Applicable from</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="applicable_from" class="form-control" value="{{companies.fin_begin}}">
+                            </div>
+                        </div> {% endcomment %}
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="f">Applicable from</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" name="applicable_from" value="{{gst.applicable_form}}" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Treshold limit includes</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <div class="col-sm-6 m-0 p-0"> 
+                                    <select name="treshold_limit" id="l" class="form-control">
+                                        <option value="Taxable and exempt goods value">Taxable and exempt goods value</option>
+                                        <option value="invoice value" selected>invoice value</option> 
+                                        <option value="Taxable goods value" >Taxable goods value</option> 
+                                       
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Treshold limit </label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <div class="col-sm-6 m-0 p-0"> <input type="text" class="form-control" name="treshold_limit1" value="{{50000}}" ></div>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Applicable for intrastate</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="intrastate" id="l" class="form-control">
+                                    <option value="no">No</option>
+                                    <option value="yes" selected>Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Treshold limit </label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <div class="col-sm-6 m-0 p-0"> <input type="text" class="form-control" name="treshold_limit2" value="{{50000}}" ></div>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Print e-way bill with invoice</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="print_ewaybill" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">e-invoicing applicable</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="e_invoicing" id="l" class="form-control">
+                                    <option value="no" selected>No</option>
+                                    <option value="yes">Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Applicable from</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" name="applicable_from" value="{{gst.app_from}}" >
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Bill from place</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" name="bill_from_place" value="{{gst.billfrom_place}}">
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Default period for the e-voice report</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input type="text" class="form-control" name="period" value="3 days">
+                            </div>
+                        </div>
+                        <div class="row container-fluid  p-2">
+                            <div class="col-sm-6 m-0 p-0"> <label for="k">Send e-way bill details with e-invoice</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="send_eway" id="l" class="form-control">
+                                    <option value="no" >No</option>
+                                    <option value="yes" selected>Yes</option> 
+                                   
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="enter w-100 py-4"><button class="btn btn-info w-15" >UPDATE</button></div>   
+                {% comment %} <a href="#" onclick="location.href = document.referrer; return false;">Back</a> {% endcomment %}
+            </form>
+        </div>
+        
+        
+    {% endblock %}

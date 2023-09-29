@@ -1,0 +1,1690 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<style>
+    .content-wrapper{
+        background-color:#1c3143;
+        margin: 1%;
+        padding: 5%;
+    }
+    select{
+        height: 25px;
+    }
+    option{
+        color: white;
+        background-color: red;
+
+    }
+</style>
+
+<div class="container-fluid" >
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row d-flex " style="background-color: rgb(103, 175, 220);color:rgb(0, 0, 0);width:100%;margin: auto;">
+                <div class="col-sm-4"> Accounting Voucher Alteration (Secondary)</div>
+                <div class="col-sm-4" style="text-align: center; text-transform: capitalize;">{{company.name}}</div>
+            </div>
+            <form style="margin-top: 30px;" method="post" action ="{% url 'alter_credit_note' cred_voucher.screditid %}">
+                {% csrf_token %}
+                <div class="ledger">
+
+                    <div class="row">   
+                        <div class="col-sm-6"> 
+
+                            <!-- Nithya change
+                            <input type="hidden" name = 'type' value="{{name}}"> -->
+                            
+                            <h6><span>Credit Note No. : 
+                                <input type="text" name="crd_no" id = "crd_no" value="{{cred_voucher.screditid}}" disabled></span></h6>
+          
+                        </div>
+                        <div class="col-sm-6" style="text-align: right;">
+                            <h6 name="cdate1" >{{cred_voucher.creditdate | date:'d-M-y' }}</h6>
+                            <input type="hidden" name = 'cdate' value="{{cred_voucher.creditdate | date:'Y-m-d' }}">
+                            <h6 name="cday">{{cred_voucher.creditdate | date:'l' }}</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label style="font-size: 18px;  margin-top: 10px;">Party Account Name :</label>
+                                    <label style="font-size: 18px;  margin-top: 10px;">Current Balance :</label>
+                                    <label style="font-size: 18px;  margin-top: 10px;">Ledger Account :</label>
+                                    <label style="font-size: 18px;  margin-top: 10px;">Current Balance :</label>
+                               
+
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <a href="" data-dismiss="modal" data-target="#crtt" data-toggle="modal">
+                                        <input type="text" class="input" name="customer" id = "customer"
+                                        value="{{cred_voucher.customer}}"></a><br><br>
+                                    <input type="text" class="input" name="cust_bal" id="cust_bal" onclick="setValue()"><br><br>
+                                    <a href="" data-dismiss="modal" data-target="#sl_acc" data-toggle="modal">
+                                        <input type="text" class="input" name="ledger_account"  id="ledger_account"
+                                        value = '{{cred_voucher.ledger_acc}}'></a><br><br>
+                                    <input type="text" class="input" name="ld_bal" id="ld_bal"  onclick="setValue()" ><br><br>
+                     
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        
+                    
+
+
+
+                </div>
+                <hr>
+                <div class="box">
+                    <div class="head px-3" style="margin-top: 5px;">Name Of Item</div>
+                    
+                    <hr>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12 mt-3">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="tab_logic">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Item</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-center">Rate per</th>
+                                        <th class="text-center">Amount</th>
+                                        
+                                        
+                                    </tr>
+                                    </thead>
+                                    <tbody id="items-table-body">
+                                        {% for i in cred_item %}
+                                        <tr id='addr0'>
+                                            <td>{{forloop.counter}}</td>
+                                            <input type="hidden" name="itemid[]" value="{{i.id}}">
+                                            <td style="width: 20%;">
+                                                <div class="d-flex">
+                                                    <a href="" data-dismiss="modal" data-target="#item_sl" data-toggle="modal" onclick="rowid('product')">
+                                                        <input type="text" value = "{{ i.items }}" name='items[]' id="product"  class="form-control" placeholder="Item"></a>
+                                                    
+                                                    
+                                                </div>
+                                            </td>
+                                            
+                                            <td>
+                                                
+                                                <input type="number" name='quantity[]' onchange="qtychange1(this)" placeholder='Enter Qty' id="qty1" 
+                                                value = "{{ i.quantity }}" class="form-control qty" step=0 min=0>
+                                                    
+                                                
+
+                                            </td>
+                                            <td>
+                                                <input type="text" name='price[]' id="unit1" placeholder='Enter Unit Price'
+                                                class="form-control price" value = "{{ i.price }}" step="0.00" min="0"/>
+                                            </td>
+                                            
+                                                
+                                            
+                                            <td>
+                                                <input type="number" name='total[]' id="total1" value = "{{ i.total }}" placeholder='0.00' class="form-control total"/>
+                                            </td>
+
+                                            
+                                                <input type="hidden" name='rowid' id="rowid" placeholder=0 class="form-control rowid" value=0 step="any" >
+                                            
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    <tr>
+                                        <td style="border: none;"><a class="btn btn-outline-secondary ml-1" role="button" id="addrow" onclick="add_item_row()">+</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-7"></div>
+                        <div class="col-md-5 table-responsive-md mt-3" id="tab_logic_total" style="background-color:rgba(0,0,0,.4); border: 1px solid rgba(128, 128, 128, 0.6);">
+                            <div class="p-3">
+                                <div class="row container-fluid p-2 m-0">
+                                    <div class="col-sm-4 mt-2"><label class="text-center">Sub Total</label></div>
+                                    <div class="col-sm-1 mt-2">:</div>
+                                    <div class="col-sm-7 mt-2"><input type="number" step="any" name='subtotal' 
+                                        value="{{cred_voucher.subtotal}}" placeholder=0 class="form-control" id="sub_total">
+                                    </div>
+                                    <div class="col-sm-4 m-0 p-0"></div>
+                                </div>
+                                <div class="row container-fluid p-2 m-0" id="igst1">
+                                    <div class="col-sm-4 mt-2"><label for="a" class="text-center">Quantity</label></div>
+                                    <div class="col-sm-1 mt-2">:</div>
+                                    <div class="col-sm-7 mt-2"><input type="number" name='quantity' step="any" id="quantity" 
+                                        value="{{cred_voucher.quantity}}" placeholder=0 class="form-control"/>
+                                    </div>
+                                    <div class="col-sm-4 m-0 p-0"></div>
+                                </div>
+                                
+                                
+                                <div class="row container-fluid p-2 m-0">
+                                    <div class="col-sm-4 mt-2"><label for="a" class="text-center">Grand Total</label></div>
+                                    <div class="col-sm-1 mt-2">:</div>
+                                    <div class="col-sm-7 mt-2"><input type="number" name='grandtotal' id="grandtotal" 
+                                        value="{{cred_voucher.grandtotal}}" placeholder='0.00' readonly class="form-control" />
+                                    </div>
+                                    <div class="col-sm-4 m-0 p-0"></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            {% if vouch.voucherNarration == 'Yes' %}     
+                                <textarea class="form-control"  id="" name="Note" placeholder="Note" 
+                                style="height: 190px; margin-top: -39%;">{{cred_voucher.note}}</textarea>
+                            {% else %}
+                                <textarea class="form-control"  id="" name="Note" placeholder="Note" 
+                                style="height: 190px; margin-top: -39%;"></textarea>
+                            
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 mb-4">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 mt-3 mb-4">
+                            <button class="btn btn-outline-info w-100 text-light rounded-pill" type="submit">Submit
+                                form
+                            </button>
+                        </div>
+                    </div>
+                
+
+                </div>
+            </form>
+            
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="crtt">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">List Of Ledger Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    <a href="{% url 'crt_ledg'%}"><p style="text-align: right;">Create</p></a>
+                    <hr>
+                    
+                    <ul>
+                        {% for p in ldg%}
+                        <li id={{forloop.counter}}><a href="" data-dismiss="modal" data-target="#view" data-toggle="modal">
+                            <p  class="name" value="{{p.name}}"  onclick="addledger('{{p.name}}')" id="namess{{forloop.counter}}" name="namess">
+                            {{p.name}}
+                        </p></a>
+                        {% endfor %}</li>
+                    </ul>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sl_acc">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">List Of Ledger Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    <a href="{% url 'crt_sl_ledg'%}"><p style="text-align: right;">Create</p></a>
+                    <hr>
+                    <ul>
+                        
+                        {% for p in ldg1%}
+                        <li id={{forloop.counter}}><a onclick="addsl('{{p.name}}')" data-dismiss="modal" aria-label="Close">
+                            <p  class="name" value="{{p.name}}"  id="sl-name{{forloop.counter}}" name="sl-name">
+                            {{p.name}}
+                        </p></a>
+                        {% endfor %}</li>
+                    </ul>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="view">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">Receipt Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="">Tracking No(s)</label>
+                                <input type="text" name="track_no" id="track_no" value="{{cred_voucher.tracking_no}}">
+                            </div>
+                            
+                            <div class="col-sm-8">
+                                <div class="col-sm-12">
+                                    
+                                        <label for="">Dispatch Doc No &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; :&nbsp;</label>
+                                        <input type="text" name="dis_doc_no" id="dis_doc_no" value="{{cred_voucher.dis_doc_no}}"><br>
+                                        <label for="">Dispatched Through&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;:&nbsp;</label>
+                                        <input type="text" name="dis_through" id="dis_through" value="{{cred_voucher.dis_thr}}"><br>
+                                        <label for="">Destination&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; :&nbsp;</label>
+                                        <input type="text" name="dis_desti" id="dis_desti" value="{{cred_voucher.destination}}"><br>
+                                        <label for="">Carrier Name/Agent &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;</label>
+                                        <input type="text" name="car_nm_ag" id="car_nm_ag" value="{{cred_voucher.carrie_nmag}}"><br>
+                                        <label for="">Bill of Lading/LR-RR No :&nbsp;</label><input type="text" name="bil_lading" id="bil_lading" value="{{cred_voucher.billlr_no}}"><br>
+                                        <label for="">Motor Vehicle No. &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</label>
+                                        <input type="text" name="mvd_no" id="mvd_no" value="{{cred_voucher.mt_vh_no}}"><br>
+                                        <label for="">Date&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;:</label> 
+                                        <input type="date" name="date_dis" id="date_dis" value="{{cred_voucher.date | date:'Y-m-d'}}"><br> 
+                                         
+                                </div>
+
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <hr>
+                                <p style="text-decoration: underline; text-align: center;">Original Invoice Details</p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-sm-6">
+                                <label for="">Invoice No.&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;</label>
+                                <input type="text" name="inv_no" id="inv_no" value="{{cred_voucher.inv_no}}"><br> 
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="">Date&nbsp; &nbsp;&nbsp;&nbsp;:&nbsp;</label>
+                                <input type="date" name="inv_date" id="inv_date" value="{{cred_voucher.inv_date | date:'Y-m-d'}}"><br> 
+                            </div>
+                        </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-12 ">
+                            <a href="" data-dismiss="modal" data-target="#view_acc" data-toggle="modal">
+                                <input type="submit" value="Next" onclick = recdet() style="margin-left: 41%;"></a>
+                        </div>
+                    </div>
+                
+         
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+
+<div class="modal fade" id="item_sltd">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3" id="itm_nm"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    
+                    <hr>
+                    <div class="col-md-12 mt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="tab_godown">
+                                <thead>
+                                <tr>
+                                    
+                                    <th class="text-center">Godown</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Rate per</th>
+                                    <th class="text-center">Amount</th>
+                                    
+                                    
+                                </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr> 
+                                        <td> <a href="" data-dismiss="modal" data-target="#gd_sl" data-toggle="modal"><input type="text" id="gd_name" name="gd_name" class="form-control" onclick=data_fetch()></a></td>
+                                        <td> <input type="text"class="form-control quantitys" onchange="amount_calcu()" id="quantitys"  name="quantitys"></td>
+                                        <td> <input type="text"class="form-control rates" onchange="amount_calcu()" name="rates" id="rates"></td>
+                                        <td> <input type="text"class="form-control amount"  name="amount" id="amount"></td>
+                                    </tr>
+ 
+                                    <tr> 
+                                        <td> <input type="hidden" name="rowss" id="rowss" placeholder=0 class="form-control rowss" value=0 step="any" ></td>
+                                        <td> <input type="text"class="form-control qty_tot" name="qty_tot" id="qty_tot"></td>
+                                        <td><input type="hidden" name="id_gd" id="id_gd" placeholder=0 class="form-control id_gd"  step="any" ></td>
+                                        <td> <input type="text"class="form-control tot_amount" id="tot_amount" name="tot_amount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                        
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="party">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">List Of Ledger Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    <a href="{% url 'crt_ledg'%}"><p style="text-align: right;">Create</p></a>
+                    <p style="text-align: right;" onclick=newpartynm()>New Party</p>
+                    <hr>
+                    <ul>
+                        
+                        <li ><a href="" data-dismiss="modal" data-target="#view_acc" data-toggle="modal" id="list_prt"></a></li><br>
+                        {% for p in ldg%}
+                        
+                        <li id={{forloop.counter}}><a href="" data-dismiss="modal" data-target="#view_acc" data-toggle="modal" id="list_prtss"><p  class="name" value="{{p.name}}"  onclick="newpartynm2('{{p.name}}')"id="namess{{forloop.counter}}" name="namess">
+                            {{p.name}}
+                        </p></a>
+                        {% endfor %}</li>
+                    </ul>
+                    
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="item_sl">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">List Of Stock Itemssss</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    <a href="{% url 'create_items_crd'%}"><p style="text-align: right;">Create</p></a>
+                    
+                    <hr>
+                    <ul>
+                        
+                        
+                        {% for p in item%}
+                        
+                        <li id={{forloop.counter}}><a href="" data-dismiss="modal" data-target="#item_sltd" data-toggle="modal"><p  class="name" value="{{p.name}}"  onclick="additem('{{p.name}}')"id="item_nm{{forloop.counter}}" name="item_nm">
+                            {{p.name}}
+                        </p></a></li>
+                        {% endfor %}
+                    </ul>
+                        
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="gd_sl">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">List Of Godown</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    <a href="{% url 'godown_creation_crd'%}"><p style="text-align: right;">Create</p></a>
+                    
+                    <hr>
+                    <div id="li_data_gd">
+
+                    </div>
+                    
+                        
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                    
+
+<div class="modal fade" id="view_acc">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: #1c3143; color: white">
+            <div class="modal-header">
+                <h5 class="m-3">Party Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card p-3 m-3">
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <label for="">Buyer(Boll To) :&nbsp;</label><br> <br> 
+                                <label for="">Mailing Name :&nbsp;</label><br> <br> 
+                                <label for="">Address :&nbsp;</label><br> <br> <br>
+                                <label for="">State :&nbsp;</label><br> <br> 
+                                <label for="">Country :&nbsp;</label><br> <br> 
+                                <label for="">GST Registration Type :&nbsp;</label><br> <br> 
+                                <label for="">GSTIN / UIN :&nbsp;</label><br> <br> 
+                         
+
+                        </div> 
+                        <div class="col-sm-6">
+                            
+                            <a href="" data-dismiss="modal" data-target="#party" data-toggle="modal">
+                                <input type="text" name="name" id="name" value="{{cred_voucher.mname}}"></a><br> <br> 
+                            <input type="text" name="mname" id="mname"value="{{cred_voucher.mname}}" ><br><br> 
+                            <textarea name="address" id="address" cols="30" rows="3"></textarea>
+                            
+                            <!-- <input type="text" name="state" id="state"><br><br>  -->
+                            <select type="text" name="state" id="state">
+                                <option  selected> </option>
+                                <option value="Andaman and Nicobar Islads">Andaman and Nicobar Islads</option>
+                                <option value="Andhra Predhesh">Andhra Predhesh</option>
+                                <option value="Arunachal Predesh">Arunachal Predesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                <option value="Damn anad Diu">Damn anad Diu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Predesh">Himachal Predesh</option>
+                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Ladakh">Ladakh</option>
+                                <option value="Lakshadweep">Lakshadweep</option>
+                                <option value="Madhya Predesh">Madhya Predesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Puducherry">Puducherry</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Predesh">Uttar Predesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                                <option value="Other Territory">Other Territory</option>
+                            </select><br><br> 
+                            <input type="text" name="country" id="country" value="{{cred_voucher.country}}"><br><br> 
+                            
+
+                            <input type="text" name="reg_type" id="reg_type" value="{{cred_voucher.reg_type}}"><br><br> 
+                            <input type="text" name="gst_uin" id="gst_uin" value="{{cred_voucher.gst_uin}}"><br><br> 
+           
+                            
+
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="">Place Of Supply :&nbsp;</label><br> 
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- <input type="text" name="pl_suply" id="pl_suply"><br> -->
+                                    <select type="text" name="pl_suply" id="pl_suply" >
+                                        <option  selected> </option>
+                                        <option value="Andaman and Nicobar Islads">Andaman and Nicobar Islads</option>
+                                        <option value="Andhra Predhesh">Andhra Predhesh</option>
+                                        <option value="Arunachal Predesh">Arunachal Predesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chandigarh">Chandigarh</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                        <option value="Damn anad Diu">Damn anad Diu</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Predesh">Himachal Predesh</option>
+                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Ladakh">Ladakh</option>
+                                        <option value="Lakshadweep">Lakshadweep</option>
+                                        <option value="Madhya Predesh">Madhya Predesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Puducherry">Puducherry</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Predesh">Uttar Predesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                        <option value="Other Territory">Other Territory</option>
+                                    </select >
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-12 ">
+                            <a href="" data-dismiss="modal" data-target="#view_acc" data-toggle="modal" onclick="partydet()"><input type="submit" value="Next" style="margin-left: 41%;"></a>
+                        </div>
+                    </div>
+                    
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var i = 1;
+            $("#add_row").click(function () {
+                b = i - 1;
+                $('#addr' + i).html($('#addr' + b).html()).find('td:first-child').html(i + 1);
+                $('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
+                i++;
+            });
+            $("#delete_row").click(function () {
+                if (i > 1) {
+                    $("#addr" + (i - 1)).html('');
+                    i--;
+                }
+                calc();
+            });
+
+            $('#tab_logic tbody').on('keyup change', function () {
+                calc();
+            });
+
+            $('#tax').on('keyup change', function () {
+                calc_total();
+            });
+        });
+
+        function calc() {
+            $('#tab_logic tbody tr').each(function () {
+                var html = $(this).html();
+                if (html != '') {
+                    var qty = $(this).find('.qty').val();
+                    var price = $(this).find('.price').val();
+                   
+                    $(this).find('.total').val(qty * price);
+                   
+                    calc_total();
+                }
+            });
+        }
+
+        function calc_total() {
+            total = 0;
+            qty=0;
+            $('.total').each(function () {
+                total += parseFloat($(this).val());
+            });
+            $('.qty').each(function () {
+                qty += parseInt($(this).val());
+            });
+            
+            $('#sub_total').val(total.toFixed(2));
+            $('#quantity').val(qty);
+            $('#grandtotal').val(total.toFixed(2));
+    
+
+
+        }
+
+        
+    </script>
+
+
+<script>
+    $(document).ready(function(){
+        
+        var roinc = 0
+        $('#addrow').click(function(){
+            roinc++
+            $('#items-table-body').append(
+                `
+                <tr id='addr0${roinc}'>
+                            <td>${roinc+1}</td>
+                            <td style="width: 20%;">
+                                <div class="d-flex">
+                                    <a href="" data-dismiss="modal" data-target="#item_sl" data-toggle="modal" onclick=rowid(${roinc})><input type="text" name='items[]' id="product${roinc}" class="form-control" placeholder='Item'></a>
+                                    
+                                                        
+                                </div>
+                            </td>
+                                            
+                            <td><input type="number" name='quantity[]' onchange="qtychange1(this)" placeholder='Enter Qty' id="qty1${roinc}"  class="form-control qty" step=0 min=0>
+                            
+                            </td>                
+                            <td>
+                                <input type="number" name='price[]' id="unit1${roinc}" placeholder='Enter Unit Price' class="form-control price" step="0.00" min="0">
+                            </td>                
+                                                            
+                            
+                            <td>
+                                <input type="number" name='total[]' id="total1${roinc}" placeholder=0 class="form-control total" value=0 step="any">
+                            </td>    
+                              
+                            
+                            
+                            
+                            
+                            <td><button type="button" id="${roinc}" class="btn btn-danger remove_row">-</button></td>
+                            
+                        </tr>
+                                                
+                `
+            );
+        });
+
+        $(document).on('click','.remove_row',function(){
+            var row_id = $(this).attr("id");
+            $('#addr0'+row_id+'').remove();
+            calc()
+        });
+        
+    });
+</script>
+
+<script>
+
+    function setValue(){
+    
+        ledger_account = $('#ledger_account').val();
+        customer = $("#customer").val()
+        $.ajax({
+            type: "GET",
+            url: "{% url 'get_sl_det1' %}",
+            data: {
+                ledger_account : ledger_account,
+                customer : customer,
+            },
+            success:function(response){
+                    console.log(response)
+                    bal_amount = response.bal_amount
+                    cust_bal_amount = response.cust_bal_amount
+                    document.getElementById('ld_bal').value = bal_amount;
+                    document.getElementById('cust_bal').value = cust_bal_amount;
+
+            }});
+  }
+
+    function addledger(el){
+        var ldg=el
+        
+        
+        document.getElementById("customer").value=ldg
+        
+    }
+
+    function addsl(el){
+        var ldg=el
+        
+        
+        document.getElementById("ledger_account").value=ldg
+        ledger_account = $('#ledger_account').val();
+        customer = $("#customer").val()
+        $.ajax({
+            type: "GET",
+            url: "{% url 'get_sl_det' %}",
+            data: {
+                ledger_account : ledger_account,
+                customer : customer,
+            },
+            success:function(response){
+                    console.log(response)
+                    bal_amount = response.bal_amount
+                    cust_bal_amount = response.cust_bal_amount
+                    document.getElementById('ld_bal').value = bal_amount;
+                    document.getElementById('cust_bal').value = cust_bal_amount;
+
+            }});
+
+        
+    }
+
+    
+
+    
+    
+    function rowid(rws_id){
+        let row_ids=rws_id  
+        
+        rowss
+        if (row_ids==="product"){
+            document.getElementById("rowid").value="product" 
+            document.getElementById("rowss").value="product"
+            
+        }else{
+            document.getElementById("rowss").value="product"+row_ids  
+            document.getElementById("rowid").value="product"+row_ids   
+             
+        }
+        
+    }
+    // #add add_item_row
+    function additem(itm){
+        
+        var row_no=document.getElementById("rowid").value
+        
+        
+        if (row_no=="product"){
+            document.getElementById("product").value=itm 
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});
+        }else if(row_no=="product1"){
+            document.getElementById("product1").value=itm  
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});
+        }
+        else if(row_no=="product2"){
+            document.getElementById("product2").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product3"){
+            document.getElementById("product3").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product4"){
+            document.getElementById("product4").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }else if(row_no=="product5"){
+            document.getElementById("product5").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product6"){
+            document.getElementById("product6").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product7"){
+            document.getElementById("product7").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product8"){
+            document.getElementById("product8").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product9"){
+            document.getElementById("product9").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product10"){
+            document.getElementById("product10").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product11"){
+            document.getElementById("product11").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product12"){
+            document.getElementById("product12").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product13"){
+            document.getElementById("product13").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product14"){
+            document.getElementById("product14").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product15"){
+            document.getElementById("product15").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product16"){
+            document.getElementById("product16").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product17"){
+            document.getElementById("product17").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product18"){
+            document.getElementById("product18").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product19"){
+            document.getElementById("product19").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }
+        else if(row_no=="product20"){
+            document.getElementById("product20").value=itm
+            $.ajax({
+            type: "GET",
+            url: "{% url 'itm_amount' %}",
+            data: {
+                itms : itm,
+                
+            },
+            success:function(response){
+                    console.log(response)
+                    amount = response.amount
+                    document.getElementById('rates').value = amount;
+                    
+                   
+
+            }});  
+        }else{
+
+        }
+        
+        document.getElementById("itm_nm").innerHTML="Item Allocations For : " +itm
+
+        
+    }
+
+    // add godown to gd modal
+    function addgd(element,x){
+        
+        
+        
+        document.getElementById("gd_name").value=element; 
+        document.getElementById("id_gd").value=x;
+        
+
+    }
+
+    // godown Calculation
+    amount //   tot_amount
+    function amount_calcu() {
+        $('#tab_godown tbody tr').each(function () {
+            elm=document.getElementById("gallary");
+            elm.remove();
+            var html = $(this).html();
+            if (html != '') {
+                var qty = $(this).find('.quantitys').val();
+                var price = $(this).find('.rates').val(); 
+                
+                // $(this).find('.qty_tot').val(qty);
+                console.log(typeof qty)
+                if (qty!=null, price!=null){
+                    $(this).find('.amount').val(qty * price);
+
+                    document.getElementById("tot_amount").value=qty * price
+                    document.getElementById("qty_tot").value=qty
+                    
+
+                    
+                    var inpusts=document.getElementById("tot_amount").value
+                    
+                    if (inpusts!=0){
+                        document.getElementById("tot_amount").focus();
+                        var input = document.getElementById("tot_amount");
+                        var id_gd = document.getElementById("id_gd").value;
+                        var qty_gdm=document.getElementById("qty_tot").value
+                        input.addEventListener("keypress", function(event) {
+                            if (event.key == "Enter") {
+                                
+                                
+                                
+                                $('#item_sltd').modal('hide');
+                                tb_clacu(qty,price)
+
+                                $.ajax({
+                                    type: "GET",
+                                    url: "{% url 'qty_add' %}",
+                                    data: {
+                                        id_gd : id_gd,
+                                        qty_gdm:qty_gdm,
+                                    
+                                    },
+                                    success:function(response){
+                                            console.log(response)
+                                            
+                                            }
+                                            
+                                        
+                                    }
+                                        
+                                );
+                                document.getElementById("gd_name").value="" 
+                                document.getElementById("quantitys").value=""
+                                document.getElementById("rates").value=""
+                                document.getElementById("amount").value=""
+                                document.getElementById("qty_tot").value=""
+                                document.getElementById("tot_amount").value=""
+                                document.getElementById("id_gd").value=""
+                                
+                                
+                                   
+                                    
+                                
+
+                            }else{
+
+                            }
+                        });
+
+                    }
+                    
+
+
+                }else{
+                   
+                }
+
+                
+                
+                // $(this).find('.tot_amount').val(qty * price);
+                
+            }
+        })
+    
+        };
+
+    function tb_clacu(qty,price){
+        
+        var row_no=document.getElementById("rowss").value 
+        
+                    
+        if (row_no=="product"){
+            
+            document.getElementById("qty1").value=qty 
+            document.getElementById("unit1").value= price
+     
+            
+            
+        }else if(row_no=="product1"){ 
+            
+            document.getElementById("qty11").value=qty 
+            
+            document.getElementById("unit11").value=price
+            
+        }else if(row_no=="product2"){ 
+            
+            document.getElementById("qty12").value=qty 
+            
+            document.getElementById("unit12").value=price
+            
+        }else if(row_no=="product3"){ 
+            
+            document.getElementById("qty13").value=qty 
+            
+            document.getElementById("unit13").value=price
+            
+        }else if(row_no=="product4"){ 
+            
+            document.getElementById("qty14").value=qty 
+            
+            document.getElementById("unit14").value=price
+            
+        }else if(row_no=="product5"){ 
+            
+            document.getElementById("qty5").value=qty 
+            
+            document.getElementById("unit15").value=price
+            
+        }else if(row_no=="product6"){ 
+            
+            document.getElementById("qty16").value=qty 
+            
+            document.getElementById("unit16").value=price
+            
+        }else if(row_no=="product7"){ 
+            
+            document.getElementById("qty17").value=qty 
+            
+            document.getElementById("unit17").value=price
+            
+        }else if(row_no=="product8"){ 
+            
+            document.getElementById("qty18").value=qty 
+            
+            document.getElementById("unit18").value=price
+            
+        }else if(row_no=="product9"){ 
+            
+            document.getElementById("qty19").value=qty 
+            
+            document.getElementById("unit19").value=price
+            
+        }else if(row_no=="product10"){ 
+            
+            document.getElementById("qty110").value=qty 
+            
+            document.getElementById("unit110").value=price
+            
+        }else if(row_no=="product11"){ 
+            
+            document.getElementById("qty111").value=qty 
+            
+            document.getElementById("unit111").value=price
+            
+        }else if(row_no=="product12"){ 
+            
+            document.getElementById("qty112").value=qty 
+            
+            document.getElementById("unit112").value=price
+            
+        }else if(row_no=="product13"){ 
+            
+            document.getElementById("qty113").value=qty 
+            
+            document.getElementById("unit113").value=price
+            
+        }else if(row_no=="product14"){ 
+            
+            document.getElementById("qty114").value=qty 
+            
+            document.getElementById("unit114").value=price
+            
+        }else if(row_no=="product15"){ 
+            
+            document.getElementById("qty115").value=qty 
+            
+            document.getElementById("unit115").value=price
+            
+        }else if(row_no=="product16"){ 
+            
+            document.getElementById("qty116").value=qty 
+            
+            document.getElementById("unit116").value=price
+            
+        }else if(row_no=="product17"){ 
+            
+            document.getElementById("qty117").value=qty 
+            
+            document.getElementById("unit117").value=price
+            
+        }else if(row_no=="product18"){ 
+            
+            document.getElementById("qty118").value=qty 
+            
+            document.getElementById("unit118").value=price
+            
+        }else if(row_no=="product19"){ 
+            
+            document.getElementById("qty119").value=qty 
+            
+            document.getElementById("unit119").value=price
+            
+        }else if(row_no=="product20"){ 
+            
+            document.getElementById("qty120").value=qty 
+            
+            document.getElementById("unit120").value=price
+            
+        }
+        else{
+            console.log("qty")
+            console.log(price)
+        }
+        
+
+        calc() 
+
+    }
+
+    //for save party det   address  state country reg_type gst_uin pl_suply mname
+    function partydet(){
+        id = $("#crd_no").val();
+        mname = $('#mname').val();
+        address = $('#address').val();
+        state = $('#state').val();
+        country = $('#country').val();
+        reg_type = $('#reg_type').val();
+        gst_uin = $('#gst_uin').val();
+        pl_suply = $('#pl_suply').val();
+        crd_num = $('#crd_no').val();
+        
+       
+  
+        $.ajax({
+            type: "GET",
+            url: "{% url 'alter_credit_party_details' %}", 
+            data: {
+                id : id,
+                mname : mname,
+                address : address,
+                state : state,
+                country : country,
+                reg_type : reg_type,
+                gst_uin : gst_uin,
+                pl_suply : pl_suply,
+                crd_num:crd_num,
+            },
+    })
+};
+    // for save recipt details
+
+    function recdet(){
+        id = $("#crd_no").val();
+        track_no = $('#track_no').val();
+        dis_doc_no = $('#dis_doc_no').val();
+        dis_through = $('#dis_through').val();
+        car_nm_ag = $('#car_nm_ag').val();
+        bil_lading = $('#bil_lading').val();
+        mvd_no = $('#mvd_no').val();
+        date_dis = $('#date_dis').val();
+        inv_no = $('#inv_no').val();
+        inv_date = $('#inv_date').val();
+        dis_desti = $('#dis_desti').val();
+        customer = $('#customer').val();
+        crd_num = $('#crd_no').val();
+        
+  
+        $.ajax({
+            type: "GET",
+            url: "{% url 'alter_credit_receipt_details'  %}",
+
+            data: {
+                id : id,
+                track_no : track_no,
+                dis_doc_no : dis_doc_no,
+                dis_through : dis_through,
+                car_nm_ag : car_nm_ag,
+                bil_lading : bil_lading,
+                mvd_no : mvd_no,
+                date_dis : date_dis,
+                inv_no : inv_no,
+                inv_date : inv_date,
+                dis_desti : dis_desti,
+                customer:customer,
+                crd_num:crd_num,
+            },
+            success:function(response){
+                    console.log(response)
+                    name = response.name
+                    mname = response.mname
+                    address = response.address
+                    state = response.state
+                    country = response.country
+                    reg_type = response.reg_type
+                    gst_uin = response.gst_uin 
+                    bal_amount = response.bal_amount 
+
+
+
+                    document.getElementById('cust_bal').value = bal_amount;
+                    
+                    document.getElementById('name').value = name;
+                    document.getElementById('mname').value = mname; 
+                    document.getElementById('address').value = address;
+                    document.getElementById('state').value = state;
+                    document.getElementById('country').value = country;
+                    document.getElementById('reg_type').value = reg_type ;
+                    document.getElementById('gst_uin').value = gst_uin;
+                    document.getElementById('pl_suply').value = state; 
+                    var invdrop=document.getElementById('state');
+                    var option=document.createElement("option");
+                    option.text=state;
+                    invdrop.add(option,invdrop[0]);
+
+                    var invdrops=document.getElementById('pl_suply');
+                    var options=document.createElement("option");
+                    option.text=state;
+                    invdrops.add(option,invdrops[0]);
+                   
+
+            }});
+    
+
+    }
+
+    function newpartynm(){
+        let person = prompt("Please enter a party name");
+        
+        let text;
+        if (person == null || person == "") {
+        text = "";
+        } else {
+            document.getElementById('name').value = person;
+            document.getElementById('mname').value = person;
+            
+            document.getElementById('list_prt').innerHTML = person;
+
+        }
+    }
+
+    function newpartynm2(det){
+        let person = det
+        
+        document.getElementById('name').value = person;
+        document.getElementById('mname').value = person;
+        
+        document.getElementById('list_prt').innerHTML = person;
+
+      
+    }
+
+    function data_fetch(){
+        prd_nm=document.getElementById('rowss').value;
+        itemaaa=document.getElementById(prd_nm).value;
+        $.ajax({
+            type: "GET",
+            url: "{% url 'data_fetch' %}",
+            data: {
+                mnames : itemaaa,
+            
+            },
+            success:function(response){
+                    console.log(response)
+                    godown = response.lst_data;
+                    // var gal = document.getElementById("gallary")
+                    
+                    for (var {name: n, quantity: qty, id: no} of godown){
+                        
+                        $('#li_data_gd').append(`
+                        <ul id="gallary">
+                        
+                        <li onclick="addgd('Primary')"><a href="" data-dismiss="modal" data-target="#item_sltd" data-toggle="modal">Primary</a></li>
+                        <li onclick="addgd('Main Location')"><a href="" data-dismiss="modal" data-target="#item_sltd" data-toggle="modal">Main Location</a></li>
+                        <li><a href="" data-dismiss="modal" data-target="#item_sltd" data-toggle="modal"><p  class="name"  onclick="addgd('${n}', '${no}')" value="${n}" name="item_nm" id ="item_nm">${n} <span style='margin-left:200px'>${qty}</span> </p></a></li> </ul>`)
+                        // gal.append(n + qty );
+                    }
+                    
+                
+            }
+                  
+    })
+        
+    }
+
+
+
+</script>
+
+// <div id="myModal" class="modal fade">
+//     <div class="modal-dialog">
+//         <div class="modal-content">
+//             <div class="modal-header">
+//                 <h5 class="modal-title">voucher</h5>
+//                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+//             </div>
+//             <div class="modal-body">
+				
+
+//                 <form action="{% url 'credit_notess'%}" method="POST">
+//                     {% csrf_token %}
+//                     <div class="form-group">
+
+//                         <select name="vc_types" id="" class="form-control">
+//                             {% for k in tps%}
+//                                 <option value="{{k.voucher_name}}">{{k.voucher_name}}</option>
+//                             {%endfor%}
+//                         </select>
+                    
+//                     </div>
+                    
+//                     <button type="submit" class="btn btn-primary">Show</button>
+//                 </form>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+
+
+
+
+
+
+
+{% endblock %}

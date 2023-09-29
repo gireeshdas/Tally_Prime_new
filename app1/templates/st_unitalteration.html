@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+
+.flexy{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    .form1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+    }
+    
+    button{
+        background-color:rgb(103, 175, 220) ;
+        color:white;
+        padding:10px 20px;
+    }
+
+    .hide{
+        display: none;
+    }
+        
+
+        .form-popup {
+        visibility: hidden;       
+        position: fixed;
+        top: 230px;
+        right: 27px;
+        background-color: rgb(216, 232, 238); 
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+       
+      
+      }
+      @media (max-width: 991px) {
+        .main-panel {
+            margin-left: 0;
+            width: 100%;
+        }
+        }
+
+        .content-wrapper {
+        padding: 1.875rem 1.75rem;
+        width: 100%;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        }
+      
+    
+    </style>
+    <div class="main-panel">
+        <div class="content-wrapper">
+    <div class="row">
+    <div class="col-md-4" ></div>
+    <div class="col-md-4" >
+        <h6  class="bg-info text-light p-2 m-0 text-left">unit alteration (Secondary)</h6>
+           {% for a in uni %}
+            <form id="" action="{% url 'statistics_cu_alter' a.id %}" method="post" class="p-5" style="background-color:rgba(0,0,0,.4);">
+                {% csrf_token %}
+
+
+            <div class="row container-fluid  p-2 m-0">
+                <div class="col-md-4"> <label for="type">Type :</label></div>
+                <div class="col-md-8"><select name="type"  id="type" required="" class="form-control">
+                    <option value="Compound">Compound</option> 
+                </select></div>
+                
+            </div>
+
+           
+
+              <div class="row container-fluid   p-2 m-0">
+                <div style="margin-left:80px;"><p ><u>Units with multiplier Factors</u></p></div>
+                <div style="margin-left:80px;"><p >(example: KGs of 1000 gms)</p></div>
+                
+       
+                
+            </div>
+
+
+            <div  class="row container-fluid   p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">First unit</label></div>
+                <div class="col-md-8"> 
+                    <select name="first_unit"  id="type" required="" class="form-control">
+                        <option value="{{ a.first_unit }}">{{ a.f_unit }}</option> 
+                        {% for a in uuu %}
+                        <option value="{{ a.symbol }}">{{ a.symbol }}</option> 
+                        {% endfor %}
+                    </select>
+               
+                
+            </div>
+
+            <div  class="row container-fluid    p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">conversion</label></div>
+                <div class="col-md-8"> 
+                <input type="text" name="conversion" class="form-control" value="{{ a.conversion }}" autocomplete="off" ></div>
+                
+            </div>
+
+
+            <div  class="row container-fluid    p-2 m-0">
+                <div class="col-md-4"> <label for="dcml">Second unit</label></div>
+                <div class="col-md-8"> 
+                    <select name="second_unit"  id="type" required="" class="form-control">
+                        <option value="{{ a.second_unit }}">{{ a.s_unit }}</option> 
+                        {% for a in uuu %}
+                        <option value="{{ a.symbol }}">{{ a.symbol }}</option> 
+                        {% endfor %}
+                    </select>
+                
+            </div>
+           
+            <div class="row" style="margin-top: 10%;">
+                <div class="col-md-4"></div>
+                    <div class="col-md-4" ><button class="btn btn-info w-15">ALter</button></div>   
+                </div> 
+        
+
+       
+        
+        </form>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-4"></div>
+
+    </div>
+        </div>
+    </div>
+    
+
+
+{% endblock %}

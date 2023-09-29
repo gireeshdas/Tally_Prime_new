@@ -1,0 +1,666 @@
+{% extends 'base.html' %}
+    {% block body %}
+    {% load static %}
+    <style>
+        .enter{
+            display: flex;
+            align-items: center;
+            justify-content: center;   
+        }
+        .hide{
+            display: none;
+        }
+        .close {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+            font-size: 17px;
+            transform: rotate(0deg);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 150px;
+            right: 30px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 300px;
+            height: 200px;
+        }
+
+        .form-popup2 {
+            display: none;
+            position: fixed;
+            top: 250px;
+            right: 330px;
+            border: 1px solid #f1f1f1;
+            z-index: 9;
+            width: 900px;
+            height: 200px;
+        }
+        .content a:hover {
+            background-color: rgb(238, 167, 75);
+        }
+        .form-container1 {
+            max-width: 350px;
+            height: 300px;
+            padding: 2px; 
+        }
+        .btns_prnt{
+            color: #fff;
+            width: 100%;
+            cursor:pointer;
+            background-color: rgba(240, 248, 255, 0);
+            border: none;
+        }
+        .btns_prnt:hover{
+            background-color:#5bc9e4;
+            color: rgb(15, 14, 14);
+        }
+        .bt{
+            text-align: end;
+        }
+        .ScrollStyle{
+            /* max-height: 200px; */
+            overflow-y: scroll;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+
+    <div class="m-2">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6">Stock Item Creation</div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                {{i.name}}
+            {% endfor %}
+            </div>
+        </div>
+           
+        <form class="p-2" style="background-color:rgba(0,0,0,.4);" method="post" action="{% url 'alter_stockitem_edit' std.id %}" autocomplete="off">
+            {% csrf_token %}
+
+            <div class="p-3">
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="a">Name</label></div>
+                    <div class="col-sm-3 m-0 p-0"><input type="text" name="name" value="{{std.name}}" class="form-control" id="name" onblur="passvalue()" required></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-2 m-0 p-0"> <label for="b">Alias</label></div>
+                    <div class="col-sm-3 m-0 p-0"><input type="text" name="alias" value="{{std.alias}}" class="form-control" id=""></div>
+                    <div class="col-sm-7 m-0 p-0"></div>
+                </div>
+            </div>
+            
+            <div class="row container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <h5 class="text-center">General</h5>
+                    <div class="row container-fluid  p-0">
+                        <div class="col-sm-6 m-0 p-0"></div>
+                        <div class="col-sm-6 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="e">Under</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <input type="text" name="under" id="under" value="{{std.under.name}}" class="form-control" onclick="showform();">
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2">
+                        <div class="col-sm-6 m-0 p-0"> <label for="e">Units</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <input type="text"  id="units" onblur="showunits()" name="units" value="{{std.units}}" class="form-control" onclick="showform1();">
+                        </div>
+                    </div>
+                    <div class="row container-fluid p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="e">Enable Godown</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="" id="gt" class="form-control" onchange="showgodown();">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid hide p-2 m-0" id="additional">
+                        <h5 class="text-center">Additional Details</h5>
+                        <div class="row container-fluid  p-0">
+                            <div class="col-sm-6 m-0 p-0"></div>
+                            <div class="col-sm-6 m-0 p-0"></div>
+                        </div>
+
+                        <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Maintain in Batches</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <input id="bt" class="form-control" value="{{std.batches}}" name="batches">
+                                    
+                            </div>
+                        </div>
+                        <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Track Date of manufacturing</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="btt" class="form-control" name="cost_tracking" >
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Use Expiry Dates</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select id="bat" class="form-control" name="expiry_date" >
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="row container-fluid p-2">
+                            <div class="col-sm-6 m-0 p-0"><label for="e">Enable Cost Tracking</label></div>
+                            <div class="col-sm-6 m-0 p-0">
+                                <select name="cost_tracking" id="" class="form-control">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div> -->
+                    </div>
+                </div> 
+
+                <div class="col-sm-6 m-0 p-4" style=" border-right: 1px solid rgba(128, 128, 128, 0.6);">
+                    <h5 class="text-center">Statutory Details</h5>
+                    <div class="row container-fluid  p-2" id="l">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">GST Applicable</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="gst_applicable" id="gst" name="gst_applicable" class="form-control" onchange="showgst()">
+                                <option value="Not Applicable">Not Applicable</option>
+                                <option value="Applicable" selected>Applicable</option>
+                                <option value="Undefined">Undefined</option>   
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid p-2" id="setalt">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">Set/Alter GST details</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="set_alter" id="stock"  class="form-control" onchange="showgststock()">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>        
+                        </div>
+                    </div>
+                    <div class="row container-fluid  p-2" id="supply">
+                        <div class="col-sm-6 m-0 p-0"> <label for="l">Type of supply</label></div>
+                        <div class="col-sm-6 m-0 p-0">
+                            <select name="typ_sply" id="l" class="form-control" >
+                                <option value="Goods">Goods</option>
+                                <option value="Services">Services</option>   
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row container-fluid p-2">
+                        <div class="col-sm-6 m-0 p-0"><label for="l">Rate of duty(eg 5)</label></div>
+                        <div class="col-sm-6 m-0 p-0"><input type="number" id="l" value="1" class="form-control" name="rate_of_duty"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid  p-0 m-0" style=" border: 1px solid rgba(128, 128, 128, 0.6);">
+                <br><h5 style="margin-left: 20%;"><b>Opening Balance</b></h5>
+                <div class="p-3">
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Quantity</label></div>
+                        <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control" value="{{std.quantity}}" placeholder="" name="quantity"
+                            id="quantity" onclick=popup()>
+                        </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Rate</label></div>
+                        <div class="col-sm-3 m-0 p-0"><input type="text" class="form-control" value="{{std.rate}}" id="rate" placeholder="" name="rate"
+                            id="rate" onblur="passrate()">
+                        </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Per</label></div>
+                        <div class="col-sm-3 m-0 p-0"> 
+                            <input type="text" class="form-control" id="per1" value="{{std.per}}" placeholder="" name="per"> </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                    <div class="row container-fluid p-2 m-0">
+                        <div class="col-sm-2 m-0 p-0"><label for="">Value</label></div>
+                        <div class="col-sm-3 m-0 p-0"> 
+                            <input type="text" class="form-control" id="value1" value="{{std.value}}" name="value"> </div>
+                        <div class="col-sm-7 m-0 p-0"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 m-0 p-4"></div>
+            <div class="enter w-100 py-4"><button class="btn btn-info w-15">CREATE</button></div>       
+        </form>
+    </div>
+
+    <div class="form-popup ScrollStyle" id="underForm" style="background-color: #213b52" >
+        <form action="" class="form-container1">
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Groups</h6>
+            <button type="button" class="btn cancel close" onclick="closeForm()">X</button>
+            <a href="{% url 'stockgroup_alt' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setPrimary()" class="btns_prnt">&nbsp;&nbsp;Primary</option>
+
+                        {% for co in grp %}
+                        <option onclick="setvalue(' {{co.name}} ','{{co.id}}')" class="btns_prnt">&nbsp;&nbsp;{{ co.name }}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{co.id}}">
+        </form>    
+    </div>
+    <div class="form-popup ScrollStyle" id="underForm1" style="background-color: #213b52" >
+        <form action="" class="form-container1">
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">Units</h6>
+            <button type="button" class="btn cancel close" onclick="closeForm1()">X</button>
+            <a href="{% url 'unitcreate_alt' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setAvailable('Not Applicable')" class="btns_prnt" value="Not Applicable">&nbsp;&nbsp;&nbsp;Not Applicable</option>
+
+                        {% for un in u %}
+                        <option onclick="setvalue1 ('{{un.symbol}} ({{un.formal_name}})','{{un.id}}')" id="un" class="btns_prnt">&nbsp;&nbsp;
+                            {{ un.symbol }} ( {{ un.formal_name }} )
+                        </option>
+                            
+                        {% endfor %}
+
+                        {% for u in u2 %}
+                            <option onclick="setvalue1 ('{{ u.f_unit }} of {{ u.conversion }} {{ u.s_unit }}','{{u.id}}')"  class="btns_prnt">&nbsp;&nbsp;
+                                {{ u.f_unit }} of {{ u.conversion }} {{ u.s_unit }}
+                            </option>
+                            
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden1" hidden value="{{un.id}},{{u.id}}">
+        </form>    
+    </div>
+
+
+
+    <div class="form-popup ScrollStyle" id="underForm2" style="background-color: #213b52" >
+        <form action="" class="form-container1" >
+            <h6 style="background-color:rgb(17, 169, 240) ;color:white text">List of Godowns</h6>
+            <a href="{% url 'godown_alt' %}" style="cursor:pointer" class="btn bt btns_prnt" role="button">Create</a>  
+            <hr>
+            <div>
+                <table>
+                    <tr>
+                        <option onclick="setPrimary2()" class="btns_prnt">&nbsp;&nbsp;Primary</option>
+                        <option onclick="setmain2()" class="btns_prnt">&nbsp;&nbsp;Main Location</option>
+                        
+                        {% for l in gd %}
+                            <option onclick="setvalue2('{{l.name}}','{{l.id}}')" class="btns_prnt">&nbsp;&nbsp;{{l.name}}</option>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <input type="text" name="underhidden" hidden value="{{l.id}}">
+        </form>
+        <button type="button" class="btn cancel close" onclick="closeForm1()">X</button>
+    </div>
+
+
+
+
+
+
+    <div class="form-popup2 m-3" id="pop1">
+        <div class="row bg-info text-light p-2 m-0">
+            <div class="col-md-6"><b>Stock Item Allocation</b></div>
+            <div class="col-md-6">
+                {% for i in tally %}
+                {{i.name}}
+            {% endfor %}
+            </div>
+        </div>
+        <div class="p-3" style="background-color:rgb(5, 1, 1);">
+            <center>
+                <!-- <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-5 m-0 p-0"></div>
+                    <div class="col-sm-1 m-0 p-0"><label for="a">Allocation of : </label></div>
+                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="dt" name="stockname" style="width: 60px;"></div>
+                    <div class="col-sm-1 m-0 p-0"></div>
+                </div>
+                <div class="row container-fluid  p-2 m-0">
+                    <div class="col-sm-5 m-0 p-0"></div>
+                    <div class="col-sm-1 m-0 p-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="a">For</label></div>
+                    <div class="col-sm-1 m-0 p-0"><input type="text" class="inp text-center" id="ft" name="stockname" style="width: 60px;"></div>
+                    <div class="col-sm-1 m-0 p-0"></div>
+                </div> -->
+            </center>
+            <div class="table-responsive-sm" style="background-color:rgba(0,0,0,0.4);">
+                <Table class="w-100 table text-center" border="1">
+                    <tr>
+                        <!-- <th>Sl.no</th> -->
+                        <th>Godown</th>
+                        <th id="branch" class="hide">Branch</th>
+                        <th id="track" class="hide">Track</th>
+                        <th id="expiry" class="hide">Expiry</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Per</th>
+                        <th>Amount</th>
+                        <th>Accept</th>
+        
+                    </tr>
+                    
+                    <tr>
+                      <td> 
+                        <input type="text" id="under2" name="under_name" value="{{std2.name}}" class="form-control" onclick="showform2();">
+                        </td>
+                      <td id="branch1" class="hide"> <input type="text" class="w-100 form-control"></td>
+                      <td id="track1" class="hide"> <input type="text" class="w-100 form-control"></td>
+                      <td id="expiry1" class="hide"> <input type="text"  class="w-100 form-control "></td>
+                      <td><input type="text" class="w-100 form-control" id="quantity1" value="{{std.quantity}}" onblur="passquantity()"> </td>
+                      <td> <input type="text" class="w-100 form-control" id="rate1" value="{{std.rate}}" onblur="passrate()"></td>
+                      <td><input type="text" class="w-100 form-control" id="per" value="{{std.per}}" onblur="passper()"> </td>
+                      <td> <input type="text" class="w-100 form-control" value="{{std.value}}" id="value2" onblur="passvalue()"></td>
+                      
+                      <td><a href="#"><button onclick="closeForm()" class="btn btn-info">Accept</button></a></td> 
+            
+                    </tr>
+                    
+                    
+                </Table>
+            </div>
+            
+        </div>
+     
+   
+    </div> 
+    
+
+
+
+    <script>
+
+        const popup=()=>{
+            document.getElementById('pop1').style.display="block";
+
+           let a=document.getElementById('btt').value;
+           let b=document.getElementById('bat').value;
+           let c=document.getElementById('bt').value;
+           console.log(c);
+           console.log(b);
+           console.log(a);
+
+           if (a == "Yes"){
+            document.getElementById("track").classList.remove("hide");
+            document.getElementById("track1").classList.remove("hide");
+           }
+           else{
+            document.getElementById("track").classList.add("hide");
+            document.getElementById("track1").classList.add("hide");
+
+           };
+
+           if (b == "Yes"){
+            document.getElementById("expiry").classList.remove("hide");
+            document.getElementById("expiry1").classList.remove("hide");
+
+           }
+           else{
+            document.getElementById("expiry").classList.add("hide");
+            document.getElementById("expiry1").classList.add("hide");
+
+           }
+
+           if (c == "Yes"){
+            document.getElementById("branch").classList.remove("hide");
+            document.getElementById("branch1").classList.remove("hide");
+           }
+           
+
+            
+        }
+
+        function setPrimary(){
+            document.getElementById('under').value= 'Primary';
+            document.getElementById('underForm').style.visibility= "hidden";
+        }
+        function setAvailable(p){
+            document.getElementById('units').value= p;
+            var status = document.getElementById("units");
+            var a = status.value
+            console.log(a);
+            if( a == "Not Applicable" ){
+                console.log(a);
+                document.getElementById('additional').style.display = "none";
+            }
+        }
+        function setvalue1(units,unitsId,gr){
+            document.getElementById('units').value= units,gr;
+            document.getElementById('underForm1').style.visibility= "block";
+            document.getElementsByName('underhidden1').value= unitsId;
+            document.getElementById('additional').style.display = "flex";
+        }
+
+        // godown popup
+
+        function setmain2(){
+            document.getElementById('under2').value='Main Location';
+
+        }
+
+        function setPrimary2(){
+            document.getElementById('under2').value='primary';
+        }
+
+        function setvalue2(godown,godownId){
+            document.getElementById('under2').value=godown;
+          
+        }
+
+        function closeForm() {
+            document.getElementById("underForm").style.display = "none";
+            document.getElementById('pop1').style.display="none";
+
+       
+
+            let quantity_value=document.getElementById('quantity1').value;
+            let rate_value=document.getElementById('rate1').value;
+            let per_value=document.getElementById('per').value;
+            let total_value=document.getElementById('value2').value;
+
+            document.getElementById('quantity').value=quantity_value;
+            document.getElementById('rate').value=rate_value;
+            document.getElementById('per1').value=per_value;
+            document.getElementById('value1').value=total_value;
+        }
+        function showform(){
+            document.getElementById('underForm').style.display= "block";
+        }
+        function showform2(){
+            document.getElementById('underForm2').style.display= "block";
+        }
+       
+        function closeForm1() {
+            document.getElementById("underForm1").style.display = "none";
+            document.getElementById("underForm2").style.display = "none";
+        }
+        function showform1(){
+            document.getElementById('underForm1').style.display= "block";
+            
+        }
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+        function showcrt(){
+            var status = document.getElementById("crt");
+            var a = status.value;
+            if(a=="create"){
+    
+                window.location.href="{% url 'load_stock_group' %}"
+            }
+            else{
+                document.getElementById('rate').style.display="flex";
+            }
+        }
+        function showgststock(){
+            var status = document.getElementById("stock");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'gst_stock_item' %}"
+            }
+            else{
+                document.getElementById('rate').style.display="flex";
+            }
+        }
+
+        // document.getElementById("value").value = localStorage.getItem("amount");
+    
+        function checker(){
+            var result =confirm('Are you sure?');
+            if (result==false){
+                event.preventDefault();
+            }
+        }
+        
+        function passquantity(){
+            var quantity=document.getElementById("quantity").value;
+            localStorage.setItem("quantity", quantity);
+            var qua=localStorage.getItem("quantity");                         
+        }
+        function passunits(){
+            var units=document.getElementById("per").value;
+            localStorage.setItem("per", units);
+            var qua=localStorage.getItem("per");                         
+        }
+        // list showgroup
+        function showGroup() {
+            document.getElementById("list-group").style.visibility = "visible";
+        }
+        function hideGroup(valueDIv) {
+            document.getElementById("group").value=valueDIv;
+            document.getElementById("list-group").style.visibility = "hidden";
+        }
+        // list Show Category
+        function showCategory() {
+            document.getElementById("list-categ").style.visibility = "visible";
+        }
+        function hideCateg(valueDIv) {
+            document.getElementById("categ").value=valueDIv;
+            document.getElementById("list-categ").style.visibility = "hidden";
+        }
+        // list show Units
+        function showUnits() {
+            document.getElementById("list-units").style.visibility = "visible";
+        }
+        function hideUnits(valueDIv) {
+            document.getElementById("unit").value=valueDIv;
+            document.getElementById("list-units").style.visibility = "hidden";
+        }
+
+        $('#quantity1, #rate1').on('input',function(){
+            var quantity = parseFloat($('#quantity1').val()) || 0;
+            var rate = parseFloat($('#rate1').val()) || 0;
+            $('#value2').val(quantity * rate);    
+        });
+
+        function showgst(){
+            var status = document.getElementById("gst");
+            var a = status.value;
+            console.log(a);
+            if( a == "Applicable" ){
+                console.log(a);
+
+                document.getElementById('supply').style.display = "flex";
+                document.getElementById('setalt').style.display = "flex";
+            }
+            else if( a == "Undefined" ){
+                document.getElementById('supply').style.display = "flex";
+                document.getElementById('setalt').style.display = "none";
+            }
+            else{
+                document.getElementById('supply').style.display = "none";
+                document.getElementById('setalt').style.display = "none";
+            }
+        }
+        function passvalue(){
+            var status = document.getElementById('name').value;
+            console.log(status);
+
+            localStorage.setItem("status",status);
+            var a = localStorage.getItem('status');
+            console.log(a);
+        }
+
+        document.getElementById("value").value = localStorage.getItem("valuepass");
+
+        function passunits(){
+            var units = document.getElementById('units').value;
+            console.log(units);
+
+            localStorage.setItem("units",units);
+            var a = localStorage.getItem('units');
+            console.log(a);
+        }
+        function showgodown(){
+            var status = document.getElementById("gt");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy2' %}"
+            }
+        }
+        function showbats(){
+            var status = document.getElementById("bt");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy' %}"
+                
+            }
+        }
+        function showbats1(){
+            var status = document.getElementById("btt");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy1' %}"
+            }
+        }
+        function showbats2(){
+            var status = document.getElementById("bat");
+            var a = status.value;
+            if(a=="Yes"){
+    
+                window.location.href="{% url 'stock_accuracy1' %}"
+            }
+        }
+
+
+    
+    </script>
+
+    <script>
+        function setvalue(under,underId){
+            console.log(under)
+            document.getElementById('under').value= underId;
+            document.getElementById('underForm').style.visibility= "hidden";
+            document.getElementsByName('underhidden').value= underId;
+        }
+    </script>
+        
+{% endblock %}

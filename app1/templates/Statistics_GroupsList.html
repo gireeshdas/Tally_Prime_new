@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+    <style>
+        /* td {
+       border: .5px solid rgba(255, 255, 255, .3); ;
+       
+       
+    } */
+        .table1 th {
+            border: .5px solid rgba(255, 255, 255, .3);
+            ;
+
+
+        }
+
+        .table-row {
+            cursor: pointer;
+        }
+
+        /* .table-row:hover{
+       background-color: rgb(216, 155, 51);
+    } */
+        .table-row1 {
+            cursor: pointer;
+        }
+
+        .table-row1:hover {
+            background-color: rgb(230, 142, 55);
+        }
+
+        .btn {
+            border: 1px solid rgb(103, 175, 220);
+            /* height: 20px;
+       text-align: center; */
+
+            width: 95%;
+
+        }
+
+        .table1 {
+            border: 1px solid rgb(103, 175, 220);
+        }
+
+        .selected {
+            background-color: rgb(216, 155, 51);
+            color: #fff;
+            font-weight: bold
+        }
+
+        .selected1 {
+            background-color: rgb(77, 154, 242);
+        }
+
+        h5 {
+            text-transform: uppercase;
+        }
+
+        li {
+            font-size: 18px;
+        }
+
+        li.sub_group {
+            font-size: 15px;
+        }
+
+        .vl {
+            margin-left: 5%;
+            border-left: 1px solid white;
+            height: 1300px;
+        }
+
+        .table tr:hover {
+            background: #b3a848;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row " style="color: rgb(0, 0, 65); background-color: rgb(142, 211, 250);padding: 2px; height:3%;">
+            <div class="col"> <b style="font-size: 20px; ">Chart Of Accounts</b></div>
+            <div class="col text-right"><b>{{comp.name}}<br>{{comp.fin_begin}} -
+                    {{comp.fin_end}}</b>
+            </div>
+        </div><br>
+        <div class="row" style="background-color:#213b52;">
+
+
+            <div class="col-md-12">
+                <table class="table " id="table">
+                    <thead class="p-5" style="font-size: 15px; ">
+                        <!-- <tr>
+                            <th class="p-4">List Of Groups</th>
+                            <th class="p-4">Under</th>
+
+                        </tr> -->
+
+
+                    </thead>
+                    <tbody>
+                        <!-- {% for i in groups %}
+                        <tr>
+                            <td><a href="{% url 'load_create_groups' i.id %}">
+                                    <h6 style="margin-left: 20px;">{{ i.group_name }}</h6>
+                                </a></td>
+                            <td>
+                                <h6 style="margin-left: 20px;">{{ i.group_under }}</h6>
+                            </td>
+                        </tr>
+                        {% endfor %} -->
+
+                        <tr  ><a href="{% url 'load_primary_groups' groups='Bank Accounts' %}"><h6 class="pt-2">Bank Accounts</h6></a></tr>
+                       {% for i in under_Bank_Accounts %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Bank OCC Ac' %}"><h6 class="pt-2">Bank OCC Ac</h6></a></tr>
+                       {% for i in under_Bank_OCC_Ac %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Bank OD Ac' %}"><h6 class="pt-2">Bank OD Ac</h6></a></tr>
+                       {% for i in under_Bank_OD_Ac %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Branch Divisions' %}"><h6 class="pt-2">Branch Divisions</h6></a></tr>
+                       {% for i in under_Branch_Divisions %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Bank Accounts' %}"><h6 class="pt-2">Capital Account</h6></a></tr>
+                       {% for i in under_Capital_Account %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Cash in Hand' %}"><h6 class="pt-2">Cash in Hand</h6></a></tr>
+                       {% for i in under_Cash_in_Hand %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <var>
+                        <tr ><a href="{% url 'load_primary_groups' groups='Current Assets' %}"><h6 class="pt-2">Current Assets</h6></a></tr>
+                       {% for i in under_Current_Assets %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Current Liabilities' %}"><h6 class="pt-2">Current Liabilities</h6></a></tr>
+                       {% for i in under_Current_Liabilities %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Deposits-Asset' %}"><h6 class="pt-2">Deposits-Asset</h6></a></tr>
+                       {% for i in under_Deposits_Asset %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Direct Expenses' %}"><h6 class="pt-2">Direct Expenses</h6></a></tr>
+                       {% for i in under_Direct_Expenses %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Direct Incomes' %}"><h6 class="pt-2">Direct Incomes</h6></a></tr>
+                       {% for i in under_Direct_Incomes %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Duties and Taxes' %}"><h6 class="pt-2">Duties and Taxes</h6></a></tr>
+                       {% for i in under_Duties_and_Taxes %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Expenses-Direct' %}"><h6 class="pt-2">Expenses-Direct</h6></a></tr>
+                       {% for i in under_Expenses_Direct %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Expenses-Indirect' %}"><h6 class="pt-2">Expenses-Indirect</h6></a></tr>
+                       {% for i in under_Expenses_Indirect %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Fixed Assets' %}"><h6 class="pt-2">Fixed Assets</h6></a></tr>
+                       {% for i in under_Fixed_Assets %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Income-Direct' %}"><h6 class="pt-2">Income-Direct</h6></a></tr>
+                       {% for i in under_Income_Direct %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Income-Indirect' %}"><h6 class="pt-2">Income-Indirect</h6></a></tr>
+                       {% for i in under_Income_Indirect %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Loans & Advances-Asset' %}"><h6 class="pt-2">Loans & Advances-Asset</h6></a></tr>
+                       {% for i in under_Loans_Advances %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Loans-Liability' %}"><h6 class="pt-2">Loans-Liability</h6></a></tr>
+                       {% for i in under_Loans_Liability %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Misc. Expenses-Asset' %}"><h6 class="pt-2">Misc. Expenses-Asset</h6></a></tr>
+                       {% for i in under_Misc_Asset %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+
+                       <tr ><a href="{% url 'load_primary_groups' groups='Provisions' %}"><h6 class="pt-2">Provisions</h6></a></tr>
+                       {% for i in under_Provisions %} 
+                       <tr ><a href="{% url 'load_create_groups' i.id %}"><h6 style="margin-left: 20px;">{{ i.group_name }}</h6></a></tr>
+                       {% endfor %}
+                       
+
+
+                    </tbody>
+                </table>
+
+            </div>
+            <hr>
+
+            <div style="font-size:15px;"> {{ groups_count2 }} Groups</div>
+            <hr><br>
+
+
+
+            <!-- <div class="bottom text-center d-flex justify-content-between">
+                <button class="btn border"><a href="{% url 'index' %}">QUIT</a></button>
+
+                <button type="button" class="btn border" onclick="myFunction()">SELECT</button>
+
+                <button class="btn border">DELETE</button>
+                <button class="btn border" onclick="removeSelectedRow()">REMOVE LINE</button>
+                <button class="btn border"><a href="{% url 'Statistics_list_of_groups' %}">RESTORE LINE</a></button>
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <script>
+            $(document).ready(function ($) {
+                $(".table-row").dblclick(function () {
+                    window.document.location = $(this).data("href");
+                });
+            });
+        </script>
+        <script>
+
+            var index;  // variable to set the selected row index
+            function getSelectedRow() {
+                var table = document.getElementById("table");
+                for (var i = 1; i < table.rows.length; i++) {
+                    table.rows[i].onclick = function () {
+                        // clear the selected from the previous selected row
+                        // the first time index is undefined
+                        if (typeof index !== "undefined") {
+                            table.rows[index].classList.toggle("selected");
+                        }
+
+                        index = this.rowIndex;
+                        this.classList.toggle("selected");
+
+                    };
+                }
+
+            }
+
+
+            getSelectedRow();
+
+
+
+
+
+
+
+        </script>
+
+        <script>
+
+
+            function myFunction() {
+                var se = document.getElementsByClassName('selected');
+                se[0].style.backgroundColor = "lightblue";
+
+            }
+        </script>
+
+
+        <script>
+
+            var rIndex,
+                table = document.getElementById("table");
+
+
+            function selectedRowToInput() {
+
+                for (var i = 1; i < table.rows.length; i++) {
+                    table.rows[i].onclick = function () {
+                        // get the seected row index
+                        rIndex = this.rowIndex;
+                        this.classList.toggle("selected");
+
+                    };
+                }
+            }
+            selectedRowToInput();
+
+
+
+            function removeSelectedRow() {
+                table.deleteRow(rIndex);
+
+            }
+        </script>
+
+        <script>
+            function removeSelectedRow() {
+                table.deleteRow(index);
+
+            }
+        </script> -->
+
+
+        {% endblock %}

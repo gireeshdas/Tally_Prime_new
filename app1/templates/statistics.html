@@ -1,0 +1,353 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<style>
+    /* td {
+   border: .5px solid rgba(255, 255, 255, .3); ;
+   
+   
+} */
+    .table1 th {
+        border: .5px solid rgba(255, 255, 255, .3);
+        ;
+
+
+    }
+
+    .table-row {
+        cursor: pointer;
+    }
+
+    /* .table-row:hover{
+   background-color: rgb(216, 155, 51);
+} */
+    .table-row1 {
+        cursor: pointer;
+    }
+
+    .table-row1:hover {
+        background-color: rgb(230, 142, 55);
+    }
+
+    .btn {
+        border: 1px solid rgb(103, 175, 220);
+        /* height: 30px;
+   text-align: center; */
+
+        width: 95%;
+
+    }
+
+    .table1 {
+        border: 1px solid rgb(103, 175, 220);
+    }
+
+    .selected {
+        background-color: rgb(216, 155, 51);
+        color: #fff;
+        font-weight: bold
+    }
+
+    .selected1 {
+        background-color: rgb(77, 154, 242);
+    }
+
+    h5 {
+        text-transform: uppercase;
+    }
+
+    li {
+        font-size: 18px;
+    }
+
+    li.sub_group {
+        font-size: 15px;
+    }
+
+    .vl {
+        margin-left: 5%;
+        border-left: 1px solid white;
+        height: 1300px;
+    }
+
+    .table tr:hover {
+        background: #b3a848;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row " style="color: rgb(0, 0, 65); background-color: rgb(142, 211, 250);padding: 2px; height:3%;"><b
+            style="font-size: 20px; ">Statistics</b></div><br>
+    <div class="row" style="background-color:#213b52;">
+
+
+        <div class="col-md-5">
+            <table class="table " id="table">
+                <thead class="p-5" style="font-size: 15px; ">
+                    <tr>
+                        <th colspan="2">Type of Vouchers</th>
+                        <th style="text-align: right;">{{company.name}}<br>{{company.fin_begin}} - {{company.fin_end}}
+                        </th>
+
+                    </tr>
+                </thead>
+
+                </tbody>
+
+                {% for i in vouchers %}
+                <tr class="table-row " >
+                    <td colspan="2"><a href="{% url 'Statistics_voucher_monthly_register' i.id %}">{{i.voucher_name}}</a></td>
+
+                    <td style="text-align: right;">{{i.no_of_vouchers}}</td>
+                </tr>
+                {% endfor %}
+
+                <tr class="table-row1">
+                    <th colspan="2">
+                        <h6 class="d-flex align-items-sm-start par p-1 py-1 foot" style="margin-left: 20px;">Total</h6>
+                    </th>
+
+                    <th style="text-align: right;">
+                        <hr>{{vouch_total}}
+                        <hr>
+                        <hr style="margin-top: -20px;">
+                    </th>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="vl"></div>
+        <div class="col-md-6">
+            <table class="table" id="table3">
+                <thead>
+                    <tr>
+                        <th colspan="2">Types of Account</th>
+                        <th style="text-align: right;">{{company.name}}<br>{{company.fin_begin}} - {{company.fin_end}}
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    <tr class="table-row ">
+                        <td colspan="2"><a href="{% url 'Statistics_list_of_groups' %}">Groups</a></td>
+                        <td style="text-align: right;">{{groups_count}}</td>
+                    </tr>
+                    <tr class="table-row" >
+                        <td colspan="2"><a href="{% url 'Statistics_list_of_ledger' %}">Ledgers</a></td>
+                        <td style="text-align: right;">{{ledgers_count}}</td>
+
+                    </tr>
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'Statistics_list_of_cost_centers' %}"> Cost Centres</a></td>
+                        <td style="text-align: right;"> {{centres_count}} </td>
+
+                    </tr>
+                    <tr class="table-row ">
+                        <td colspan="2"><a href="{% url 'Statistics_Stock_Groups' %}"> Stock groups</a></td>
+                        <td style="text-align: right;"> {{sg_count}}</td>
+
+                    </tr>
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'Statistics_Stock_Items' %}"> Stock items</a></td>
+                        <td style="text-align: right;"> {{si_count}}</td>
+
+                    </tr>
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'Statistics_Voucher_Types' %}"> Voucher types</a></td>
+                        <td style="text-align: right;">{{v_count}}</td>
+
+                    </tr>
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'statistics_units' %}"> Units</a></td>
+
+                        <td style="text-align: right;">{{ unit_count }}</td>
+
+                    </tr>
+
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'statistics_currencies' %}"> Currencies</a></td>
+
+                        <td style="text-align: right;">{{ cur_count }}</td>
+                        </td>
+
+                    </tr>
+
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'statistics_atten_prod' %}"> Attendance / Production Types</a></td>
+
+                        <td style="text-align: right;">{{ att_count }}</td>
+
+                    </tr>
+
+
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'statistics_emp_groups' %}"> Employee Groups</a></td>
+
+                        <td style="text-align: right;">{{ empg_count }}</td>
+
+                    </tr>
+
+                    <tr class="table-row " >
+                        <td colspan="2"><a href="{% url 'statistics_employee' %}"> Employees</a></td>
+
+                        <td style="text-align: right;">{{ emp_count }}</td>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<table class="table1 col" style="text-align: center; margin-top: 10px;">
+    <thead>
+        <th><a href="{% url 'index' %}" type="button" class="btn p-1 px-4">Quit</a></th>
+        <th><button type="button" class="btn p-1 px-4" onclick="myFunction()">Select</button></th>
+        <th><button type="button" class="btn p-1 px-1" onclick="removeSelectedRow()">Remove Line</button></th>
+        <th><a href="{% url 'statistics' %}" type="button" class="btn p-1 px-1">Restore Line</a></th>
+    </thead>
+</table>
+<div style="margin-top: 1px; height: 10px ; width: 100%;"></div>
+
+
+
+
+
+</div>
+</div>
+
+</div>
+<script>
+    $(document).ready(function ($) {
+        $(".table-row").dblclick(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
+
+
+
+
+<script>
+
+    var index;  // variable to set the selected row index
+    function getSelectedRow() {
+        var table = document.getElementById("table");
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                // clear the selected from the previous selected row
+                // the first time index is undefined
+                if (typeof index !== "undefined") {
+                    table.rows[index].classList.toggle("selected");
+                }
+
+                index = this.rowIndex;
+                this.classList.toggle("selected");
+
+            };
+        }
+
+    }
+
+
+    getSelectedRow();
+
+
+
+
+
+
+
+</script>
+
+<script>
+
+    var index;  // variable to set the selected row index
+    function getSelectedRow() {
+        var table = document.getElementById("table3");
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                // clear the selected from the previous selected row
+                // the first time index is undefined
+                if (typeof index !== "undefined") {
+                    table.rows[index].classList.toggle("selected");
+                }
+
+                index = this.rowIndex;
+                this.classList.toggle("selected");
+
+            };
+        }
+
+    }
+
+
+    getSelectedRow();
+
+
+
+
+
+
+
+</script>
+
+<script>
+
+
+    function myFunction() {
+        var se = document.getElementsByClassName('selected');
+        se[0].style.backgroundColor = "lightblue";
+
+    }
+</script>
+
+
+<!-- <script>
+
+var rIndex,
+table = document.getElementById("table");
+
+
+function selectedRowToInput()
+{
+
+for(var i = 1; i < table.rows.length; i++)
+{
+table.rows[i].onclick = function()
+{
+// get the seected row index
+rIndex = this.rowIndex;
+this.classList.toggle("selected");
+
+};
+}
+}
+selectedRowToInput();
+
+
+
+function removeSelectedRow()
+{
+table.deleteRow(rIndex);
+
+}
+</script> -->
+
+<script>
+    function removeSelectedRow() {
+        table.deleteRow(index);
+
+    }
+</script>
+{% endblock %}

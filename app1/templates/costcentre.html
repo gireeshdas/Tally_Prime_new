@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block body %}
+<script src="https://code.jquery.com/jquery-git.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+    .close {
+        position: absolute;
+        top: 3px;
+        right: 8px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        transform: rotate(45deg);
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .form-popup {
+        display: none;
+        position: fixed;
+        top: 250px;
+        right: 15px;
+        border: 1px solid #f1f1f1;
+        z-index: 9;
+        width: 300px;
+        height: 600px;
+      }
+    
+      .content a:hover {background-color: rgb(238, 167, 75);}
+      
+      /* Add styles to the form container */
+      .form-container {
+        max-width: 50px;
+        height: 500px;
+        padding: 10px;
+      }
+      .form-container1 {
+        max-width: 350px;
+        height: 500px;
+        padding: 2px;
+       
+      }
+      body{
+        overflow: hidden;
+      }
+</style>
+<script>
+    $(document).ready(function() {
+        
+       
+    });
+
+   
+    function showCost(){
+        document.getElementById('underForm').style.visibility= "visible";
+        document.getElementById('underForm').style.display= "block";
+    }
+    function setPrimary(){
+    document.getElementById('under').value= '*Primary';
+    document.getElementById('underForm').style.visibility= "hidden";
+    }
+    function setCostcentre(under,underId){
+        document.getElementById('under').value= under;
+        document.getElementById('underForm').style.visibility= "hidden";
+        document.getElementsByName('underhidden').value= underId;
+    }
+    function showMe() {
+        
+      }
+</script>
+
+<div class="row container-fluid p-3 mx-0">
+    <div class="col-sm-3 m-0 p-0"></div>
+    <div class="col-sm-6 m-0 p-0" style=" background-color:rgba(0,0,0,0.2);">
+        <!-- <a href="javascript:history.go(-1);" class="close">+</a> -->
+    <h6  class="bg-info text-light p-1 ">Cost Centre Creation</h6>
+    <div  style="text-align: center;margin-top:-35px;font-weight:900">{{cmp.name}}</div>
+
+<form id="myForm" action="{% url 'costcentre' %}" method="post" class="p-5">
+        {% csrf_token %}
+   
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="gname">Name :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input type="text" id="cname" onkeyup="showMe()" name="cname" class="form-control " placeholder="" required></div> 
+                    </div>
+<div id="q" >
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="alia">(Alias) :</label></div>
+                        <div class="col-sm-8 m-0 p-0"><input type="text" id="alia" name="alia"class="form-control " placeholder=""></div> 
+                    </div>
+
+                    <div class="row container-fluid  p-2 m-0">
+                        <div class="col-sm-4 m-0 p-0"> <label for="under">Under :</label></div>
+                        <div class="col-sm-8 m-0 p-0">
+                            <input type="text" id="under" value="*Primary" name="under" class="form-control " placeholder="" 
+                            onclick="showCost();" >
+
+                        </div> 
+                    </div>
+</div>
+                    <br>
+                   
+                    <div class="col text-center" >
+                        <button   type="submit" class="btn btn-info" >Create</button>
+                    <!-- <input  type="submit" value="create"> -->
+                    </div>
+                    <!-- <div class="flexy w-100 py-4"><button id="cbtn" type="button" class="btn btn-info w-50">Create</button></div> -->
+    
+</form>
+
+</div>
+</div>
+<div class="col-sm-3  m-0 p-0"></div>
+
+</div> 
+
+<div class="form-popup" id="underForm" style="background-color: rgb(216, 232, 238);" >
+    <form action="" class="form-container1" >
+        <h6 style="background-color:rgb(17, 169, 240) ;color:white">List of Cost Centres</h6>
+        <a  href="{% url 'costcentre2' %}" style="margin-left:180px;color:black;cursor:pointer" >Create New</a>  
+
+    <hr >
+    <div>
+        <table >
+        <tr >
+            <a onclick="setPrimary()" style="color:black;cursor:pointer">&nbsp;&nbsp;*Primary</a><br>
+        {% for i in ccentre %}
+       
+    
+        <a onclick="setCostcentre('{{i.cname}}','{{i.id}}')"  class="content" 
+        style="cursor:pointer;color:black;">&nbsp;&nbsp;{{i.cname}}</a><br>
+        {% endfor %}
+        </tr>
+        </table>
+    </div>
+    <input type="text" name="underhidden" hidden value="{{i.id}}">
+    </form>
+</div>
+
+
+{% endblock %}

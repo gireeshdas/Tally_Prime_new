@@ -1,0 +1,258 @@
+
+    {% extends 'base.html' %}
+    {% block body %}
+        {% load static %}
+        <style>
+            *{
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing:border-box;
+        }
+       
+        table,th,td
+{
+    border-collapse: collapse;
+  
+}
+table
+{
+    width: 100%;
+    border-color: gray;
+    background-color:rgba(0,0,0,.4);
+}
+
+th.a{
+    text-align: center;
+    width: 120px;
+}
+th.c{
+    text-align: center;
+    width: 80px;  
+}
+th
+{
+   
+    border-top: 1.5px solid rgb(100, 107, 114);
+    border-left: 1.5px solid rgb(100, 107, 114);
+    border-bottom: 1.5px solid rgb(100, 107, 114);
+    
+    font-size: 13px;
+    font-weight: lighter;
+    padding: 6px;
+    color:beige;
+    
+   
+}
+
+ td
+{
+    padding: 8px;
+    font-size: 13px;
+    text-align: center;
+ 
+}
+tfoot td.b{
+    padding: 8px;
+    font-size: 13px;
+    text-align: left;
+}
+.btns{
+    color: black;
+    text-decoration: none;
+    
+  
+
+}
+.btns_prnt{
+    width: 100%;
+    text-align: start;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    /* padding: 6px; */
+
+}
+tbody tr:hover td{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+.btns_prnt:hover{
+    background-color:orange;
+    color: rgb(15, 14, 14);
+}
+@media (max-width: 991px) {
+  .main-panel {
+      margin-left: 0;
+      width: 100%;
+  }
+}
+
+.content-wrapper {
+
+  padding: 1.875rem 1.75rem;
+  width: 100%;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+    </style>
+
+</head>
+<body>
+    <div class="main-panel">
+        <div class="content-wrapper">
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 ">
+    <div  style="background-color:rgba(0,0,0,.4);">
+        <h6 style="color: rgb(0, 0, 65); background-color: rgb(142, 211, 250);">Stock Item Vouchers<span style="margin-left:30%;">{{ cmp.comp_name }}</span></h6>
+    <div style=" display:flex; height: 97%;">
+    <div style="width:100%;  height: 100%; ">
+       
+        <!--<div style="display:flex; padding: 25px;">
+    
+            <div style="width: 50%; text-align: start;">
+              <h5 style="color: black; font-size: 16px; height: 3%;">Particulars</h5>
+              <h5 style="padding:5px;">1-Apr-22 to 31-March-23</h5>
+        
+          </div>
+          <div style="width: 50%; text-align: end;">
+            <h5 style="color: black; padding:5px;font-size: 16px;">For 1-Apr-22&nbsp;</h5>
+            <br><h5 style="color: black; padding:5px;font-size: 16px;">Quantity &nbsp;Rate &nbsp;Value</h5>
+        
+          </div>
+          </div>-->
+      <hr>Stock Item:{{ si.name }}</hr>
+      
+<div style="overflow-x:auto;">
+      <table>
+        <thead>
+        <tr>
+            <th rowspan="4" class="c">Date</th>
+            <th rowspan="4">Particulars </th>
+            <th rowspan="4"class="c">Vch Type</th>
+            <th rowspan="4"class="c">Vch No</th>
+            <th colspan="6" class="a" ><br> 
+           
+            
+            </th>
+        </tr>
+
+    <tr> <th colspan="2"class="a" >Inwards</th>
+        <th colspan="2"class="a" >Outwards</th><th colspan="2"class="a" >Closing Balance</th></tr>
+     <tr><th class="a" >Quantity</th><th class="a">Value</th>
+        <th class="a" >Quantity</th><th class="a">Value</th>
+        <th class="a" >Quantity</th><th class="a">Value</th></tr>   
+         
+    </thead>
+    <tbody>
+        <tr><td><span style="font-style: italic;">Opening Balance</span></td>
+            <td></td>
+         <td></td>  <td></td>
+        
+    <td>{{ qty }}</td>
+<td>{{ val }}</td>
+<td></td>
+        <td></td>
+
+<td>{{ qty }}</td>
+<td>{{ val }}</td></tr>
+            {% if m == 4 %}
+            <td>April</td>
+            {% elif m == 5 %}
+            <td>May</td>
+            {% elif m == 6 %}
+            <td>June</td>
+            {% elif m == 7 %}
+            <td>July</td>
+            {% elif m == 8 %}
+            <td>August</td>
+            {% elif m == 9 %}
+            <td>September</td>
+            {% elif m == 10 %}
+            <td>October</td>
+            {% elif m == 11 %}
+            <td>November</td>
+            {% elif m == 12 %}
+            <td>December</td>
+            {% elif m == 1 %}
+            <td>January</td>
+            {% elif m == 2 %}
+            <td>February</td>
+            {% endif %}
+         {% for vi in v %}
+         <tr>
+            <td>{{ vi.date }}</td>
+            <td>{{ vi.party_name }}</td>
+            <td>{{ vi.vouch_type }}</td>
+            <td>{{ vi.id }}</td>
+{% if vi.vouch_type == 'purchase' %}            
+<td>{{ vi.quantity }}</td>
+<td>{{ vi.value }}</td>
+<td></td>
+<td></td>
+<td>{{ vi.cbalance }}</td>
+<td>{{ vi.cvalue }}</td>
+{% else %}
+<td></td>
+<td></td>
+<td>{{ vi.quantity }}</td>
+<td>{{ vi.value }}</td>
+<td>{{ vi.cbalance }}</td>
+<td>{{ vi.cvalue }}</td>
+{% endif %}
+
+
+         </tr>
+         {% endfor %}
+            
+    </tbody>
+    <tfoot>
+        <tr style=" border-top: 1.5px solid rgb(100, 107, 114);">
+            <td class="b">Grand Total</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ a }}</td>
+            <td>{{ b }}</td>
+            <td>{{ c }}</td>
+            <td>{{ d }}</td>
+            <td>{{ tq }}</td>
+            <td>{{ fr }}</td>
+        </tr>
+    </tfoot>
+     </table></div>
+    </div>
+     
+    </div>
+    
+   
+</div>
+</div>
+<div class="col-md-2"></div>
+</div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Period</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{% url 'periodvouchsummary' si.id m n  %}" method="post">{% csrf_token %} 
+        <div class="modal-body">
+         Start date:<input type="date"name="start"><br><br>
+         End  date:<input type="date"name="end">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          
+            <button type="submit" class="btn btn-secondary">submit</button></form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
